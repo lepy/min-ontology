@@ -23,15 +23,16 @@ This repository contains the MIN foundational ontology and the OPA interpretatio
 
 ## Validation
 
-Install dependencies:
+Recommended: run validation with `uv` and Python 3.12 (no manual install needed):
+
+```bash
+uv run --python 3.12 --with rdflib==7.0.0 --with pyshacl==0.28.1 python scripts/validate.py
+```
+
+Optional fallback with `pip`:
 
 ```bash
 python3 -m pip install -r requirements-dev.txt
-```
-
-Run checks:
-
-```bash
 python3 scripts/validate.py
 ```
 
