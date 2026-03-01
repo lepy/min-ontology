@@ -1,0 +1,8 @@
+PREFIX min: <https://w3id.org/min#>
+
+SELECT ?nexus WHERE {
+  ?nexus a min:Nexus ;
+         min:hasMaterialAspect ?material ;
+         min:hasInformationalAspect ?information .
+}
+LIMIT 25

@@ -1,0 +1,67 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix min:     <https://w3id.org/min#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+min:OntologyMetadataShape a sh:NodeShape ;
+    sh:targetNode <https://w3id.org/min> ;
+    sh:property [
+        sh:path owl:versionIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path owl:versionInfo ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:title ;
+        sh:minCount 2
+    ] ;
+    sh:property [
+        sh:path dcterms:description ;
+        sh:minCount 2
+    ] ;
+    sh:property [
+        sh:path dcterms:creator ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:created ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:license ;
+        sh:minCount 1
+    ] .
+
+min:ClassLabelShape a sh:NodeShape ;
+    sh:targetNode min:Nexus ;
+    sh:targetNode min:Material ;
+    sh:targetNode min:Information ;
+    sh:targetNode min:Modality ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1
+    ] .
+
+min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
+    sh:targetNode min:hasMaterialAspect ;
+    sh:targetNode min:hasInformationalAspect ;
+    sh:targetNode min:isMaterialAspectOf ;
+    sh:targetNode min:isInformationalAspectOf ;
+    sh:targetNode min:isAspectOf ;
+    sh:targetNode min:nexusWith ;
+    sh:targetNode min:hasComponent ;
+    sh:targetNode min:hasModality ;
+    sh:property [
+        sh:path rdfs:domain ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path rdfs:range ;
+        sh:minCount 1
+    ] .

@@ -1,0 +1,28 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+ASK WHERE {
+  <https://w3id.org/min>
+    dcterms:creator ?creator ;
+    dcterms:created ?created ;
+    dcterms:license ?license .
+
+  FILTER EXISTS {
+    <https://w3id.org/min> dcterms:title ?titleDe .
+    FILTER(LANG(?titleDe) = "de")
+  }
+
+  FILTER EXISTS {
+    <https://w3id.org/min> dcterms:title ?titleEn .
+    FILTER(LANG(?titleEn) = "en")
+  }
+
+  FILTER EXISTS {
+    <https://w3id.org/min> dcterms:description ?descDe .
+    FILTER(LANG(?descDe) = "de")
+  }
+
+  FILTER EXISTS {
+    <https://w3id.org/min> dcterms:description ?descEn .
+    FILTER(LANG(?descEn) = "en")
+  }
+}

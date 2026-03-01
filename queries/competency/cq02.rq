@@ -1,0 +1,7 @@
+PREFIX min: <https://w3id.org/min#>
+
+SELECT ?nexus ?modality WHERE {
+  ?nexus a min:Nexus ;
+         min:hasModality ?modality .
+}
+LIMIT 25

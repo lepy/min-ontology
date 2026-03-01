@@ -1,0 +1,13 @@
+@prefix ex:  <https://example.org/min/> .
+@prefix min: <https://w3id.org/min#> .
+
+ex:steelBlock a min:Nexus ;
+    min:hasMaterialAspect ex:steelMatter ;
+    min:hasInformationalAspect ex:microstructure ;
+    min:hasModality min:MaterialModal .
+
+ex:steelMatter a min:Material ;
+    min:isMaterialAspectOf ex:steelBlock .
+
+ex:microstructure a min:Information ;
+    min:isInformationalAspectOf ex:steelBlock .

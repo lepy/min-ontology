@@ -1,0 +1,5 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  <https://w3id.org/opa> owl:imports <https://w3id.org/min> .
+}
