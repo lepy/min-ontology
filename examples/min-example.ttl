@@ -1,13 +1,21 @@
 @prefix ex:  <https://example.org/min/> .
 @prefix min: <https://w3id.org/min#> .
 
-ex:steelBlock a min:Nexus ;
-    min:hasMaterialAspect ex:steelMatter ;
-    min:hasInformationalAspect ex:microstructure ;
-    min:hasModality min:MaterialModal .
+ex:steelBlock a min:Object ;
+    min:materialAspect [ ] ;
+    min:informationalAspect [ ] .
 
-ex:steelMatter a min:Material ;
-    min:isMaterialAspectOf ex:steelBlock .
+ex:tensileTest a min:Process ;
+    min:hasInput ex:steelBlock ;
+    min:hasOutput ex:testedSteelBlock ;
+    min:generates ex:testReport .
 
-ex:microstructure a min:Information ;
-    min:isInformationalAspectOf ex:steelBlock .
+ex:testReport a min:Data ;
+    min:describes ex:testedSteelBlock .
+
+ex:testOperator a min:Agent ;
+    min:performs ex:tensileTest .
+
+ex:testedSteelBlock a min:Object ;
+    min:materialAspect [ ] ;
+    min:informationalAspect [ ] .

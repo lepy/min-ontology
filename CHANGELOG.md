@@ -1,6 +1,17 @@
 # Changelog
 
-All notable changes to MIN and OPA are documented in this file.
+All notable changes to MIN are documented in this file.
+
+## [2.0.0] - 2026-03-01
+
+### Changed
+- `min.ttl` now points to MIN `v2.0.0`.
+- OPA concepts were absorbed into MIN (no separate `opa.ttl` in active maintenance).
+- Validation suite and repository docs were updated to MIN v2 structure.
+
+### Removed
+- Active OPA ontology file `opa.ttl`.
+- OPA alignment and OPA import test from active validation.
 
 ## [1.0.0] - 2026-03-01
 

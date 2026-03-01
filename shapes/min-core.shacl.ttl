@@ -23,7 +23,7 @@ min:OntologyMetadataShape a sh:NodeShape ;
     ] ;
     sh:property [
         sh:path dcterms:description ;
-        sh:minCount 2
+        sh:minCount 1
     ] ;
     sh:property [
         sh:path dcterms:creator ;
@@ -40,23 +40,41 @@ min:OntologyMetadataShape a sh:NodeShape ;
 
 min:ClassLabelShape a sh:NodeShape ;
     sh:targetNode min:Nexus ;
-    sh:targetNode min:Material ;
-    sh:targetNode min:Information ;
-    sh:targetNode min:Modality ;
+    sh:targetNode min:Object ;
+    sh:targetNode min:Process ;
+    sh:targetNode min:Data ;
+    sh:targetNode min:Agent ;
     sh:property [
         sh:path rdfs:label ;
         sh:minCount 1
     ] .
 
+min:ObjectPropertyDomainOnlyShape a sh:NodeShape ;
+    sh:targetNode min:materialAspect ;
+    sh:targetNode min:informationalAspect ;
+    sh:property [
+        sh:path rdfs:domain ;
+        sh:minCount 1
+    ] .
+
 min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
-    sh:targetNode min:hasMaterialAspect ;
-    sh:targetNode min:hasInformationalAspect ;
-    sh:targetNode min:isMaterialAspectOf ;
-    sh:targetNode min:isInformationalAspectOf ;
-    sh:targetNode min:isAspectOf ;
+    sh:targetNode min:hasInput ;
+    sh:targetNode min:hasOutput ;
+    sh:targetNode min:undergoes ;
+    sh:targetNode min:resultOf ;
+    sh:targetNode min:performs ;
+    sh:targetNode min:performedBy ;
+    sh:targetNode min:controls ;
+    sh:targetNode min:actsOn ;
+    sh:targetNode min:affectedBy ;
+    sh:targetNode min:owns ;
+    sh:targetNode min:describes ;
+    sh:targetNode min:describedBy ;
+    sh:targetNode min:generates ;
+    sh:targetNode min:generatedBy ;
+    sh:targetNode min:produces ;
     sh:targetNode min:nexusWith ;
     sh:targetNode min:hasComponent ;
-    sh:targetNode min:hasModality ;
     sh:property [
         sh:path rdfs:domain ;
         sh:minCount 1

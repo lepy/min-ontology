@@ -20,9 +20,4 @@ ASK WHERE {
     <https://w3id.org/min> dcterms:description ?descDe .
     FILTER(LANG(?descDe) = "de")
   }
-
-  FILTER EXISTS {
-    <https://w3id.org/min> dcterms:description ?descEn .
-    FILTER(LANG(?descEn) = "en")
-  }
 }

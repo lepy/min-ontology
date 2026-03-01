@@ -1,0 +1,7 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  FILTER NOT EXISTS {
+    <https://w3id.org/min> owl:imports <https://w3id.org/opa> .
+  }
+}

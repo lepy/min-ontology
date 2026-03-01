@@ -1,8 +1,9 @@
 PREFIX min: <https://w3id.org/min#>
 
-SELECT ?nexus WHERE {
-  ?nexus a min:Nexus ;
-         min:hasMaterialAspect ?material ;
-         min:hasInformationalAspect ?information .
+SELECT ?nexus ?type WHERE {
+  VALUES ?type { min:Object min:Process min:Data min:Agent }
+  ?nexus a ?type ;
+         min:materialAspect ?material ;
+         min:informationalAspect ?information .
 }
 LIMIT 25

@@ -12,9 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TTL_FILES = [
     "min.ttl",
     "min-v1.0.0.ttl",
-    "opa.ttl",
-    "opa-v1.0.0.ttl",
-    "alignments/opa-min.ttl",
+    "min-v2.0.0.ttl",
     "examples/min-example.ttl",
     "shapes/min-core.shacl.ttl",
 ]
@@ -23,7 +21,8 @@ SPARQL_TESTS = [
     ("tests/sparql/test-min-version.rq", "min.ttl"),
     ("tests/sparql/test-min-metadata.rq", "min.ttl"),
     ("tests/sparql/test-min-domain-range.rq", "min.ttl"),
-    ("tests/sparql/test-opa-imports-min.rq", "opa.ttl"),
+    ("tests/sparql/test-min-classes-v2.rq", "min.ttl"),
+    ("tests/sparql/test-min-no-opa-import.rq", "min.ttl"),
 ]
 
 

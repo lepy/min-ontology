@@ -1,20 +1,23 @@
 # MIN model summary
 
-MIN defines three core classes:
+MIN v2 defines five core classes:
 
 - `min:Nexus`
-- `min:Material`
-- `min:Information`
+- `min:Object`
+- `min:Process`
+- `min:Data`
+- `min:Agent`
 
-A `min:Nexus` is constrained to have both:
+A `min:Nexus` is constrained to have both internal structural poles:
 
-- `min:hasMaterialAspect some min:Material`
-- `min:hasInformationalAspect some min:Information`
+- `min:materialAspect some owl:Thing`
+- `min:informationalAspect some owl:Thing`
 
-MIN also defines a modality model via `min:Modality` and individuals:
+MIN v2 category relations are directly part of MIN:
 
-- `min:MaterialModal`
-- `min:Balanced`
-- `min:InformationalModal`
+- Process/Object: `min:hasInput`, `min:hasOutput`, `min:undergoes`, `min:resultOf`
+- Agent/Process: `min:performs`, `min:performedBy`, `min:controls`
+- Agent/Object: `min:actsOn`, `min:affectedBy`, `min:owns`, `min:produces`
+- Data links: `min:describes`, `min:describedBy`, `min:generates`, `min:generatedBy`
 
-Core repository requirement: all domain ontologies importing MIN must keep `owl:imports <https://w3id.org/min>` stable.
+Since v2, OPA is absorbed into MIN and no separate OPA layer is required.

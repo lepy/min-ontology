@@ -10,6 +10,11 @@
 
 - `min.ttl`: current stable version
 - `min-vX.Y.Z.ttl`: immutable snapshot for release `X.Y.Z`
+- Current stable line: `2.x` (`min.ttl` -> `v2.0.0`)
+
+## Architecture note
+
+- Since `v2.0.0`, OPA is absorbed into MIN and no separate `opa.ttl` is maintained.
 
 ## Release checklist
 

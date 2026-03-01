@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "min-ontology"
 version = "1.0.0"
-description = "MIN and OPA ontologies with validation tooling."
+description = "MIN ontology with validation tooling."
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
