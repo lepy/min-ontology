@@ -13,6 +13,8 @@ theme:
 nav:
   - Home: index.md
   - Model: min-model.md
+  - Class Catalog: class-catalog.md
+  - Property Catalog: property-catalog.md
   - Versioning: versioning.md
   - Changelog: changelog.md
   - Visualisierung v3.0.0: min-v3_0_0-visualization.html

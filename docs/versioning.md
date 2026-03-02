@@ -2,9 +2,9 @@
 
 ## Semantic versioning
 
-- Major (`X.0.0`): breaking semantic changes
-- Minor (`1.X.0`): backward-compatible additions
-- Patch (`1.0.X`): non-semantic corrections and metadata fixes
+- Major (`X.0.0`): conceptual or semantic breaks
+- Minor (`X.Y.0`): backward-compatible ontology extensions
+- Patch (`X.Y.Z`): metadata/docs/non-semantic corrections
 
 ## Files
 
@@ -20,5 +20,7 @@
 
 1. Update `owl:versionIRI` and `owl:versionInfo` in `min.ttl`.
 2. Create `min-vX.Y.Z.ttl` from released `min.ttl`.
-3. Update `CHANGELOG.md`.
-4. Tag release as `vX.Y.Z`.
+3. Update validation assets (SPARQL/SHACL/scripts) if semantics changed.
+4. Update `CHANGELOG.md` and docs pages.
+5. Run full validation (`uv run ontology-validate`).
+6. Tag release as `vX.Y.Z`.

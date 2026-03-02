@@ -1,62 +1,101 @@
-# MIN Ontology Repository
+# MIN Ontology
 
-This repository contains the MIN foundational ontology.
+MIN (Material · Information · Nexus) is a foundational ontology for modeling
+industrial and scientific domains with a strict distinction between:
 
-## Canonical ontology IRIs
+- **Nexus**: actual entities that are causally effective
+- **Forma**: formal entities that are constitutively determining
 
-- MIN ontology IRI: `https://w3id.org/min`
-- MIN namespace: `https://w3id.org/min#`
-- Current MIN version IRI: `https://w3id.org/min/3.0.0`
+The current stable release line is **v3.x**.
 
-## Repository layout
+## Canonical IRIs
+
+- Ontology IRI: `https://w3id.org/min`
+- Namespace: `https://w3id.org/min#`
+- Current version IRI: `https://w3id.org/min/3.0.0`
+
+## Conceptual core (v3.0.0)
+
+MIN v3 defines **12 classes**:
+
+- Root: `min:Entity`
+- Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Agent`
+- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`
+
+For full class definitions, see `docs/class-catalog.md`.
+
+## Repository structure
 
 - `min.ttl`: current MIN ontology
-- `min-v1.0.0.ttl`: immutable MIN release snapshot
-- `min-v2.0.0.ttl`: immutable MIN v2 release snapshot
-- `min-v2.1.0.ttl`: immutable MIN v2.1 release snapshot
-- `min-v3.0.0.ttl`: immutable MIN v3 release snapshot
-- `opa-v1.0.0.ttl`: legacy OPA snapshot (historical reference only)
-- `shapes/`: SHACL validation shapes
-- `tests/sparql/`: SPARQL ASK checks
+- `min-v*.ttl`: immutable release snapshots
+- `examples/`: example instance graphs
 - `queries/competency/`: competency queries
-- `examples/`: example instance data
-- `scripts/validate.py`: local/CI validation entrypoint
+- `shapes/`: SHACL shapes
+- `tests/sparql/`: SPARQL ASK regression checks
+- `scripts/validate.py`: local/CI validation runner
+- `docs/`: MkDocs documentation source
 
-## Validation
+## Quickstart
 
-Recommended: run validation with `uv` (Python is pinned via `.python-version`):
+Requirements:
+
+- Python `3.12`
+- `uv` (recommended) or `pip`
+
+Validate ontology quality:
 
 ```bash
 uv run ontology-validate
 ```
 
-Optional fallback with `pip`:
+Fallback:
 
 ```bash
 python3 -m pip install -r requirements-dev.txt
 python3 scripts/validate.py
 ```
 
-## Documentation (MkDocs)
+## Documentation
 
-Build locally:
+Local docs build:
 
 ```bash
 uv run mkdocs build --strict
 ```
 
-Serve locally:
+Local live preview:
 
 ```bash
 uv run mkdocs serve
 ```
 
-Deployment to GitHub Pages is automated via `.github/workflows/docs.yml`
-on every push to `main` (and via manual `workflow_dispatch`).
+Published docs:
 
-## Versioning policy
+- `https://lepy.github.io/min-ontology/`
 
-- Semantic versioning is used for ontology releases.
+Core doc pages:
+
+- `docs/min-model.md`
+- `docs/class-catalog.md` (all classes in MIN v3)
+- `docs/property-catalog.md`
+
+Static visualizations are intentionally kept as part of the docs:
+
+- `docs/min-v3_0_0-visualization.html`
+- `docs/min-v2_1_0-visualization.html`
+
+## GitHub Pages deployment
+
+Docs deployment is automated via `.github/workflows/docs.yml` on each push to
+`main` and can also be triggered manually (`workflow_dispatch`).
+
+Repository setting required:
+
+- `Settings -> Pages -> Build and deployment -> Source: GitHub Actions`
+
+## Release and versioning policy
+
+- Semantic versioning is used for MIN releases.
 - `min-vX.Y.Z.ttl` files are immutable snapshots.
 - `min.ttl` always points to the latest stable MIN release.
 - Since `v2.0.0`, OPA is absorbed into MIN and no separate `opa.ttl` is maintained.
