@@ -13,6 +13,18 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body, #root { height: 100%; }
+
+      /* Footer */
+  .footer {
+    padding: 12px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-align: center;
+    background: var(--surface);
+  }
+  
     body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #161b22; }
@@ -618,12 +630,19 @@ resultOf │  │  │  │ undergoes    describes
             {tab === "datatype" && <DatatypeView />}
             {tab === "inventory" && <InventoryView />}
           </div>
+          <div class="footer">
+			  MIN v2.1.0 · CC BY 4.0 · Dr. Ingolf Lepenies · 2026-03-01
+		  </div>
         </div>
+
       );
     }
 
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<MINVisualization />);
   </script>
+
+
+
 </body>
 </html>

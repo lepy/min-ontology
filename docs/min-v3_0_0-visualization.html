@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIN — Material · Information · Nexus — Ontologie-Visualisierung v3.0.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+
+  .header {
+    padding: 24px 24px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .header h1 {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .header h1 .sep { color: var(--muted); font-weight: 400; }
+  .header h1 .mat { color: #f0883e; }
+  .header h1 .inf { color: #a371f7; }
+  .header h1 .nex { color: #58a6ff; }
+
+  .version-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding: 2px 8px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 6px 0 14px;
+    line-height: 1.4;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 8px 18px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 6px 6px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    letter-spacing: 0.03em;
+  }
+
+  .tab-btn.active {
+    background: rgba(88, 166, 255, 0.13);
+    color: var(--accent);
+    border-color: rgba(88, 166, 255, 0.33);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .content {
+    padding: 20px 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SVG */
+  .overview-svg {
+    width: 100%;
+    max-height: 580px;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .svg-node { cursor: pointer; }
+  .svg-node:hover rect { filter: brightness(1.2); }
+
+  /* Class cards */
+  .class-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-bottom: 8px;
+  }
+
+  .class-card:hover { background: #1c2129; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .class-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .class-label-de {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .branch-badge {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 9px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+  }
+
+  .badge-nexus { background: rgba(88,166,255,0.13); color: #58a6ff; border: 1px solid rgba(88,166,255,0.2); }
+  .badge-forma { background: rgba(210,168,255,0.13); color: #d2a8ff; border: 1px solid rgba(210,168,255,0.2); }
+  .badge-root  { background: rgba(139,148,158,0.13); color: #8b949e; border: 1px solid rgba(139,148,158,0.2); }
+
+  .card-details { margin-top: 12px; display: none; }
+  .class-card.expanded .card-details { display: block; }
+
+  .card-desc {
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .philosophical-box {
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border-left: 2px solid var(--muted);
+  }
+
+  .section-label {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .axiom-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    background: var(--border);
+    color: var(--text);
+    border: 1px solid var(--border);
+    margin: 2px;
+  }
+
+  .axiom-tag.warning {
+    background: rgba(218, 54, 51, 0.13);
+    color: #ff7b72;
+    border-color: rgba(218, 54, 51, 0.33);
+  }
+
+  .example-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin: 2px;
+  }
+
+  /* Relations */
+  .ascii-tree {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+
+  .ascii-tree pre {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  .group-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .group-toggle-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .group-toggle-btn:hover { background: #1c2129; }
+
+  .group-content {
+    padding: 0 16px 16px;
+    display: none;
+  }
+
+  .group-toggle.open .group-content { display: block; }
+
+  .prop-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+
+  .prop-name {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .derived-badge {
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    background: rgba(255, 166, 87, 0.13);
+    color: #ffa657;
+    border: 1px solid rgba(255, 166, 87, 0.27);
+  }
+
+  .trait-badge {
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    background: rgba(88, 166, 255, 0.13);
+    color: #58a6ff;
+    border: 1px solid rgba(88, 166, 255, 0.27);
+  }
+
+  .prop-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    margin-top: 6px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .prop-meta .label { color: var(--muted); }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  th {
+    text-align: left;
+    padding: 8px 12px;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(48, 54, 61, 0.13);
+  }
+
+  /* Inventory */
+  .big-number {
+    text-align: center;
+    padding: 30px 0 20px;
+  }
+
+  .big-number .num {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .big-number .label {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .inv-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .inv-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .inv-card-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .inv-card-count {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .inv-tags {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .inv-tag {
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+  }
+
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+
+  /* Code blocks */
+  .code-toggle-group {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .code-toggle-btn {
+    padding: 6px 14px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  .code-toggle-btn.active {
+    background: rgba(88, 166, 255, 0.13);
+    color: var(--accent);
+    border-color: rgba(88, 166, 255, 0.33);
+  }
+
+  .code-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+  }
+
+  .code-block pre {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  /* Polarity cards */
+  .polarity-grid {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .polarity-card {
+    flex: 1 1 300px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+  }
+
+  /* Detail panel */
+  .detail-panel {
+    margin-top: 16px;
+    background: var(--surface);
+    border-radius: 6px;
+    padding: 16px;
+    display: none;
+  }
+
+  .detail-panel.visible { display: block; }
+
+  .close-btn {
+    float: right;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    padding: 2px 8px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 12px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-align: center;
+    background: var(--surface);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>
+    MIN <span class="sep">—</span>
+    <span class="mat">Material</span>
+    <span class="sep">·</span>
+    <span class="inf">Information</span>
+    <span class="sep">·</span>
+    <span class="nex">Nexus</span>
+    <span class="version-badge">v3.0.0</span>
+  </h1>
+  <p class="subtitle">Die Grundontologie. Zwei Wurzeln unter Entity: Nexus (das Aktuale) · Forma (das Formale). 48 Terme.</p>
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="0">◉ Übersicht</button>
+    <button class="tab-btn" data-tab="1">▣ Klassen</button>
+    <button class="tab-btn" data-tab="2">⇄ Relationen</button>
+    <button class="tab-btn" data-tab="3">⊕ Polarität</button>
+    <button class="tab-btn" data-tab="4">⊞ Datatype &amp; Annotations</button>
+    <button class="tab-btn" data-tab="5">∑ Inventar</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ==================== TAB 0: OVERVIEW ==================== -->
+<div class="tab-panel active" id="panel-0">
+<svg class="overview-svg" viewBox="0 0 960 680" id="overview-svg">
+  <defs>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrowSub" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#8b949e"/></marker>
+    <marker id="arrow-da3633" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#da3633"/></marker>
+    <marker id="arrow-3fb950" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3fb950"/></marker>
+    <marker id="arrow-a371f7" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#a371f7"/></marker>
+    <marker id="arrow-58a6ff" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/></marker>
+    <marker id="arrow-d2a8ff" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#d2a8ff"/></marker>
+    <marker id="arrow-ff7b72" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#ff7b72"/></marker>
+    <marker id="arrow-f778ba" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f778ba"/></marker>
+  </defs>
+
+  <!-- Disjointness arcs -->
+  <path d="M 80 296 Q 240 350 400 296" fill="none" stroke="rgba(218,54,51,0.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="240" y="342" fill="rgba(218,54,51,0.6)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint</text>
+
+  <path d="M 580 296 Q 720 350 860 296" fill="none" stroke="rgba(210,168,255,0.27)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="720" y="342" fill="rgba(210,168,255,0.47)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint</text>
+
+  <line x1="300" y1="130" x2="660" y2="130" stroke="rgba(255,123,114,0.27)" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="480" y="124" fill="rgba(255,123,114,0.4)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint</text>
+
+  <text x="160" y="432" fill="rgba(63,185,80,0.53)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">≠⊥ nicht-disjunkt</text>
+
+  <!-- Subclass edges -->
+  <line x1="480" y1="60" x2="240" y2="120" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="480" y1="60" x2="720" y2="120" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="240" y1="160" x2="80" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="240" y1="160" x2="240" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="240" y1="160" x2="400" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="240" y1="160" x2="160" y2="370" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="160" x2="580" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="160" x2="720" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="160" x2="860" y2="250" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="160" x2="650" y2="370" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="160" x2="800" y2="370" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+
+  <!-- Key relation edges -->
+  <line x1="240" y1="270" x2="80" y2="270" stroke="rgba(218,54,51,0.33)" stroke-width="1.2" marker-end="url(#arrow-da3633)"/>
+  <rect x="125" y="258" width="70" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="160" y="269" fill="#da3633" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">hasInput/Out</text>
+
+  <line x1="160" y1="390" x2="240" y2="270" stroke="rgba(63,185,80,0.33)" stroke-width="1.2" marker-end="url(#arrow-3fb950)"/>
+  <rect x="167" y="323" width="22" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="163" y="334" fill="#3fb950" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">performs</text>
+
+  <line x1="400" y1="260" x2="240" y2="150" stroke="rgba(163,113,247,0.33)" stroke-width="1.2" marker-end="url(#arrow-a371f7)"/>
+  <rect x="290" y="193" width="55" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="318" y="204" fill="#a371f7" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">describes</text>
+
+  <line x1="240" y1="285" x2="400" y2="265" stroke="rgba(218,54,51,0.33)" stroke-width="1.2" marker-end="url(#arrow-da3633)"/>
+  <rect x="288" y="278" width="55" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="315" y="289" fill="#da3633" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">generates</text>
+
+  <!-- Bridge: realizes -->
+  <line x1="240" y1="125" x2="720" y2="125" stroke="rgba(88,166,255,0.33)" stroke-width="1.5" marker-end="url(#arrow-58a6ff)"/>
+  <rect x="445" y="107" width="50" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="470" y="118" fill="#58a6ff" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">realizes</text>
+
+  <!-- Bridge: constrains -->
+  <line x1="720" y1="148" x2="240" y2="148" stroke="rgba(210,168,255,0.33)" stroke-width="1.5" marker-end="url(#arrow-d2a8ff)"/>
+  <rect x="440" y="148" width="60" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="470" y="159" fill="#d2a8ff" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">constrains</text>
+
+  <!-- Bridge: encodes -->
+  <line x1="400" y1="280" x2="720" y2="155" stroke="rgba(163,113,247,0.33)" stroke-width="1.5" marker-end="url(#arrow-a371f7)"/>
+  <rect x="530" y="207" width="48" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="554" y="218" fill="#a371f7" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">encodes</text>
+
+  <!-- Bridge: governs -->
+  <line x1="580" y1="270" x2="240" y2="270" stroke="rgba(255,123,114,0.33)" stroke-width="1.5" marker-end="url(#arrow-ff7b72)"/>
+  <rect x="385" y="255" width="50" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="410" y="266" fill="#ff7b72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">governs</text>
+
+  <!-- Bridge: constitutes -->
+  <line x1="160" y1="390" x2="800" y2="390" stroke="rgba(63,185,80,0.33)" stroke-width="1.5" marker-end="url(#arrow-3fb950)"/>
+  <rect x="445" y="378" width="65" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="478" y="389" fill="#3fb950" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">constitutes</text>
+
+  <!-- Bridge: evaluates -->
+  <!-- 
+  <line x1="650" y1="380" x2="240" y2="160" stroke="rgba(247,120,186,0.33)" stroke-width="1.5" marker-end="url(#arrow-f778ba)"/>
+  <rect x="415" y="260" width="55" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="443" y="271" fill="#f778ba" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">evaluates</text>
+-->
+
+<path d="M 650 380 Q 490 200 240 160" fill="none" stroke="rgba(247,120,186,0.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="440" y="205" fill="rgba(247,120,186,0.6)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">evaluates</text>
+
+  <!-- CLASS NODES -->
+  <g class="svg-node" data-class="Entity" onclick="selectSvgNode('Entity')">
+    <rect x="440" y="24" width="80" height="32" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="1.2"/>
+    <text x="480" y="44" fill="#8b949e" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Entity</text>
+  </g>
+  <g class="svg-node" data-class="Nexus" onclick="selectSvgNode('Nexus')">
+    <rect x="200" y="124" width="80" height="32" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.2"/>
+    <text x="240" y="144" fill="#58a6ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Nexus</text>
+  </g>
+  <g class="svg-node" data-class="Forma" onclick="selectSvgNode('Forma')">
+    <rect x="680" y="124" width="80" height="32" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="1.2"/>
+    <text x="720" y="144" fill="#d2a8ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Forma</text>
+  </g>
+  <g class="svg-node" data-class="Object" onclick="selectSvgNode('Object')">
+    <rect x="38" y="254" width="84" height="32" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.2"/>
+    <text x="80" y="274" fill="#f0883e" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Object</text>
+  </g>
+  <g class="svg-node" data-class="Process" onclick="selectSvgNode('Process')">
+    <rect x="196" y="254" width="88" height="32" rx="6" fill="#161b22" stroke="#da3633" stroke-width="1.2"/>
+    <text x="240" y="274" fill="#da3633" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Process</text>
+  </g>
+  <g class="svg-node" data-class="Data" onclick="selectSvgNode('Data')">
+    <rect x="364" y="254" width="72" height="32" rx="6" fill="#161b22" stroke="#a371f7" stroke-width="1.2"/>
+    <text x="400" y="274" fill="#a371f7" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Data</text>
+  </g>
+  <g class="svg-node" data-class="Agent" onclick="selectSvgNode('Agent')">
+    <rect x="120" y="374" width="80" height="32" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.2"/>
+    <text x="160" y="394" fill="#3fb950" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Agent</text>
+  </g>
+  <g class="svg-node" data-class="Lex" onclick="selectSvgNode('Lex')">
+    <rect x="548" y="254" width="64" height="32" rx="6" fill="#161b22" stroke="#ff7b72" stroke-width="1.2"/>
+    <text x="580" y="274" fill="#ff7b72" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Lex</text>
+  </g>
+  <g class="svg-node" data-class="Structura" onclick="selectSvgNode('Structura')">
+    <rect x="668" y="254" width="104" height="32" rx="6" fill="#161b22" stroke="#79c0ff" stroke-width="1.2"/>
+    <text x="720" y="274" fill="#79c0ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Structura</text>
+  </g>
+  <g class="svg-node" data-class="Possibile" onclick="selectSvgNode('Possibile')">
+    <rect x="808" y="254" width="104" height="32" rx="6" fill="#161b22" stroke="#ffa657" stroke-width="1.2"/>
+    <text x="860" y="274" fill="#ffa657" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Possibile</text>
+  </g>
+  <g class="svg-node" data-class="Norma" onclick="selectSvgNode('Norma')">
+    <rect x="608" y="374" width="84" height="32" rx="6" fill="#161b22" stroke="#f778ba" stroke-width="1.2"/>
+    <text x="650" y="394" fill="#f778ba" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Norma</text>
+  </g>
+  <g class="svg-node" data-class="Institutio" onclick="selectSvgNode('Institutio')">
+    <rect x="744" y="374" width="112" height="32" rx="6" fill="#161b22" stroke="#7ee787" stroke-width="1.2"/>
+    <text x="800" y="394" fill="#7ee787" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Institutio</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(16,480)">
+    <rect x="0" y="0" width="200" height="175" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="12" y="20" fill="#e6edf3" font-size="11" font-weight="600" font-family="JetBrains Mono,monospace">Legende</text>
+    <line x1="12" y1="28" x2="188" y2="28" stroke="#30363d"/>
+    <line x1="12" y1="40" x2="40" y2="40" stroke="#8b949e" stroke-dasharray="5 3"/>
+    <text x="48" y="44" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">rdfs:subClassOf</text>
+    <line x1="12" y1="58" x2="40" y2="58" stroke="#58a6ff" stroke-width="1.2"/>
+    <text x="48" y="62" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Object Property</text>
+    <line x1="12" y1="76" x2="40" y2="76" stroke="rgba(218,54,51,0.4)" stroke-dasharray="6 3"/>
+    <text x="48" y="80" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">⊥ AllDisjointClasses</text>
+    <text x="12" y="98" fill="rgba(63,185,80,0.53)" font-size="10" font-family="JetBrains Mono,monospace">≠⊥ Nicht disjunkt (Agent)</text>
+    <rect x="12" y="108" width="10" height="10" rx="2" fill="rgba(88,166,255,0.27)" stroke="#58a6ff" stroke-width="0.5"/>
+    <text x="28" y="117" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Nexus-Klassen</text>
+    <rect x="12" y="126" width="10" height="10" rx="2" fill="rgba(210,168,255,0.27)" stroke="#d2a8ff" stroke-width="0.5"/>
+    <text x="28" y="135" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Forma-Klassen</text>
+    <rect x="12" y="144" width="10" height="10" rx="2" fill="rgba(88,166,255,0.27)" stroke="#58a6ff" stroke-width="0.5"/>
+    <text x="28" y="153" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Brückenrelation</text>
+  </g>
+</svg>
+
+<div class="detail-panel" id="detail-panel"></div>
+</div>
+
+<!-- ==================== TAB 1: CLASSES ==================== -->
+<div class="tab-panel" id="panel-1"></div>
+
+<!-- ==================== TAB 2: RELATIONS ==================== -->
+<div class="tab-panel" id="panel-2"></div>
+
+<!-- ==================== TAB 3: POLARITY ==================== -->
+<div class="tab-panel" id="panel-3"></div>
+
+<!-- ==================== TAB 4: DATATYPE & ANNOTATIONS ==================== -->
+<div class="tab-panel" id="panel-4"></div>
+
+<!-- ==================== TAB 5: INVENTORY ==================== -->
+<div class="tab-panel" id="panel-5"></div>
+
+</div>
+
+<div class="footer">
+  MIN v3.0.0 · CC BY 4.0 · Dr. Ingolf Lepenies · 2026-03-02 · 1 Wurzel · 2 Zweige · 4+5 Kategorien · 48 Terme
+</div>
+
+<script>
+// ============ DATA ============
+const CLASSES = [
+  { id:"Entity", label_de:"Entität", branch:"root", color:"#8b949e", parent:null,
+    desc:"Absolute Wurzel. Alles, was in MIN existiert, ist Entity. Zwei Zweige: Nexus (das Aktuale) und Forma (das Formale). Entity selbst wird nicht direkt instantiiert.",
+    phil:"Aristoteles: to on — das Seiende.", axioms:[], examples:[] },
+  { id:"Nexus", label_de:"Nexus", branch:"nexus", color:"#58a6ff", parent:"Entity",
+    desc:"Zweig des Aktualen. Existenzkriterium: kausale Wirksamkeit. Polarität auf Schema-Ebene. Nicht direkt instantiiert.",
+    phil:"Whitehead: Actual Entity. Latour: Aktant.", axioms:["rdfs:subClassOf min:Entity"], examples:[] },
+  { id:"Object", label_de:"Objekt", branch:"nexus", color:"#f0883e", parent:"Nexus",
+    desc:"Das, was ist. Material-dominanter Nexus. Identitätskriterium: materiale Kontinuität.",
+    phil:"Aristoteles: Ousia.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }"],
+    examples:["Rohstoff","Coil","Bauteil","Werkzeug","Maschine","Prüfling","Recyclat","Vakuum","EM-Feld","Schatten"] },
+  { id:"Process", label_de:"Prozess", branch:"nexus", color:"#da3633", parent:"Nexus",
+    desc:"Das, was geschieht. Ausgewogener Nexus. Transformation — nimmt Objects als Input, erzeugt Objects als Output, generiert Data.",
+    phil:"Whitehead: the becoming of being.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }","∃ hasInput min:Object","∃ hasOutput min:Object"],
+    examples:["Umformen","Gießen","Zugversuch","Simulation","Recycling","Montage","Schall","Tornado"] },
+  { id:"Data", label_de:"Daten", branch:"nexus", color:"#a371f7", parent:"Nexus",
+    desc:"Das, was beschreibt. Informational-dominanter Nexus. Data kodiert Forma, aber Data IST nicht Forma.",
+    phil:"Data KODIERT Forma. Lehrbuch löschen → Naturgesetz bleibt.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }"],
+    examples:["Messdaten","Simulationsergebnis","Produktpass","Zertifikat","Fehlerbericht","DIN-Dokument"] },
+  { id:"Agent", label_de:"Agent", branch:"nexus", color:"#3fb950", parent:"Nexus",
+    desc:"Das, was handelt. Orthogonal zu Object/Process/Data. Kriterien: kausale Wirksamkeit, Selektivität, Zurechenbarkeit. Intentionalität NICHT gefordert.",
+    phil:"Latour: Aktant. Agency nicht auf Menschen beschränkt.", axioms:["rdfs:subClassOf min:Nexus","NICHT disjunkt mit Object, Process, Data","∃ performs min:Process"],
+    examples:["Mensch","CNC-Maschine","Roboterarm","Software-Agent","ML-Modell","Organisation","Schatten","Korrosion"] },
+  { id:"Forma", label_de:"Forma", branch:"forma", color:"#d2a8ff", parent:"Entity",
+    desc:"Zweig des Formalen. Existenzkriterium: konstitutive Bestimmung. Keine Polarität. Nicht direkt instantiiert.",
+    phil:"Whitehead: Eternal Objects. Platon: Eidea. Ohne platonischen Himmel.", axioms:["rdfs:subClassOf min:Entity","owl:AllDisjointClasses { Nexus, Forma }"], examples:[] },
+  { id:"Lex", label_de:"Lex", branch:"forma", color:"#ff7b72", parent:"Forma",
+    desc:"Das, was gilt. Naturgesetze. Lex ist nicht kausal wirksam — Lex BESTIMMT. Universell.",
+    phil:"Humean/Non-Humean. MIN nimmt keine Stellung.", axioms:["rdfs:subClassOf min:Forma","owl:AllDisjointClasses { Lex, Structura, Possibile, Norma, Institutio }"],
+    examples:["Gravitation","Energieerhaltung","Thermodynamik","Massenerhaltung","Coulomb-Gesetz"] },
+  { id:"Structura", label_de:"Structura", branch:"forma", color:"#79c0ff", parent:"Forma",
+    desc:"Das, was formt. Mathematische Objekte, formale Strukturen.",
+    phil:"Mathematischer Strukturalismus.", axioms:["rdfs:subClassOf min:Forma","owl:AllDisjointClasses { Lex, Structura, Possibile, Norma, Institutio }"],
+    examples:["SO(3)","von-Mises-Fließfläche","Fourier-Transformation","DGL-System","Graphentheorie"] },
+  { id:"Possibile", label_de:"Possibile", branch:"forma", color:"#ffa657", parent:"Forma",
+    desc:"Das, was sein könnte. Möglichkeiten, kontrafaktische Szenarien.",
+    phil:"Kripke: Possible Worlds. Lewis: Modal Realism.", axioms:["rdfs:subClassOf min:Forma","owl:AllDisjointClasses { Lex, Structura, Possibile, Norma, Institutio }"],
+    examples:["Versagensszenario","Risikofall","Designalternative","What-if-Szenario"] },
+  { id:"Norma", label_de:"Norma", branch:"forma", color:"#f778ba", parent:"Forma",
+    desc:"Das, was gelten soll. Sollens-Aussagen. Norma gilt konventionell, kann verletzt werden.",
+    phil:"Kant: Sein vs. Sollen. Humes Guillotine.", axioms:["rdfs:subClassOf min:Forma","owl:AllDisjointClasses { Lex, Structura, Possibile, Norma, Institutio }"],
+    examples:["Mindestzugfestigkeit","Toleranzanforderung","Umweltgrenzwert","Qualitätskriterium"] },
+  { id:"Institutio", label_de:"Institution", branch:"forma", color:"#7ee787", parent:"Forma",
+    desc:"Das, was anerkannt wird. Soziale Konstrukte durch kollektive Anerkennung.",
+    phil:"Searle: Institutional Facts. X counts as Y in C.", axioms:["rdfs:subClassOf min:Forma","owl:AllDisjointClasses { Lex, Structura, Possibile, Norma, Institutio }"],
+    examples:["Euro","Patent","Zertifizierung","GmbH-Form","Grenze","Vertrag","Recht","Lizenz"] },
+];
+
+// ============ TAB SWITCHING ============
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ============ SVG NODE SELECTION ============
+function selectSvgNode(id) {
+  const cls = CLASSES.find(c => c.id === id);
+  if (!cls) return;
+  const panel = document.getElementById('detail-panel');
+  panel.classList.add('visible');
+  panel.style.borderLeft = `3px solid ${cls.color}44`;
+  panel.style.borderColor = cls.color + '44';
+
+  let html = `<button class="close-btn" onclick="document.getElementById('detail-panel').classList.remove('visible')">✕</button>`;
+  html += `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">`;
+  html += `<span style="color:${cls.color};font-family:var(--font-mono);font-size:16px;font-weight:700">min:${cls.id}</span>`;
+  html += `<span style="color:var(--muted);font-family:var(--font-mono);font-size:12px">${cls.label_de}</span>`;
+  html += `</div>`;
+  html += `<p style="color:var(--text);font-size:13px;line-height:1.6;margin-bottom:10px">${cls.desc}</p>`;
+
+  if (cls.axioms.length) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">`;
+    cls.axioms.forEach(a => {
+      const warn = a.includes('NICHT');
+      html += `<span class="axiom-tag ${warn?'warning':''}">${a}</span>`;
+    });
+    html += `</div>`;
+  }
+
+  if (cls.examples.length) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:4px">`;
+    cls.examples.forEach(e => {
+      html += `<span class="example-tag" style="background:${cls.color}18;color:${cls.color};border:1px solid ${cls.color}33">${e}</span>`;
+    });
+    html += `</div>`;
+  }
+
+  panel.innerHTML = html;
+
+  // Highlight node in SVG
+  document.querySelectorAll('.svg-node rect').forEach(r => {
+    r.removeAttribute('filter');
+    r.setAttribute('stroke-width', '1.2');
+  });
+  const node = document.querySelector(`.svg-node[data-class="${id}"] rect`);
+  if (node) {
+    node.setAttribute('filter', 'url(#glow)');
+    node.setAttribute('stroke-width', '2');
+  }
+}
+
+// ============ POPULATE CLASSES TAB ============
+(function() {
+  const el = document.getElementById('panel-1');
+  let html = '';
+  CLASSES.forEach(cls => {
+    const branchClass = cls.branch === 'nexus' ? 'badge-nexus' : cls.branch === 'forma' ? 'badge-forma' : 'badge-root';
+    const branchLabel = cls.branch === 'root' ? 'Wurzel' : cls.branch === 'nexus' ? 'Nexus' : 'Forma';
+    html += `<div class="class-card" onclick="this.classList.toggle('expanded')" style="border-left:3px solid ${cls.color}">`;
+    html += `<div class="card-header"><div class="card-header-left">`;
+    html += `<span class="class-name" style="color:${cls.color}">min:${cls.id}</span>`;
+    if (cls.label_de !== cls.id) html += `<span class="class-label-de">${cls.label_de}</span>`;
+    html += `<span class="branch-badge ${branchClass}">${branchLabel}</span>`;
+    html += `</div><span style="color:var(--muted)">▸</span></div>`;
+    html += `<div class="card-details">`;
+    html += `<p class="card-desc">${cls.desc}</p>`;
+    if (cls.phil) {
+      html += `<div class="philosophical-box"><span class="section-label">Philosophisch</span>`;
+      html += `<p style="color:var(--muted);font-size:12px;margin-top:4px;line-height:1.5;font-style:italic">${cls.phil}</p></div>`;
+    }
+    if (cls.axioms.length) {
+      html += `<div style="margin-bottom:10px"><span class="section-label">Axiome</span><div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:4px">`;
+      cls.axioms.forEach(a => {
+        html += `<span class="axiom-tag ${a.includes('NICHT')?'warning':''}">${a}</span>`;
+      });
+      html += `</div></div>`;
+    }
+    if (cls.examples.length) {
+      html += `<div><span class="section-label">Beispiele</span><div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:4px">`;
+      cls.examples.forEach(e => {
+        html += `<span class="example-tag" style="background:${cls.color}18;color:${cls.color};border:1px solid ${cls.color}33">${e}</span>`;
+      });
+      html += `</div></div>`;
+    }
+    html += `</div></div>`;
+  });
+  el.innerHTML = html;
+})();
+
+// ============ POPULATE RELATIONS TAB ============
+(function() {
+  const el = document.getElementById('panel-2');
+  const asciiTree = `min:nexusWith (symmetric)
+├── min:hasComponent (transitive)
+├── min:hasInput      Process → Object
+│   └── inverse: min:undergoes
+├── min:hasOutput     Process → Object
+│   └── inverse: min:resultOf
+├── min:performs      Agent → Process
+│   ├── inverse: min:performedBy
+│   └── min:controls (sub)
+├── min:actsOn        Agent → Object  ⚡ Chain(performs, hasInput)
+│   └── inverse: min:affectedBy
+├── min:owns          Agent → Object
+├── min:describes     Data → Nexus
+│   └── inverse: min:describedBy
+├── min:generates     Process → Data
+│   └── inverse: min:generatedBy
+└── min:produces      Agent → Object  ⚡ Chain(performs, hasOutput)
+
+[Brückenrelationen]
+min:realizes          Nexus → Forma
+└── inverse: min:realizedBy
+min:constrains        Forma → Nexus
+├── min:governs       Lex → Process (sub)
+├── min:formalizes    Structura → Nexus (sub)
+├── min:evaluates     Norma → Nexus (sub)
+└── min:alternativeTo Possibile → Nexus (sub of concerns)
+min:concerns          Possibile → Nexus
+min:constitutes       Agent → Institutio
+min:recognizes        Agent → Institutio
+min:encodes           Data → Forma
+└── inverse: min:encodedBy`;
+
+  el.innerHTML = `<div class="ascii-tree"><div class="section-label" style="margin-bottom:8px">Strukturdiagramm — Object Properties</div><pre>${asciiTree}</pre></div>
+  <p style="color:var(--muted);font-size:12px;margin-bottom:16px">Klicke auf eine Gruppe, um Details zu den enthaltenen Relationen zu sehen.</p>
+  <div id="relation-groups"></div>`;
+
+  const groups = {
+    "Inter-Nexus":[
+      {id:"nexusWith",de:"verbunden mit",domain:"Nexus",range:"Nexus",inv:null,sub:null,chain:null,traits:["symmetric"]},
+      {id:"hasComponent",de:"hat Bestandteil",domain:"Nexus",range:"Nexus",inv:null,sub:"nexusWith",chain:null,traits:["transitive"]},
+    ],
+    "Transformation (Process ↔ Object)":[
+      {id:"hasInput",de:"hat Eingabe",domain:"Process",range:"Object",inv:"undergoes",sub:"nexusWith",chain:null,traits:[]},
+      {id:"hasOutput",de:"hat Ausgabe",domain:"Process",range:"Object",inv:"resultOf",sub:"nexusWith",chain:null,traits:[]},
+      {id:"undergoes",de:"durchläuft",domain:"Object",range:"Process",inv:"hasInput",sub:"nexusWith",chain:null,traits:[]},
+      {id:"resultOf",de:"Ergebnis von",domain:"Object",range:"Process",inv:"hasOutput",sub:"nexusWith",chain:null,traits:[]},
+    ],
+    "Agency (Agent ↔ Process)":[
+      {id:"performs",de:"führt durch",domain:"Agent",range:"Process",inv:"performedBy",sub:"nexusWith",chain:null,traits:[]},
+      {id:"performedBy",de:"durchgeführt von",domain:"Process",range:"Agent",inv:"performs",sub:"nexusWith",chain:null,traits:[]},
+      {id:"controls",de:"steuert",domain:"Agent",range:"Process",inv:null,sub:"performs",chain:null,traits:[]},
+    ],
+    "Wirkung (Agent ↔ Object)":[
+      {id:"actsOn",de:"wirkt auf",domain:"Agent",range:"Object",inv:"affectedBy",sub:"nexusWith",chain:["performs","hasInput"],traits:[]},
+      {id:"affectedBy",de:"betroffen von",domain:"Object",range:"Agent",inv:"actsOn",sub:"nexusWith",chain:null,traits:[]},
+      {id:"owns",de:"besitzt",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:null,traits:[]},
+    ],
+    "Data-Relationen":[
+      {id:"describes",de:"beschreibt",domain:"Data",range:"Nexus",inv:"describedBy",sub:"nexusWith",chain:null,traits:[]},
+      {id:"describedBy",de:"beschrieben durch",domain:"Nexus",range:"Data",inv:"describes",sub:"nexusWith",chain:null,traits:[]},
+      {id:"generates",de:"erzeugt",domain:"Process",range:"Data",inv:"generatedBy",sub:"nexusWith",chain:null,traits:[]},
+      {id:"generatedBy",de:"erzeugt durch",domain:"Data",range:"Process",inv:"generates",sub:"nexusWith",chain:null,traits:[]},
+      {id:"produces",de:"produziert",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:["performs","hasOutput"],traits:[]},
+    ],
+    "Brücke: Nexus ↔ Forma":[
+      {id:"realizes",de:"realisiert",domain:"Nexus",range:"Forma",inv:"realizedBy",sub:null,chain:null,traits:[]},
+      {id:"realizedBy",de:"realisiert durch",domain:"Forma",range:"Nexus",inv:"realizes",sub:null,chain:null,traits:[]},
+      {id:"constrains",de:"beschränkt",domain:"Forma",range:"Nexus",inv:null,sub:null,chain:null,traits:[]},
+      {id:"governs",de:"regiert",domain:"Lex",range:"Process",inv:null,sub:"constrains",chain:null,traits:[]},
+      {id:"formalizes",de:"formalisiert",domain:"Structura",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[]},
+      {id:"evaluates",de:"bewertet",domain:"Norma",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[]},
+      {id:"concerns",de:"betrifft",domain:"Possibile",range:"Nexus",inv:null,sub:null,chain:null,traits:[]},
+      {id:"alternativeTo",de:"Alternative zu",domain:"Possibile",range:"Nexus",inv:null,sub:"concerns",chain:null,traits:[]},
+      {id:"constitutes",de:"konstituiert",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[]},
+      {id:"recognizes",de:"erkennt an",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[]},
+      {id:"encodes",de:"kodiert",domain:"Data",range:"Forma",inv:"encodedBy",sub:null,chain:null,traits:[]},
+      {id:"encodedBy",de:"kodiert durch",domain:"Forma",range:"Data",inv:"encodes",sub:null,chain:null,traits:[]},
+    ]
+  };
+
+  const colorMap = {};
+  CLASSES.forEach(c => colorMap[c.id] = c.color);
+
+  const container = document.getElementById('relation-groups');
+  Object.entries(groups).forEach(([name, props]) => {
+    const div = document.createElement('div');
+    div.className = 'group-toggle';
+    let propsHtml = '';
+    props.forEach(p => {
+      const dc = colorMap[p.domain]||'#58a6ff', rc = colorMap[p.range]||'#58a6ff';
+      propsHtml += `<div class="prop-card">`;
+      propsHtml += `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">`;
+      propsHtml += `<span class="prop-name">min:${p.id}</span>`;
+      propsHtml += `<span style="color:var(--muted);font-family:var(--font-mono);font-size:11px">${p.de}</span>`;
+      if(p.chain) propsHtml += `<span class="derived-badge">⚡ abgeleitet</span>`;
+      p.traits.forEach(t => { propsHtml += `<span class="trait-badge">${t}</span>`; });
+      propsHtml += `</div>`;
+      propsHtml += `<div class="prop-meta">`;
+      propsHtml += `<span><span class="label">Domain:</span> <span style="color:${dc}">${p.domain}</span></span>`;
+      propsHtml += `<span style="color:var(--muted)">→</span>`;
+      propsHtml += `<span><span class="label">Range:</span> <span style="color:${rc}">${p.range}</span></span>`;
+      if(p.inv) propsHtml += `<span><span class="label">↔ Inverse:</span> <span style="color:var(--accent)">${p.inv}</span></span>`;
+      if(p.sub) propsHtml += `<span><span class="label">⊂ SubOf:</span> <span style="color:var(--accent)">${p.sub}</span></span>`;
+      propsHtml += `</div>`;
+      if(p.chain) propsHtml += `<div style="margin-top:4px;font-family:var(--font-mono);font-size:11px"><span style="color:#ffa657">Chain:</span> <span style="color:var(--text)">${p.chain.join(' → ')}</span></div>`;
+      propsHtml += `</div>`;
+    });
+    div.innerHTML = `<button class="group-toggle-btn" onclick="this.parentElement.classList.toggle('open')"><span>${name} <span style="color:var(--muted);font-weight:400;font-size:11px">(${props.length})</span></span><span style="color:var(--muted)">▸</span></button><div class="group-content">${propsHtml}</div>`;
+    container.appendChild(div);
+  });
+})();
+
+// ============ POPULATE POLARITY TAB ============
+(function() {
+  const el = document.getElementById('panel-3');
+  el.innerHTML = `
+  <h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:8px">Polaritätsmechanismus</h3>
+  <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:16px">
+    Polarität deklariert die Natur einer Eigenschaft auf Schema-Ebene, nicht auf Instanz-Ebene.
+    Instanzen bleiben flach. Gilt NUR für Nexus. Forma hat keine Polarität.
+  </p>
+  <div class="polarity-grid">
+    <div class="polarity-card" style="border-left:3px solid #f0883e">
+      <div style="color:#f0883e;font-family:var(--font-mono);font-size:13px;font-weight:600">min:materialProperty</div>
+      <div style="color:var(--muted);font-family:var(--font-mono);font-size:11px;margin-top:2px">materiale Eigenschaft</div>
+      <p style="color:var(--text);font-size:12px;line-height:1.5;margin:8px 0">Superproperty für kausal-räumliche Eigenschaften. Aristoteles: Hyle. Spinoza: Attribut der Ausdehnung.</p>
+      <code style="color:var(--accent);font-family:var(--font-mono);font-size:11px;background:var(--bg);padding:4px 8px;border-radius:4px;display:block">ex:masse_kg rdfs:subPropertyOf min:materialProperty .</code>
+    </div>
+    <div class="polarity-card" style="border-left:3px solid #a371f7">
+      <div style="color:#a371f7;font-family:var(--font-mono);font-size:13px;font-weight:600">min:informationalProperty</div>
+      <div style="color:var(--muted);font-family:var(--font-mono);font-size:11px;margin-top:2px">informationale Eigenschaft</div>
+      <p style="color:var(--text);font-size:12px;line-height:1.5;margin:8px 0">Superproperty für strukturell-bestimmte Eigenschaften. Aristoteles: Morphe. Spinoza: Attribut des Denkens.</p>
+      <code style="color:var(--accent);font-family:var(--font-mono);font-size:11px;background:var(--bg);padding:4px 8px;border-radius:4px;display:block">ex:werkstoffNr rdfs:subPropertyOf min:informationalProperty .</code>
+    </div>
+  </div>
+  <div class="code-toggle-group">
+    <button class="code-toggle-btn active" onclick="showCode(this,'schema')">Schema (Turtle)</button>
+    <button class="code-toggle-btn" onclick="showCode(this,'instance')">Instanz (Turtle)</button>
+    <button class="code-toggle-btn" onclick="showCode(this,'sparql')">SPARQL</button>
+  </div>
+  <div class="code-block" id="polarity-code"></div>`;
+
+  const codes = {
+    schema: `# === Polaritätsdeklaration auf Schema-Ebene ===
+
+min:materialProperty a rdf:Property ;
+    rdfs:label "material property"@en ;
+    rdfs:comment "Superproperty für kausal-räumliche Eigenschaften." .
+
+min:informationalProperty a rdf:Property ;
+    rdfs:label "informational property"@en ;
+    rdfs:comment "Superproperty für strukturell-bestimmte Eigenschaften." .
+
+# Domänenontologie deklariert:
+ex:masse_kg a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+ex:werkstoffNr a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .`,
+    instance: `# === Instanz: Flacher Graph ===
+
+ex:coil_42 a min:Object ;
+    ex:masse_kg 2750.0 ;      # ← materialProperty
+    ex:werkstoffNr "1.0338" ;  # ← informationalProperty
+    min:hasName "Coil 42" ;
+    min:hasIdentifier "COIL-2026-042" .
+
+# Kein Blank Node. Kein Zwischenknoten.
+# Polarität ist in ex:masse_kg deklariert, nicht in ex:coil_42.`,
+    sparql: `# === Alle materialen Eigenschaften eines Objects ===
+
+PREFIX min: <https://w3id.org/min#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?property ?value
+WHERE {
+  ?property rdfs:subPropertyOf min:materialProperty .
+  ex:coil_42 ?property ?value .
+}
+
+# === Alle informationalen Eigenschaften ===
+
+SELECT ?property ?value
+WHERE {
+  ?property rdfs:subPropertyOf min:informationalProperty .
+  ex:coil_42 ?property ?value .
+}`
+  };
+  window._polarityCodes = codes;
+  document.getElementById('polarity-code').innerHTML = `<pre>${codes.schema}</pre>`;
+
+  window.showCode = function(btn, key) {
+    document.querySelectorAll('#panel-3 .code-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('polarity-code').innerHTML = `<pre>${window._polarityCodes[key]}</pre>`;
+  };
+})();
+
+// ============ POPULATE DATATYPE & ANNOTATIONS TAB ============
+(function() {
+  const el = document.getElementById('panel-4');
+  const dtp = [
+    {id:"hasIdentifier",label:"has identifier",domain:"Entity",range:"xsd:string"},
+    {id:"hasName",label:"has name",domain:"Entity",range:"xsd:string"},
+    {id:"hasTimestamp",label:"has timestamp",domain:"Entity",range:"xsd:dateTime"},
+    {id:"hasDescription",label:"has description",domain:"Entity",range:"xsd:string"},
+    {id:"hasStatus",label:"has status",domain:"Entity",range:"xsd:string"},
+  ];
+  const ap = [
+    {id:"designRationale",label:"design rationale",desc:"Begründung für Entwurfsentscheidungen."},
+    {id:"philosophicalBasis",label:"philosophical basis",desc:"Philosophische Grundlage des Konzepts."},
+  ];
+
+  let html = `<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:12px">Datatype Properties</h3>`;
+  html += `<table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>`;
+  dtp.forEach(p => {
+    html += `<tr><td><span style="color:#79c0ff;font-weight:600">min:${p.id}</span> <span style="color:var(--muted);margin-left:8px">${p.label}</span></td><td style="color:#8b949e">${p.domain}</td><td style="color:#ffa657">${p.range}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+
+  html += `<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin:24px 0 12px">Annotation Properties</h3>`;
+  html += `<table><thead><tr><th>Property</th><th>Beschreibung</th></tr></thead><tbody>`;
+  ap.forEach(p => {
+    html += `<tr><td><span style="color:#7ee787;font-weight:600">min:${p.id}</span> <span style="color:var(--muted);margin-left:8px">${p.label}</span></td><td>${p.desc}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  el.innerHTML = html;
+})();
+
+// ============ POPULATE INVENTORY TAB ============
+(function() {
+  const el = document.getElementById('panel-5');
+  const cats = [
+    {label:"Klassen",count:11,color:"#58a6ff",items:CLASSES.map(c=>"min:"+c.id)},
+    {label:"Polaritäts-Properties",count:2,color:"#f0883e",items:["min:materialProperty","min:informationalProperty"]},
+    {label:"Inter-Nexus",count:2,color:"#da3633",items:["min:nexusWith","min:hasComponent"]},
+    {label:"Kategorienrelationen",count:15,color:"#3fb950",items:["min:hasInput","min:hasOutput","min:undergoes","min:resultOf","min:performs","min:performedBy","min:controls","min:actsOn","min:affectedBy","min:owns","min:describes","min:describedBy","min:generates","min:generatedBy","min:produces"]},
+    {label:"Brückenrelationen",count:11,color:"#d2a8ff",items:["min:realizes","min:realizedBy","min:constrains","min:governs","min:formalizes","min:evaluates","min:concerns","min:alternativeTo","min:constitutes","min:recognizes","min:encodes","min:encodedBy"]},
+    {label:"Datatype Properties",count:5,color:"#79c0ff",items:["min:hasIdentifier","min:hasName","min:hasTimestamp","min:hasDescription","min:hasStatus"]},
+    {label:"Annotations",count:2,color:"#7ee787",items:["min:designRationale","min:philosophicalBasis"]},
+  ];
+
+  let html = `<div class="big-number"><div class="num">48</div><div class="label">Terme in MIN v3.0.0</div></div>`;
+
+  // Disjointness
+  html += `<div class="info-box" style="margin-bottom:20px;margin-top:0">`;
+  html += `<div class="section-label" style="margin-bottom:8px">Disjunktheitsaxiome</div>`;
+  [{m:["Object","Process","Data"],n:"Nexus-intern: paarweise disjunkt"},
+   {m:["Lex","Structura","Possibile","Norma","Institutio"],n:"Forma-intern: alle paarweise disjunkt"},
+   {m:["Nexus","Forma"],n:"Zweige: disjunkt"}].forEach(d => {
+    html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">`;
+    html += `<span style="color:#ff7b72;font-family:var(--font-mono);font-size:11px">⊥</span>`;
+    html += `<span style="font-family:var(--font-mono);font-size:11px">owl:AllDisjointClasses { ${d.m.join(", ")} }</span>`;
+    html += `<span style="color:var(--muted);font-size:11px">— ${d.n}</span></div>`;
+  });
+  html += `<div style="display:flex;align-items:center;gap:8px;margin-top:6px">`;
+  html += `<span style="color:#3fb950;font-family:var(--font-mono);font-size:11px">≠⊥</span>`;
+  html += `<span style="font-family:var(--font-mono);font-size:11px">Agent</span>`;
+  html += `<span style="color:var(--muted);font-size:11px">— NICHT disjunkt mit Object, Process oder Data</span></div>`;
+  html += `</div>`;
+
+  // Grid
+  html += `<div class="inv-grid">`;
+  cats.forEach(cat => {
+    html += `<div class="inv-card" style="border-top:3px solid ${cat.color}">`;
+    html += `<div class="inv-card-header"><span class="inv-card-title">${cat.label}</span><span class="inv-card-count" style="color:${cat.color}">${cat.count}</span></div>`;
+    html += `<div class="inv-tags">`;
+    cat.items.forEach(item => {
+      html += `<span class="inv-tag" style="background:${cat.color}15;color:${cat.color};border:1px solid ${cat.color}30">${item}</span>`;
+    });
+    html += `</div></div>`;
+  });
+  html += `</div>`;
+
+  // Existential restrictions
+  html += `<div class="info-box"><div class="section-label" style="margin-bottom:8px">Existenzrestriktionen (∃)</div>`;
+  [{c:"Process",a:"∃ hasInput min:Object",col:"#da3633"},
+   {c:"Process",a:"∃ hasOutput min:Object",col:"#da3633"},
+   {c:"Agent",a:"∃ performs min:Process",col:"#3fb950"}].forEach(r => {
+    html += `<div style="font-family:var(--font-mono);font-size:11px;margin-bottom:4px"><span style="color:${r.col}">min:${r.c}</span> <span style="color:var(--muted)">rdfs:subClassOf</span> <span>${r.a}</span></div>`;
+  });
+  html += `</div>`;
+
+  // Property Chains
+  html += `<div class="info-box"><div class="section-label" style="margin-bottom:8px">Property Chains (abgeleitet)</div>`;
+  [{p:"actsOn",ch:"performs → hasInput",d:"Agent wirkt auf Object"},
+   {p:"produces",ch:"performs → hasOutput",d:"Agent produziert Object"}].forEach(c => {
+    html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">`;
+    html += `<span style="color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:600">min:${c.p}</span>`;
+    html += `<span class="derived-badge">⚡ Chain(${c.ch})</span>`;
+    html += `<span style="color:var(--muted);font-size:11px">— ${c.d}</span></div>`;
+  });
+  html += `</div>`;
+
+  el.innerHTML = html;
+})();
+</script>
+</body>
+</html>
