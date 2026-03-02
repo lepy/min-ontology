@@ -1,9 +1,21 @@
 @prefix ex:  <https://example.org/min/> .
 @prefix min: <https://w3id.org/min#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:massKg a <http://www.w3.org/2002/07/owl#DatatypeProperty> ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:decimal .
+
+ex:materialGrade a <http://www.w3.org/2002/07/owl#DatatypeProperty> ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .
 
 ex:steelBlock a min:Object ;
-    min:materialAspect [ ] ;
-    min:informationalAspect [ ] .
+    ex:massKg "12.5"^^xsd:decimal ;
+    ex:materialGrade "S355J2" .
 
 ex:tensileTest a min:Process ;
     min:hasInput ex:steelBlock ;
@@ -17,5 +29,5 @@ ex:testOperator a min:Agent ;
     min:performs ex:tensileTest .
 
 ex:testedSteelBlock a min:Object ;
-    min:materialAspect [ ] ;
-    min:informationalAspect [ ] .
+    ex:massKg "12.4"^^xsd:decimal ;
+    ex:materialGrade "S355J2" .

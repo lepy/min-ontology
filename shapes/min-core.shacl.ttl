@@ -49,11 +49,11 @@ min:ClassLabelShape a sh:NodeShape ;
         sh:minCount 1
     ] .
 
-min:ObjectPropertyDomainOnlyShape a sh:NodeShape ;
-    sh:targetNode min:materialAspect ;
-    sh:targetNode min:informationalAspect ;
+min:PolaritySuperPropertyShape a sh:NodeShape ;
+    sh:targetNode min:materialProperty ;
+    sh:targetNode min:informationalProperty ;
     sh:property [
-        sh:path rdfs:domain ;
+        sh:path rdfs:label ;
         sh:minCount 1
     ] .
 

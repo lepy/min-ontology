@@ -8,10 +8,13 @@ MIN v2 defines five core classes:
 - `min:Data`
 - `min:Agent`
 
-A `min:Nexus` is constrained to have both internal structural poles:
+In MIN v2.1, polarität is modeled at schema level via super-properties:
 
-- `min:materialAspect some owl:Thing`
-- `min:informationalAspect some owl:Thing`
+- `min:materialProperty`
+- `min:informationalProperty`
+
+Domain properties are linked through `rdfs:subPropertyOf` chains to one of
+these two super-properties, so instance graphs stay flat.
 
 MIN v2 category relations are directly part of MIN:
 

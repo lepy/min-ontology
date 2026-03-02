@@ -6,14 +6,15 @@ This repository contains the MIN foundational ontology.
 
 - MIN ontology IRI: `https://w3id.org/min`
 - MIN namespace: `https://w3id.org/min#`
-- Current MIN version IRI: `https://w3id.org/min/2.0.0`
+- Current MIN version IRI: `https://w3id.org/min/2.1.0`
 
 ## Repository layout
 
 - `min.ttl`: current MIN ontology
 - `min-v1.0.0.ttl`: immutable MIN release snapshot
 - `min-v2.0.0.ttl`: immutable MIN v2 release snapshot
-- `opa-v1.0.0.ttl`: legacy OPA snapshot (historical reference)
+- `min-v2.1.0.ttl`: immutable MIN v2.1 release snapshot
+- `opa-v1.0.0.ttl`: legacy OPA snapshot (historical reference only)
 - `shapes/`: SHACL validation shapes
 - `tests/sparql/`: SPARQL ASK checks
 - `queries/competency/`: competency queries

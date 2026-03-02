@@ -32,6 +32,5 @@ jobs:
           path: |
             min.ttl
             min-v*.ttl
-            opa-v*.ttl
             shapes/*.ttl
             examples/*.ttl

@@ -2,6 +2,16 @@
 
 All notable changes to MIN are documented in this file.
 
+## [2.1.0] - 2026-03-02
+
+### Changed
+- `min.ttl` now points to MIN `v2.1.0`.
+- Polarität moved from instance blank-node structure (`materialAspect` / `informationalAspect`) to schema-level super-properties (`materialProperty` / `informationalProperty`).
+- Validation, examples, and competency queries were updated for the v2.1 model.
+
+### Notes
+- OPA remains obsolete for active lines since `v2.0.0`.
+
 ## [2.0.0] - 2026-03-01
 
 ### Changed

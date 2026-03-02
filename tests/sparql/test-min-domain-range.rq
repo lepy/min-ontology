@@ -10,10 +10,6 @@ ASK WHERE {
 
   FILTER NOT EXISTS {
     ?p a owl:ObjectProperty .
-    FILTER(?p NOT IN (
-      min:materialAspect,
-      min:informationalAspect
-    ))
     FILTER NOT EXISTS { ?p rdfs:range ?range . }
   }
 }
