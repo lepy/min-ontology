@@ -68,7 +68,7 @@
     2 Polaritäts-Superproperties. 2 Inter-Nexus-Relationen.
     15 Kategorienrelationen. 9 Brückenrelationen.
     5 Datatype Properties. 2 Annotations."""@de ;
-    dcterms:creator "Lepy" ;
+    dcterms:creator "Dr. Ingolf Lepenies" ;
     dcterms:created "2026-03-02"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/sdata/core> ;
