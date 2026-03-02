@@ -211,6 +211,12 @@
     border-color: rgba(218, 54, 51, 0.33);
   }
 
+  .axiom-tag.info {
+    background: rgba(88, 166, 255, 0.13);
+    color: #58a6ff;
+    border-color: rgba(88, 166, 255, 0.33);
+  }
+
   .example-tag {
     display: inline-block;
     padding: 2px 8px;
@@ -304,6 +310,26 @@
     background: rgba(88, 166, 255, 0.13);
     color: #58a6ff;
     border: 1px solid rgba(88, 166, 255, 0.27);
+  }
+
+  .identity-badge {
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    background: rgba(218, 54, 51, 0.13);
+    color: #ff7b72;
+    border: 1px solid rgba(218, 54, 51, 0.27);
+  }
+
+  .conserve-badge {
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    background: rgba(63, 185, 80, 0.13);
+    color: #3fb950;
+    border: 1px solid rgba(63, 185, 80, 0.27);
   }
 
   .prop-meta {
@@ -618,13 +644,7 @@
   <text x="478" y="389" fill="#3fb950" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">constitutes</text>
 
   <!-- Bridge: evaluates -->
-  <!-- 
-  <line x1="650" y1="380" x2="240" y2="160" stroke="rgba(247,120,186,0.33)" stroke-width="1.5" marker-end="url(#arrow-f778ba)"/>
-  <rect x="415" y="260" width="55" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
-  <text x="443" y="271" fill="#f778ba" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">evaluates</text>
--->
-
-<path d="M 650 380 Q 490 200 240 160" fill="none" stroke="rgba(247,120,186,0.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <path d="M 650 380 Q 490 200 240 160" fill="none" stroke="rgba(247,120,186,0.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
   <text x="440" y="205" fill="rgba(247,120,186,0.6)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">evaluates</text>
 
   <!-- CLASS NODES -->
@@ -732,19 +752,19 @@ const CLASSES = [
     desc:"Zweig des Aktualen. Existenzkriterium: kausale Wirksamkeit. Polarität auf Schema-Ebene. Nicht direkt instantiiert.",
     phil:"Whitehead: Actual Entity. Latour: Aktant.", axioms:["rdfs:subClassOf min:Entity"], examples:[] },
   { id:"Object", label_de:"Objekt", branch:"nexus", color:"#f0883e", parent:"Nexus",
-    desc:"Das, was ist. Material-dominanter Nexus. Identitätskriterium: materiale Kontinuität.",
-    phil:"Aristoteles: Ousia.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }"],
+    desc:"Das, was ist. Material-dominanter Nexus. Identitätskriterium: materiale Kontinuität. Ein Coil wird umgeformt, bleibt aber derselbe Stahl.",
+    phil:"Aristoteles: Ousia — das Zugrundeliegende.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }"],
     examples:["Rohstoff","Coil","Bauteil","Werkzeug","Maschine","Prüfling","Recyclat","Vakuum","EM-Feld","Schatten"] },
   { id:"Process", label_de:"Prozess", branch:"nexus", color:"#da3633", parent:"Nexus",
-    desc:"Das, was geschieht. Ausgewogener Nexus. Transformation — nimmt Objects als Input, erzeugt Objects als Output, generiert Data.",
-    phil:"Whitehead: the becoming of being.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }","∃ hasInput min:Object","∃ hasOutput min:Object"],
-    examples:["Umformen","Gießen","Zugversuch","Simulation","Recycling","Montage","Schall","Tornado"] },
+    desc:"Das, was geschieht. Ausgewogener Nexus. Transformation — nimmt Nexus-Instanzen als Input, erzeugt Nexus-Instanzen als Output, generiert Data. Zwei Modi: Transformativ (hasInput/hasOutput → neue ID) und Konservativ (undergoes → selbe ID).",
+    phil:"Whitehead: the becoming of being.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }","∃ hasInput min:Nexus","∃ hasOutput min:Nexus"],
+    examples:["Umformen","Gießen","Zugversuch","Simulation","Recycling","Montage","Datentransfer","ML-Training","Altern","Lernen"] },
   { id:"Data", label_de:"Daten", branch:"nexus", color:"#a371f7", parent:"Nexus",
-    desc:"Das, was beschreibt. Informational-dominanter Nexus. Data kodiert Forma, aber Data IST nicht Forma.",
+    desc:"Das, was beschreibt. Informational-dominanter Nexus. Data kodiert Forma, aber Data IST nicht Forma. Identitätskriterium: informationale Identität. Selbe Bytes = selbe Data. Transfer bewahrt Identität (undergoes). Transformation erzeugt neue Data (hasInput/hasOutput).",
     phil:"Data KODIERT Forma. Lehrbuch löschen → Naturgesetz bleibt.", axioms:["rdfs:subClassOf min:Nexus","owl:AllDisjointClasses { Object, Process, Data }"],
     examples:["Messdaten","Simulationsergebnis","Produktpass","Zertifikat","Fehlerbericht","DIN-Dokument"] },
   { id:"Agent", label_de:"Agent", branch:"nexus", color:"#3fb950", parent:"Nexus",
-    desc:"Das, was handelt. Orthogonal zu Object/Process/Data. Kriterien: kausale Wirksamkeit, Selektivität, Zurechenbarkeit. Intentionalität NICHT gefordert.",
+    desc:"Das, was handelt. Orthogonal zu Object/Process/Data. Kriterien: kausale Wirksamkeit, Selektivität, Zurechenbarkeit. Intentionalität NICHT gefordert. Identitätskriterium: folgt der überlappenden Kategorie. Agent ∩ Object (Mensch): materiale Kontinuität. Agent ∩ Data (ML-Modell): informationale Identität.",
     phil:"Latour: Aktant. Agency nicht auf Menschen beschränkt.", axioms:["rdfs:subClassOf min:Nexus","NICHT disjunkt mit Object, Process, Data","∃ performs min:Process"],
     examples:["Mensch","CNC-Maschine","Roboterarm","Software-Agent","ML-Modell","Organisation","Schatten","Korrosion"] },
   { id:"Forma", label_de:"Forma", branch:"forma", color:"#d2a8ff", parent:"Entity",
@@ -872,10 +892,12 @@ function selectSvgNode(id) {
   const el = document.getElementById('panel-2');
   const asciiTree = `min:nexusWith (symmetric)
 ├── min:hasComponent (transitive)
-├── min:hasInput      Process → Object
+├── min:hasInput      Process → Nexus     🔴 transformativ (neue ID)
 │   └── inverse: min:undergoes
-├── min:hasOutput     Process → Object
+├── min:hasOutput     Process → Nexus     🔴 transformativ (neue ID)
 │   └── inverse: min:resultOf
+├── min:undergoes     Nexus → Process     🟢 konservativ (selbe ID)
+├── min:resultOf      Nexus → Process     🟢 konservativ (selbe ID)
 ├── min:performs      Agent → Process
 │   ├── inverse: min:performedBy
 │   └── min:controls (sub)
@@ -908,45 +930,45 @@ min:encodes           Data → Forma
 
   const groups = {
     "Inter-Nexus":[
-      {id:"nexusWith",de:"verbunden mit",domain:"Nexus",range:"Nexus",inv:null,sub:null,chain:null,traits:["symmetric"]},
-      {id:"hasComponent",de:"hat Bestandteil",domain:"Nexus",range:"Nexus",inv:null,sub:"nexusWith",chain:null,traits:["transitive"]},
+      {id:"nexusWith",de:"verbunden mit",domain:"Nexus",range:"Nexus",inv:null,sub:null,chain:null,traits:["symmetric"],identity:null},
+      {id:"hasComponent",de:"hat Bestandteil",domain:"Nexus",range:"Nexus",inv:null,sub:"nexusWith",chain:null,traits:["transitive"],identity:null},
     ],
-    "Transformation (Process ↔ Object)":[
-      {id:"hasInput",de:"hat Eingabe",domain:"Process",range:"Object",inv:"undergoes",sub:"nexusWith",chain:null,traits:[]},
-      {id:"hasOutput",de:"hat Ausgabe",domain:"Process",range:"Object",inv:"resultOf",sub:"nexusWith",chain:null,traits:[]},
-      {id:"undergoes",de:"durchläuft",domain:"Object",range:"Process",inv:"hasInput",sub:"nexusWith",chain:null,traits:[]},
-      {id:"resultOf",de:"Ergebnis von",domain:"Object",range:"Process",inv:"hasOutput",sub:"nexusWith",chain:null,traits:[]},
+    "Transformation (Process ↔ Nexus)":[
+      {id:"hasInput",de:"hat Eingabe",domain:"Process",range:"Nexus",inv:"undergoes",sub:"nexusWith",chain:null,traits:[],identity:"transformativ"},
+      {id:"hasOutput",de:"hat Ausgabe",domain:"Process",range:"Nexus",inv:"resultOf",sub:"nexusWith",chain:null,traits:[],identity:"transformativ"},
+      {id:"undergoes",de:"durchläuft",domain:"Nexus",range:"Process",inv:"hasInput",sub:"nexusWith",chain:null,traits:[],identity:"konservativ"},
+      {id:"resultOf",de:"Ergebnis von",domain:"Nexus",range:"Process",inv:"hasOutput",sub:"nexusWith",chain:null,traits:[],identity:"konservativ"},
     ],
     "Agency (Agent ↔ Process)":[
-      {id:"performs",de:"führt durch",domain:"Agent",range:"Process",inv:"performedBy",sub:"nexusWith",chain:null,traits:[]},
-      {id:"performedBy",de:"durchgeführt von",domain:"Process",range:"Agent",inv:"performs",sub:"nexusWith",chain:null,traits:[]},
-      {id:"controls",de:"steuert",domain:"Agent",range:"Process",inv:null,sub:"performs",chain:null,traits:[]},
+      {id:"performs",de:"führt durch",domain:"Agent",range:"Process",inv:"performedBy",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"performedBy",de:"durchgeführt von",domain:"Process",range:"Agent",inv:"performs",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"controls",de:"steuert",domain:"Agent",range:"Process",inv:null,sub:"performs",chain:null,traits:[],identity:null},
     ],
     "Wirkung (Agent ↔ Object)":[
-      {id:"actsOn",de:"wirkt auf",domain:"Agent",range:"Object",inv:"affectedBy",sub:"nexusWith",chain:["performs","hasInput"],traits:[]},
-      {id:"affectedBy",de:"betroffen von",domain:"Object",range:"Agent",inv:"actsOn",sub:"nexusWith",chain:null,traits:[]},
-      {id:"owns",de:"besitzt",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:null,traits:[]},
+      {id:"actsOn",de:"wirkt auf",domain:"Agent",range:"Object",inv:"affectedBy",sub:"nexusWith",chain:["performs","hasInput"],traits:[],identity:null},
+      {id:"affectedBy",de:"betroffen von",domain:"Object",range:"Agent",inv:"actsOn",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"owns",de:"besitzt",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:null,traits:[],identity:null},
     ],
     "Data-Relationen":[
-      {id:"describes",de:"beschreibt",domain:"Data",range:"Nexus",inv:"describedBy",sub:"nexusWith",chain:null,traits:[]},
-      {id:"describedBy",de:"beschrieben durch",domain:"Nexus",range:"Data",inv:"describes",sub:"nexusWith",chain:null,traits:[]},
-      {id:"generates",de:"erzeugt",domain:"Process",range:"Data",inv:"generatedBy",sub:"nexusWith",chain:null,traits:[]},
-      {id:"generatedBy",de:"erzeugt durch",domain:"Data",range:"Process",inv:"generates",sub:"nexusWith",chain:null,traits:[]},
-      {id:"produces",de:"produziert",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:["performs","hasOutput"],traits:[]},
+      {id:"describes",de:"beschreibt",domain:"Data",range:"Nexus",inv:"describedBy",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"describedBy",de:"beschrieben durch",domain:"Nexus",range:"Data",inv:"describes",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"generates",de:"erzeugt",domain:"Process",range:"Data",inv:"generatedBy",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"generatedBy",de:"erzeugt durch",domain:"Data",range:"Process",inv:"generates",sub:"nexusWith",chain:null,traits:[],identity:null},
+      {id:"produces",de:"produziert",domain:"Agent",range:"Object",inv:null,sub:"nexusWith",chain:["performs","hasOutput"],traits:[],identity:null},
     ],
     "Brücke: Nexus ↔ Forma":[
-      {id:"realizes",de:"realisiert",domain:"Nexus",range:"Forma",inv:"realizedBy",sub:null,chain:null,traits:[]},
-      {id:"realizedBy",de:"realisiert durch",domain:"Forma",range:"Nexus",inv:"realizes",sub:null,chain:null,traits:[]},
-      {id:"constrains",de:"beschränkt",domain:"Forma",range:"Nexus",inv:null,sub:null,chain:null,traits:[]},
-      {id:"governs",de:"regiert",domain:"Lex",range:"Process",inv:null,sub:"constrains",chain:null,traits:[]},
-      {id:"formalizes",de:"formalisiert",domain:"Structura",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[]},
-      {id:"evaluates",de:"bewertet",domain:"Norma",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[]},
-      {id:"concerns",de:"betrifft",domain:"Possibile",range:"Nexus",inv:null,sub:null,chain:null,traits:[]},
-      {id:"alternativeTo",de:"Alternative zu",domain:"Possibile",range:"Nexus",inv:null,sub:"concerns",chain:null,traits:[]},
-      {id:"constitutes",de:"konstituiert",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[]},
-      {id:"recognizes",de:"erkennt an",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[]},
-      {id:"encodes",de:"kodiert",domain:"Data",range:"Forma",inv:"encodedBy",sub:null,chain:null,traits:[]},
-      {id:"encodedBy",de:"kodiert durch",domain:"Forma",range:"Data",inv:"encodes",sub:null,chain:null,traits:[]},
+      {id:"realizes",de:"realisiert",domain:"Nexus",range:"Forma",inv:"realizedBy",sub:null,chain:null,traits:[],identity:null},
+      {id:"realizedBy",de:"realisiert durch",domain:"Forma",range:"Nexus",inv:"realizes",sub:null,chain:null,traits:[],identity:null},
+      {id:"constrains",de:"beschränkt",domain:"Forma",range:"Nexus",inv:null,sub:null,chain:null,traits:[],identity:null},
+      {id:"governs",de:"regiert",domain:"Lex",range:"Process",inv:null,sub:"constrains",chain:null,traits:[],identity:null},
+      {id:"formalizes",de:"formalisiert",domain:"Structura",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[],identity:null},
+      {id:"evaluates",de:"bewertet",domain:"Norma",range:"Nexus",inv:null,sub:"constrains",chain:null,traits:[],identity:null},
+      {id:"concerns",de:"betrifft",domain:"Possibile",range:"Nexus",inv:null,sub:null,chain:null,traits:[],identity:null},
+      {id:"alternativeTo",de:"Alternative zu",domain:"Possibile",range:"Nexus",inv:null,sub:"concerns",chain:null,traits:[],identity:null},
+      {id:"constitutes",de:"konstituiert",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[],identity:null},
+      {id:"recognizes",de:"erkennt an",domain:"Agent",range:"Institutio",inv:null,sub:null,chain:null,traits:[],identity:null},
+      {id:"encodes",de:"kodiert",domain:"Data",range:"Forma",inv:"encodedBy",sub:null,chain:null,traits:[],identity:null},
+      {id:"encodedBy",de:"kodiert durch",domain:"Forma",range:"Data",inv:"encodes",sub:null,chain:null,traits:[],identity:null},
     ]
   };
 
@@ -966,6 +988,8 @@ min:encodes           Data → Forma
       propsHtml += `<span style="color:var(--muted);font-family:var(--font-mono);font-size:11px">${p.de}</span>`;
       if(p.chain) propsHtml += `<span class="derived-badge">⚡ abgeleitet</span>`;
       p.traits.forEach(t => { propsHtml += `<span class="trait-badge">${t}</span>`; });
+      if(p.identity === 'transformativ') propsHtml += `<span class="identity-badge">🔴 neue ID</span>`;
+      if(p.identity === 'konservativ') propsHtml += `<span class="conserve-badge">🟢 selbe ID</span>`;
       propsHtml += `</div>`;
       propsHtml += `<div class="prop-meta">`;
       propsHtml += `<span><span class="label">Domain:</span> <span style="color:${dc}">${p.domain}</span></span>`;
@@ -1150,12 +1174,25 @@ WHERE {
 
   // Existential restrictions
   html += `<div class="info-box"><div class="section-label" style="margin-bottom:8px">Existenzrestriktionen (∃)</div>`;
-  [{c:"Process",a:"∃ hasInput min:Object",col:"#da3633"},
-   {c:"Process",a:"∃ hasOutput min:Object",col:"#da3633"},
+  [{c:"Process",a:"∃ hasInput min:Nexus",col:"#da3633"},
+   {c:"Process",a:"∃ hasOutput min:Nexus",col:"#da3633"},
    {c:"Agent",a:"∃ performs min:Process",col:"#3fb950"}].forEach(r => {
     html += `<div style="font-family:var(--font-mono);font-size:11px;margin-bottom:4px"><span style="color:${r.col}">min:${r.c}</span> <span style="color:var(--muted)">rdfs:subClassOf</span> <span>${r.a}</span></div>`;
   });
   html += `</div>`;
+
+  // Identity semantics
+  html += `<div class="info-box"><div class="section-label" style="margin-bottom:8px">Identitätssemantik der Transformationsrelationen</div>`;
+  html += `<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px">`;
+  html += `<div style="flex:1;min-width:200px;padding:8px;background:rgba(218,54,51,0.08);border-radius:4px;border:1px solid rgba(218,54,51,0.2)">`;
+  html += `<div style="color:#ff7b72;font-family:var(--font-mono);font-size:11px;font-weight:600">🔴 Transformativ</div>`;
+  html += `<div style="color:var(--text);font-family:var(--font-mono);font-size:10px;margin-top:4px">hasInput / hasOutput</div>`;
+  html += `<div style="color:var(--muted);font-size:11px;margin-top:4px">Neue Entität, neue ID.<br>Coil → Tiefziehen → Bauteil<br>Data → Simulation → Data'<br>GPT-4 → Fine-Tuning → GPT-4-custom</div></div>`;
+  html += `<div style="flex:1;min-width:200px;padding:8px;background:rgba(63,185,80,0.08);border-radius:4px;border:1px solid rgba(63,185,80,0.2)">`;
+  html += `<div style="color:#3fb950;font-family:var(--font-mono);font-size:11px;font-weight:600">🟢 Konservativ</div>`;
+  html += `<div style="color:var(--text);font-family:var(--font-mono);font-size:10px;margin-top:4px">undergoes / resultOf</div>`;
+  html += `<div style="color:var(--muted);font-size:11px;margin-top:4px">Selbe Entität, selbe ID.<br>Mensch → Altern → derselbe Mensch<br>Datei → Transfer → dieselbe Datei<br>Coil → Transport → derselbe Coil</div></div>`;
+  html += `</div></div>`;
 
   // Property Chains
   html += `<div class="info-box"><div class="section-label" style="margin-bottom:8px">Property Chains (abgeleitet)</div>`;
