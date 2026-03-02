@@ -49,7 +49,7 @@
     1 Wurzelklasse. 4 Subklassen. 2 Struktureigenschaften.
     2 Inter-Nexus-Relationen. 9 Kategorienrelationen.
     5 Datatype Properties. Das ist MIN."""@de ;
-    dcterms:creator "Lepy" ;
+    dcterms:creator "Dr. Ingolf Lepenies" ;
     dcterms:created "2026-03-01"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/sdata/core> ;

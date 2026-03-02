@@ -65,7 +65,7 @@
     dcterms:description """Middle abstraction layer between MIN
     (foundational ontology) and domain ontologies.
     Three categories. Nine relations. Domain-independent."""@en ;
-    dcterms:creator "Lepy" ;
+    dcterms:creator "Dr. Ingolf Lepenies" ;
     dcterms:created "2026-03-01"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/min> ;
