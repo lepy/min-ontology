@@ -1,6 +1,6 @@
 @prefix min:     <https://w3id.org/min#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22/rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -99,7 +99,18 @@
        Traditionen unter einer Architektur.
 
     Ergebnis: Entity als neue Wurzel. Nexus und Forma als
-    zwei Zweige. 9 Brückenrelationen verbinden sie."""@de .
+    zwei Zweige. 9 Brückenrelationen verbinden sie.
+
+    Transformationsrelationen (hasInput, hasOutput, undergoes,
+    resultOf) operieren auf Nexus-Ebene, nicht auf Object-Ebene.
+    Begründung: MINs Existenzkriterium ist kausale Wirksamkeit,
+    nicht Materialität. Jeder Nexus — Object, Data, Agent — kann
+    Input, Output oder Subjekt eines Processes sein.
+
+    Die Unterscheidung identitätserhaltend vs. identitätserzeugend
+    liegt in der Relation, nicht in der Kategorie:
+      hasInput/hasOutput → transformativ (neue Entität, neue ID)
+      undergoes/resultOf → konservativ (selbe Entität, selbe ID)"""@de .
 
 
 # =============================================================================
@@ -230,8 +241,22 @@ min:Process a owl:Class ;
     Energie, physische Wechselwirkung. Informational:
     Regeln, Parameter, Modell.
 
-    Process ist Transformation — er nimmt Objects als Input,
-    verändert sie, erzeugt Objects als Output und generiert Data.
+    Process ist Transformation — er nimmt Nexus-Instanzen als
+    Input, verändert sie, erzeugt Nexus-Instanzen als Output
+    und generiert Data.
+
+    Zwei Modi der Transformation:
+    — Transformativ (hasInput/hasOutput): erzeugt neue Entitäten.
+      Coil → Tiefziehen → Bauteil. Zwei IDs.
+      Trainingsdaten → Simulation → Ergebnisse. Zwei IDs.
+      GPT-4 → Fine-Tuning → GPT-4-custom. Zwei IDs.
+    — Konservativ (undergoes): bewahrt Identität.
+      Mensch → Altern → derselbe Mensch. Eine ID.
+      Datei → Transfer → dieselbe Datei. Eine ID.
+      Coil → Transport → derselbe Coil. Eine ID.
+
+    Die Unterscheidung liegt in der Relation, nicht in der
+    Kategorie des Nexus.
 
     Whitehead: ‹the becoming of being›.
 
@@ -242,9 +267,12 @@ min:Process a owl:Class ;
     Ein Process realisiert Forma-Instanzen: ein Tiefziehprozess
     realisiert die von-Mises-Fließfläche (Structura) und
     gehorcht der Energieerhaltung (Lex)."""@de ;
-    skos:example "Umformen, Gießen, Zugversuch, Simulation, Recycling, Montage, Schall, Tornado."@de ;
+    skos:example "Umformen, Gießen, Zugversuch, Simulation, Recycling, Montage, Datentransfer, ML-Training, Altern, Lernen, Tornado."@de ;
 
     # --- Strukturelle Axiome ---
+    # Ein Process muss mindestens einen Nexus als Input und Output haben.
+    # Das kann ein Object sein (Fertigung), Data (Simulation),
+    # oder Agent (Lernen, Training).
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:hasInput ;
@@ -275,6 +303,11 @@ min:Data a owl:Class ;
     informationalen Bestimmtheit liegt — nicht in seiner
     physischen Präsenz. Eine Datei existiert als Datei wegen
     ihrer Semantik, nicht wegen ihrer Bytes.
+
+    Identitätskriterium: informationale Identität.
+    Selbe Bytes = selbe Data. Neue Bytes = neue Data.
+    Transfer bewahrt Identität (undergoes). Transformation
+    erzeugt neue Data (hasInput/hasOutput).
 
     Abgrenzung zu Forma: Data ist ein AKTUALES Artefakt — es
     hat Bytes, einen Speicherort, einen Eigentümer. Data kodiert
@@ -311,6 +344,13 @@ min:Agent a owl:Class ;
 
     Intentionalität ist NICHT gefordert. Ein Thermostat hat
     Agency, aber keine Intention.
+
+    Identitätskriterium: folgt der überlappenden Kategorie.
+    Agent ∩ Object (Mensch): materiale Kontinuität.
+    Agent ∩ Data (ML-Modell): informationale Identität.
+    Ein Mensch bleibt nach dem Lernen derselbe Agent (undergoes).
+    Ein ML-Modell nach Fine-Tuning ist ein neuer Agent
+    (hasInput/hasOutput).
 
     Latour: Aktant — alles, was einen Unterschied macht.
     Agency ist nicht auf Menschen beschränkt.
@@ -656,7 +696,7 @@ min:hasComponent a owl:ObjectProperty , owl:TransitiveProperty ;
 #       actsOn│  │performs
 #             │  │  │
 #             ▼  │  ▼
-#          Object│ Process
+#         Nexus  │ Process
 #             ▲  │  │  ▲
 #    resultOf │  │  │  │ undergoes
 #             │  ▼  ▼  │
@@ -671,21 +711,42 @@ min:hasComponent a owl:ObjectProperty , owl:TransitiveProperty ;
 #
 # #############################################################################
 
-# --- Transformation: Process ↔ Object ---
+# --- Transformation: Process ↔ Nexus ---
+#
+# hasInput/hasOutput operieren auf Nexus-Ebene.
+# Jeder Nexus — Object, Data, Agent — kann I/O sein.
+#
+# Identitätssemantik:
+#   hasInput/hasOutput → transformativ (neue Entität, neue ID)
+#   undergoes/resultOf → konservativ (selbe Entität, selbe ID)
 
 min:hasInput a owl:ObjectProperty ;
     rdfs:label "has input"@en ;
     rdfs:label "hat Eingabe"@de ;
     rdfs:domain min:Process ;
     rdfs:range min:Nexus ;
-    rdfs:subPropertyOf min:nexusWith .
+    rdfs:subPropertyOf min:nexusWith ;
+    rdfs:comment """Process konsumiert einen Nexus als Input.
+    Transformativ: der Input-Nexus wird konsumiert, der
+    Output-Nexus ist eine neue Entität mit neuer ID.
+
+    Object-Input: Coil → Tiefziehen.
+    Data-Input: Trainingsdaten → ML-Training.
+    Agent-Input: GPT-4 → Fine-Tuning."""@de .
 
 min:hasOutput a owl:ObjectProperty ;
     rdfs:label "has output"@en ;
     rdfs:label "hat Ausgabe"@de ;
     rdfs:domain min:Process ;
     rdfs:range min:Nexus ;
-    rdfs:subPropertyOf min:nexusWith .
+    rdfs:subPropertyOf min:nexusWith ;
+    rdfs:comment """Process erzeugt einen Nexus als Output.
+    Transformativ: der Output-Nexus ist eine neue Entität
+    mit neuer ID.
+
+    Object-Output: Tiefziehen → Bauteil.
+    Data-Output: Simulation → Ergebnisdaten.
+    Agent-Output: Fine-Tuning → GPT-4-custom."""@de .
 
 min:undergoes a owl:ObjectProperty ;
     rdfs:label "undergoes"@en ;
@@ -693,7 +754,14 @@ min:undergoes a owl:ObjectProperty ;
     rdfs:domain min:Nexus ;
     rdfs:range min:Process ;
     owl:inverseOf min:hasInput ;
-    rdfs:subPropertyOf min:nexusWith .
+    rdfs:subPropertyOf min:nexusWith ;
+    rdfs:comment """Ein Nexus durchläuft einen Process.
+    Konservativ: die Entität bewahrt ihre Identität.
+    Selbe ID vor und nach dem Process.
+
+    Object: Coil undergoes Transport.
+    Data: Datei undergoes Transfer.
+    Agent: Mensch undergoes Altern."""@de .
 
 min:resultOf a owl:ObjectProperty ;
     rdfs:label "result of"@en ;
@@ -1060,23 +1128,22 @@ min:philosophicalBasis a owl:AnnotationProperty ;
 #
 #   Gesamt:                48  Terme
 #
-#   Neu gegenüber v2.1.0:
-#   — Entity (Klasse — neue absolute Wurzel)
-#   — Forma + 5 Subklassen (6 Klassen)
-#   — 11 Brückenrelationen
-#   — Nexus rdfs:subClassOf Entity (statt Wurzel)
-#   — Datatype Properties: Domain Entity statt Nexus
-#   — 3 Disjunktheitsaxiome statt 1
+#   Designentscheidungen:
+#   — hasInput/hasOutput: Range Nexus (nicht Object).
+#     Begründung: MINs Existenzkriterium ist kausale Wirksamkeit.
+#     Jeder Nexus kann Input oder Output eines Processes sein.
+#   — undergoes/resultOf: Domain Nexus (nicht Object).
+#     Begründung: Identitätserhaltende Transformation ist nicht
+#     auf Objects beschränkt. Eine Datei durchläuft einen Transfer,
+#     ein Mensch durchläuft Altern.
+#   — Identitätssemantik in der Relation, nicht in der Kategorie:
+#       hasInput/hasOutput = transformativ (neue ID)
+#       undergoes/resultOf = konservativ (selbe ID)
+#   — Agent-Identität folgt der überlappenden Kategorie:
+#       Agent ∩ Object → materiale Kontinuität
+#       Agent ∩ Data → informationale Identität
 #
-#   Unverändert gegenüber v2.1.0:
-#   — Alle 4 Nexus-Kategorien (Object, Process, Data, Agent)
-#   — Alle 15 Nexus-internen Relationen
-#   — Beide Polaritäts-Superproperties
-#   — Beide Inter-Nexus-Relationen
-#   — Agent bleibt nichtdisjunkt
-#   — Flacher Graph, Schema-Ebene Polarität
-#
-#   Abwärtskompatibilität:
+#   Abwärtskompatibilität zu v2.1:
 #   — Jeder gültige v2.1-Graph ist ein gültiger v3.0-Graph.
 #   — Nexus-interne Queries bleiben unverändert.
 #   — Forma-Zweig ist optional — wer ihn nicht braucht,
