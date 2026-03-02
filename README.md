@@ -37,6 +37,23 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/validate.py
 ```
 
+## Documentation (MkDocs)
+
+Build locally:
+
+```bash
+uv run mkdocs build --strict
+```
+
+Serve locally:
+
+```bash
+uv run mkdocs serve
+```
+
+Deployment to GitHub Pages is automated via `.github/workflows/docs.yml`
+on every push to `main` (and via manual `workflow_dispatch`).
+
 ## Versioning policy
 
 - Semantic versioning is used for ontology releases.

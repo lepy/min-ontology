@@ -18,3 +18,8 @@ ontology-validate = "scripts.validate:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["scripts"]
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+]

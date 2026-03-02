@@ -1,0 +1,17 @@
+site_name: MIN Ontology
+site_description: Documentation for the MIN foundational ontology
+site_url: https://lepy.github.io/min-ontology/
+repo_url: https://github.com/lepy/min-ontology
+repo_name: lepy/min-ontology
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: mkdocs
+
+nav:
+  - Home: index.md
+  - Model: min-model.md
+  - Versioning: versioning.md
+  - Changelog: changelog.md
