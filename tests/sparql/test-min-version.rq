@@ -3,6 +3,6 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 ASK WHERE {
   <https://w3id.org/min>
     a owl:Ontology ;
-    owl:versionIRI <https://w3id.org/min/2.1.0> ;
-    owl:versionInfo "2.1.0" .
+    owl:versionIRI <https://w3id.org/min/3.0.0> ;
+    owl:versionInfo "3.0.0" .
 }

@@ -39,11 +39,18 @@ min:OntologyMetadataShape a sh:NodeShape ;
     ] .
 
 min:ClassLabelShape a sh:NodeShape ;
+    sh:targetNode min:Entity ;
     sh:targetNode min:Nexus ;
+    sh:targetNode min:Forma ;
     sh:targetNode min:Object ;
     sh:targetNode min:Process ;
     sh:targetNode min:Data ;
     sh:targetNode min:Agent ;
+    sh:targetNode min:Lex ;
+    sh:targetNode min:Structura ;
+    sh:targetNode min:Possibile ;
+    sh:targetNode min:Norma ;
+    sh:targetNode min:Institutio ;
     sh:property [
         sh:path rdfs:label ;
         sh:minCount 1
@@ -73,6 +80,18 @@ min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
     sh:targetNode min:generates ;
     sh:targetNode min:generatedBy ;
     sh:targetNode min:produces ;
+    sh:targetNode min:realizes ;
+    sh:targetNode min:realizedBy ;
+    sh:targetNode min:constrains ;
+    sh:targetNode min:governs ;
+    sh:targetNode min:formalizes ;
+    sh:targetNode min:evaluates ;
+    sh:targetNode min:concerns ;
+    sh:targetNode min:alternativeTo ;
+    sh:targetNode min:constitutes ;
+    sh:targetNode min:recognizes ;
+    sh:targetNode min:encodes ;
+    sh:targetNode min:encodedBy ;
     sh:targetNode min:nexusWith ;
     sh:targetNode min:hasComponent ;
     sh:property [

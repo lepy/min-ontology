@@ -14,6 +14,7 @@ TTL_FILES = [
     "min-v1.0.0.ttl",
     "min-v2.0.0.ttl",
     "min-v2.1.0.ttl",
+    "min-v3.0.0.ttl",
     "examples/min-example.ttl",
     "shapes/min-core.shacl.ttl",
 ]
