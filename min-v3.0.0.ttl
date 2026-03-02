@@ -248,12 +248,12 @@ min:Process a owl:Class ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:hasInput ;
-        owl:someValuesFrom min:Object
+        owl:someValuesFrom min:Nexus
     ] ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:hasOutput ;
-        owl:someValuesFrom min:Object
+        owl:someValuesFrom min:Nexus
     ] .
 
 
@@ -677,20 +677,20 @@ min:hasInput a owl:ObjectProperty ;
     rdfs:label "has input"@en ;
     rdfs:label "hat Eingabe"@de ;
     rdfs:domain min:Process ;
-    rdfs:range min:Object ;
+    rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:nexusWith .
 
 min:hasOutput a owl:ObjectProperty ;
     rdfs:label "has output"@en ;
     rdfs:label "hat Ausgabe"@de ;
     rdfs:domain min:Process ;
-    rdfs:range min:Object ;
+    rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:nexusWith .
 
 min:undergoes a owl:ObjectProperty ;
     rdfs:label "undergoes"@en ;
     rdfs:label "durchläuft"@de ;
-    rdfs:domain min:Object ;
+    rdfs:domain min:Nexus ;
     rdfs:range min:Process ;
     owl:inverseOf min:hasInput ;
     rdfs:subPropertyOf min:nexusWith .
@@ -698,7 +698,7 @@ min:undergoes a owl:ObjectProperty ;
 min:resultOf a owl:ObjectProperty ;
     rdfs:label "result of"@en ;
     rdfs:label "Ergebnis von"@de ;
-    rdfs:domain min:Object ;
+    rdfs:domain min:Nexus ;
     rdfs:range min:Process ;
     owl:inverseOf min:hasOutput ;
     rdfs:subPropertyOf min:nexusWith .
