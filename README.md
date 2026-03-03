@@ -12,7 +12,7 @@ The current stable release line is **v3.x**.
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/3.0.0`
+- Current version IRI: `https://w3id.org/min/3.1.0`
 
 ## Conceptual core (v3.0.0)
 

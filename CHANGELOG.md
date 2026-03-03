@@ -2,6 +2,30 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.1.0] - 2026-03-03
+
+### Changed
+- `min:hasInput` / `min:hasOutput` range broadened from `min:Object` to `min:Nexus` — any Nexus (Object, Data, Agent) can now be process I/O.
+- `min:undergoes` / `min:resultOf` domain broadened from `min:Object` to `min:Nexus`.
+- `min:Process` existential restrictions updated: `owl:someValuesFrom min:Nexus` (was `min:Object`).
+- Identity semantics documented: `hasInput`/`hasOutput` = transformative (new ID), `undergoes`/`resultOf` = conservative (same ID).
+- Identity criteria added to `min:Data` and `min:Agent` comments.
+
+### Fixed
+- `min:materialProperty` / `min:informationalProperty` changed from `rdf:Property` to `owl:AnnotationProperty` for OWL-DL compatibility.
+- Missing inverse properties `min:constitutedBy` and `min:recognizedBy` declared (used in examples but previously undefined).
+- Missing `min:hasOutput` added to `Zugversuch_042` and `Sensorausfall_2026_03` in examples.
+
+### Added
+- `min:Entity owl:equivalentClass [ owl:unionOf ( min:Nexus min:Forma ) ]` — exhaustive partition axiom.
+- Instance-level SHACL shapes (`shapes/min-instance.shacl.ttl`) for Process, Agent, and Entity.
+- 9 per-class example files (`examples/{object,process,data,agent,lex,structura,possibile,norma,institutio}.ttl`).
+- 5 new SPARQL regression tests (Forma classes, Entity partition, disjointness, bridge relations, inverse properties).
+- 5 new competency queries (cq03–cq07: encodes, governs, evaluates, realizes, constitutes).
+- Phase [4/4] Instance-SHACL validation in `scripts/validate.py`.
+- Design-decision comment explaining why `dcterms:` is not imported via `owl:imports`.
+- Documentation page `docs/examples.md` with per-class modeling guidance.
+
 ## [3.0.0] - 2026-03-02
 
 ### Changed

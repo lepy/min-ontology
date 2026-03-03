@@ -98,16 +98,49 @@ ex:Zugversuch_042 a min:Process ;
     min:hasIdentifier    "TEST-ZV-042" ;
     min:hasName          "Zugversuch Querlenker" ;
     min:hasInput         ex:Bauteil_007 ;
+    min:hasOutput        ex:Bauteil_007 ;
     min:performedBy      ex:Dr_Mueller ;
     min:generates        ex:Pruefzertifikat_042 .
 
 ex:Sensorausfall_2026_03 a min:Process ;
     min:hasIdentifier    "FAIL-SENS-2026-03" ;
+    min:hasName          "Sensorausfall Station 12" ;
     min:hasTimestamp      "2026-03-02T14:22:00"^^xsd:dateTime ;
     min:hasInput         ex:Sensor_Optisch_007 ;
+    min:hasOutput        ex:Sensor_Optisch_007 ;
     min:performedBy      ex:Schatten_Kran_014 ;
     min:generates        ex:Fehlerbericht_2026_03 ;
     ex:dauer_s           45 .
+
+ex:Patentantrag_TZ a min:Object ;
+    min:hasIdentifier    "OBJ-ANTRAG-TZ-2024" ;
+    min:hasName          "Patentantrag Tiefziehverfahren" .
+
+ex:Patenturkunde_TZ a min:Object ;
+    min:hasIdentifier    "OBJ-URKUNDE-TZ-2024" ;
+    min:hasName          "Patenturkunde Tiefziehverfahren" .
+
+ex:Patenterteilung_TZ a min:Process ;
+    min:hasIdentifier    "OP-PAT-TZ-2024" ;
+    min:hasName          "Patenterteilung Tiefziehverfahren" ;
+    min:hasInput         ex:Patentantrag_TZ ;
+    min:hasOutput        ex:Patenturkunde_TZ ;
+    min:generates        ex:Patentschrift_TZ .
+
+ex:Normentwurf_EN10025 a min:Object ;
+    min:hasIdentifier    "OBJ-ENTWURF-EN10025" ;
+    min:hasName          "Normentwurf EN 10025-2" .
+
+ex:Normdokument_EN10025 a min:Object ;
+    min:hasIdentifier    "OBJ-NORM-EN10025" ;
+    min:hasName          "Normblatt EN 10025-2" .
+
+ex:Normungsverfahren_EN10025 a min:Process ;
+    min:hasIdentifier    "OP-NORM-EN10025" ;
+    min:hasName          "Normungsverfahren EN 10025-2" ;
+    min:hasInput         ex:Normentwurf_EN10025 ;
+    min:hasOutput        ex:Normdokument_EN10025 ;
+    min:generates        ex:DIN_EN_10025_2 .
 
 # --- Agents ---
 
@@ -132,11 +165,13 @@ ex:Schatten_Kran_014 a min:Object , min:Agent ;
 
 ex:DPMA a min:Agent ;
     min:hasIdentifier    "ORG-DPMA" ;
-    min:hasName          "Deutsches Patent- und Markenamt" .
+    min:hasName          "Deutsches Patent- und Markenamt" ;
+    min:performs         ex:Patenterteilung_TZ .
 
 ex:DIN_Komitee a min:Agent ;
     min:hasIdentifier    "ORG-DIN-NA092" ;
-    min:hasName          "DIN-Normenausschuss Materialprüfung" .
+    min:hasName          "DIN-Normenausschuss Materialprüfung" ;
+    min:performs         ex:Normungsverfahren_EN10025 .
 
 # --- Data ---
 

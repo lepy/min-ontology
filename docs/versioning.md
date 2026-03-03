@@ -10,7 +10,7 @@
 
 - `min.ttl`: current stable version
 - `min-vX.Y.Z.ttl`: immutable snapshot for release `X.Y.Z`
-- Current stable line: `3.x` (`min.ttl` -> `v3.0.0`)
+- Current stable line: `3.x` (`min.ttl` -> `v3.1.0`)
 
 ## Architecture note
 

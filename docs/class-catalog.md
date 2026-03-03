@@ -1,6 +1,6 @@
-# MIN Class Catalog (v3.0.0)
+# MIN Class Catalog (v3.1.0)
 
-This page lists **all classes** defined in `min.ttl` for MIN v3.0.0.
+This page lists **all classes** defined in `min.ttl` for MIN v3.1.0.
 
 ## Complete class list
 
@@ -25,6 +25,7 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.0.0.
 
 - Absolute ontology root
 - Every MIN individual is in either the `Nexus` or `Forma` branch
+- Formal partition axiom (v3.1.0): `Entity ≡ Nexus ⊔ Forma`
 - Not intended for direct instantiation
 
 ### `min:Nexus`
@@ -39,24 +40,28 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.0.0.
 - Material-dominant actual entity
 - Identity criterion: material continuity
 - Typical examples: parts, tools, machines, fields, shadows
+- Example: [`examples/object.ttl`](examples.md#object-material-dominant-entity) — Steel beam in bridge construction
 
 ### `min:Process`
 
 - Event/transformative actual entity
-- Uses objects as input, produces objects as output, can generate data
-- Structural axiom: at least one `hasInput` and one `hasOutput`
+- Uses nexus entities as input, produces nexus entities as output, can generate data
+- Structural axiom: at least one `hasInput` and one `hasOutput` (range: `min:Nexus`)
+- Example: [`examples/process.ttl`](examples.md#process-transformation-and-event) — Laser welding in automotive manufacturing
 
 ### `min:Data`
 
 - Informational artifact in the actual branch
 - Has physical realization (bytes/storage), but semantics is primary
 - Encodes formal entities via `min:encodes`
+- Example: [`examples/data.ttl`](examples.md#data-informational-artifact) — Vibration measurement data (wind turbine)
 
 ### `min:Agent`
 
 - Acting entity with selective, attributable effects
 - May overlap with object/process/data roles
 - Structural axiom: at least one `performs` relation to a process
+- Example: [`examples/agent.ttl`](examples.md#agent-acting-entity) — Cobot, human worker, software agent
 
 ### `min:Forma`
 
@@ -70,30 +75,35 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.0.0.
 - Formal law-like regularity (e.g., conservation laws)
 - Constrains and governs actual entities/processes
 - Realized by nexus entities/processes
+- Example: [`examples/lex.ttl`](examples.md#lex-law-like-regularity) — Hooke's Law in a spring test
 
 ### `min:Structura`
 
 - Formal mathematical/model structure
 - Formalizes actual systems/processes
 - Distinct from data artifacts implementing the structure
+- Example: [`examples/structura.ttl`](examples.md#structura-mathematical-structure) — Euler-Bernoulli beam theory
 
 ### `min:Possibile`
 
 - Possibility or counterfactual scenario
 - Concerns actual entities but is itself non-actual
 - Useful for risk and what-if modeling
+- Example: [`examples/possibile.ttl`](examples.md#possibile-possibility-and-counterfactual) — Fatigue crack scenario (offshore wind)
 
 ### `min:Norma`
 
 - Normative requirement/evaluation criterion
 - Evaluates actual entities/processes
 - Distinct from documents encoding the norm
+- Example: [`examples/norma.ttl`](examples.md#norma-normative-requirement) — Maximum deflection (Eurocode)
 
 ### `min:Institutio`
 
 - Institutionally constituted entity
 - Exists via collective recognition and constitutive acts
 - Linked to agents through constitution/recognition relations
+- Example: [`examples/institutio.ttl`](examples.md#institutio-institutional-construct) — ISO 9001 certification
 
 ## Disjointness axioms
 

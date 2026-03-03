@@ -1,0 +1,10 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ05: Welche Norma evaluiert einen Nexus? (evaluates)
+SELECT ?norma ?normaName ?nexus ?nexusName WHERE {
+  ?norma a min:Norma ;
+         min:evaluates ?nexus .
+  OPTIONAL { ?norma min:hasName ?normaName . }
+  OPTIONAL { ?nexus min:hasName ?nexusName . }
+}
+LIMIT 25

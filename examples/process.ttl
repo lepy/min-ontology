@@ -1,0 +1,63 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Process
+#
+#   Szenario: Laserschweißen zweier Aluminiumprofile in der Fahrzeugfertigung.
+#   Zeigt: hasInput, hasOutput, performedBy, generates, realizes (Brücke),
+#          domänenspezifische materialProperties.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:laserleistung_kW a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Process ;
+    rdfs:range xsd:float .
+
+ex:vorschub_m_min a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Process ;
+    rdfs:range xsd:float .
+
+# --- Process-Instanz ---
+
+ex:Laserschweissen_047 a min:Process ;
+    min:hasIdentifier    "OP-LSW-047" ;
+    min:hasName          "Laserschweißen Seitenteil links" ;
+    min:hasTimestamp      "2026-02-28T06:45:00"^^xsd:dateTime ;
+    min:hasStatus        "abgeschlossen" ;
+    min:hasInput         ex:Profil_A_links ;
+    min:hasInput         ex:Profil_B_links ;
+    min:hasOutput        ex:Seitenteil_links ;
+    min:performedBy      ex:Schweissroboter_R7 ;
+    min:generates        ex:Schweissprotokoll_047 ;
+    ex:laserleistung_kW  4.5 ;
+    ex:vorschub_m_min    1.2 .
+
+# --- Stützinstanzen ---
+
+ex:Profil_A_links a min:Object ;
+    min:hasName "Aluminiumprofil A links" .
+
+ex:Profil_B_links a min:Object ;
+    min:hasName "Aluminiumprofil B links" .
+
+ex:Seitenteil_links a min:Object ;
+    min:hasName          "Seitenteil links (geschweißt)" ;
+    min:resultOf         ex:Laserschweissen_047 .
+
+ex:Schweissroboter_R7 a min:Object , min:Agent ;
+    min:hasName   "Schweißroboter R7" ;
+    min:performs  ex:Laserschweissen_047 .
+
+ex:Schweissprotokoll_047 a min:Data ;
+    min:hasName      "Schweißprotokoll #047" ;
+    min:describes    ex:Laserschweissen_047 ;
+    min:generatedBy  ex:Laserschweissen_047 .

@@ -1,4 +1,4 @@
-# MIN Model (v3.0.0)
+# MIN Model (v3.1.0)
 
 This page describes the conceptual architecture and modeling rules of MIN.
 
@@ -38,7 +38,7 @@ Structural constraints:
 
 - `min:Object`, `min:Process`, `min:Data` are disjoint
 - `min:Agent` is intentionally **not** disjoint from those classes
-- `min:Process` has existential restrictions to at least one input and one output object
+- `min:Process` has existential restrictions to at least one input and one output nexus
 - `min:Agent` has existential restriction to perform at least one process
 
 ## 4. Forma branch (formal)
@@ -73,7 +73,7 @@ indirection.
 
 Nexus-internal relations:
 
-- Process/Object: `hasInput`, `hasOutput`, `undergoes`, `resultOf`
+- Process/Nexus: `hasInput`, `hasOutput`, `undergoes`, `resultOf`
 - Agent/Process: `performs`, `performedBy`, `controls`
 - Agent/Object: `actsOn`, `affectedBy`, `owns`, `produces`
 - Data links: `describes`, `describedBy`, `generates`, `generatedBy`
@@ -102,7 +102,24 @@ Use these rules for stable modeling outcomes:
 - Do not add blank-node wrappers for polarity.
 - Do not collapse institution and actor into one node (e.g. legal entity as both `Agent` and `Institutio` without explicit semantics).
 
-## 9. Backward compatibility
+## 9. Formal axioms (since v3.1.0)
+
+MIN v3.1 adds the following formal axioms to strengthen OWL-DL compatibility:
+
+- **Entity partition**: `min:Entity owl:equivalentClass [ owl:unionOf ( min:Nexus min:Forma ) ]`.
+  Every Entity is either a Nexus or a Forma. This makes the two-branch architecture a formal
+  OWL axiom, not just a modeling convention.
+
+- **OWL-DL polarity**: `min:materialProperty` and `min:informationalProperty` are typed as
+  `owl:AnnotationProperty` (previously `rdf:Property`). This keeps MIN in OWL-DL rather than
+  OWL Full, since domain-specific datatype properties declared as `rdfs:subPropertyOf` an
+  annotation property do not violate the OWL-DL property hierarchy.
+
+- **10 inverse property pairs**: All directional relations have formally declared inverses,
+  including the new `min:constitutedBy` (inverse of `min:constitutes`) and `min:recognizedBy`
+  (inverse of `min:recognizes`).
+
+## 10. Backward compatibility
 
 MIN v3 keeps v2.1 Nexus semantics stable:
 

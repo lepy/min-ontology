@@ -1,0 +1,10 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ04: Welches Lex regiert einen Process? (governs)
+SELECT ?lex ?lexName ?process ?processName WHERE {
+  ?lex a min:Lex ;
+       min:governs ?process .
+  OPTIONAL { ?lex min:hasName ?lexName . }
+  OPTIONAL { ?process min:hasName ?processName . }
+}
+LIMIT 25

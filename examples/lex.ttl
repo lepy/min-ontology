@@ -1,0 +1,68 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Lex
+#
+#   Szenario: Hookesches Gesetz in einer Federprüfung.
+#   Zeigt: governs, constrains, realizedBy, encodedBy (inverse Brücke),
+#          Abgrenzung Lex vs. Data.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:formel a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Entity ;
+    rdfs:range xsd:string .
+
+ex:gueltigkeitsbereich a owl:DatatypeProperty ;
+    rdfs:domain min:Forma ;
+    rdfs:range xsd:string .
+
+# --- Lex-Instanz ---
+
+ex:Hooke_Gesetz a min:Lex ;
+    min:hasIdentifier       "LEX-HOOKE" ;
+    min:hasName             "Hookesches Gesetz" ;
+    min:hasDescription      "Kraft proportional zur Verformung im elastischen Bereich" ;
+    ex:formel               "F = k · Δx" ;
+    ex:gueltigkeitsbereich  "linear-elastisch, kleine Verformungen" ;
+    min:governs             ex:Federpruefung_101 ;
+    min:constrains          ex:Druckfeder_F42 ;
+    min:realizedBy          ex:Federpruefung_101 .
+
+# Das Lehrbuch ist Data — es kodiert die Lex, IST aber nicht die Lex.
+ex:Lehrbuch_Festigkeitslehre a min:Data ;
+    min:hasName  "Technische Mechanik — Festigkeitslehre, 12. Aufl." ;
+    min:encodes  ex:Hooke_Gesetz .
+
+# --- Stützinstanzen ---
+
+ex:Druckfeder_F42 a min:Object ;
+    min:hasName "Druckfeder F42 (Edelstahl)" .
+
+ex:Druckfeder_F42_geprueft a min:Object ;
+    min:hasName "Druckfeder F42 (geprüft)" .
+
+ex:Pruefer_Weber a min:Agent ;
+    min:hasName  "Weber, K. (Prüfingenieur)" ;
+    min:performs ex:Federpruefung_101 .
+
+ex:Federpruefung_101 a min:Process ;
+    min:hasIdentifier "TEST-FP-101" ;
+    min:hasName       "Federprüfung F42" ;
+    min:hasInput      ex:Druckfeder_F42 ;
+    min:hasOutput     ex:Druckfeder_F42_geprueft ;
+    min:realizes      ex:Hooke_Gesetz ;
+    min:generates     ex:Pruefprotokoll_FP101 .
+
+ex:Pruefprotokoll_FP101 a min:Data ;
+    min:hasName      "Prüfprotokoll FP-101" ;
+    min:describes    ex:Federpruefung_101 ;
+    min:generatedBy  ex:Federpruefung_101 .

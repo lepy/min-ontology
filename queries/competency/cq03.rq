@@ -1,0 +1,10 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ03: Welche Forma kodiert ein Data? (encodes)
+SELECT ?data ?dataName ?forma ?formaName WHERE {
+  ?data a min:Data ;
+        min:encodes ?forma .
+  OPTIONAL { ?data min:hasName ?dataName . }
+  OPTIONAL { ?forma min:hasName ?formaName . }
+}
+LIMIT 25

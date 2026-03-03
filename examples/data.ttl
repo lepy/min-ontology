@@ -1,0 +1,70 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Data
+#
+#   Szenario: Schwingungsmessdaten eines Windkraftgetriebes.
+#   Zeigt: describes, generatedBy, encodes (Brücke zu Forma),
+#          informationale Domänen-Properties.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:abtastrate_Hz a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Data ;
+    rdfs:range xsd:integer .
+
+ex:dateigroesse_MB a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Data ;
+    rdfs:range xsd:float .
+
+ex:datenformat a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Data ;
+    rdfs:range xsd:string .
+
+# --- Data-Instanzen ---
+
+ex:Schwingungsdaten_G5_2026 a min:Data ;
+    min:hasIdentifier    "DAT-VIB-G5-2026-02" ;
+    min:hasName          "Schwingungsmessdaten Getriebe G5" ;
+    min:hasDescription   "48 h Dauermessung, 3 Achsen, Getriebe Gondel 5" ;
+    min:hasTimestamp      "2026-02-15T00:00:00"^^xsd:dateTime ;
+    min:hasStatus        "archiviert" ;
+    min:describes        ex:Getriebe_G5 ;
+    min:generatedBy      ex:Schwingungsmessung_G5 ;
+    ex:abtastrate_Hz     25600 ;
+    ex:dateigroesse_MB   1840.0 ;
+    ex:datenformat       "TDMS" .
+
+ex:Grenzwertliste_Vibration a min:Data ;
+    min:hasIdentifier    "DOC-LIMIT-VIB-001" ;
+    min:hasName          "Grenzwertliste Getriebeschwingungen" ;
+    min:encodes          ex:Schwingungsgrenzwert_Stufe2 .
+
+# --- Stützinstanzen ---
+
+ex:Getriebe_G5 a min:Object ;
+    min:hasName "Planetengetriebe Gondel 5" .
+
+ex:Sensor_VIB_G5 a min:Object ;
+    min:hasName "Beschleunigungssensor Gondel 5" .
+
+ex:Schwingungsmessung_G5 a min:Process ;
+    min:hasName   "Schwingungsmessung Getriebe G5" ;
+    min:hasInput  ex:Getriebe_G5 ;
+    min:hasOutput ex:Getriebe_G5 ;
+    min:generates ex:Schwingungsdaten_G5_2026 .
+
+ex:Schwingungsgrenzwert_Stufe2 a min:Norma ;
+    min:hasName "Schwingungsgrenzwert Alarmstufe 2" ;
+    min:hasDescription "Effektivwert ≤ 7.1 mm/s (ISO 10816-21)" ;
+    min:evaluates ex:Getriebe_G5 .

@@ -1,0 +1,86 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Institutio
+#
+#   Szenario: ISO-9001-Zertifizierung eines Fertigungsbetriebs.
+#   Zeigt: constitutedBy, recognizedBy, encodedBy, Abgrenzung
+#          Institutio vs. Agent vs. Data.
+#
+#   Die Zertifizierung ist Institutio — ein soziales Konstrukt,
+#   das nur existiert, weil Agenten es anerkennen.
+#   Der Zertifizierungsauditor ist Agent.
+#   Die Zertifikatsurkunde ist Data (kodiert die Institutio).
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:gueltig_bis a owl:DatatypeProperty ;
+    rdfs:domain min:Institutio ;
+    rdfs:range xsd:date .
+
+ex:geltungsbereich a owl:DatatypeProperty ;
+    rdfs:domain min:Institutio ;
+    rdfs:range xsd:string .
+
+# --- Institutio-Instanzen ---
+
+ex:ISO9001_Zertifizierung_WerkA a min:Institutio ;
+    min:hasIdentifier       "INST-ISO9001-WERKA" ;
+    min:hasName             "ISO 9001:2015 Zertifizierung Werk A" ;
+    min:hasDescription      "Qualitätsmanagementsystem Werk A, Geltungsbereich Fertigung" ;
+    min:hasStatus           "gültig" ;
+    ex:gueltig_bis          "2028-06-30"^^xsd:date ;
+    ex:geltungsbereich      "Fertigung von Getriebegehäusen und Wellen" ;
+    min:constitutedBy       ex:TUeV_Sued ;
+    min:recognizedBy        ex:TUeV_Sued ;
+    min:recognizedBy        ex:Kunde_OEM_Nord .
+
+# Das Zertifikat (Urkunde) ist Data — es kodiert die Institutio.
+ex:Zertifikatsurkunde_ISO9001 a min:Data ;
+    min:hasName  "Zertifikatsurkunde ISO 9001 Werk A" ;
+    min:encodes  ex:ISO9001_Zertifizierung_WerkA .
+
+# --- Stützinstanzen ---
+
+ex:Auditbericht_WerkA a min:Object ;
+    min:hasName "Auditunterlagen Werk A (Papierordner)" .
+
+ex:Auditbericht_WerkA_bewertet a min:Object ;
+    min:hasName "Auditunterlagen Werk A (bewertet)" .
+
+ex:Zertifizierungsaudit_WerkA a min:Process ;
+    min:hasIdentifier "OP-AUDIT-ISO-WERKA" ;
+    min:hasName       "Zertifizierungsaudit ISO 9001 Werk A" ;
+    min:hasInput      ex:Auditbericht_WerkA ;
+    min:hasOutput     ex:Auditbericht_WerkA_bewertet ;
+    min:generates     ex:Zertifikatsurkunde_ISO9001 .
+
+ex:TUeV_Sued a min:Agent ;
+    min:hasIdentifier "ORG-TUEV-SUED" ;
+    min:hasName       "TÜV SÜD Management Service GmbH" ;
+    min:performs      ex:Zertifizierungsaudit_WerkA ;
+    min:constitutes   ex:ISO9001_Zertifizierung_WerkA .
+
+ex:Kunde_OEM_Nord a min:Agent ;
+    min:hasIdentifier "ORG-OEM-NORD" ;
+    min:hasName       "OEM Nord GmbH (Auftraggeber)" ;
+    min:performs      ex:Lieferantenfreigabe_WerkA ;
+    min:recognizes    ex:ISO9001_Zertifizierung_WerkA .
+
+ex:Freigabeunterlagen_WerkA a min:Object ;
+    min:hasName "Freigabeunterlagen Werk A" .
+
+ex:Freigabeunterlagen_WerkA_geprueft a min:Object ;
+    min:hasName "Freigabeunterlagen Werk A (geprüft)" .
+
+ex:Lieferantenfreigabe_WerkA a min:Process ;
+    min:hasName   "Lieferantenfreigabe Werk A" ;
+    min:hasInput  ex:Freigabeunterlagen_WerkA ;
+    min:hasOutput ex:Freigabeunterlagen_WerkA_geprueft .

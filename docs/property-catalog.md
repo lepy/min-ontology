@@ -1,13 +1,14 @@
-# MIN Property Catalog (v3.0.0)
+# MIN Property Catalog (v3.1.0)
 
 This page lists the properties defined by MIN and groups them by modeling role.
 
 ## 1. Polarity super-properties (schema level)
 
-These are used to classify domain-specific properties:
+These are used to classify domain-specific properties. Both are typed as
+`owl:AnnotationProperty` (since v3.1.0, previously `rdf:Property`) for OWL-DL compatibility.
 
-- `min:materialProperty`
-- `min:informationalProperty`
+- `min:materialProperty` (type: `owl:AnnotationProperty`)
+- `min:informationalProperty` (type: `owl:AnnotationProperty`)
 
 Recommended pattern:
 
@@ -25,7 +26,7 @@ ex:massKg a owl:DatatypeProperty ;
 
 ## 3. Nexus category relations
 
-Process/Object:
+Process/Nexus:
 
 - `min:hasInput`
 - `min:hasOutput`
@@ -74,7 +75,9 @@ Norms and possibilities:
 Institutional:
 
 - `min:constitutes`
+- `min:constitutedBy` (inverse of `min:constitutes`)
 - `min:recognizes`
+- `min:recognizedBy` (inverse of `min:recognizes`)
 
 Encoding:
 

@@ -1,0 +1,85 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Norma
+#
+#   Szenario: Maximale Durchbiegung eines Brückenträgers nach Eurocode.
+#   Zeigt: evaluates, encodedBy, Abgrenzung Norma vs. Lex vs. Data.
+#
+#   Norma ≠ Lex: Norma ist konventionell (kann verletzt werden),
+#   Lex ist universell (kann nicht verletzt werden).
+#   Norma ≠ Data: Das Normdokument ist Data, die Anforderung ist Norma.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:eigenschaft a owl:DatatypeProperty ;
+    rdfs:domain min:Norma ;
+    rdfs:range xsd:string .
+
+ex:operator a owl:DatatypeProperty ;
+    rdfs:domain min:Norma ;
+    rdfs:range xsd:string .
+
+ex:schwellenwert a owl:DatatypeProperty ;
+    rdfs:domain min:Norma ;
+    rdfs:range xsd:string .
+
+# --- Norma-Instanzen ---
+
+ex:Max_Durchbiegung_L300 a min:Norma ;
+    min:hasIdentifier    "NORM-DEFL-L300" ;
+    min:hasName          "Maximale Durchbiegung L/300" ;
+    min:hasDescription   "Vertikale Durchbiegung ≤ L/300 unter Verkehrslast (Eurocode EN 1993-2)" ;
+    ex:eigenschaft       "vertikale Durchbiegung" ;
+    ex:operator          "<=" ;
+    ex:schwellenwert     "L/300" ;
+    min:evaluates        ex:Stahltraeger_B12 ;
+    min:evaluates        ex:Brueckenberechnung_Feld12 .
+
+ex:Max_Eigenfrequenz_Fussgaenger a min:Norma ;
+    min:hasIdentifier    "NORM-FREQ-FG" ;
+    min:hasName          "Eigenfrequenzanforderung Fußgängerbrücke" ;
+    min:hasDescription   "Erste vertikale Eigenfrequenz > 5 Hz (EN 1990 Anhang A2)" ;
+    ex:eigenschaft       "1. vertikale Eigenfrequenz" ;
+    ex:operator          ">" ;
+    ex:schwellenwert     "5 Hz" ;
+    min:evaluates        ex:Brueckenfeld_12 .
+
+# Das Normdokument ist Data — es kodiert die Norma.
+ex:Eurocode_EN1993_2 a min:Data ;
+    min:hasName  "DIN EN 1993-2:2010 Stahlbrücken" ;
+    min:encodes  ex:Max_Durchbiegung_L300 .
+
+ex:Eurocode_EN1990_A2 a min:Data ;
+    min:hasName  "DIN EN 1990 Anhang A2 Brücken" ;
+    min:encodes  ex:Max_Eigenfrequenz_Fussgaenger .
+
+# --- Stützinstanzen ---
+
+ex:Stahltraeger_B12 a min:Object ;
+    min:hasName "Stahlträger IPE 300, Brücke Feld 12" .
+
+ex:Brueckenfeld_12 a min:Object ;
+    min:hasName "Brückenfeld 12" .
+
+ex:Brueckenentwurf_Feld12 a min:Object ;
+    min:hasName "Brückenentwurf Feld 12 (CAD)" .
+
+ex:Brueckenstatik_Feld12 a min:Object ;
+    min:hasName "Statiknachweis Feld 12" .
+
+ex:Tragwerksplaner_Lang a min:Agent ;
+    min:hasName  "Lang, M. (Tragwerksplaner)" ;
+    min:performs ex:Brueckenberechnung_Feld12 .
+
+ex:Brueckenberechnung_Feld12 a min:Process ;
+    min:hasName   "Statische Berechnung Brücke Feld 12" ;
+    min:hasInput  ex:Brueckenentwurf_Feld12 ;
+    min:hasOutput ex:Brueckenstatik_Feld12 .

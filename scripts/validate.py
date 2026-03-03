@@ -15,8 +15,19 @@ TTL_FILES = [
     "min-v2.0.0.ttl",
     "min-v2.1.0.ttl",
     "min-v3.0.0.ttl",
+    "min-v3.1.0.ttl",
     "examples/min-example.ttl",
+    "examples/object.ttl",
+    "examples/process.ttl",
+    "examples/data.ttl",
+    "examples/agent.ttl",
+    "examples/lex.ttl",
+    "examples/structura.ttl",
+    "examples/possibile.ttl",
+    "examples/norma.ttl",
+    "examples/institutio.ttl",
     "shapes/min-core.shacl.ttl",
+    "shapes/min-instance.shacl.ttl",
 ]
 
 SPARQL_TESTS = [
@@ -26,6 +37,11 @@ SPARQL_TESTS = [
     ("tests/sparql/test-min-classes-v2.rq", "min.ttl"),
     ("tests/sparql/test-min-polarity-superproperties.rq", "min.ttl"),
     ("tests/sparql/test-min-no-opa-import.rq", "min.ttl"),
+    ("tests/sparql/test-min-forma-classes.rq", "min.ttl"),
+    ("tests/sparql/test-min-entity-partition.rq", "min.ttl"),
+    ("tests/sparql/test-min-disjointness.rq", "min.ttl"),
+    ("tests/sparql/test-min-bridge-relations.rq", "min.ttl"),
+    ("tests/sparql/test-min-inverse-properties.rq", "min.ttl"),
 ]
 
 
@@ -45,7 +61,7 @@ def run_sparql_ask(query_file: Path, data_file: Path) -> bool:
 def main() -> int:
     failures = 0
 
-    print("[1/3] Parsing Turtle files")
+    print("[1/4] Parsing Turtle files")
     for rel in TTL_FILES:
         path = ROOT / rel
         try:
@@ -55,7 +71,7 @@ def main() -> int:
             failures += 1
             print(f"  ERR {rel}: {exc}")
 
-    print("[2/3] Running SPARQL ASK tests")
+    print("[2/4] Running SPARQL ASK tests")
     for query_rel, data_rel in SPARQL_TESTS:
         query_file = ROOT / query_rel
         data_file = ROOT / data_rel
@@ -70,7 +86,7 @@ def main() -> int:
             failures += 1
             print(f"  ERR {query_rel} on {data_rel}: {exc}")
 
-    print("[3/3] Running SHACL validation")
+    print("[3/4] Running Core-SHACL validation")
     data_graph = parse_turtle(ROOT / "min.ttl")
     shapes_graph = parse_turtle(ROOT / "shapes/min-core.shacl.ttl")
     conforms, _, report_text = validate(
@@ -85,8 +101,40 @@ def main() -> int:
         print("  OK  SHACL shapes conform for min.ttl")
     else:
         failures += 1
-        print("  ERR SHACL validation failed")
+        print("  ERR Core-SHACL validation failed")
         print(report_text)
+
+    print("[4/4] Running Instance-SHACL validation")
+    instance_shapes = parse_turtle(ROOT / "shapes/min-instance.shacl.ttl")
+    example_files = [
+        "examples/min-v3.0.0-examples.ttl",
+        "examples/object.ttl",
+        "examples/process.ttl",
+        "examples/data.ttl",
+        "examples/agent.ttl",
+        "examples/lex.ttl",
+        "examples/structura.ttl",
+        "examples/possibile.ttl",
+        "examples/norma.ttl",
+        "examples/institutio.ttl",
+    ]
+    for ex_rel in example_files:
+        instance_graph = parse_turtle(ROOT / "min.ttl")
+        instance_graph.parse(ROOT / ex_rel, format="turtle")
+        conforms, _, report_text = validate(
+            instance_graph,
+            shacl_graph=instance_shapes,
+            inference="rdfs",
+            abort_on_first=False,
+            allow_infos=False,
+            allow_warnings=True,
+        )
+        if conforms:
+            print(f"  OK  Instance-SHACL: {ex_rel}")
+        else:
+            failures += 1
+            print(f"  ERR Instance-SHACL: {ex_rel}")
+            print(report_text)
 
     if failures:
         print(f"Validation finished with {failures} error(s).")

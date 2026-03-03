@@ -1,0 +1,71 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Possibile
+#
+#   Szenario: Ermüdungsriss an einer Schweißnaht (Offshore-Windkraft).
+#   Zeigt: concerns, alternativeTo, encodedBy, realizes (wenn realisiert).
+#
+#   Ein Possibile geschieht NICHT — es KÖNNTE geschehen.
+#   Wenn es eintritt, wird der reale Vorgang ein Process,
+#   der das Possibile realizes.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:wahrscheinlichkeit a owl:DatatypeProperty ;
+    rdfs:domain min:Possibile ;
+    rdfs:range xsd:float .
+
+ex:bedingung a owl:DatatypeProperty ;
+    rdfs:domain min:Possibile ;
+    rdfs:range xsd:string .
+
+# --- Possibile-Instanzen ---
+
+ex:Ermuedungsriss_Naht_G5 a min:Possibile ;
+    min:hasIdentifier       "POSS-FATIGUE-G5" ;
+    min:hasName             "Ermüdungsriss Schweißnaht Turmfuß Gondel 5" ;
+    min:hasDescription      "Rissinitiierung an Nahtübergang nach > 10⁷ Lastwechseln" ;
+    ex:wahrscheinlichkeit   0.08 ;
+    ex:bedingung            "N > 10⁷ LW, ΔK > ΔK_th, keine Nachbehandlung" ;
+    min:concerns            ex:Schweissnaht_Turmfuss_G5 ;
+    min:alternativeTo       ex:Inspektion_G5_2026 .
+
+# Nicht realisiertes Possibile (reine Möglichkeit)
+ex:Blattbruch_Szenario_G5 a min:Possibile ;
+    min:hasIdentifier       "POSS-BLADE-G5" ;
+    min:hasName             "Blattbruch bei Extremwind Gondel 5" ;
+    ex:wahrscheinlichkeit   0.002 ;
+    ex:bedingung            "v_wind > 70 m/s, Pitchsystem ausgefallen" ;
+    min:concerns            ex:Rotorblatt_G5 .
+
+# Kodierung: Die FMEA-Tabelle ist Data, das Possibile ist Forma.
+ex:FMEA_Offshore_G5 a min:Data ;
+    min:hasName  "FMEA Offshore-Anlage Gondel 5" ;
+    min:encodes  ex:Ermuedungsriss_Naht_G5 ;
+    min:encodes  ex:Blattbruch_Szenario_G5 .
+
+# --- Stützinstanzen ---
+
+ex:Schweissnaht_Turmfuss_G5 a min:Object ;
+    min:hasName "Schweißnaht Turmfuß Gondel 5" .
+
+ex:Rotorblatt_G5 a min:Object ;
+    min:hasName "Rotorblatt 1 Gondel 5" .
+
+ex:Inspekteur_Hansen a min:Agent ;
+    min:hasName  "Hansen, L. (Offshore-Inspekteur)" ;
+    min:performs ex:Inspektion_G5_2026 .
+
+ex:Inspektion_G5_2026 a min:Process ;
+    min:hasIdentifier "OP-INSP-G5-2026" ;
+    min:hasName       "Jahresinspektion Gondel 5" ;
+    min:hasInput      ex:Schweissnaht_Turmfuss_G5 ;
+    min:hasOutput     ex:Schweissnaht_Turmfuss_G5 .

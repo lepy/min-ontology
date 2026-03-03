@@ -15,6 +15,7 @@ nav:
   - Model: min-model.md
   - Class Catalog: class-catalog.md
   - Property Catalog: property-catalog.md
+  - Examples: examples.md
   - Versioning: versioning.md
   - Changelog: changelog.md
   - Visualisierung v3.0.0: min-v3_0_0-visualization.html

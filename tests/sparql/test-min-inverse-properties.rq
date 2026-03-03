@@ -1,0 +1,15 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  min:undergoes owl:inverseOf min:hasInput .
+  min:resultOf owl:inverseOf min:hasOutput .
+  min:performedBy owl:inverseOf min:performs .
+  min:affectedBy owl:inverseOf min:actsOn .
+  min:describedBy owl:inverseOf min:describes .
+  min:generatedBy owl:inverseOf min:generates .
+  min:realizedBy owl:inverseOf min:realizes .
+  min:encodedBy owl:inverseOf min:encodes .
+  min:constitutedBy owl:inverseOf min:constitutes .
+  min:recognizedBy owl:inverseOf min:recognizes .
+}

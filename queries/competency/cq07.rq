@@ -1,0 +1,10 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ07: Wer hat welche Institutio konstituiert? (constitutes)
+SELECT ?agent ?agentName ?institutio ?institutioName WHERE {
+  ?agent min:constitutes ?institutio .
+  ?institutio a min:Institutio .
+  OPTIONAL { ?agent min:hasName ?agentName . }
+  OPTIONAL { ?institutio min:hasName ?institutioName . }
+}
+LIMIT 25

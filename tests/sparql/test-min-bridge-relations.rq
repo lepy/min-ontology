@@ -1,0 +1,19 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  min:realizes a owl:ObjectProperty .
+  min:realizedBy a owl:ObjectProperty .
+  min:constrains a owl:ObjectProperty .
+  min:governs a owl:ObjectProperty .
+  min:formalizes a owl:ObjectProperty .
+  min:evaluates a owl:ObjectProperty .
+  min:concerns a owl:ObjectProperty .
+  min:alternativeTo a owl:ObjectProperty .
+  min:constitutes a owl:ObjectProperty .
+  min:constitutedBy a owl:ObjectProperty .
+  min:recognizes a owl:ObjectProperty .
+  min:recognizedBy a owl:ObjectProperty .
+  min:encodes a owl:ObjectProperty .
+  min:encodedBy a owl:ObjectProperty .
+}

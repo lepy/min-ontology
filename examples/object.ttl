@@ -1,0 +1,62 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Object
+#
+#   Szenario: Ein Stahlträger (IPE 300) in einer Brückenkonstruktion.
+#   Zeigt: materiale und informationale Domänen-Properties,
+#          hasComponent-Mereologie, Beziehung zu Process (undergoes).
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:masse_kg a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+ex:laenge_m a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+ex:werkstoffNr a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .
+
+ex:profilbezeichnung a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .
+
+# --- Object-Instanzen ---
+
+ex:Stahltraeger_B12 a min:Object ;
+    min:hasIdentifier    "OBJ-IPE300-B12" ;
+    min:hasName          "Stahlträger IPE 300, Brücke Feld 12" ;
+    min:hasStatus        "montiert" ;
+    ex:masse_kg          420.0 ;
+    ex:laenge_m          10.0 ;
+    ex:werkstoffNr       "1.0577" ;
+    ex:profilbezeichnung "IPE 300" ;
+    min:undergoes        ex:Feuerverzinken_B12 .
+
+ex:Brueckenfeld_12 a min:Object ;
+    min:hasIdentifier    "OBJ-FELD-12" ;
+    min:hasName          "Brückenfeld 12" ;
+    min:hasDescription   "Nordseite, Spannweite 30 m" ;
+    min:hasComponent     ex:Stahltraeger_B12 .
+
+# --- Stützinstanzen (damit das Beispiel relational vollständig ist) ---
+
+ex:Feuerverzinken_B12 a min:Process ;
+    min:hasName   "Feuerverzinken Träger B12" ;
+    min:hasInput  ex:Stahltraeger_B12 ;
+    min:hasOutput ex:Stahltraeger_B12 .
