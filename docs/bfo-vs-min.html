@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BFO vs MIN — Systematische Kritik und Alternative</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --bfo: #da3633;
+    --min-color: #3fb950;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+
+  .header {
+    padding: 24px 24px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .header h1 {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .header h1 .sep { color: var(--muted); font-weight: 400; }
+  .header h1 .bfo-t { color: var(--bfo); }
+  .header h1 .vs { color: var(--muted); font-weight: 400; font-size: 14px; }
+  .header h1 .min-t { color: var(--min-color); }
+
+  .version-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding: 2px 8px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 6px 0 14px;
+    line-height: 1.4;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 8px 18px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 6px 6px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    letter-spacing: 0.03em;
+  }
+
+  .tab-btn.active {
+    background: rgba(88, 166, 255, 0.13);
+    color: var(--accent);
+    border-color: rgba(88, 166, 255, 0.33);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .content {
+    padding: 20px 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* =============== SHARED COMPONENTS =============== */
+  .section-label {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .badge-bfo {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 9px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: rgba(218, 54, 51, 0.13);
+    color: #ff7b72;
+    border: 1px solid rgba(218, 54, 51, 0.2);
+  }
+
+  .badge-min {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 9px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: rgba(63, 185, 80, 0.13);
+    color: #3fb950;
+    border: 1px solid rgba(63, 185, 80, 0.2);
+  }
+
+  .badge-neutral {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 9px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: rgba(139, 148, 158, 0.13);
+    color: #8b949e;
+    border: 1px solid rgba(139, 148, 158, 0.2);
+  }
+
+  /* =============== ISSUE CARDS =============== */
+  .issue-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    overflow: hidden;
+  }
+
+  .issue-card:hover { background: #1c2129; }
+
+  .issue-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .issue-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .issue-number {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--muted);
+    min-width: 24px;
+  }
+
+  .issue-title {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .issue-severity {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 9px;
+    font-size: 9px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .sev-fundamental {
+    background: rgba(218, 54, 51, 0.2);
+    color: #ff7b72;
+    border: 1px solid rgba(218, 54, 51, 0.4);
+  }
+
+  .sev-structural {
+    background: rgba(255, 166, 87, 0.15);
+    color: #ffa657;
+    border: 1px solid rgba(255, 166, 87, 0.3);
+  }
+
+  .sev-practical {
+    background: rgba(88, 166, 255, 0.15);
+    color: #58a6ff;
+    border: 1px solid rgba(88, 166, 255, 0.3);
+  }
+
+  .issue-details {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .issue-card.expanded .issue-details { display: block; }
+
+  .issue-col-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  @media (max-width: 700px) {
+    .issue-col-grid { grid-template-columns: 1fr; }
+  }
+
+  .issue-col {
+    padding: 14px 16px;
+  }
+
+  .issue-col-bfo {
+    background: rgba(218, 54, 51, 0.04);
+    border-right: 1px solid var(--border);
+  }
+
+  .issue-col-min {
+    background: rgba(63, 185, 80, 0.04);
+  }
+
+  .issue-col h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .issue-col p {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .code-inline {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--text);
+    display: block;
+    margin: 8px 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .verdict {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(88, 166, 255, 0.04);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    line-height: 1.5;
+  }
+
+  /* =============== OVERVIEW SVG =============== */
+  .overview-svg {
+    width: 100%;
+    max-height: 520px;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  /* =============== COMPARISON TABLE =============== */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .comp-table th {
+    text-align: left;
+    padding: 10px 14px;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid var(--border);
+    background: var(--surface);
+  }
+
+  .comp-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .comp-table tr:hover td { background: rgba(88, 166, 255, 0.03); }
+
+  .comp-table .aspect { color: var(--text); font-weight: 600; }
+  .comp-table .bfo-val { color: #ff7b72; }
+  .comp-table .min-val { color: #3fb950; }
+
+  /* =============== HIERARCHY VIS =============== */
+  .hier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .hier-grid { grid-template-columns: 1fr; }
+  }
+
+  .hier-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .hier-box h3 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hier-box pre {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* =============== FAIRNESS =============== */
+  .fairness-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .fairness-card h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: #ff7b72;
+    margin-bottom: 6px;
+  }
+
+  .fairness-card p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* =============== STATS =============== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stat-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* =============== QUOTE =============== */
+  .quote-box {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.5;
+  }
+
+  .quote-box .attr {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 11px;
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* =============== FOOTER =============== */
+  .footer {
+    padding: 12px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-align: center;
+    background: var(--surface);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .expand-chevron {
+    color: var(--muted);
+    font-size: 14px;
+    transition: transform 0.15s ease;
+  }
+  .issue-card.expanded .expand-chevron { transform: rotate(90deg); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>
+    <span class="bfo-t">BFO</span>
+    <span class="vs"> vs </span>
+    <span class="min-t">MIN</span>
+    <span class="sep"> — </span>
+    Systematische Kritik und Alternative
+    <span class="version-badge">14 Unzulänglichkeiten</span>
+  </h1>
+  <p class="subtitle">Warum die Basic Formal Ontology für Ingenieure nicht funktioniert — und wie MIN v3.2.0 es besser macht.</p>
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="0">◉ Übersicht</button>
+    <button class="tab-btn" data-tab="1">▣ 14 Unzulänglichkeiten</button>
+    <button class="tab-btn" data-tab="2">⇄ Hierarchievergleich</button>
+    <button class="tab-btn" data-tab="3">⊞ Vergleichstabelle</button>
+    <button class="tab-btn" data-tab="4">⚖ Fairness</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ==================== TAB 0: OVERVIEW ==================== -->
+<div class="tab-panel active" id="panel-0">
+
+<div class="quote-box">
+  „MIN ist keine Metaphysik. MIN ist Werkzeug."
+  <span class="attr">— MIN Designprinzip</span>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card" style="border-top:3px solid var(--bfo)">
+    <div class="stat-num" style="color:var(--bfo)">38</div>
+    <div class="stat-label">BFO Klassen</div>
+    <div class="stat-sub">+ CCO + IAO + IOF</div>
+  </div>
+  <div class="stat-card" style="border-top:3px solid var(--min-color)">
+    <div class="stat-num" style="color:var(--min-color)">13</div>
+    <div class="stat-label">MIN Klassen</div>
+    <div class="stat-sub">5 Nexus + 5 Forma + 3 Wurzel</div>
+  </div>
+  <div class="stat-card" style="border-top:3px solid #ffa657">
+    <div class="stat-num" style="color:#ffa657">4</div>
+    <div class="stat-label">Schichten bis Domäne</div>
+    <div class="stat-sub">BFO → CCO → IOF → Domain</div>
+  </div>
+  <div class="stat-card" style="border-top:3px solid #58a6ff">
+    <div class="stat-num" style="color:#58a6ff">3</div>
+    <div class="stat-label">Schichten bis Domäne</div>
+    <div class="stat-sub">MIN → sdata-core → Domain</div>
+  </div>
+  <div class="stat-card" style="border-top:3px solid #d2a8ff">
+    <div class="stat-num" style="color:#d2a8ff">5</div>
+    <div class="stat-label">Fehlende Konzepte</div>
+    <div class="stat-sub">Agent · Data · Boundary · Norma · Institutio</div>
+  </div>
+  <div class="stat-card" style="border-top:3px solid #f778ba">
+    <div class="stat-num" style="color:#f778ba">14</div>
+    <div class="stat-label">Unzulänglichkeiten</div>
+    <div class="stat-sub">5 fundamental · 5 strukturell · 4 praktisch</div>
+  </div>
+</div>
+
+<svg class="overview-svg" viewBox="0 0 960 500">
+  <defs>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arr-r" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#da3633"/></marker>
+    <marker id="arr-g" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3fb950"/></marker>
+    <marker id="arr-m" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#8b949e"/></marker>
+  </defs>
+
+  <!-- Divider -->
+  <line x1="480" y1="20" x2="480" y2="480" stroke="var(--border)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="480" y="14" fill="var(--muted)" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">VS</text>
+
+  <!-- ======= BFO SIDE ======= -->
+  <text x="240" y="38" fill="#ff7b72" font-size="14" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="800">BFO 2020</text>
+  <text x="240" y="52" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">„Was IST es?"</text>
+
+  <!-- BFO Entity -->
+  <rect x="200" y="62" width="80" height="26" rx="4" fill="var(--surface)" stroke="#8b949e" stroke-width="1"/>
+  <text x="240" y="79" fill="#8b949e" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Entity</text>
+
+  <!-- BFO Continuant -->
+  <line x1="220" y1="88" x2="140" y2="110" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="80" y="110" width="120" height="26" rx="4" fill="var(--surface)" stroke="#ff7b72" stroke-width="1"/>
+  <text x="140" y="127" fill="#ff7b72" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Continuant</text>
+
+  <!-- BFO Occurrent -->
+  <line x1="260" y1="88" x2="340" y2="110" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="285" y="110" width="110" height="26" rx="4" fill="var(--surface)" stroke="#ff7b72" stroke-width="1"/>
+  <text x="340" y="127" fill="#ff7b72" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Occurrent</text>
+
+  <!-- BFO Independent Continuant -->
+  <line x1="110" y1="136" x2="70" y2="158" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="6" y="158" width="128" height="22" rx="3" fill="var(--surface)" stroke="#da363388" stroke-width="0.8"/>
+  <text x="70" y="173" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Indep. Continuant</text>
+
+  <!-- BFO Dependent Continuant -->
+  <line x1="170" y1="136" x2="210" y2="158" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="144" y="158" width="128" height="22" rx="3" fill="var(--surface)" stroke="#da363388" stroke-width="0.8"/>
+  <text x="208" y="173" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Dep. Continuant</text>
+
+  <!-- BFO Material Entity -->
+  <line x1="50" y1="180" x2="50" y2="200" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="6" y="200" width="88" height="22" rx="3" fill="var(--surface)" stroke="#da363344" stroke-width="0.8"/>
+  <text x="50" y="215" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Mat. Entity</text>
+
+  <!-- BFO Object -->
+  <line x1="50" y1="222" x2="50" y2="240" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="18" y="240" width="64" height="22" rx="3" fill="var(--surface)" stroke="#f0883e" stroke-width="1"/>
+  <text x="50" y="255" fill="#f0883e" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Object</text>
+
+  <!-- BFO SDC / Quality -->
+  <line x1="208" y1="180" x2="208" y2="200" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="178" y="200" width="60" height="22" rx="3" fill="var(--surface)" stroke="#da363344" stroke-width="0.8"/>
+  <text x="208" y="215" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">SDC</text>
+
+  <line x1="208" y1="222" x2="208" y2="240" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="178" y="240" width="60" height="22" rx="3" fill="var(--surface)" stroke="#a371f7" stroke-width="1"/>
+  <text x="208" y="255" fill="#a371f7" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Quality</text>
+
+  <!-- BFO GDC -->
+  <line x1="140" y1="136" x2="140" y2="280" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="105" y="280" width="70" height="22" rx="3" fill="var(--surface)" stroke="#da363344" stroke-width="0.8"/>
+  <text x="140" y="295" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">GDC</text>
+
+  <!-- BFO Process -->
+  <line x1="340" y1="136" x2="340" y2="158" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="306" y="158" width="68" height="22" rx="3" fill="var(--surface)" stroke="#da3633" stroke-width="1"/>
+  <text x="340" y="173" fill="#da3633" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Process</text>
+
+  <!-- Depth annotation BFO -->
+  <line x1="280" y1="68" x2="280" y2="258" stroke="rgba(218,54,51,0.2)" stroke-width="1"/>
+  <text x="284" y="252" fill="rgba(218,54,51,0.4)" font-size="8" font-family="JetBrains Mono,monospace" transform="rotate(-90,284,252)">5 Stufen bis Object</text>
+
+  <!-- Missing concepts -->
+  <g transform="translate(30,330)">
+    <rect x="0" y="0" width="420" height="150" rx="6" fill="rgba(218,54,51,0.04)" stroke="rgba(218,54,51,0.2)" stroke-dasharray="4 3"/>
+    <text x="12" y="18" fill="#ff7b72" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace">✗ Fehlende Konzepte in BFO</text>
+
+    <rect x="12" y="28" width="56" height="20" rx="3" fill="rgba(63,185,80,0.1)" stroke="rgba(63,185,80,0.3)"/>
+    <text x="40" y="42" fill="#3fb950" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Agent</text>
+    <text x="78" y="42" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ via CCO Role (6 Stufen)</text>
+
+    <rect x="12" y="54" width="46" height="20" rx="3" fill="rgba(163,113,247,0.1)" stroke="rgba(163,113,247,0.3)"/>
+    <text x="35" y="68" fill="#a371f7" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Data</text>
+    <text x="68" y="68" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ via IAO (GDC + concretized_by)</text>
+
+    <rect x="12" y="80" width="76" height="20" rx="3" fill="rgba(88,166,255,0.1)" stroke="rgba(88,166,255,0.3)"/>
+    <text x="50" y="94" fill="#58a6ff" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Boundary</text>
+    <text x="98" y="94" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ Fiat Boundary (nur geometrisch)</text>
+
+    <rect x="220" y="28" width="60" height="20" rx="3" fill="rgba(247,120,186,0.1)" stroke="rgba(247,120,186,0.3)"/>
+    <text x="250" y="42" fill="#f778ba" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Norma</text>
+    <text x="290" y="42" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ IOF Specification (debattiert)</text>
+
+    <rect x="220" y="54" width="80" height="20" rx="3" fill="rgba(126,231,135,0.1)" stroke="rgba(126,231,135,0.3)"/>
+    <text x="260" y="68" fill="#7ee787" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Institutio</text>
+    <text x="310" y="68" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ keine native Klasse</text>
+
+    <rect x="220" y="80" width="80" height="20" rx="3" fill="rgba(255,166,87,0.1)" stroke="rgba(255,166,87,0.3)"/>
+    <text x="260" y="94" fill="#ffa657" font-size="9" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Possibile</text>
+    <text x="310" y="94" fill="var(--muted)" font-size="8" font-family="JetBrains Mono,monospace">→ Universals-Doktrin schließt aus</text>
+
+    <text x="12" y="130" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace">participates_in: keine Identitätssemantik · keine Polarität · keine nativen Brückenrelationen</text>
+    <text x="12" y="143" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace">Quality-Instanzen: 10.000 Blank Nodes statt 10.000 Triples</text>
+  </g>
+
+  <!-- ======= MIN SIDE ======= -->
+  <text x="720" y="38" fill="#3fb950" font-size="14" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="800">MIN v3.2.0</text>
+  <text x="720" y="52" fill="var(--muted)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">„Bewirkt es etwas?"</text>
+
+  <!-- MIN Entity -->
+  <rect x="680" y="62" width="80" height="26" rx="4" fill="var(--surface)" stroke="#8b949e" stroke-width="1"/>
+  <text x="720" y="79" fill="#8b949e" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Entity</text>
+
+  <!-- MIN Nexus -->
+  <line x1="700" y1="88" x2="620" y2="110" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="580" y="110" width="80" height="26" rx="4" fill="var(--surface)" stroke="#58a6ff" stroke-width="1.2" filter="url(#glow)"/>
+  <text x="620" y="127" fill="#58a6ff" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace" text-anchor="middle">Nexus</text>
+
+  <!-- MIN Forma -->
+  <line x1="740" y1="88" x2="840" y2="110" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="800" y="110" width="80" height="26" rx="4" fill="var(--surface)" stroke="#d2a8ff" stroke-width="1.2" filter="url(#glow)"/>
+  <text x="840" y="127" fill="#d2a8ff" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace" text-anchor="middle">Forma</text>
+
+  <!-- MIN Nexus children -->
+  <line x1="600" y1="136" x2="540" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="508" y="165" width="64" height="24" rx="4" fill="var(--surface)" stroke="#f0883e" stroke-width="1"/>
+  <text x="540" y="181" fill="#f0883e" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Object</text>
+
+  <line x1="620" y1="136" x2="620" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="586" y="165" width="68" height="24" rx="4" fill="var(--surface)" stroke="#da3633" stroke-width="1"/>
+  <text x="620" y="181" fill="#da3633" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Process</text>
+
+  <line x1="640" y1="136" x2="700" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="672" y="165" width="56" height="24" rx="4" fill="var(--surface)" stroke="#a371f7" stroke-width="1"/>
+  <text x="700" y="181" fill="#a371f7" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Data</text>
+
+  <line x1="600" y1="136" x2="566" y2="210" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="532" y="210" width="68" height="24" rx="4" fill="var(--surface)" stroke="#3fb950" stroke-width="1"/>
+  <text x="566" y="226" fill="#3fb950" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Agent</text>
+  <text x="601" y="228" fill="rgba(63,185,80,0.5)" font-size="8" font-family="JetBrains Mono,monospace">≠⊥</text>
+
+  <line x1="620" y1="136" x2="674" y2="210" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="640" y="210" width="68" height="24" rx="4" fill="var(--surface)" stroke="#58a6ff" stroke-width="1"/>
+  <text x="674" y="226" fill="#58a6ff" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Boundary</text>
+
+  <!-- MIN Forma children -->
+  <line x1="820" y1="136" x2="790" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="768" y="165" width="44" height="24" rx="4" fill="var(--surface)" stroke="#ff7b72" stroke-width="1"/>
+  <text x="790" y="181" fill="#ff7b72" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Lex</text>
+
+  <line x1="840" y1="136" x2="860" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="822" y="165" width="76" height="24" rx="4" fill="var(--surface)" stroke="#79c0ff" stroke-width="1"/>
+  <text x="860" y="181" fill="#79c0ff" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Structura</text>
+
+  <line x1="860" y1="136" x2="930" y2="165" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="900" y="165" width="56" height="24" rx="4" fill="var(--surface)" stroke="#ffa657" stroke-width="1"/>
+  <text x="928" y="181" fill="#ffa657" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Poss.</text>
+
+  <line x1="830" y1="136" x2="810" y2="210" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="780" y="210" width="60" height="24" rx="4" fill="var(--surface)" stroke="#f778ba" stroke-width="1"/>
+  <text x="810" y="226" fill="#f778ba" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Norma</text>
+
+  <line x1="850" y1="136" x2="890" y2="210" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <rect x="853" y="210" width="76" height="24" rx="4" fill="var(--surface)" stroke="#7ee787" stroke-width="1"/>
+  <text x="891" y="226" fill="#7ee787" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Institutio</text>
+
+  <!-- Depth annotation MIN -->
+  <line x1="740" y1="68" x2="740" y2="188" stroke="rgba(63,185,80,0.2)" stroke-width="1"/>
+  <text x="744" y="180" fill="rgba(63,185,80,0.4)" font-size="8" font-family="JetBrains Mono,monospace" transform="rotate(-90,744,175)">1 Stufe bis Object</text>
+
+  <!-- Key relations on MIN side -->
+  <line x1="620" y1="189" x2="540" y2="175" stroke="rgba(218,54,51,0.4)" stroke-width="1" marker-end="url(#arr-r)"/>
+  <text x="572" y="172" fill="rgba(218,54,51,0.6)" font-size="7" font-family="JetBrains Mono,monospace" text-anchor="middle">hasInput</text>
+
+  <line x1="620" y1="189" x2="700" y2="175" stroke="rgba(218,54,51,0.4)" stroke-width="1" marker-end="url(#arr-r)"/>
+  <text x="668" y="172" fill="rgba(218,54,51,0.6)" font-size="7" font-family="JetBrains Mono,monospace" text-anchor="middle">generates</text>
+
+  <line x1="566" y1="210" x2="620" y2="189" stroke="rgba(63,185,80,0.4)" stroke-width="1" marker-end="url(#arr-g)"/>
+  <text x="585" y="194" fill="rgba(63,185,80,0.6)" font-size="7" font-family="JetBrains Mono,monospace" text-anchor="middle">performs</text>
+
+  <!-- Bridge relations -->
+  <path d="M 620 136 Q 730 148 800 136" fill="none" stroke="rgba(88,166,255,0.3)" stroke-width="1.2"/>
+  <text x="710" y="146" fill="rgba(88,166,255,0.5)" font-size="7" font-family="JetBrains Mono,monospace" text-anchor="middle">realizes · constrains</text>
+
+  <!-- MIN advantages box -->
+  <g transform="translate(500,270)">
+    <rect x="0" y="0" width="440" height="170" rx="6" fill="rgba(63,185,80,0.04)" stroke="rgba(63,185,80,0.2)" stroke-dasharray="4 3"/>
+    <text x="12" y="18" fill="#3fb950" font-size="10" font-weight="700" font-family="JetBrains Mono,monospace">✓ MIN-Vorteile</text>
+
+    <text x="12" y="38" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Kausalität statt Klassifikation</text>
+    <text x="12" y="53" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Agent, Data, Boundary, Norma, Institutio: erstklassig</text>
+    <text x="12" y="68" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Properties statt Quality-Instanzen → flacher Graph</text>
+    <text x="12" y="83" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• hasInput/hasOutput (neue ID) vs undergoes (selbe ID)</text>
+    <text x="12" y="98" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• materialProperty / informationalProperty → Polarität</text>
+    <text x="12" y="113" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Nativ OWL 2 — kein FOL-Übersetzungsverlust</text>
+    <text x="12" y="128" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Keine Continuant/Occurrent-Dichotomie</text>
+    <text x="12" y="143" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Possibile für Szenarien, FMEA, Designalternativen</text>
+    <text x="12" y="158" fill="var(--text)" font-size="9" font-family="JetBrains Mono,monospace">• Dual-Typing: Agent ∩ Object, Agent ∩ Data erlaubt</text>
+  </g>
+</svg>
+
+<div class="quote-box" style="border-color:#ff7b72;color:#ff7b72">
+  „Der Ingenieur will nicht wissen, ob ein Übergangswiderstand ein ‹dependent continuant› ist. Er will wissen, ob und wie er den Fügepunkt bei Widerstandsschweißen beeinflusst."
+  <span class="attr">— MIN v3.2.0 · min:Nexus rdfs:comment</span>
+</div>
+
+</div>
+
+<!-- ==================== TAB 1: 14 ISSUES ==================== -->
+<div class="tab-panel" id="panel-1"></div>
+
+<!-- ==================== TAB 2: HIERARCHY ==================== -->
+<div class="tab-panel" id="panel-2"></div>
+
+<!-- ==================== TAB 3: TABLE ==================== -->
+<div class="tab-panel" id="panel-3"></div>
+
+<!-- ==================== TAB 4: FAIRNESS ==================== -->
+<div class="tab-panel" id="panel-4"></div>
+
+</div>
+
+<div class="footer">
+  BFO vs MIN · 14 Unzulänglichkeiten · MIN v3.2.0 · CC BY 4.0 · Dr. Ingolf Lepenies · 2026-03-04
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ============ TAB 1: 14 ISSUES ============
+(function(){
+const issues = [
+  { num:"01", title:"Klassifikation statt Kausalität", severity:"fundamental", sevLabel:"FUNDAMENTAL",
+    bfo:`BFO fragt: <em>Was IST es?</em> Die Antwort ist eine Schublade. Continuant oder Occurrent? Independent oder Dependent? Fünf Hierarchiestufen, bevor man beim ersten Ingenieurbegriff ankommt.`,
+    bfoCode:`Entity → Continuant → Indep.Cont. → Mat.Entity → Object\nEntity → Occurrent → Process\nEntity → Cont. → Dep.Cont. → SDC → Quality`,
+    min:`MIN fragt: <em>Bewirkt es etwas?</em> Jedes Ding wird nach seiner Wirkweise klassifiziert, nicht nach seiner Seinsweise.`,
+    minCode:`ex:coil_01   a min:Object .   # bewirkt Widerstand\nex:zugv_01   a min:Process .  # bewirkt Formänderung\nex:coil_01 ex:Rm_MPa 352.0 . # flache Property`,
+    verdict:`BFO sortiert. MIN denkt kausal. Für Ingenieure ist Wirkung relevanter als Einordnung.` },
+  { num:"02", title:"38 Klassen für Philosophen", severity:"structural", sevLabel:"STRUKTURELL",
+    bfo:`BFO 2020 hat 38 Klassen. Für Ingenieure relevant: ~6 (Object, Process, Quality, Role, Function, Disposition). Der Rest — Zero-Dimensional Temporal Region, Fiat Line, Spatiotemporal Region — ist philosophische Infrastruktur.`,
+    bfoCode:null,
+    min:`MIN hat 13 Klassen. 10 davon sind direkt domänenrelevant. Jede Klasse hat einen Namen, den ein Ingenieur versteht.`,
+    minCode:`Nexus (5): Object · Process · Data · Agent · Boundary\nForma (5): Lex · Structura · Possibile · Norma · Institutio\nWurzel (3): Entity · Nexus · Forma`,
+    verdict:`38 vs 13. Weniger ist mehr, wenn jede Klasse eine klare Ingenieursfrage beantwortet.` },
+  { num:"03", title:"Continuant/Occurrent — falsche Dichotomie", severity:"fundamental", sevLabel:"FUNDAMENTAL",
+    bfo:`BFO teilt alles in Continuant (persistiert) und Occurrent (entfaltet sich). Disjunkt. Ein Organismus ist aber beides. Ein Feuer ist beides. Software ist beides. BFO zwingt zur Wahl.`,
+    bfoCode:`Continuant ⊥ Occurrent   # disjunkt!\n# Feuer: Process? Aber es hat Temperatur...\n# ML-Modell: GDC? Aber es transformiert...`,
+    min:`MIN hat keine Cont./Occ.-Dichotomie. Agent ist explizit nicht disjunkt mit Object/Process/Data. Ein ML-Modell kann gleichzeitig Data und Agent sein.`,
+    minCode:`ex:ml_model a min:Data, min:Agent .  # erlaubt!\n# Data: es hat Bytes, Speicherort\n# Agent: es handelt, transformiert`,
+    verdict:`Dual-Typing statt falscher Dichotomie. Die Welt ist nicht disjunkt — die Ontologie sollte es auch nicht sein.` },
+  { num:"04", title:"Qualities als abhängige Entitäten", severity:"practical", sevLabel:"PRAKTISCH",
+    bfo:`In BFO ist Rm = 352 MPa ein Specifically Dependent Continuant → Quality. Eigene Entität, eigene ID, inheres_in-Relation. Bei 1000 Blechen × 10 Eigenschaften = 10.000 Quality-Instanzen + 10.000 Relationen.`,
+    bfoCode:`_:q1 a bfo:Quality .\n_:q1 bfo:inheres_in ex:blech_01 .\n_:q1 ex:hasValue 352.0 .\n# × 10.000 = 30.000 Triples`,
+    min:`MIN: Properties als owl:DatatypeProperty. Polarität wird auf Schema-Ebene deklariert. Kein Blank Node, kein Zwischenknoten.`,
+    minCode:`ex:blech_01 ex:Rm_MPa 352.0 .  # 1 Triple\n# Polarität:\nex:Rm_MPa rdfs:subPropertyOf min:materialProperty .`,
+    verdict:`30.000 Triples vs 10.000 Triples. Flacher Graph, direkte SPARQL-Queries, kein ontologischer Ballast.` },
+  { num:"05", title:"Kein Agent-Konzept", severity:"fundamental", sevLabel:"FUNDAMENTAL",
+    bfo:`BFO hat keinen Agent. Der IOF muss Agent über CCO als Object + Agent Role (Realizable Entity → SDC → Dep.Cont. → Cont. → Entity) einführen. Sechs Hierarchiestufen.`,
+    bfoCode:`Agent Role → Realizable Entity → SDC\n  → Dep.Cont. → Continuant → Entity\n# 6 Stufen für: „Diese CNC-Maschine handelt."`,
+    min:`Agent ist eine erstklassige Nexus-Kategorie. Nicht disjunkt mit Object/Data. Dual-Typing statt Rollenindirektion.`,
+    minCode:`ex:cnc_01 a min:Agent, min:Object .\nex:cnc_01 min:performs ex:tiefziehen_01 .\n# 2 Triples. Fertig.`,
+    verdict:`Handlungsfähigkeit ist keine Rolle, die man trägt — es ist eine Seinsweise.` },
+  { num:"06", title:"Kein Data-Konzept", severity:"fundamental", sevLabel:"FUNDAMENTAL",
+    bfo:`BFO hat keinen Data-Term. Messdaten werden über IAO als Generically Dependent Continuant modelliert. Inhalt/Träger-Trennung erzwingt zwei Entitäten + concretized_by pro Datei.`,
+    bfoCode:`_:ice a iao:InformationContentEntity . # GDC\n_:ice iao:concretized_by ex:file_01 .  # Material\n# 10.000 Dateien = 30.000 Triples`,
+    min:`Data ist erstklassige Nexus-Kategorie. Bytes auf Speicher. Keine Inhalt/Träger-Trennung auf Grundontologie-Ebene.`,
+    minCode:`ex:messdaten_01 a min:Data .\nex:messdaten_01 min:describes ex:probe_01 .\nex:zugversuch_01 min:generates ex:messdaten_01 .`,
+    verdict:`Der Ingenieur hat eine CSV-Datei. Er will sie parsen, nicht ihre Abhängigkeitsstruktur reflektieren.` },
+  { num:"07", title:"Kein Boundary-Konzept", severity:"fundamental", sevLabel:"FUNDAMENTAL",
+    bfo:`BFO hat Continuant Fiat Boundary — aber nur für willkürlich gesetzte Grenzen (Äquator, Grundstücksgrenze). Kein kausales Boundary für: Reibung, Übergangswiderstand, Adhäsion, Korngrenzdiffusion, Grenzflächenenergie.`,
+    bfoCode:`# Reibung in BFO: Relational Quality?\n# Aber Quality hat keine kausale Wirksamkeit.\n# Reibung dissipiert Energie — sie IST kausal.`,
+    min:`Boundary ist erstklassige Nexus-Kategorie. Irreduzibel relational, kausal wirksam, eigene messbare Eigenschaften. Test: Entferne einen Partner — existiert es noch? Nein → Boundary.`,
+    minCode:`ex:reibung_01 a min:Boundary .\nex:reibung_01 min:bounds ex:werkzeug_01 .\nex:reibung_01 min:bounds ex:werkstueck_01 .\nex:reibung_01 ex:reibungskoeffizient 0.12 .`,
+    verdict:`Grenzphänomene sind irreduzibel relational und kausal wirksam. BFO kann beides nicht modellieren.` },
+  { num:"08", title:"Kein Norma-Konzept", severity:"structural", sevLabel:"STRUKTURELL",
+    bfo:`BFO hat keine Klasse für Anforderungen/Grenzwerte. „Rm ≥ 340 MPa" hat keine Heimat. IOF debattiert seit Jahren: Information Content Entity? Directive? Specification? Objective Specification?`,
+    bfoCode:`# IOF-Debatte:\n# Anforderung = Information Content Entity (IAO)?\n# = Directive Information Entity?\n# = Specification (CCO)?\n# = Objective Specification (IOF)?`,
+    min:`Norma ist erstklassige Forma-Kategorie. Sauber getrennt vom DIN-Dokument (Data), das sie kodiert.`,
+    minCode:`ex:rm_min a min:Norma .\nex:rm_min min:evaluates ex:blech_01 .\nex:din_dok a min:Data .\nex:din_dok min:encodes ex:rm_min .`,
+    verdict:`Jeder Produktpass hat Anforderungen. Die Ontologie braucht dafür eine erstklassige Kategorie — keine jahrelange Debatte.` },
+  { num:"09", title:"Kein Institutio-Konzept", severity:"structural", sevLabel:"STRUKTURELL",
+    bfo:`Geld, Patente, Zertifizierungen, Lizenzen — kein BFO-Term passt. Euro ist kein Object (keine Masse), kein Quality (kein Träger), kein Process (geschieht nicht). BFO wurde für Naturwissenschaften entwickelt.`,
+    bfoCode:null,
+    min:`Institutio ist Forma-Kategorie. Bewirkt nichts, aber bestimmt, wie Agenten handeln. Searles „X counts as Y in context C" hat eine direkte Entsprechung.`,
+    minCode:`ex:euro a min:Institutio .\nex:ezb a min:Agent .\nex:ezb min:constitutes ex:euro .`,
+    verdict:`Ingenieure leben in einer Welt aus Normen, Zertifizierungen, Patenten und Geld. Diese Dinge sind nicht optional.` },
+  { num:"10", title:"Tiefe Hierarchie erzwingt Zwischenschichten", severity:"structural", sevLabel:"STRUKTURELL",
+    bfo:`BFO → CCO (~800 Klassen) → IOF Core (~200 Klassen) → Domäne. Vier Schichten. Jede mit eigenen Maintainern, Release-Zyklen, Inkompatibilitäten. ROMAIN berichtet: „tried, tested and accepted BFO-aligned classes for engineering" fehlen.`,
+    bfoCode:`BFO (38)  →  CCO (~800)  →  IOF (~200)  →  Domain\n  4 Schichten, 4 Release-Zyklen, 4× Inkompatibilität`,
+    min:`MIN (13) → sdata-core (~10) → Domain. Drei Schichten. MIN ist so dünn, dass sdata-core direkt aufsetzt.`,
+    minCode:`MIN (13)  →  sdata-core (~10)  →  sdata-tensile\n  3 Schichten. Fertig.`,
+    verdict:`Je tiefer die Hierarchie, desto mehr Zwischenschichten — und desto mehr Koordinationsaufwand.` },
+  { num:"11", title:"OWL-Inkompatibilität", severity:"practical", sevLabel:"PRAKTISCH",
+    bfo:`BFO wurde in First-Order Logic konzipiert. Die OWL-Version ist „nothing but a bunch of class definitions — no object or data properties or rules" (Ontolog Forum). FOL-Axiome gehen bei der Übersetzung verloren.`,
+    bfoCode:`# BFO OWL: nur rdfs:subClassOf\n# Keine Object Properties\n# Keine Defined Classes\n# Keine OWL Restrictions`,
+    min:`MIN ist nativ OWL 2. Jedes Axiom ist von Reasonern verarbeitbar. Kein FOL-Überbau.`,
+    minCode:`# Disjunktheitsaxiom\n[] a owl:AllDisjointClasses ;\n  owl:members ( min:Object min:Process min:Data ) .\n\n# Kardinalitätsaxiom\nmin:Boundary rdfs:subClassOf [\n  owl:onProperty min:bounds ;\n  owl:minCardinality "2" ] .`,
+    verdict:`Die TTL-Datei IST die Ontologie — nicht eine verarmte Projektion einer reichhaltigeren FOL-Theorie.` },
+  { num:"12", title:"Universals-Doktrin", severity:"structural", sevLabel:"STRUKTURELL",
+    bfo:`Nur „Universals" (real instantiierte Typen) dürfen als Klassen modelliert werden. Versagensszenarien (FMEA), Designalternativen, kontrafaktische What-if-Szenarien existieren nicht — und haben daher keinen Platz.`,
+    bfoCode:null,
+    min:`Possibile ist Forma-Kategorie. Szenarios, Alternativen, What-ifs haben eine ontologische Heimat. Die FMEA-Tabelle (Data) kodiert das Szenario (Possibile).`,
+    minCode:`ex:szenario_riss a min:Possibile .\nex:szenario_riss min:concerns ex:bauteil_01 .\nex:fmea a min:Data .\nex:fmea min:encodes ex:szenario_riss .`,
+    verdict:`Engineering ohne Szenarien ist wie Schach ohne Züge planen. Die Ontologie muss das Mögliche modellieren können.` },
+  { num:"13", title:"Keine Identitätssemantik", severity:"practical", sevLabel:"PRAKTISCH",
+    bfo:`participates_in sagt nichts über Identität. Wird der Participant verbraucht? Transformiert? Erzeugt? Erhalten? Ein Coil participates_in Tiefziehen — aber was passiert mit ihm?`,
+    bfoCode:`ex:coil participates_in ex:tiefziehen .\n# Wird der Coil zum Bauteil (neue ID)?\n# Oder bleibt er der Coil (selbe ID, neue Form)?\n# BFO schweigt.`,
+    min:`MIN kodiert Identitätssemantik in die Relation. hasInput/hasOutput = neue ID (transformativ). undergoes/resultOf = selbe ID (konservativ).`,
+    minCode:`# Transformativ:\nex:tiefziehen min:hasInput  ex:coil_01 .\nex:tiefziehen min:hasOutput ex:bauteil_01 .\n# Konservativ:\nex:coil_01 min:undergoes ex:transport_01 .`,
+    verdict:`Die Unterscheidung liegt in der Relation, nicht im Raten. Kein Ambiguität.` },
+  { num:"14", title:"Keine Polarität", severity:"practical", sevLabel:"PRAKTISCH",
+    bfo:`BFO unterscheidet nicht zwischen materialen und informationalen Eigenschaften. Masse (physisch) und Werkstoffnummer (informational) sind beide Quality.`,
+    bfoCode:null,
+    min:`Polarität auf Schema-Ebene: materialProperty / informationalProperty. Kein Laufzeit-Overhead, aber strukturelle Queries möglich.`,
+    minCode:`ex:masse_kg rdfs:subPropertyOf min:materialProperty .\nex:werkstoffNr rdfs:subPropertyOf min:informationalProperty .\n\nSELECT ?p ?v WHERE {\n  ?p rdfs:subPropertyOf min:materialProperty .\n  ex:coil_42 ?p ?v . }`,
+    verdict:`Material/Information ist für Ingenieure fundamental. Die Ontologie sollte diese Dualität abbilden.` },
+];
+
+const el = document.getElementById('panel-1');
+let html = `<p style="color:var(--muted);font-size:12px;margin-bottom:16px;font-family:var(--font-mono)">Klicke auf eine Zeile, um den Vergleich BFO ↔ MIN zu sehen.</p>`;
+
+issues.forEach(iss => {
+  const sevClass = iss.severity === 'fundamental' ? 'sev-fundamental' : iss.severity === 'structural' ? 'sev-structural' : 'sev-practical';
+  html += `<div class="issue-card" onclick="this.classList.toggle('expanded')">`;
+  html += `<div class="issue-header"><div class="issue-header-left">`;
+  html += `<span class="issue-number">#${iss.num}</span>`;
+  html += `<span class="issue-title">${iss.title}</span>`;
+  html += `<span class="issue-severity ${sevClass}">${iss.sevLabel}</span>`;
+  html += `</div><span class="expand-chevron">▸</span></div>`;
+  html += `<div class="issue-details"><div class="issue-col-grid">`;
+  html += `<div class="issue-col issue-col-bfo"><h4><span style="color:#ff7b72">✗</span> <span style="color:#ff7b72">BFO</span></h4>`;
+  html += `<p>${iss.bfo}</p>`;
+  if (iss.bfoCode) html += `<div class="code-inline">${iss.bfoCode}</div>`;
+  html += `</div>`;
+  html += `<div class="issue-col issue-col-min"><h4><span style="color:#3fb950">✓</span> <span style="color:#3fb950">MIN</span></h4>`;
+  html += `<p>${iss.min}</p>`;
+  if (iss.minCode) html += `<div class="code-inline">${iss.minCode}</div>`;
+  html += `</div>`;
+  html += `</div>`;
+  html += `<div class="verdict">⚡ ${iss.verdict}</div>`;
+  html += `</div></div>`;
+});
+
+el.innerHTML = html;
+})();
+
+// ============ TAB 2: HIERARCHY ============
+(function(){
+const el = document.getElementById('panel-2');
+el.innerHTML = `
+<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:16px">Hierarchievergleich</h3>
+<div class="hier-grid">
+  <div class="hier-box" style="border-top:3px solid var(--bfo)">
+    <h3><span style="color:#ff7b72">BFO 2020</span> <span class="badge-bfo">38 Klassen</span></h3>
+    <pre style="color:var(--muted)"><span style="color:#8b949e">Entity</span>
+├── <span style="color:#ff7b72">Continuant</span>
+│   ├── <span style="color:var(--muted)">Independent Continuant</span>
+│   │   ├── <span style="color:var(--muted)">Material Entity</span>
+│   │   │   ├── <span style="color:#f0883e">Object</span>
+│   │   │   ├── Object Aggregate
+│   │   │   └── Fiat Object Part
+│   │   └── <span style="color:var(--muted)">Immaterial Entity</span>
+│   │       ├── Site
+│   │       ├── Spatial Region (0D,1D,2D,3D)
+│   │       └── Continuant Fiat Boundary
+│   │           ├── Fiat Point
+│   │           ├── Fiat Line
+│   │           └── Fiat Surface
+│   ├── <span style="color:var(--muted)">Specifically Dep. Continuant</span>
+│   │   ├── <span style="color:#a371f7">Quality</span>
+│   │   │   └── Relational Quality
+│   │   └── Realizable Entity
+│   │       ├── Role
+│   │       ├── Disposition
+│   │       └── Function
+│   └── <span style="color:var(--muted)">Generically Dep. Continuant</span>
+└── <span style="color:#ff7b72">Occurrent</span>
+    ├── <span style="color:#da3633">Process</span>
+    │   └── History
+    ├── Process Boundary
+    ├── Temporal Region
+    │   ├── Zero-Dim Temporal Region
+    │   │   └── Temporal Instant
+    │   └── One-Dim Temporal Region
+    │       └── Temporal Interval
+    └── Spatiotemporal Region</pre>
+  </div>
+  <div class="hier-box" style="border-top:3px solid var(--min-color)">
+    <h3><span style="color:#3fb950">MIN v3.2.0</span> <span class="badge-min">13 Klassen</span></h3>
+    <pre><span style="color:#8b949e">Entity</span>
+├── <span style="color:#58a6ff;font-weight:700">Nexus</span>  <span style="color:var(--muted)">— „Bewirkt es etwas?"</span>
+│   ├── <span style="color:#f0883e;font-weight:600">Object</span>    <span style="color:var(--muted)">— das, was ist</span>
+│   ├── <span style="color:#da3633;font-weight:600">Process</span>   <span style="color:var(--muted)">— das, was geschieht</span>
+│   ├── <span style="color:#a371f7;font-weight:600">Data</span>      <span style="color:var(--muted)">— das, was beschreibt</span>
+│   ├── <span style="color:#3fb950;font-weight:600">Agent</span>     <span style="color:var(--muted)">— das, was handelt  <span style="color:#3fb950">≠⊥</span></span>
+│   └── <span style="color:#58a6ff;font-weight:600">Boundary</span>  <span style="color:var(--muted)">— das, was dazwischen</span>
+└── <span style="color:#d2a8ff;font-weight:700">Forma</span>  <span style="color:var(--muted)">— „Bestimmt es etwas?"</span>
+    ├── <span style="color:#ff7b72;font-weight:600">Lex</span>        <span style="color:var(--muted)">— das, was gilt</span>
+    ├── <span style="color:#79c0ff;font-weight:600">Structura</span>  <span style="color:var(--muted)">— das, was formt</span>
+    ├── <span style="color:#ffa657;font-weight:600">Possibile</span>  <span style="color:var(--muted)">— das, was sein könnte</span>
+    ├── <span style="color:#f778ba;font-weight:600">Norma</span>      <span style="color:var(--muted)">— das, was gelten soll</span>
+    └── <span style="color:#7ee787;font-weight:600">Institutio</span> <span style="color:var(--muted)">— das, was anerkannt wird</span></pre>
+  </div>
+</div>
+<div class="quote-box" style="border-color:var(--muted);color:var(--muted);font-size:11px;font-weight:400">
+  BFO: Tiefe Taxonomie, philosophische Zwischenebenen, wenige Domänenrelationen.<br>
+  MIN: Flache Taxonomie, kausale Kategorien, reiche Relationsstruktur mit Identitätssemantik und Brücken.
+</div>
+
+<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin:20px 0 12px">Schichtenarchitektur</h3>
+<div class="hier-grid">
+  <div class="hier-box" style="border-top:3px solid var(--bfo)">
+    <h3><span style="color:#ff7b72">BFO Stack</span></h3>
+    <pre style="color:var(--muted)">┌─────────────────────────────────────┐
+│  <span style="color:#ff7b72">BFO</span>            38 Klassen         │  Schicht 1
+├─────────────────────────────────────┤
+│  <span style="color:var(--text)">CCO + IAO</span>       ~800 Klassen       │  Schicht 2
+├─────────────────────────────────────┤
+│  <span style="color:var(--text)">IOF Core</span>        ~200 Klassen       │  Schicht 3
+├─────────────────────────────────────┤
+│  <span style="color:#f0883e">Domain</span>          variabel           │  Schicht 4
+└─────────────────────────────────────┘</pre>
+  </div>
+  <div class="hier-box" style="border-top:3px solid var(--min-color)">
+    <h3><span style="color:#3fb950">MIN Stack</span></h3>
+    <pre style="color:var(--muted)">┌─────────────────────────────────────┐
+│  <span style="color:#3fb950">MIN</span>             13 Klassen         │  Schicht 1
+├─────────────────────────────────────┤
+│  <span style="color:var(--text)">sdata-core</span>      ~10 Klassen        │  Schicht 2
+├─────────────────────────────────────┤
+│  <span style="color:#f0883e">Domain</span>          variabel           │  Schicht 3
+└─────────────────────────────────────┘
+
+<span style="color:#3fb950">1 Schicht weniger. Keine CCO/IAO nötig.</span></pre>
+  </div>
+</div>`;
+})();
+
+// ============ TAB 3: TABLE ============
+(function(){
+const el = document.getElementById('panel-3');
+const rows = [
+  ["Grundfrage", "Was IST es?", "Bewirkt es etwas?"],
+  ["Denkweise", "Klassifikation", "Kausalität"],
+  ["Klassen", "38", "13"],
+  ["Tiefe bis Domäne", "4 Schichten", "3 Schichten"],
+  ["Agent", "Kein nativer Term → CCO Role", "Erstklassige Kategorie"],
+  ["Data", "Über IAO (GDC)", "Erstklassige Kategorie"],
+  ["Boundary", "Fiat Boundary (geometrisch)", "Erstklassige Kategorie (kausal)"],
+  ["Norma", "Kein nativer Term → IOF debattiert", "Erstklassige Kategorie"],
+  ["Institutio", "Kein nativer Term", "Erstklassige Kategorie"],
+  ["Possibile", "Universals-Doktrin schließt aus", "Erstklassige Kategorie"],
+  ["Eigenschaften", "Quality-Instanzen (Blank Nodes)", "DatatypeProperty (flach)"],
+  ["Identitätssemantik", "participates_in (ambig)", "hasInput/hasOutput vs undergoes"],
+  ["Polarität", "Keine", "materialProperty / informationalProperty"],
+  ["OWL-Kompatibilität", "FOL → OWL Übersetzung (verarmt)", "Nativ OWL 2"],
+  ["Cont./Occ.-Dichotomie", "Ja (disjunkt)", "Nein (Dual-Typing)"],
+  ["Zielgruppe", "Philosophen · Biomedizin", "Ingenieure · Materialwissenschaft"],
+  ["ISO-Standard", "✓ ISO/IEC 21838-2", "✗ kein Standard"],
+  ["Projekte", "650+", "1 (MIN)"],
+  ["Biomedizin", "✓ Unerreicht (GO, OBI, …)", "✗ Nicht der Zielbereich"],
+];
+
+let html = `<table class="comp-table"><thead><tr><th style="width:25%">Aspekt</th><th style="width:37.5%"><span style="color:#ff7b72">BFO 2020</span></th><th style="width:37.5%"><span style="color:#3fb950">MIN v3.2.0</span></th></tr></thead><tbody>`;
+rows.forEach(r => {
+  html += `<tr><td class="aspect">${r[0]}</td><td class="bfo-val">${r[1]}</td><td class="min-val">${r[2]}</td></tr>`;
+});
+html += `</tbody></table>`;
+el.innerHTML = html;
+})();
+
+// ============ TAB 4: FAIRNESS ============
+(function(){
+const el = document.getElementById('panel-4');
+const items = [
+  { title:"ISO-Standard (21838-2)", desc:"BFO ist ein internationaler Standard. MIN hat keinen. Für Organisationen, die ISO-Konformität benötigen, ist BFO die einzige Option." },
+  { title:"650+ Projekte", desc:"BFO ist in über 650 Projekten im Einsatz. MIN ist in einem Projekt im Einsatz. Netzwerkeffekte sind real: je mehr Projekte BFO nutzen, desto wertvoller wird BFO-Konformität." },
+  { title:"Biomedizin", desc:"BFO ist in der Biomedizin unerreicht. Gene Ontology, OBI, OBO Foundry — hunderte Ontologien bauen auf BFO. MIN zielt nicht auf Biomedizin und kann dort nicht konkurrieren." },
+  { title:"Interoperabilität", desc:"BFO als gemeinsamer Nenner ermöglicht Querverweise zwischen Domänen (Biomedizin ↔ Defense ↔ Engineering). MIN muss seine Interoperabilität erst beweisen." },
+  { title:"Community", desc:"BFO hat eine große, aktive Community mit Office Hours, Konferenzen, Lehrbüchern (MIT Press). MIN hat einen Entwickler. Community ist für langfristige Wartung essentiell." },
+];
+
+let html = `<div class="quote-box" style="border-color:#ffa657;color:#ffa657">
+  Fairness-Klausel: BFO hat reale Stärken, die MIN nicht hat. Diese Kritik ist kein Verriss — sie ist eine Alternative für einen spezifischen Kontext.
+</div>`;
+
+items.forEach(item => {
+  html += `<div class="fairness-card"><h4>✓ ${item.title}</h4><p>${item.desc}</p></div>`;
+});
+
+html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:20px">`;
+html += `<div class="section-label" style="margin-bottom:8px">Positionierung</div>`;
+html += `<p style="color:var(--text);font-size:13px;line-height:1.7">MIN ersetzt BFO nicht. MIN ist eine Alternative für einen spezifischen Kontext: <strong style="color:#f0883e">Materialwissenschaft</strong>, <strong style="color:#da3633">Fertigungstechnik</strong>, <strong style="color:#a371f7">digitale Produktpässe</strong>. Dort, wo Ingenieure kausal denken und nicht klassifizieren wollen.</p>`;
+html += `<p style="color:var(--muted);font-size:12px;line-height:1.6;margin-top:10px">BFO fragt: „Besteht es aus Materie?" — Schatten, Vakuum, EM-Feld existieren nicht → für Ingenieure unbrauchbar.<br>BFO fragt: „Was IST es?" — Continuant/Occurrent, Independent/Dependent → sortiert in Schubladen, sagt nichts über Wirkung.<br>MIN fragt: „Bewirkt es etwas?" — Kausalität als Existenzkriterium.</p>`;
+html += `</div>`;
+
+el.innerHTML = html;
+})();
+</script>
+</body>
+</html>
