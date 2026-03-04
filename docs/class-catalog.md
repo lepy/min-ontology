@@ -1,6 +1,6 @@
-# MIN Class Catalog (v3.1.0)
+# MIN Class Catalog (v3.2.0)
 
-This page lists **all classes** defined in `min.ttl` for MIN v3.1.0.
+This page lists **all classes** defined in `min.ttl` for MIN v3.2.0.
 
 ## Complete class list
 
@@ -12,6 +12,7 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.1.0.
 | `min:Process` | `min:Nexus` | Actual | Transformation/event entity |
 | `min:Data` | `min:Nexus` | Actual | Informational artifact |
 | `min:Agent` | `min:Nexus` | Actual | Acting/selective entity |
+| `min:Boundary` | `min:Nexus` | Actual | Irreducibly relational boundary phenomenon |
 | `min:Forma` | `min:Entity` | Formal | Root of formal determinants |
 | `min:Lex` | `min:Forma` | Formal | Law-like regularity |
 | `min:Structura` | `min:Forma` | Formal | Mathematical/formal structure |
@@ -63,6 +64,12 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.1.0.
 - Structural axiom: at least one `performs` relation to a process
 - Example: [`examples/agent.ttl`](examples.md#agent-acting-entity) — Cobot, human worker, software agent
 
+### `min:Boundary`
+
+- Irreducibly relational nexus phenomenon (exists only between partner nexus entities)
+- Structural axiom: at least two `bounds` relations to nexus entities
+- Typical examples: transition resistance, grain boundary, thermal contact resistance
+
 ### `min:Forma`
 
 - Root of formal entities
@@ -107,7 +114,7 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.1.0.
 
 ## Disjointness axioms
 
-- `min:Object`, `min:Process`, `min:Data` are disjoint
+- `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are disjoint
 - `min:Agent` is intentionally not disjoint from them
 - `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio` are pairwise disjoint
 - `min:Nexus` and `min:Forma` are disjoint

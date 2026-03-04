@@ -1,6 +1,6 @@
 # Per-Class Examples
 
-MIN provides a dedicated example file for each instantiable class. Each file is a
+MIN provides dedicated example files for the main instantiable classes. Each file is a
 self-contained Turtle graph showing how to properly model instances of that class,
 including the required relations and typical domain-specific properties.
 
@@ -14,6 +14,7 @@ All examples pass the instance-level SHACL validation (`shapes/min-instance.shac
 | `min:Process` | `examples/process.ttl` | Laser welding in automotive manufacturing |
 | `min:Data` | `examples/data.ttl` | Vibration measurement data from a wind turbine |
 | `min:Agent` | `examples/agent.ttl` | Collaborative robot, human worker, software agent |
+| `min:Boundary` | - | Covered in ontology docs; standalone instance example pending |
 | `min:Lex` | `examples/lex.ttl` | Hooke's Law in a spring test |
 | `min:Structura` | `examples/structura.ttl` | Euler-Bernoulli beam theory in bridge design |
 | `min:Possibile` | `examples/possibile.ttl` | Fatigue crack scenario (offshore wind) |
@@ -74,7 +75,7 @@ ex:Laserschweissen_047 a min:Process ;
     ex:vorschub_m_min    1.2 .
 ```
 
-**SHACL requirement:** Every Process must have at least one `hasInput` and one `hasOutput` (range: `min:Nexus` — any Object, Data, or Agent can be input/output).
+**SHACL requirement:** Every Process must have at least one `hasInput` and one `hasOutput` (range: `min:Nexus` — any Nexus instance can be input/output).
 
 ---
 

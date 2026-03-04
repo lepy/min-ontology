@@ -16,6 +16,7 @@ TTL_FILES = [
     "min-v2.1.0.ttl",
     "min-v3.0.0.ttl",
     "min-v3.1.0.ttl",
+    "min-v3.2.0.ttl",
     "examples/min-example.ttl",
     "examples/object.ttl",
     "examples/process.ttl",

@@ -1,4 +1,4 @@
-# MIN Property Catalog (v3.1.0)
+# MIN Property Catalog (v3.2.0)
 
 This page lists the properties defined by MIN and groups them by modeling role.
 
@@ -53,6 +53,11 @@ Data links:
 - `min:generates`
 - `min:generatedBy` (inverse of `min:generates`)
 
+Boundary links:
+
+- `min:bounds`
+- `min:hasBoundary` (inverse of `min:bounds`)
+
 ## 4. Nexus/Forma bridge relations
 
 Realization/model:
@@ -84,7 +89,7 @@ Encoding:
 - `min:encodes`
 - `min:encodedBy` (inverse of `min:encodes`)
 
-## 5. Datatype properties
+## 6. Datatype properties
 
 All datatype properties are defined with domain `min:Entity`:
 
@@ -94,12 +99,12 @@ All datatype properties are defined with domain `min:Entity`:
 - `min:hasDescription`
 - `min:hasStatus`
 
-## 6. Annotation properties
+## 7. Annotation properties
 
 - `min:designRationale`
 - `min:philosophicalBasis`
 
-## 7. Modeling guidance
+## 8. Modeling guidance
 
 1. Keep instance data flat; avoid blank-node wrappers for polarity.
 2. Put domain-specific semantics into subproperties beneath `materialProperty` or `informationalProperty`.

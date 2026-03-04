@@ -2,6 +2,19 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.2.0] - 2026-03-04
+
+### Added
+- New Nexus class `min:Boundary` for irreducibly relational, causally effective boundary phenomena.
+- New boundary relation pair `min:bounds` / `min:hasBoundary` (inverse properties).
+- Boundary cardinality axiom requiring at least two bound Nexus instances.
+- New immutable release snapshot `min-v3.2.0.ttl`.
+
+### Changed
+- Nexus disjointness set extended to include `min:Boundary` (`Object`, `Process`, `Data`, `Boundary` pairwise disjoint).
+- Ontology design rationale extended with explicit criteria and modeling guidance for Boundary vs. Object.
+- `min.ttl` now points to MIN `v3.2.0`.
+
 ## [3.1.0] - 2026-03-03
 
 ### Changed

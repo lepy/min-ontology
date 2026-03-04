@@ -1,10 +1,11 @@
-# MIN Model (v3.1.0)
+# MIN Model (v3.2.0)
 
 This page describes the conceptual architecture and modeling rules of MIN.
 
 ## 1. High-level architecture
 
-MIN v3 introduces a strict two-branch ontology under `min:Entity`:
+MIN v3 introduces a strict two-branch ontology under `min:Entity`.
+As of v3.2, `min:Boundary` is part of the Nexus branch:
 
 - `min:Nexus`: actual entities (causal efficacy criterion)
 - `min:Forma`: formal entities (constitutive determination criterion)
@@ -33,11 +34,13 @@ Core classes:
 - `min:Process`
 - `min:Data`
 - `min:Agent`
+- `min:Boundary`
 
 Structural constraints:
 
-- `min:Object`, `min:Process`, `min:Data` are disjoint
+- `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are disjoint
 - `min:Agent` is intentionally **not** disjoint from those classes
+- `min:Boundary` has at least two `min:bounds` links to nexus instances
 - `min:Process` has existential restrictions to at least one input and one output nexus
 - `min:Agent` has existential restriction to perform at least one process
 
@@ -77,6 +80,7 @@ Nexus-internal relations:
 - Agent/Process: `performs`, `performedBy`, `controls`
 - Agent/Object: `actsOn`, `affectedBy`, `owns`, `produces`
 - Data links: `describes`, `describedBy`, `generates`, `generatedBy`
+- Boundary links: `bounds`, `hasBoundary`
 - Structural links: `nexusWith`, `hasComponent`
 
 Nexus/Forma bridge relations:
@@ -102,7 +106,7 @@ Use these rules for stable modeling outcomes:
 - Do not add blank-node wrappers for polarity.
 - Do not collapse institution and actor into one node (e.g. legal entity as both `Agent` and `Institutio` without explicit semantics).
 
-## 9. Formal axioms (since v3.1.0)
+## 9. Formal axioms (v3.1.0+)
 
 MIN v3.1 adds the following formal axioms to strengthen OWL-DL compatibility:
 
@@ -118,6 +122,10 @@ MIN v3.1 adds the following formal axioms to strengthen OWL-DL compatibility:
 - **10 inverse property pairs**: All directional relations have formally declared inverses,
   including the new `min:constitutedBy` (inverse of `min:constitutes`) and `min:recognizedBy`
   (inverse of `min:recognizes`).
+
+- **Boundary axioms (v3.2.0)**: `min:Boundary` is a dedicated Nexus category with
+  cardinality constraint `min 2 min:bounds`, and `bounds` / `hasBoundary` are declared
+  as inverse properties.
 
 ## 10. Backward compatibility
 

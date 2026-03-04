@@ -12,14 +12,14 @@ The current stable release line is **v3.x**.
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/3.1.0`
+- Current version IRI: `https://w3id.org/min/3.2.0`
 
-## Conceptual core (v3.0.0)
+## Conceptual core (v3.2.0)
 
-MIN v3 defines **12 classes**:
+MIN v3 defines **13 classes**:
 
 - Root: `min:Entity`
-- Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Agent`
+- Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Agent`, `min:Boundary`
 - Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`
 
 For full class definitions, see `docs/class-catalog.md`.
@@ -99,3 +99,10 @@ Repository setting required:
 - `min-vX.Y.Z.ttl` files are immutable snapshots.
 - `min.ttl` always points to the latest stable MIN release.
 - Since `v2.0.0`, OPA is absorbed into MIN and no separate `opa.ttl` is maintained.
+
+## License and Attribution
+
+- License: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+- Required attribution (Namensnennung): **Dr. Ingolf Lepenies** as author of MIN.
+- Suggested citation:
+  `"MIN Ontology" by Dr. Ingolf Lepenies, https://w3id.org/min, licensed under CC BY 4.0.`
