@@ -50,6 +50,11 @@
 #     Searle         — Institutional Facts, Constitutive Rules
 #     Kripke/Lewis   — Possible Worlds (Possibile)
 #
+#
+#     — Entity: Identitätsaxiom ∃hasIdentifier min 1
+#       Begründung: Ohne Identität keine Entität.
+#       Aristoteles: Individuation ist Voraussetzung für Existenz.
+#       Praktisch: jede Entity MUSS mindestens einen Identifier haben.
 #   v3.2.0 — 2026-03-04
 #
 # =============================================================================
@@ -194,7 +199,19 @@
         — Whitehead: Prehension — kausale Bezogenheit zwischen Entitäten.
         — Bowden/Tabor (1950): Reibung ist Systemeigenschaft, nicht
           Materialeigenschaft — empirischer Beweis für irreduzible
-          Relationalität."""@de .
+          Relationalität.
+
+    11. Jede Entity — ob Nexus oder Forma — muss identifizierbar sein.
+        Ohne Identität keine Individuation, ohne Individuation keine
+        Entität. Das ist kein Domänenwissen, sondern architektonisches
+        Grundprinzip.
+
+        Aristoteles: Individuation (tode ti — ‹dieses da›) ist
+        Voraussetzung für Ousia. Kein ‹dieses da› ohne Erkennbarkeit.
+
+        Praktisch: Jede Entity muss mindestens einen hasIdentifier-Wert
+        tragen. Für einfache Fälle genügt ein String. Für DPP/DZ
+        wird der Identifier auf Domänenebene (sdata) reifiziert."""@de .
 
 
 # =============================================================================
@@ -236,9 +253,22 @@ min:Entity a owl:Class ;
         a owl:Class ;
         owl:unionOf ( min:Nexus min:Forma )
     ] ;
+
+    # Jede Entity MUSS mindestens einen Identifier haben.
+    # Ohne Identität keine Individuation, ohne Individuation keine Entität.
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty min:hasIdentifier ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+
     min:philosophicalBasis """Aristoteles: to on — das Seiende.
     Der allgemeinste Begriff, unter dem alles fällt,
-    was auf irgendeine Weise ist."""@de .
+    was auf irgendeine Weise ist.
+
+    Individuation (tode ti — ‹dieses da›) ist Voraussetzung
+    für Ousia. Kein ‹dieses da› ohne Erkennbarkeit.
+    Deshalb: ∃hasIdentifier min 1."""@de .
 
 
 # #############################################################################
@@ -328,9 +358,10 @@ min:Object a owl:Class ;
     rdfs:comment """Das, was ist. Material-dominanter Nexus.
 
     Zeigt sich primär als physisches, räumlich ausgedehntes,
-    kausal wirksames Etwas. Seine informationalen Eigenschaften
-    sind real (Struktur, Zusammensetzung), aber der primäre
-    Zugang geht über die Materialität.
+    kausal wirksames Etwas. Identitätskriterium: materiale Kontinuität.
+
+    Seine informationalen Eigenschaften sind real (Struktur, Zusammensetzung),
+    aber der primäre Zugang geht über die Materialität.
 
     Aristotelisch: Ousia — das Zugrundeliegende.
 
@@ -1475,11 +1506,19 @@ min:philosophicalBasis a owl:AnnotationProperty ;
 #   — Process: ∃hasInput.Nexus, ∃hasOutput.Nexus
 #   — Agent: ∃performs.Process
 #   — Boundary: bounds min 2
+#   — Entity: Identitätsaxiom ∃hasIdentifier min 1
 #
 #   Abwärtskompatibilität:
 #   — Jeder gültige v3.1-Graph ist ein gültiger v3.2-Graph.
 #   — Nexus-interne Queries bleiben unverändert.
 #   — Bestehende Object/Process/Data/Agent-Instanzen sind
 #     nicht betroffen. Boundary erweitert, ersetzt nichts.
+#   — Jeder gültige Graph, der hasIdentifier nutzt,
+#     ist ein gültiger v3.2.0-Graph.
+#   — Graphen OHNE hasIdentifier sind in v3.2.0 streng genommen
+#     nicht konform. Das Axiom ist ein SOLL, kein MUSS im
+#     Sinne von OWL Open World Assumption — ein Reasoner
+#     nimmt fehlende Identifier nicht als Fehler, sondern
+#     als unbekannt an.
 #
 # #############################################################################
