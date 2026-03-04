@@ -14,7 +14,7 @@ All examples pass the instance-level SHACL validation (`shapes/min-instance.shac
 | `min:Process` | `examples/process.ttl` | Laser welding in automotive manufacturing |
 | `min:Data` | `examples/data.ttl` | Vibration measurement data from a wind turbine |
 | `min:Agent` | `examples/agent.ttl` | Collaborative robot, human worker, software agent |
-| `min:Boundary` | - | Covered in ontology docs; standalone instance example pending |
+| `min:Boundary` | `examples/boundary.ttl` | Friction boundary between tool and sheet metal |
 | `min:Lex` | `examples/lex.ttl` | Hooke's Law in a spring test |
 | `min:Structura` | `examples/structura.ttl` | Euler-Bernoulli beam theory in bridge design |
 | `min:Possibile` | `examples/possibile.ttl` | Fatigue crack scenario (offshore wind) |
@@ -131,6 +131,30 @@ ex:MES_Planner a min:Agent ;
 ```
 
 **SHACL requirement:** Every Agent must have at least one `performs`.
+
+---
+
+## Boundary — friction as irreducibly relational nexus
+
+**File:** `examples/boundary.ttl`
+**Scenario:** Friction boundary between forming tool and aluminum sheet.
+
+Key patterns shown:
+
+- `min:Boundary` as a first-class nexus instance with own identifier and properties
+- `min:bounds` to both partner nexus instances (`tool`, `sheet`) with explicit inverse `min:hasBoundary`
+- Friction-specific datatype properties (`ex:reibungskoeffizient_mu`, `ex:kontaktpressung_MPa`) scoped to `min:Boundary`
+- Distinction from Object-properties: friction is modeled on the relation entity, not on one partner alone
+
+```turtle
+ex:Reibkontakt_Werkzeug_Blech_A17 a min:Boundary ;
+    min:hasIdentifier         "BND-FRIK-A17" ;
+    min:hasName               "Reibkontakt Matrize/Blech A17" ;
+    min:bounds                ex:Matrize_A17 ;
+    min:bounds                ex:AluBlech_A17 ;
+    ex:reibungskoeffizient_mu 0.12 ;
+    ex:kontaktpressung_MPa    35.0 .
+```
 
 ---
 
@@ -253,6 +277,6 @@ ex:ISO9001_Zertifizierung_WerkA a min:Institutio ;
 ## Integrated scenario
 
 The file `examples/min-v3.0.0-examples.ttl` contains a larger integrated scenario
-(deep drawing of a steel coil) that uses all 9 classes together with bridge
-relations, polarity properties, and cross-references. It serves as the primary
-integration test for the ontology.
+(deep drawing of a steel coil) that uses the original v3.0 class set together
+with bridge relations, polarity properties, and cross-references. It serves as
+the primary integration test for the ontology.

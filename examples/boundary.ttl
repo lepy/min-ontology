@@ -1,0 +1,57 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Boundary
+#
+#   Szenario: Reibkontakt zwischen Werkzeug und Werkstueck im Umformprozess.
+#   Zeigt: irreduzibel relationale Modellierung von Reibung als Boundary,
+#          bounds/hasBoundary, domänenspezifische Reibungs-Properties.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:reibungskoeffizient_mu a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Boundary ;
+    rdfs:range xsd:float .
+
+ex:kontaktpressung_MPa a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Boundary ;
+    rdfs:range xsd:float .
+
+# --- Boundary-Instanz ---
+
+ex:Reibkontakt_Werkzeug_Blech_A17 a min:Boundary ;
+    min:hasIdentifier         "BND-FRIK-A17" ;
+    min:hasName               "Reibkontakt Matrize/Blech A17" ;
+    min:hasDescription        "Kontaktzone beim Tiefziehen von Blech A17" ;
+    min:bounds                ex:Matrize_A17 ;
+    min:bounds                ex:AluBlech_A17 ;
+    ex:reibungskoeffizient_mu 0.12 ;
+    ex:kontaktpressung_MPa    35.0 .
+
+# --- Stützinstanzen ---
+
+ex:Matrize_A17 a min:Object ;
+    min:hasName "Matrize A17" ;
+    min:hasBoundary ex:Reibkontakt_Werkzeug_Blech_A17 .
+
+ex:AluBlech_A17 a min:Object ;
+    min:hasName "Aluminiumblech A17" ;
+    min:hasBoundary ex:Reibkontakt_Werkzeug_Blech_A17 .
+
+ex:Tiefziehen_A17 a min:Process ;
+    min:hasName "Tiefziehen Charge A17" ;
+    min:hasInput ex:AluBlech_A17 ;
+    min:hasOutput ex:GeformtesBauteil_A17 .
+
+ex:GeformtesBauteil_A17 a min:Object ;
+    min:hasName "Geformtes Bauteil A17" ;
+    min:resultOf ex:Tiefziehen_A17 .

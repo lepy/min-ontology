@@ -69,6 +69,7 @@ This page lists **all classes** defined in `min.ttl` for MIN v3.2.0.
 - Irreducibly relational nexus phenomenon (exists only between partner nexus entities)
 - Structural axiom: at least two `bounds` relations to nexus entities
 - Typical examples: transition resistance, grain boundary, thermal contact resistance
+- Example: [`examples/boundary.ttl`](examples.md#boundary-friction-as-irreducibly-relational-nexus) — Friction boundary in forming
 
 ### `min:Forma`
 

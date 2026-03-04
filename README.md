@@ -83,6 +83,7 @@ Static visualizations are intentionally kept as part of the docs:
 
 - `docs/min-v3_0_0-visualization.html`
 - `docs/min-v2_1_0-visualization.html`
+- `docs/bfo-vs-min3_2_0.html`
 
 ## GitHub Pages deployment
 
