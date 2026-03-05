@@ -16,11 +16,11 @@ The current stable release line is **v3.x** (current: **v3.3.0**, tag `v3.3.0`).
 
 ## Conceptual core (v3.3.0)
 
-MIN v3 defines **13 classes**:
+MIN v3 defines **14 classes**:
 
 - Root: `min:Entity`
 - Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Agent`, `min:Boundary`
-- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`
+- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`, `min:Typus`
 
 For full class definitions, see `docs/class-catalog.md`.
 
