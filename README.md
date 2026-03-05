@@ -6,8 +6,7 @@ industrial and scientific domains with a strict distinction between:
 - **Nexus**: actual entities that are causally effective
 - **Forma**: formal entities that are constitutively determining
 
-The current stable release line is **v3.x**.
-Current stable release: **v3.3.0**.
+The current stable release line is **v3.x** (current: **v3.3.0**, tag `v3.3.0`).
 
 ## Canonical IRIs
 
@@ -29,8 +28,10 @@ For full class definitions, see `docs/class-catalog.md`.
 
 - `min.ttl`: current MIN ontology
 - `min-v*.ttl`: immutable release snapshots
-- `min_v3.3.0.ttl`: v3.3.0 release artifact (underscore naming variant)
+- `min-v3.3.0.ttl`: current immutable snapshot (hyphen naming)
+- `min_v3.3.0.ttl`: current compatibility snapshot (underscore naming)
 - `examples/`: example instance graphs
+- `examples/min-v3.3.0-examples.ttl`: integrated v3.3.0 scenario
 - `queries/competency/`: competency queries
 - `shapes/`: SHACL shapes
 - `tests/sparql/`: SPARQL ASK regression checks
