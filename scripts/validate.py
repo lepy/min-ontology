@@ -18,7 +18,6 @@ TTL_FILES = [
     "min-v3.1.0.ttl",
     "min-v3.2.0.ttl",
     "min-v3.3.0.ttl",
-    "min_v3.3.0.ttl",
     "examples/min-example.ttl",
     "examples/object.ttl",
     "examples/process.ttl",
@@ -33,6 +32,11 @@ TTL_FILES = [
     "examples/typus.ttl",
     "shapes/min-core.shacl.ttl",
     "shapes/min-instance.shacl.ttl",
+]
+
+OPTIONAL_TTL_FILES = [
+    # Compatibility snapshot (underscore naming) is optional.
+    "min_v3.3.0.ttl",
 ]
 
 SPARQL_TESTS = [
@@ -67,7 +71,14 @@ def main() -> int:
     failures = 0
 
     print("[1/4] Parsing Turtle files")
-    for rel in TTL_FILES:
+    ttl_files = list(TTL_FILES)
+    for rel in OPTIONAL_TTL_FILES:
+        if (ROOT / rel).exists():
+            ttl_files.append(rel)
+        else:
+            print(f"  SKIP {rel} (optional file not present)")
+
+    for rel in ttl_files:
         path = ROOT / rel
         try:
             parse_turtle(path)
