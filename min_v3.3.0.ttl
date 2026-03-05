@@ -120,6 +120,7 @@
     5 Datatype Properties. 2 Annotations."""@de ;
     dcterms:creator "Dr. Ingolf Lepenies" ;
     dcterms:created "2026-03-05"^^xsd:date ;
+    dcterms:contributor "" ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/sdata/core> ;
     min:designRationale """v3.0 erweitert MIN um den Forma-Zweig. Begründung:
