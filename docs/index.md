@@ -1,35 +1,37 @@
 # MIN Ontology Documentation
 
-Welcome to the MIN ontology documentation.
+MIN v3.3.0 models reality with a strict two-branch architecture under `min:Entity`:
 
-MIN v3 models reality with two explicit branches under `min:Entity`:
+- `min:Nexus`: actual, causally effective entities
+- `min:Forma`: formal, constitutively determining entities
 
-- `min:Nexus` for actual, causally effective entities
-- `min:Forma` for formal, constitutively determining entities
+## Reading paths
 
-## What to read first
+### If you are new to MIN
 
-- `min-model.md`: architecture, modeling rules, and design rationale
-- `class-catalog.md`: complete catalog of all MIN classes (v3.3.0)
-- `property-catalog.md`: complete catalog of object/data/annotation properties
-- `versioning.md`: release and semantic versioning rules
+1. Start with [Modellüberblick](min-model.md).
+2. Continue with [Klassenkatalog](class-catalog.md).
+3. Use [Property-Katalog](property-catalog.md) as implementation reference.
 
-## Static visualizations (kept intentionally)
+### If you are modeling domain data
 
-- [MIN v3.0.0 visualization](min-v3_0_0-visualization.html)
-- [MIN v2.1.0 visualization](min-v2_1_0-visualization.html)
-- [BFO vs MIN v3.2.0 (historical)](bfo-vs-min3_2_0.html)
+1. Pick class patterns in [Klassenbeispiele](examples.md).
+2. Use [Eierkochen Tutorial](eierkochen_tutorial.md) for end-to-end modeling.
 
-## Quality gates
+## Reference scope
 
-MIN maintains ontology quality through:
+The docs reflect MIN `v3.3.0` (`min.ttl` points to this release):
 
-- SPARQL ASK regression tests
-- SHACL conformance checks
-- Turtle parse checks across all released snapshots
+- 14 classes (`Entity`, 6 Nexus-side classes, 7 Forma-side classes including `Typus`)
+- Full Nexus/Forma bridge relations (including `typifies` / `typifiedBy`)
+- Current validation and versioning rules
 
-Run locally:
+## Validation command
 
 ```bash
 uv run ontology-validate
 ```
+
+## Historical artifacts
+
+Static visualizations from earlier documentation phases are preserved under **Historisch**.

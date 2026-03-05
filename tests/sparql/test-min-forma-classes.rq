@@ -8,4 +8,5 @@ ASK WHERE {
   min:Possibile a owl:Class .
   min:Norma a owl:Class .
   min:Institutio a owl:Class .
+  min:Typus a owl:Class .
 }

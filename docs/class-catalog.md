@@ -1,121 +1,141 @@
 # MIN Class Catalog (v3.3.0)
 
-This page lists **all classes** defined in `min.ttl` for MIN v3.3.0.
+This catalog reflects the classes in `min.ttl` / `min-v3.3.0.ttl`.
 
 ## Complete class list
 
-| Class | Parent | Branch | Role |
-| --- | --- | --- | --- |
-| `min:Entity` | - | Root | Absolute top class |
-| `min:Nexus` | `min:Entity` | Actual | Root of causally effective entities |
-| `min:Object` | `min:Nexus` | Actual | Material-dominant entity |
-| `min:Process` | `min:Nexus` | Actual | Transformation/event entity |
-| `min:Data` | `min:Nexus` | Actual | Informational artifact |
-| `min:Agent` | `min:Nexus` | Actual | Acting/selective entity |
-| `min:Boundary` | `min:Nexus` | Actual | Irreducibly relational boundary phenomenon |
-| `min:Forma` | `min:Entity` | Formal | Root of formal determinants |
-| `min:Lex` | `min:Forma` | Formal | Law-like regularity |
-| `min:Structura` | `min:Forma` | Formal | Mathematical/formal structure |
-| `min:Possibile` | `min:Forma` | Formal | Possibility/counterfactual |
-| `min:Norma` | `min:Forma` | Formal | Normative requirement |
-| `min:Institutio` | `min:Forma` | Formal | Institutional construct |
+| Class | Parent | Branch | Direct instantiation | Core role |
+| --- | --- | --- | --- | --- |
+| `min:Entity` | - | Root | No (conceptual root) | Absolute root of MIN |
+| `min:Nexus` | `min:Entity` | Nexus | No (branch root) | Actual, causally effective entities |
+| `min:Object` | `min:Nexus` | Nexus | Yes | Material-dominant entity |
+| `min:Process` | `min:Nexus` | Nexus | Yes | Transformation/event entity |
+| `min:Data` | `min:Nexus` | Nexus | Yes | Informational artifact |
+| `min:Agent` | `min:Nexus` | Nexus | Yes | Selectively acting entity |
+| `min:Boundary` | `min:Nexus` | Nexus | Yes | Irreducibly relational boundary phenomenon |
+| `min:Forma` | `min:Entity` | Forma | No (branch root) | Formal determinants |
+| `min:Lex` | `min:Forma` | Forma | Yes | Law-like regularity |
+| `min:Structura` | `min:Forma` | Forma | Yes | Mathematical/formal structure |
+| `min:Possibile` | `min:Forma` | Forma | Yes | Possibility/counterfactual |
+| `min:Norma` | `min:Forma` | Forma | Yes | Normative requirement |
+| `min:Institutio` | `min:Forma` | Forma | Yes | Institutional construct |
+| `min:Typus` | `min:Forma` | Forma | Yes | Essential type determination |
 
-## Detailed class definitions
+## Hierarchy
+
+```text
+Entity
+|- Nexus
+|  |- Object
+|  |- Process
+|  |- Data
+|  |- Agent
+|  `- Boundary
+`- Forma
+   |- Lex
+   |- Structura
+   |- Possibile
+   |- Norma
+   |- Institutio
+   `- Typus
+```
+
+## Per-class details
 
 ### `min:Entity`
 
-- Absolute ontology root
-- Every MIN individual is in either the `Nexus` or `Forma` branch
-- Formal partition axiom (v3.1.0): `Entity ≡ Nexus ⊔ Forma`
-- Not intended for direct instantiation
+- Role: absolute ontology root.
+- Formal axiom: `Entity ≡ Nexus ⊔ Forma`.
+- Structural axiom: at least one identifier (`min:hasIdentifier minCardinality 1`).
+- Modeling note: use as abstraction, not as direct instance type.
 
 ### `min:Nexus`
 
-- Root of actual entities
-- Existence criterion: causal efficacy
-- Query anchor for all actual entities
-- Not intended for direct instantiation
+- Role: root for actual, causally effective entities.
+- Design criterion: if it makes a causal difference in the world, it belongs in Nexus.
+- Modeling note: instantiate one of its subclasses (`Object`, `Process`, `Data`, `Agent`, `Boundary`).
 
 ### `min:Object`
 
-- Material-dominant actual entity
-- Identity criterion: material continuity
-- Typical examples: parts, tools, machines, fields, shadows
-- Example: [`examples/object.ttl`](examples.md#object-material-dominant-entity) — Steel beam in bridge construction
+- Role: material-dominant actual entity.
+- Identity criterion: material continuity.
+- Key relations: `undergoes`, `hasComponent`, `actsOn`/`affectedBy`, `hasBoundary`, `typifiedBy`.
+- Example: [Object section](examples.md#object-material-dominant-entity).
 
 ### `min:Process`
 
-- Event/transformative actual entity
-- Uses nexus entities as input, produces nexus entities as output, can generate data
-- Structural axiom: at least one `hasInput` and one `hasOutput` (range: `min:Nexus`)
-- Example: [`examples/process.ttl`](examples.md#process-transformation-and-event) — Laser welding in automotive manufacturing
+- Role: transformation/event entity.
+- Structural axioms: at least one `hasInput` (from `Nexus`) and one `hasOutput` (to `Nexus`).
+- Key relations: `hasInput`, `hasOutput`, `performedBy`, `generates`, `governed` via `Lex`.
+- Example: [Process section](examples.md#process-transformation-and-event).
 
 ### `min:Data`
 
-- Informational artifact in the actual branch
-- Has physical realization (bytes/storage), but semantics is primary
-- Encodes formal entities via `min:encodes`
-- Example: [`examples/data.ttl`](examples.md#data-informational-artifact) — Vibration measurement data (wind turbine)
+- Role: informational artifact in the actual branch.
+- Identity criterion: informational identity.
+- Key relations: `describes`, `generatedBy`, `encodes` (bridge to Forma).
+- Example: [Data section](examples.md#data-informational-artifact).
 
 ### `min:Agent`
 
-- Acting entity with selective, attributable effects
-- May overlap with object/process/data roles
-- Structural axiom: at least one `performs` relation to a process
-- Example: [`examples/agent.ttl`](examples.md#agent-acting-entity) — Cobot, human worker, software agent
+- Role: selectively acting and attributable entity.
+- Structural axiom: at least one `performs` relation to a `Process`.
+- Key relations: `performs`, `controls`, `actsOn`, `owns`, `constitutes`, `recognizes`.
+- Example: [Agent section](examples.md#agent-acting-entity).
 
 ### `min:Boundary`
 
-- Irreducibly relational nexus phenomenon (exists only between partner nexus entities)
-- Structural axiom: at least two `bounds` relations to nexus entities
-- Typical examples: transition resistance, grain boundary, thermal contact resistance
-- Example: [`examples/boundary.ttl`](examples.md#boundary-friction-as-irreducibly-relational-nexus) — Friction boundary in forming
+- Role: irreducibly relational nexus phenomenon.
+- Structural axiom: minimum two `bounds` links.
+- Key relations: `bounds` / `hasBoundary`.
+- Example: [Boundary section](examples.md#boundary-friction-as-irreducibly-relational-nexus).
 
 ### `min:Forma`
 
-- Root of formal entities
-- Existence criterion: constitutive determination
-- Not causally effective itself
-- Not intended for direct instantiation
+- Role: root for formal determinants.
+- Design criterion: does not act causally; determines validity/structure/possibility.
+- Modeling note: instantiate one of its subclasses (`Lex`, `Structura`, `Possibile`, `Norma`, `Institutio`, `Typus`).
 
 ### `min:Lex`
 
-- Formal law-like regularity (e.g., conservation laws)
-- Constrains and governs actual entities/processes
-- Realized by nexus entities/processes
-- Example: [`examples/lex.ttl`](examples.md#lex-law-like-regularity) — Hooke's Law in a spring test
+- Role: law-like regularity.
+- Key relations: `governs` (Process), `constrains` (Nexus), `realizedBy`.
+- Example: [Lex section](examples.md#lex-law-like-regularity).
 
 ### `min:Structura`
 
-- Formal mathematical/model structure
-- Formalizes actual systems/processes
-- Distinct from data artifacts implementing the structure
-- Example: [`examples/structura.ttl`](examples.md#structura-mathematical-structure) — Euler-Bernoulli beam theory
+- Role: mathematical/formal structure.
+- Key relations: `formalizes` (Nexus), `realizedBy`.
+- Example: [Structura section](examples.md#structura-mathematical-structure).
 
 ### `min:Possibile`
 
-- Possibility or counterfactual scenario
-- Concerns actual entities but is itself non-actual
-- Useful for risk and what-if modeling
-- Example: [`examples/possibile.ttl`](examples.md#possibile-possibility-and-counterfactual) — Fatigue crack scenario (offshore wind)
+- Role: possibility/counterfactual scenario.
+- Key relations: `concerns`, `alternativeTo`, `realizedBy` (when realized).
+- Example: [Possibile section](examples.md#possibile-possibility-and-counterfactual).
 
 ### `min:Norma`
 
-- Normative requirement/evaluation criterion
-- Evaluates actual entities/processes
-- Distinct from documents encoding the norm
-- Example: [`examples/norma.ttl`](examples.md#norma-normative-requirement) — Maximum deflection (Eurocode)
+- Role: normative requirement and evaluation criterion.
+- Key relations: `evaluates`, `constrains`, `encodedBy`.
+- Example: [Norma section](examples.md#norma-normative-requirement).
 
 ### `min:Institutio`
 
-- Institutionally constituted entity
-- Exists via collective recognition and constitutive acts
-- Linked to agents through constitution/recognition relations
-- Example: [`examples/institutio.ttl`](examples.md#institutio-institutional-construct) — ISO 9001 certification
+- Role: institutionally constituted entity.
+- Key relations: `constitutedBy`, `recognizedBy` (inverse direction from Agent relations).
+- Example: [Institutio section](examples.md#institutio-institutional-construct).
 
-## Disjointness axioms
+### `min:Typus`
 
-- `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are disjoint
-- `min:Agent` is intentionally not disjoint from them
-- `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio` are pairwise disjoint
-- `min:Nexus` and `min:Forma` are disjoint
+- Role: essential determination of what kind of Nexus something is.
+- Key relations: `typifies` / `typifiedBy` (inverse pair), `constrains` (superproperty path).
+- Typical use: classify Object/Process/Data/Agent/Boundary instances by type.
+- Example: [Typus section](examples.md#typus-essential-determination).
+
+## Disjointness and overlap rules
+
+- `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are pairwise disjoint.
+- `min:Agent` is intentionally not disjoint from those Nexus subclasses.
+- `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`, `min:Typus` are pairwise disjoint.
+- `min:Nexus` and `min:Forma` are disjoint.

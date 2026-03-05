@@ -16,4 +16,6 @@ ASK WHERE {
   min:recognizedBy a owl:ObjectProperty .
   min:encodes a owl:ObjectProperty .
   min:encodedBy a owl:ObjectProperty .
+  min:typifies a owl:ObjectProperty .
+  min:typifiedBy a owl:ObjectProperty .
 }

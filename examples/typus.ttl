@@ -1,0 +1,80 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Typus
+#
+#   Szenario: Werkstofftyp DC04 und Prozess-Typ Zugversuch nach ISO 6892-1.
+#   Zeigt: typifies/typifiedBy, encodes, Abgrenzung Typus vs. Data vs. Norma.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:kategorie a owl:DatatypeProperty ;
+    rdfs:domain min:Typus ;
+    rdfs:range xsd:string .
+
+ex:referenznorm a owl:DatatypeProperty ;
+    rdfs:domain min:Typus ;
+    rdfs:range xsd:string .
+
+# --- Typus-Instanzen ---
+
+ex:DC04_Typus a min:Typus ;
+    min:hasIdentifier   "TYP-DC04" ;
+    min:hasName         "DC04 (Stahlsorte)" ;
+    min:hasDescription  "Wesensbestimmung der Stahlsorte DC04 für Kaltumformung." ;
+    ex:kategorie        "Object-Typ" ;
+    ex:referenznorm     "EN 10130" ;
+    min:typifies        ex:Blech_042 ;
+    min:constrains      ex:Blech_042 .
+
+ex:Zugversuch_ISO6892_1_Typus a min:Typus ;
+    min:hasIdentifier   "TYP-ISO6892-1" ;
+    min:hasName         "Zugversuch nach ISO 6892-1" ;
+    min:hasDescription  "Wesensbestimmung eines standardisierten Zugversuchs." ;
+    ex:kategorie        "Process-Typ" ;
+    ex:referenznorm     "ISO 6892-1" ;
+    min:typifies        ex:Zugversuch_042 .
+
+# --- Nexus-Instanzen, die typifiziert werden ---
+
+ex:Blech_042 a min:Object ;
+    min:hasIdentifier   "OBJ-BLECH-042" ;
+    min:hasName         "Blechcharge 042" ;
+    min:typifiedBy      ex:DC04_Typus .
+
+ex:Probe_042 a min:Object ;
+    min:hasIdentifier   "OBJ-PROBE-042" ;
+    min:hasName         "Zugprobe 042" .
+
+ex:Probe_042_geprueft a min:Object ;
+    min:hasIdentifier   "OBJ-PROBE-042-GEPRUEFT" ;
+    min:hasName         "Zugprobe 042 (geprüft)" .
+
+ex:Messwerte_Zugversuch_042 a min:Data ;
+    min:hasIdentifier   "DAT-ZV-042" ;
+    min:hasName         "Messwerte Zugversuch 042" ;
+    min:describes       ex:Probe_042 ;
+    min:generatedBy     ex:Zugversuch_042 .
+
+ex:Zugversuch_042 a min:Process ;
+    min:hasIdentifier   "PRC-ZV-042" ;
+    min:hasName         "Zugversuch Probe 042" ;
+    min:hasInput        ex:Probe_042 ;
+    min:hasOutput       ex:Probe_042_geprueft ;
+    min:generates       ex:Messwerte_Zugversuch_042 ;
+    min:typifiedBy      ex:Zugversuch_ISO6892_1_Typus .
+
+# --- Data kodiert Typus (Typus ist nicht Data) ---
+
+ex:Datenblatt_DC04 a min:Data ;
+    min:hasIdentifier   "DAT-DC04-001" ;
+    min:hasName         "Werkstoffdatenblatt DC04" ;
+    min:describes       ex:Blech_042 ;
+    min:encodes         ex:DC04_Typus .

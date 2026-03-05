@@ -30,6 +30,7 @@ TTL_FILES = [
     "examples/possibile.ttl",
     "examples/norma.ttl",
     "examples/institutio.ttl",
+    "examples/typus.ttl",
     "shapes/min-core.shacl.ttl",
     "shapes/min-instance.shacl.ttl",
 ]
@@ -122,6 +123,7 @@ def main() -> int:
         "examples/possibile.ttl",
         "examples/norma.ttl",
         "examples/institutio.ttl",
+        "examples/typus.ttl",
     ]
     for ex_rel in example_files:
         instance_graph = parse_turtle(ROOT / "min.ttl")

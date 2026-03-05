@@ -8,8 +8,10 @@ ASK WHERE {
   min:affectedBy owl:inverseOf min:actsOn .
   min:describedBy owl:inverseOf min:describes .
   min:generatedBy owl:inverseOf min:generates .
+  min:hasBoundary owl:inverseOf min:bounds .
   min:realizedBy owl:inverseOf min:realizes .
   min:encodedBy owl:inverseOf min:encodes .
   min:constitutedBy owl:inverseOf min:constitutes .
   min:recognizedBy owl:inverseOf min:recognizes .
+  min:typifiedBy owl:inverseOf min:typifies .
 }

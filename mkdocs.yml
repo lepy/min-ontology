@@ -11,14 +11,20 @@ theme:
   name: mkdocs
 
 nav:
-  - Home: index.md
-  - Model: min-model.md
-  - Class Catalog: class-catalog.md
-  - Property Catalog: property-catalog.md
-  - Examples: examples.md
-  - Eierkochen Tutorial: eierkochen_tutorial.md
-  - Versioning: versioning.md
-  - Changelog: changelog.md
-  - Visualisierung v3.0.0: min-v3_0_0-visualization.html
-  - Visualisierung v2.1.0: min-v2_1_0-visualization.html
-  - BFO vs MIN v3.2.0 (historical): bfo-vs-min3_2_0.html
+  - Start: index.md
+  - Grundlagen:
+    - Modellüberblick: min-model.md
+    - Klassenkatalog: class-catalog.md
+    - Property-Katalog: property-catalog.md
+  - Guides:
+    - Klassenbeispiele: examples.md
+    - Eierkochen Tutorial: eierkochen_tutorial.md
+  - Referenz:
+    - Versionierung: versioning.md
+    - Changelog: changelog.md
+    - Meta Vocabulary (DE): min-meta-vocabulary-de.md
+    - Meta Vocabulary (EN): min-meta-vocabulary-en.md
+  - Historisch:
+    - Visualisierung v3.0.0: min-v3_0_0-visualization.html
+    - Visualisierung v2.1.0: min-v2_1_0-visualization.html
+    - BFO vs MIN v3.2.0: bfo-vs-min3_2_0.html
