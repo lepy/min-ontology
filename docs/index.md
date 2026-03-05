@@ -35,3 +35,5 @@ uv run ontology-validate
 ## Historical artifacts
 
 Static visualizations from earlier documentation phases are preserved under **Historisch**.
+
+- [Visualization v3.3.0](min-v3_3_0-visualization.html)
