@@ -13,6 +13,8 @@ Formal axiom:
 
 - `min:Entity owl:equivalentClass [ owl:unionOf ( min:Nexus min:Forma ) ]`
 
+![min_hierarchy.svg](min_hierarchy.svg)
+
 ## 2. Why this split matters
 
 The architecture separates artifacts from determinants:
@@ -125,3 +127,58 @@ Current model characteristics:
 
 - Nexus-centric v2-style instance modeling remains valid in v3.x.
 - v3 adds explicit formal semantics (`Forma` branch and bridge relations) without removing core Nexus patterns.
+
+
+```mermaid
+graph TD
+    Entity["<b>Entity</b><br/><small>∃hasIdentifier ≥ 1</small>"]
+    
+    Nexus["<b>Nexus</b><br/><small>kausale Wirksamkeit</small>"]
+    Forma["<b>Forma</b><br/><small>konstitutive Bestimmung</small>"]
+
+    Object["Object"]
+    Process["Process"]
+    Data["Data"]
+    Agent["Agent"]
+    Boundary["Boundary"]
+
+    Lex["Lex"]
+    Structura["Structura"]
+    Possibile["Possibile"]
+    Norma["Norma"]
+    Institutio["Institutio"]
+    Typus["Typus"]
+
+    Entity --> Nexus
+    Entity --> Forma
+
+    Nexus --> Object
+    Nexus --> Process
+    Nexus --> Data
+    Nexus -.-> Agent
+    Nexus --> Boundary
+
+    Forma --> Lex
+    Forma --> Structura
+    Forma --> Possibile
+    Forma --> Norma
+    Forma --> Institutio
+    Forma --> Typus
+
+    style Entity fill:#f0ebe3,stroke:#9c8b75,color:#3d3225,stroke-width:2px
+    style Nexus fill:#d6eaf8,stroke:#2e86c1,color:#1a3c5e,stroke-width:2px
+    style Forma fill:#e8daef,stroke:#7d3c98,color:#4a235a,stroke-width:2px
+    
+    style Object fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Process fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Data fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Boundary fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Agent fill:#fdebd0,stroke:#e67e22,color:#7e4a12,stroke-width:2px,stroke-dasharray: 5 5
+
+    style Lex fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Structura fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Possibile fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Norma fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Institutio fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Typus fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+```
