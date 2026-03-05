@@ -1691,15 +1691,772 @@ min:hasStatus a owl:DatatypeProperty ;
 
 # #############################################################################
 #
-#   TEIL IX — ANNOTATION PROPERTIES
+#   TEIL IX — ANNOTATION PROPERTIES (Legacy)
+#
+#   Die beiden ursprünglichen Annotation Properties.
+#   min:designRationale wird durch min:rationale ersetzt (deprecated).
+#   min:philosophicalBasis bleibt aktiv und wird vom Metavokabular
+#   referenziert.
 #
 # #############################################################################
 
 min:designRationale a owl:AnnotationProperty ;
-    rdfs:label "design rationale"@en .
+    rdfs:label "design rationale"@en ;
+    rdfs:label "Entwurfsbegründung (legacy)"@de ;
+    min:status "deprecated" ;
+    min:replacedBy min:rationale ;
+    min:definedInVersion "1.0.0" .
 
 min:philosophicalBasis a owl:AnnotationProperty ;
-    rdfs:label "philosophical basis"@en .
+    rdfs:label "philosophical basis"@en ;
+    rdfs:label "Philosophische Grundlage"@de ;
+    min:definition """Ein Verweis auf die philosophische Tradition oder
+    Denklinie, aus der der Begriff der annotierten Entität stammt."""@de ;
+    min:criterion "Benennt der Text eine identifizierbare philosophische Position oder einen Denker, dessen Begrifflichkeit die Entität motiviert?"@de ;
+    min:distinguishedFrom "min:normativeSource — verweist auf technische Autoritätsquellen. min:philosophicalBasis verweist auf begriffliche Traditionen."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# #############################################################################
+#
+#   TEIL X — METAVOKABULAR (Selbstbeschreibende Klassendokumentation)
+#
+#   11 Annotation Properties in 7 irreduziblen Dimensionen:
+#     I.   Intension        — Was ist es?           (definition, criterion)
+#     II.  Extension         — Wie sieht es aus?     (usageExample)
+#     III. Grenze            — Was ist es nicht?      (counterExample,
+#                                                      distinguishedFrom)
+#     IV.  Herkunft          — Woher kommt es?        (philosophicalBasis,
+#                                                      normativeSource)
+#     V.   Teleologie        — Warum existiert es?    (rationale)
+#     VI.  Lebenszyklus      — In welchem Zustand?    (definedInVersion,
+#                                                      status, replacedBy)
+#     VII. Axiom-Transparenz — Warum diese Formalia?  (axiomRationale)
+#
+#   Entwurfsprinzipien:
+#     1. Irreduzibilität — Jede Property deckt eine Dimension ab, die keine
+#        andere Property abdecken kann.
+#     2. Selbstbeschreibung — Das Vokabular dokumentiert sich mit sich selbst.
+#     3. Minimalität — Keine Property, deren Fehlen tolerierbar wäre.
+#     4. Universalität — Anwendbar auf Klassen, Properties und Individuen.
+#
+# #############################################################################
+
+# =============================================================================
+#   I. INTENSION — Was ist die Entität?
+# =============================================================================
+
+min:definition a owl:AnnotationProperty ;
+    rdfs:label "Definition"@de ;
+    rdfs:label "definition"@en ;
+    rdfs:comment """Eine Satz-Definition der Entität.
+    Präzise, nicht-zirkulär, genus-differentia wo möglich."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Eine natürlichsprachliche Satz-Definition, die eine
+    Ontologie-Entität so beschreibt, dass ein sachkundiger Leser sie ohne
+    weitere Quellen eindeutig identifizieren kann."""@de ;
+    min:criterion "Könnte ein sachkundiger Leser allein anhand dieses Satzes entscheiden, ob ein gegebenes Ding zur Klasse gehört oder nicht?"@de ;
+    min:rationale """Ohne eine explizite Definition bleibt die Semantik
+    einer Klasse implizit im Label und in der Axiomatik verborgen.
+    Das genügt für Maschinen, nicht für Menschen."""@de ;
+    min:distinguishedFrom "rdfs:comment — der informell, unstrukturiert und redundant sein darf. min:definition ist normativ und nicht-zirkulär."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+min:criterion a owl:AnnotationProperty ;
+    rdfs:label "Existenzkriterium"@de ;
+    rdfs:label "criterion"@en ;
+    rdfs:comment """Die Frage, die eine Instanz erfüllen muss,
+    um zur Klasse zu gehören. In MIN typisch als Ja/Nein-Frage."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Eine operationalisierbare Ja/Nein-Frage, deren Bejahung
+    eine Entität als Instanz der annotierten Klasse qualifiziert."""@de ;
+    min:criterion "Kann die Frage prinzipiell mit Ja oder Nein beantwortet werden, und trennt sie Instanzen zuverlässig von Nicht-Instanzen?"@de ;
+    min:rationale """Eine Definition sagt, was etwas *ist*. Ein Kriterium
+    sagt, wie man *entscheidet*. Beide sind irreduzibel: Eine gute
+    Definition kann ein schlechtes Entscheidungsverfahren haben
+    und umgekehrt."""@de ;
+    min:distinguishedFrom "min:definition — die beschreibt, was die Klasse ist. min:criterion beschreibt, wie man Zugehörigkeit prüft."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   II. EXTENSION — Wie sieht die Entität konkret aus?
+# =============================================================================
+
+min:usageExample a owl:AnnotationProperty ;
+    rdfs:label "Verwendungsbeispiel"@de ;
+    rdfs:label "usage example"@en ;
+    rdfs:comment "Konkrete Instanz oder Nutzung der Entität."@de ;
+    rdfs:range xsd:string ;
+    min:definition """Ein konkretes Beispiel — als natürlichsprachliche
+    Beschreibung oder als Turtle-Fragment — das zeigt, wie die
+    annotierte Entität in der Praxis instanziiert oder verwendet wird."""@de ;
+    min:criterion "Zeigt das Beispiel eine korrekte, nicht-triviale Verwendung der Entität in einem realistischen Kontext?"@de ;
+    min:rationale """Definitionen und Kriterien sind abstrakt. Beispiele
+    verankern das Verständnis in konkreter Praxis und reduzieren
+    Mehrdeutigkeit, die Definitionen allein nicht auflösen können."""@de ;
+    min:distinguishedFrom "min:counterExample — das zeigt, was die Entität *nicht* ist. min:usageExample zeigt, was sie *ist*."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   III. GRENZE — Was ist die Entität nicht?
+# =============================================================================
+
+min:counterExample a owl:AnnotationProperty ;
+    rdfs:label "Gegenbeispiel"@de ;
+    rdfs:label "counterexample"@en ;
+    rdfs:comment """Eine Entität, die ähnlich scheint, aber nicht
+    zur Klasse gehört — mit Begründung."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Ein konkretes Beispiel einer Entität, die
+    der annotierten Klasse nahezuliegen scheint, aber nach deren
+    Kriterium nicht dazugehört — zusammen mit der Begründung,
+    warum nicht."""@de ;
+    min:criterion "Würde ein Nicht-Experte die genannte Entität plausibel der Klasse zuordnen, obwohl sie nicht dazugehört?"@de ;
+    min:rationale """Definitionen und Kriterien allein lassen Grenzfälle
+    offen. Gegenbeispiele machen die Grenze der Klasse sichtbar,
+    besonders dort, wo Verwechslungsgefahr besteht."""@de ;
+    min:distinguishedFrom "min:distinguishedFrom — das grenzt *Klassen* voneinander ab. min:counterExample nennt ein konkretes *Ding*, das nicht zur Klasse gehört."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+min:distinguishedFrom a owl:AnnotationProperty ;
+    rdfs:label "Abgrenzung"@de ;
+    rdfs:label "distinguished from"@en ;
+    rdfs:comment """Abgrenzung zu einer verwandten Klasse.
+    Mehrfach verwendbar für mehrere Abgrenzungen."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Eine explizite Abgrenzung der annotierten Klasse
+    gegenüber einer verwandten Klasse, die ein anderer Modellierer
+    verwechseln oder zusammenlegen könnte."""@de ;
+    min:criterion "Gibt es eine dokumentierte Verwechslungsgefahr zwischen den beiden Klassen, und macht die Abgrenzung den Unterschied operationalisierbar?"@de ;
+    min:rationale """Ontologien wachsen durch mehrere Beitragende. Ohne
+    explizite Abgrenzungen driften Klassengrenzen auseinander, weil
+    jeder Modellierer eine eigene Intuition hat."""@de ;
+    min:distinguishedFrom "min:counterExample — das nennt ein konkretes Ding. min:distinguishedFrom nennt eine *Klasse* und begründet die Trennung."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   IV. HERKUNFT — Woher kommt die Entität?
+# =============================================================================
+
+# min:philosophicalBasis — definiert in TEIL IX, bleibt aktiv.
+
+min:normativeSource a owl:AnnotationProperty ;
+    rdfs:label "Normative Quelle"@de ;
+    rdfs:label "normative source"@en ;
+    rdfs:comment """Standard, Spezifikation oder Fachquelle, auf der die
+    Definition der annotierten Entität inhaltlich basiert."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Ein Verweis auf einen publizierten Standard,
+    eine Spezifikation oder eine anerkannte Fachquelle, deren
+    inhaltliche Definition die Semantik der annotierten Entität
+    begründet oder einschränkt."""@de ;
+    min:criterion "Ist die genannte Quelle ein publiziertes, zitierfähiges Dokument, das die Definition der Entität inhaltlich stützt?"@de ;
+    min:rationale """min:philosophicalBasis verweist auf die begriffliche
+    Tradition (Aristoteles, Whitehead). Aber wenn eine Klasse aus
+    DIN EN ISO 6892-1 abgeleitet ist, braucht man einen getrennten
+    Verweis auf die *fachliche* Quelle. Philosophische Tradition ≠
+    normative Referenz."""@de ;
+    min:distinguishedFrom "min:philosophicalBasis — verweist auf philosophische Tradition und Begriffsgeschichte. min:normativeSource verweist auf technische oder wissenschaftliche Autoritätsquellen."@de ;
+    min:distinguishedFrom "dcterms:source — ein generischer Dublin-Core-Verweis ohne die Einschränkung auf normative, definitionsstützende Quellen."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   V. TELEOLOGIE — Warum existiert die Entität hier?
+# =============================================================================
+
+min:rationale a owl:AnnotationProperty ;
+    rdfs:label "Entwurfsbegründung"@de ;
+    rdfs:label "design rationale"@en ;
+    rdfs:comment """Begründung, warum diese Entität in der Ontologie
+    existiert — welches Modellierungsproblem sie löst."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Eine natürlichsprachliche Begründung, die erklärt,
+    welches konkrete Modellierungsproblem die annotierte Entität löst
+    und warum keine bestehende Entität dieses Problem bereits abdeckt."""@de ;
+    min:criterion "Benennt der Text ein konkretes Modellierungsproblem und erklärt, warum keine bestehende Entität es löst?"@de ;
+    min:rationale """min:definition sagt *was*, min:philosophicalBasis sagt
+    *woher der Begriff stammt* — aber keines beantwortet: 'Warum habt
+    ihr das nicht einfach unter X subsumiert?' Ohne Rationale geht
+    die Entwurfsentscheidung verloren, sobald der Autor nicht mehr
+    verfügbar ist."""@de ;
+    min:distinguishedFrom "min:definition — die beschreibt, was die Entität *ist*. min:rationale beschreibt, warum sie *sein muss*."@de ;
+    min:distinguishedFrom "min:philosophicalBasis — die verortet den Begriff in einer Denktradition. min:rationale verortet ihn im Kontext der Ontologie-Architektur."@de ;
+    min:distinguishedFrom "min:designRationale — deprecated legacy-Property. min:rationale ist der strukturierte Nachfolger."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   VI. LEBENSZYKLUS — In welchem Zustand ist die Entität?
+# =============================================================================
+
+min:definedInVersion a owl:AnnotationProperty ;
+    rdfs:label "Definiert in Version"@de ;
+    rdfs:label "defined in version"@en ;
+    rdfs:comment "Versionsnummer der Ontologie, in der diese Entität eingeführt wurde."@de ;
+    rdfs:range xsd:string ;
+    min:definition """Die Versionsnummer (SemVer) der Ontologie, in der
+    die annotierte Entität erstmals eingeführt wurde."""@de ;
+    min:criterion "Ist der Wert eine gültige SemVer-Versionsnummer, und entspricht sie dem Release, in dem die Entität erstmals erschien?"@de ;
+    min:rationale """In einer sich entwickelnden Ontologie müssen Nutzer
+    nachvollziehen können, ab welcher Version eine Entität verfügbar
+    ist — insbesondere für Abwärtskompatibilität und Migration."""@de ;
+    min:distinguishedFrom "min:status — das den aktuellen Reifegrad beschreibt. min:definedInVersion beschreibt den historischen Einführungszeitpunkt."@de ;
+    min:distinguishedFrom "owl:versionInfo — das die Ontologie als Ganzes versioniert. min:definedInVersion versioniert einzelne Entitäten."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+min:status a owl:AnnotationProperty ;
+    rdfs:label "Status"@de ;
+    rdfs:label "status"@en ;
+    rdfs:comment """Reifestatus der annotierten Entität.
+    Erlaubte Werte: \"experimental\" | \"stable\" | \"deprecated\"."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Der aktuelle Reifegrad der annotierten Entität im
+    Lebenszyklus der Ontologie. Genau einer von drei Werten:
+    'experimental' (kann sich ändern), 'stable' (festgeschrieben),
+    'deprecated' (nicht mehr verwenden, siehe min:replacedBy)."""@de ;
+    min:criterion "Ist der Wert exakt einer der drei erlaubten Strings: 'experimental', 'stable' oder 'deprecated'?"@de ;
+    min:rationale """min:definedInVersion sagt, *wann* eine Entität
+    eingeführt wurde, aber nicht, ob sie noch verwendet werden soll.
+    Ohne expliziten Status weiß ein Nutzer nicht, ob er eine Klasse
+    sicher einsetzen kann oder ob sie bald entfällt."""@de ;
+    min:distinguishedFrom "min:definedInVersion — das einen historischen Zeitpunkt markiert. min:status beschreibt den *aktuellen* Zustand."@de ;
+    min:distinguishedFrom "min:replacedBy — das den Nachfolger bei Deprecation nennt. min:status markiert nur den Zustand selbst."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+min:replacedBy a owl:AnnotationProperty ;
+    rdfs:label "Ersetzt durch"@de ;
+    rdfs:label "replaced by"@en ;
+    rdfs:comment """Verweis auf die Nachfolger-Entität bei Deprecation.
+    Nur sinnvoll in Kombination mit min:status \"deprecated\"."""@de ;
+    rdfs:range rdfs:Resource ;
+    min:definition """Ein Verweis auf die Ontologie-Entität, die die
+    annotierte (deprecated) Entität funktional ersetzt. Der Wert
+    ist eine URI, kein String."""@de ;
+    min:criterion "Ist die annotierte Entität deprecated, und bietet die referenzierte Entität tatsächlich einen funktionalen Ersatz?"@de ;
+    min:rationale """Deprecation ohne Migrationspfad ist nutzlos. Nutzer
+    müssen wissen, *wohin* sie migrieren sollen, nicht nur, dass
+    sie migrieren müssen."""@de ;
+    min:distinguishedFrom "min:status — das nur den Zustand 'deprecated' markiert. min:replacedBy nennt den konkreten Nachfolger."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   VII. AXIOM-TRANSPARENZ — Warum diese formalen Einschränkungen?
+# =============================================================================
+
+min:axiomRationale a owl:AnnotationProperty ;
+    rdfs:label "Axiom-Begründung"@de ;
+    rdfs:label "axiom rationale"@en ;
+    rdfs:comment """Begründung für eine formale Restriktion (domain, range,
+    cardinality, disjointness) in natürlicher Sprache."""@de ;
+    rdfs:range xsd:string ;
+    min:definition """Eine natürlichsprachliche Begründung, die erklärt,
+    warum eine bestimmte OWL-Restriktion (Domain, Range, Kardinalität,
+    Disjunktheit) so gewählt wurde und welche Modellierungsalternative
+    bewusst verworfen wurde."""@de ;
+    min:criterion "Benennt der Text die spezifische Restriktion, begründet die Wahl und benennt mindestens eine verworfene Alternative?"@de ;
+    min:rationale """OWL-Axiome sind maschinenlesbar, aber ihre
+    Entwurfsentscheidungen sind es nicht. Die jüngste Korrektur der
+    Process-Axiome in MIN (Öffnung für Data-Inputs neben Object-Inputs)
+    zeigt: Ohne dokumentierte Begründung muss jeder Nachfolger die
+    Designentscheidung neu rekonstruieren."""@de ;
+    min:distinguishedFrom "min:rationale — das begründet, warum die *Entität* existiert. min:axiomRationale begründet, warum eine *formale Einschränkung* auf der Entität so gewählt wurde."@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# #############################################################################
+#
+#   TEIL XI — META-ANNOTATIONEN (Strukturierte Klassendokumentation)
+#
+#   Jede der 14 Klassen wird mit dem Metavokabular annotiert.
+#   Ergänzt die bestehenden rdfs:comment, skos:example,
+#   min:philosophicalBasis und min:designRationale (legacy).
+#
+# #############################################################################
+
+# =============================================================================
+#   ENTITY — Meta-Annotationen
+# =============================================================================
+
+min:Entity
+    min:definition """Absolute Wurzel der MIN-Ontologie. Eine Entität ist
+    alles, was in MIN existiert — ob kausal wirksam (Nexus) oder
+    konstitutiv bestimmend (Forma)."""@de ;
+    min:criterion "Existiert es in MIN? Dann ist es Entity. Entity ist die oberste Klasse und wird nicht direkt instantiiert."@de ;
+    min:counterExample """Eine reine Eigenschaft (z.B. ‹die Farbe Rot›
+    als abstrakte Quale). MIN reifiziert Properties nicht als Entitäten —
+    Rot ist eine materialProperty an einem Object, keine Entity."""@de ;
+    min:distinguishedFrom """owl:Thing — Entity ist MINs eigene Wurzel mit
+    dem Identitätsaxiom ∃hasIdentifier min 1. owl:Thing hat kein
+    solches Axiom."""@de ;
+    min:rationale """MIN braucht eine gemeinsame Wurzel für Nexus und Forma,
+    um Datatype Properties (hasIdentifier, hasName) an beiden Zweigen
+    zu deklarieren. Ohne Entity müsste man die Properties duplizieren."""@de ;
+    min:axiomRationale """Entity ≡ Nexus ⊔ Forma — erschöpfende Partition.
+    Begründung: In MIN gibt es nur Aktuales (Nexus) und Formales (Forma).
+    Verworfene Alternative: Entity als offene Superklasse ohne Partition.
+    Aber dann wäre die Zweig-Architektur nicht erzwungen.
+
+    ∃hasIdentifier min 1 — jede Entity muss identifizierbar sein.
+    Verworfene Alternative: Identifier nur auf Domänenebene.
+    Aber Identität ist architektonisch, nicht domänenspezifisch."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   NEXUS — Meta-Annotationen
+# =============================================================================
+
+min:Nexus
+    min:definition """Zweig des Aktualen. Gemeinsame Superklasse aller
+    kausal wirksamen Entitäten: Object, Process, Data, Agent, Boundary."""@de ;
+    min:criterion "Bewirkt es etwas — direkt oder als Subjekt kausaler Relationen? Dann ist es Nexus."@de ;
+    min:counterExample """Die Energieerhaltung. Sie bewirkt nichts direkt —
+    kein Process wird ‹von ihr verursacht›. Sie bestimmt nur, WIE
+    Processes ablaufen. → Lex (Forma), nicht Nexus."""@de ;
+    min:distinguishedFrom """min:Forma — Forma bestimmt, Nexus wirkt.
+    Die Unterscheidung ist MINs Fundamentalunterscheidung.
+    Forma ist die Grammatik, Nexus sind die Sätze."""@de ;
+    min:rationale """MIN braucht einen gemeinsamen Query-Anker für alle
+    aktualen Entitäten (?x a min:Nexus) und eine Domain/Range für
+    geteilte Relationen (hasInput, hasOutput, describes etc.).
+    Ohne Nexus müsste man jede Relation einzeln für Object, Data
+    etc. deklarieren."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   OBJECT — Meta-Annotationen
+# =============================================================================
+
+min:Object
+    min:definition """Material-dominanter Nexus. Ein Ding, das primär
+    über seine physische Präsenz und kausale Wirksamkeit zugänglich
+    ist. Identitätskriterium: materiale Kontinuität."""@de ;
+    min:criterion "Ist es primär über seine Materialität zugänglich und bewirkt es etwas als physisches Ding?"@de ;
+    min:usageExample """ex:coil_DC04_001 a min:Object ;
+    min:hasIdentifier \"COIL-2026-042\" ;
+    min:hasName \"DC04-Coil Charge 7814\" ."""@de ;
+    min:counterExample """Eine CNC-Maschine IM BETRIEB. Sie ist nicht
+    nur physisch da (Object), sondern handelt selektiv (Agent).
+    → Agent ∩ Object. Als passives Werkzeug ohne Eigensteuerung
+    wäre sie nur Object."""@de ;
+    min:distinguishedFrom """min:Data — Data ist informational-dominant.
+    Eine Festplatte ist Object, die Datei darauf ist Data.
+    Object: identifiziert durch materiale Kontinuität.
+    Data: identifiziert durch informationale Identität."""@de ;
+    min:distinguishedFrom """min:Boundary — Object existiert ohne Partner.
+    Boundary existiert nur zwischen Partnern. Testkriterium:
+    Partner entfernen → Object bleibt, Boundary verschwindet."""@de ;
+    min:rationale """MIN braucht eine Kategorie für das Physische —
+    Bleche, Werkzeuge, Maschinen, Prüflinge. Object ist die
+    Heimat alles material-dominanten Aktualen."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   PROCESS — Meta-Annotationen
+# =============================================================================
+
+min:Process
+    min:definition """Ausgewogener Nexus. Transformation, die Nexus-Instanzen
+    als Input konsumiert und als Output erzeugt. Beide Pole (material,
+    informational) sind gleich gewichtig."""@de ;
+    min:criterion "Verbraucht oder transformiert die Entität Inputs zu Outputs über die Zeit?"@de ;
+    min:usageExample """ex:tiefziehen_001 a min:Process ;
+    min:hasIdentifier \"TZ-2026-001\" ;
+    min:hasInput ex:coil_DC04_001 ;
+    min:hasOutput ex:bauteil_001 ;
+    min:performedBy ex:presse_001 ."""@de ;
+    min:counterExample """‹Lagern› — wenn es keine Transformation gibt.
+    Ein Coil, der im Lager liegt, durchläuft keinen Process
+    (solange keine Alterung, Korrosion etc. stattfindet).
+    Transport hingegen IST ein Process (konservativ: undergoes)."""@de ;
+    min:distinguishedFrom """min:Possibile — ein Process GESCHIEHT.
+    Ein Possibile KÖNNTE geschehen. Wenn ein Possibile eintritt,
+    wird es zum Process (realisiert)."""@de ;
+    min:rationale """MIN braucht eine Kategorie für Transformation —
+    Fertigung, Prüfung, Simulation, ML-Training. Process ist die
+    Heimat alles Zeitlichen und Transformativen."""@de ;
+    min:axiomRationale """∃hasInput.Nexus und ∃hasOutput.Nexus — Range ist
+    Nexus, nicht Object. Begründung: MINs Existenzkriterium ist
+    kausale Wirksamkeit, nicht Materialität. Ein Simulationsprozess
+    konsumiert Data als Input. Verworfene Alternative: Range Object
+    (v2.1) — konnte FEM-Simulationen nicht abbilden."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   DATA — Meta-Annotationen
+# =============================================================================
+
+min:Data
+    min:definition """Informational-dominanter Nexus. Ein aktuales Artefakt,
+    dessen Existenzberechtigung in seiner informationalen Bestimmtheit
+    liegt. Identitätskriterium: informationale Identität."""@de ;
+    min:criterion "Existiert es primär als Informationsträger — als Bytes, Struktur, Semantik?"@de ;
+    min:usageExample """ex:messdaten_zv001 a min:Data ;
+    min:hasIdentifier \"MD-ZV-2026-001\" ;
+    min:describes ex:pruefling_001 ;
+    min:generatedBy ex:zugversuch_001 ;
+    min:encodes ex:norma_iso6892 ."""@de ;
+    min:counterExample """Das Naturgesetz der Gravitation. Es hat keine
+    Bytes, keinen Speicherort, keinen Eigentümer. Das Lehrbuch,
+    das es beschreibt, ist Data. Das Gesetz selbst ist Lex.
+    → Lex (Forma), nicht Data."""@de ;
+    min:distinguishedFrom """min:Forma — Data ist AKTUELL (hat Bytes,
+    Speicherort, Eigentümer). Forma ist FORMAL (keine materiale
+    Seite). Data KODIERT Forma (min:encodes). Wenn man Data löscht,
+    ist Forma noch da."""@de ;
+    min:rationale """MIN braucht eine Kategorie für Informationsartefakte —
+    Messdaten, Simulationsergebnisse, Produktpässe, Zertifikate.
+    Data ist die Brücke zwischen Nexus und Forma via min:encodes."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   AGENT — Meta-Annotationen
+# =============================================================================
+
+min:Agent
+    min:definition """Handlungsfähiger Nexus. Eine Entität mit kausaler
+    Wirksamkeit, Selektivität und Zurechenbarkeit. Orthogonal zu
+    Object/Process/Data/Boundary — überlappt mit diesen."""@de ;
+    min:criterion "Hat die Entität kausale Wirksamkeit, handelt sie selektiv (lokal, nicht universal) und ist die Wirkung ihr zurechenbar?"@de ;
+    min:usageExample """ex:operator_mueller a min:Agent , min:Object ;
+    min:hasIdentifier \"OP-2026-Mueller\" ;
+    min:performs ex:zugversuch_001 ;
+    min:controls ex:zugversuch_001 ."""@de ;
+    min:counterExample """Die Gravitation. Sie wirkt universal, nicht
+    selektiv. Sie ist keinem Akteur zurechenbar. Universalität
+    disqualifiziert für Agency. → Lex (Forma), nicht Agent."""@de ;
+    min:counterExample """Eine passive CNC-Maschine (ausgeschaltet,
+    keine Eigensteuerung). Physisch da, aber nicht handlungsfähig.
+    → Object. Erst im Betrieb: Agent ∩ Object."""@de ;
+    min:distinguishedFrom """min:Institutio — ein Unternehmen als
+    Handelnder ist Agent. Dasselbe Unternehmen als juristische
+    Person (soziales Konstrukt) ist Institutio. Verschiedene
+    Entitäten, verbunden durch Relationen."""@de ;
+    min:rationale """MIN braucht eine Kategorie für Handlungsfähigkeit —
+    Menschen, Maschinen, Software-Agenten, Organisationen.
+    Agent ist orthogonal, weil Agency eine Dimension ist,
+    keine Substanzkategorie."""@de ;
+    min:axiomRationale """Agent ist NICHT disjunkt mit Object, Process,
+    Data, Boundary. Begründung: Ein Mensch ist Agent ∩ Object,
+    ein ML-Modell ist Agent ∩ Data, eine aktive Membran ist
+    Agent ∩ Boundary. Verworfene Alternative: Agent als disjunkte
+    Kategorie — aber dann wäre ein Mensch kein Object mehr, was
+    die materiale Kontinuität als Identitätskriterium verlöre."""@de ;
+    min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   BOUNDARY — Meta-Annotationen
+# =============================================================================
+
+min:Boundary
+    min:definition """Irreduzibel relationaler Nexus. Ein Phänomen, das nur
+    zwischen zwei oder mehr Entitäten existiert, keinem Partner allein
+    zuschreibbar ist und eigenständige kausale Wirksamkeit besitzt."""@de ;
+    min:criterion """Entferne einen der Partner. Existiert das Phänomen
+    noch? — Ja → Object. Nein → Boundary."""@de ;
+    min:usageExample """ex:uebergangswiderstand_01 a min:Boundary ;
+    min:hasIdentifier \"UW-2026-001\" ;
+    min:bounds ex:blech_A , ex:blech_B ."""@de ;
+    min:counterExample """Die Oberfläche eines Bleches. Sie gehört dem
+    Blech — entferne alle Partner, die Oberfläche bleibt.
+    → Object (oder Teil via min:hasComponent), nicht Boundary."""@de ;
+    min:counterExample """Oberflächenrauheit Ra eines einzelnen Bleches.
+    Partner entfernen → Ra bleibt. → materialProperty des Object,
+    nicht Boundary."""@de ;
+    min:distinguishedFrom """min:Object — Object existiert ohne Partner.
+    Boundary existiert NUR zwischen Partnern. Oberfläche ≠ Grenzfläche."""@de ;
+    min:normativeSource """Bowden, Tabor: The Friction and Lubrication
+    of Solids (1950) — Reibung als Systemeigenschaft, nicht
+    Materialeigenschaft."""@de ;
+    min:rationale """MIN v3.1 konnte irreduzibel relationale Phänomene
+    (Übergangswiderstand, Reibung, Korngrenze) nicht adäquat
+    modellieren. Object suggeriert ein eigenständiges Ding.
+    Datatype Property verliert die kausale Eigenständigkeit."""@de ;
+    min:axiomRationale """∃bounds min 2 — jede Boundary muss mindestens
+    zwei Nexus-Instanzen verbinden. Begründung: Eine Boundary
+    existiert definitionsgemäß NUR zwischen Partnern.
+    Verworfene Alternative: keine Kardinalität — aber dann
+    könnte eine Boundary ohne Partner existieren, was der
+    Definition widerspricht."""@de ;
+    min:definedInVersion "3.2.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   FORMA — Meta-Annotationen
+# =============================================================================
+
+min:Forma
+    min:definition """Zweig des Formalen. Gemeinsame Superklasse aller
+    konstitutiv bestimmenden Entitäten: Lex, Structura, Possibile,
+    Norma, Institutio, Typus."""@de ;
+    min:criterion "Bestimmt es, wie Nexus wirkt — ohne selbst kausal wirksam zu sein?"@de ;
+    min:counterExample """Eine Messdatei. Sie kodiert ein Naturgesetz
+    (Forma), aber sie selbst hat Bytes, Speicherort, Eigentümer.
+    → Data (Nexus), nicht Forma. Data encodes Forma."""@de ;
+    min:distinguishedFrom """min:Nexus — Nexus wirkt, Forma bestimmt.
+    Forma ist die Grammatik, Nexus sind die Sätze."""@de ;
+    min:distinguishedFrom """min:Data — Data ist ein aktuales Artefakt
+    (Bytes, Speicher). Forma hat keine materiale Seite.
+    Data kodiert Forma (min:encodes), aber Data IST nicht Forma."""@de ;
+    min:rationale """MIN v2.1 modellierte alles Formale als Data. Aber
+    ein Naturgesetz ist nicht dasselbe wie das Lehrbuch, das es
+    beschreibt. Forma-Zweig löst das: Lehrbuch = Data,
+    Gesetz = Lex, Verbindung via min:encodes."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   LEX — Meta-Annotationen
+# =============================================================================
+
+min:Lex
+    min:definition """Universelle Regularität. Ein Naturgesetz oder
+    Erhaltungssatz, der bestimmt, was passiert, wenn
+    Nexus-Instanzen interagieren."""@de ;
+    min:criterion "Gilt es universell, ausnahmslos, und bestimmt es, wie Nexus interagieren — ohne selbst kausal wirksam zu sein?"@de ;
+    min:usageExample """ex:energieerhaltung a min:Lex ;
+    min:hasIdentifier \"LEX-E-ERHALT\" ;
+    min:hasName \"Energieerhaltungssatz\" ;
+    min:governs ex:tiefziehen_001 ."""@de ;
+    min:counterExample """‹Rm ≥ 340 MPa› — das ist eine Anforderung,
+    kein Naturgesetz. Sie kann verletzt werden. Lex kann NICHT
+    verletzt werden. → Norma, nicht Lex."""@de ;
+    min:distinguishedFrom """min:Norma — Lex ist deskriptiv (was IST).
+    Norma ist normativ (was sein SOLL). Lex gilt universal,
+    Norma konventionell. Lex kann nicht verletzt werden,
+    Norma schon."""@de ;
+    min:rationale """Ingenieure operieren unter Naturgesetzen. MIN braucht
+    eine Kategorie, die ausdrückt: dieser Process GEHORCHT
+    dieser Regularität — ohne sie als Agent zu reifizieren."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   STRUCTURA — Meta-Annotationen
+# =============================================================================
+
+min:Structura
+    min:definition """Mathematische oder formale Struktur, die bestimmt,
+    welche Formen in der aktualen Welt möglich sind. Existiert
+    nicht raumzeitlich, aber bestimmt die Geometrie des Möglichen."""@de ;
+    min:criterion "Ist es eine rein mathematische/formale Struktur, die nicht raumzeitlich existiert, aber Nexus formt?"@de ;
+    min:usageExample """ex:von_mises a min:Structura ;
+    min:hasIdentifier \"STRUCT-MISES\" ;
+    min:hasName \"Von-Mises-Fließfläche\" ;
+    min:formalizes ex:plastische_verformung ."""@de ;
+    min:counterExample """Ein FEM-Simulationsmodell. Es hat Bytes,
+    einen Speicherort, eine Versionsnummer. → Data (Nexus).
+    Das Modell KODIERT die Fließfläche (Structura):
+    Data encodes Structura."""@de ;
+    min:distinguishedFrom """min:Typus — Structura ist formal-rein
+    (eine mathematische Struktur). Typus ist komposit — er bündelt
+    Structura, Norma, Lex und Properties zu einer
+    Wesensbestimmung."""@de ;
+    min:rationale """Ingenieure nutzen Modelle. MIN braucht eine Kategorie,
+    die das FORMALE Modell (Fließfläche) vom AKTUALEN Artefakt
+    (FEM-Implementierung) trennt."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   POSSIBILE — Meta-Annotationen
+# =============================================================================
+
+min:Possibile
+    min:definition """Möglichkeit oder kontrafaktisches Szenario. Eine
+    modale Aussage über Nicht-Aktuales — das, was hätte sein können
+    oder unter anderen Bedingungen sein würde."""@de ;
+    min:criterion "Handelt es sich um eine modale Aussage über etwas Nicht-Aktuales — etwas, das KÖNNTE, aber nicht IST?"@de ;
+    min:usageExample """ex:versagen_bauteil_001 a min:Possibile ;
+    min:hasIdentifier \"POSS-V-001\" ;
+    min:hasName \"Versagensszenario Bauteil 001\" ;
+    min:concerns ex:bauteil_001 ."""@de ;
+    min:counterExample """Ein tatsächlich eingetretener Bruch. Er ist
+    GESCHEHEN → Process (Nexus), nicht Possibile (Forma).
+    Vor dem Bruch war er Possibile, danach wurde er
+    realisiert (min:realizes)."""@de ;
+    min:distinguishedFrom """min:Process — ein Process GESCHIEHT.
+    Ein Possibile geschieht NICHT — es KÖNNTE geschehen."""@de ;
+    min:rationale """Risikoanalyse (FMEA), What-if-Szenarien und
+    Designalternativen sind im Ingenieuralltag zentral.
+    MIN braucht eine Heimat für das Nicht-Aktuale."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   NORMA — Meta-Annotationen
+# =============================================================================
+
+min:Norma
+    min:definition """Anforderung, Grenzwert oder Bewertungskriterium.
+    Das, was gelten SOLL. Norma bewirkt nichts, aber sie definiert
+    den Unterschied zwischen ‹bestanden› und ‹nicht bestanden›."""@de ;
+    min:criterion "Definiert es einen Soll-Wert, gegen den ein Nexus bewertet werden kann — bestanden oder nicht?"@de ;
+    min:usageExample """ex:norma_rm_270 a min:Norma ;
+    min:hasIdentifier \"NORMA-RM-270\" ;
+    min:hasName \"Mindestzugfestigkeit Rm >= 270 MPa\" ;
+    min:evaluates ex:coil_DC04_001 ."""@de ;
+    min:counterExample """‹Stahl hat eine Zugfestigkeit von 450 MPa› —
+    das ist ein Messwert (Data describes Object), keine
+    Anforderung. Keine Bewertung = keine Norma."""@de ;
+    min:distinguishedFrom """min:Lex — Lex ist deskriptiv und universell.
+    Norma ist normativ und konventionell. Lex kann nicht verletzt
+    werden. Norma kann verletzt werden — genau das macht sie
+    zur Norma."""@de ;
+    min:distinguishedFrom """min:Typus — Norma BEWERTET (Soll). Typus
+    KONSTITUIERT (Wesen). Norma: ‹Rm SOLL ≥ 270 MPa.›
+    Typus: ‹DC04 IST das, was C ≤ 0.08% und Rm 270–350 MPa hat.›"""@de ;
+    min:rationale """Ohne Norma kein Produktpass, kein Zertifikat,
+    kein ‹bestanden/nicht bestanden›. Norma ist die ontologische
+    Heimat von allem, was unter ‹Anforderung› steht."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   INSTITUTIO — Meta-Annotationen
+# =============================================================================
+
+min:Institutio
+    min:definition """Soziales Konstrukt, das nur durch kollektive
+    Anerkennung existiert. Institutio existiert, weil Agenten
+    es anerkennen — ohne Anerkennung keine Institutio."""@de ;
+    min:criterion "Existiert es NUR, weil Agenten es kollektiv anerkennen — und hört es auf zu existieren, wenn alle aufhören es anzuerkennen?"@de ;
+    min:usageExample """ex:euro a min:Institutio ;
+    min:hasIdentifier \"INST-EUR\" ;
+    min:hasName \"Euro\" ;
+    min:constitutedBy ex:ezb ;
+    min:recognizedBy ex:eu_mitgliedstaaten ."""@de ;
+    min:counterExample """Ein Stück Papier. Physisch existiert es
+    unabhängig von Anerkennung. → Object (Nexus).
+    Der WERT des Papiers als Geldschein → Institutio (Forma).
+    Searle: X (Papier) counts as Y (Geld) in context C."""@de ;
+    min:distinguishedFrom """min:Agent — ein Unternehmen als Handelnder
+    ist Agent. Dasselbe Unternehmen als juristische Person ist
+    Institutio. Verschiedene Entitäten."""@de ;
+    min:distinguishedFrom """min:Typus — Institutio braucht laufende
+    kollektive Anerkennung (ohne EZB kein Euro). Typus nicht —
+    DC04 bleibt DC04, auch wenn das Normungsgremium aufgelöst
+    wird."""@de ;
+    min:normativeSource "Searle, J.R.: The Construction of Social Reality (1995) — Institutional Facts."@de ;
+    min:rationale """Ingenieure operieren mit Patenten, Zertifizierungen,
+    Lizenzen, Währungen. MIN braucht eine Kategorie für soziale
+    Konstrukte, die von kollektiver Anerkennung abhängen."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   TYPUS — Meta-Annotationen
+# =============================================================================
+
+min:Typus
+    # I. Intension
+    min:definition """Das Bündel von Bestimmungen, das eine Klasse von
+    Nexus-Instanzen konstituiert. Typus bestimmt, ALS WAS ein Nexus
+    zählt — nicht, was er hat (Property), nicht, was er soll (Norma),
+    sondern, was er IST."""@de ;
+    min:criterion """Kann man fragen: ‹Was für ein X ist das?› — und
+    liefert die Antwort eine Wesensbestimmung (ein Bündel von
+    Bestimmungen, das die Sorte/Art konstituiert)?"""@de ;
+
+    # II. Extension
+    min:usageExample """ex:DC04_typus a min:Typus ;
+    min:hasIdentifier \"TYP-DC04\" ;
+    min:hasName \"DC04\" ;
+    min:typifies ex:blech_042 ."""@de ;
+    min:usageExample """ex:zugversuch_iso6892 a min:Typus ;
+    min:hasIdentifier \"TYP-ZV-ISO6892\" ;
+    min:hasName \"Zugversuch nach ISO 6892-1\" ;
+    min:typifies ex:zugversuch_001 ."""@de ;
+
+    # III. Grenze
+    min:counterExample """Ein SKOS-Konzept ‹DC04› in einem Thesaurus.
+    Es klassifiziert terminologisch, aber es bestimmt nicht die
+    Wesensform — es hat keine Verbindung zu Structura, Lex, Norma.
+    → skos:Concept, nicht min:Typus."""@de ;
+    min:distinguishedFrom """min:Norma — Norma BEWERTET (Soll). Typus
+    KONSTITUIERT (Wesen). Norma: ‹Rm SOLL ≥ 270 MPa.› Typus:
+    ‹DC04 IST das, was C ≤ 0.08% und Rm 270–350 MPa hat.›
+    EN 10130 zurückgezogen → DC04 bleibt."""@de ;
+    min:distinguishedFrom """min:Structura — Structura ist formal-rein
+    (eine mathematische Struktur). Typus ist komposit — er BÜNDELT
+    Structura, Norma, Lex und Properties zu einer
+    Wesensbestimmung."""@de ;
+    min:distinguishedFrom """min:Institutio — Institutio braucht laufende
+    kollektive Anerkennung (ohne EZB kein Euro). Typus nicht —
+    DC04 bleibt DC04, auch wenn das Normungsgremium aufgelöst
+    wird."""@de ;
+    min:distinguishedFrom """min:Lex — Lex ist universell und
+    ausnahmslos. Typus ist kontingent — DC04 hätte andere
+    Grenzwerte haben können."""@de ;
+
+    # IV. Herkunft
+    min:normativeSource """Aristoteles: Metaphysik, Buch Z (Eidos als
+    Wesensform). Quine: Natural Kinds (1969). Putnam: The Meaning
+    of ‹Meaning› (1975). Weber: Objektive Möglichkeit und
+    adäquate Verursachung (1906, Idealtyp)."""@de ;
+
+    # V. Teleologie
+    min:rationale """MIN v3.2 konnte einzelne Bestimmungen aussprechen
+    (Norma: Rm ≥ 270 MPa; Structura: bcc-Gitter), aber nicht sagen:
+    ‹Das ist ein DC04.› Die Wesensbestimmung — der Satz, den jeder
+    Ingenieur täglich sagt — hatte keine ontologische Heimat.
+    Workarounds waren unzureichend: OWL-Klasse (hat Klassen FÜR
+    Typen, aber keinen Begriff VON Typus), SKOS-Konzept
+    (klassifiziert ohne zu bestimmen), Norma (kodifiziert den
+    Typus, IST nicht der Typus)."""@de ;
+
+    # VI. Lebenszyklus
+    min:definedInVersion "3.3.0" ;
+    min:status "stable" ;
+
+    # VII. Axiom-Transparenz
+    min:axiomRationale """Typus ist disjunkt mit Lex, Structura, Possibile,
+    Norma, Institutio. Begründung: Typus ist komposit (bündelt andere
+    Forma-Kategorien), während jede andere Forma-Kategorie atomar ist.
+    Verworfene Alternative: Typus als Subklasse von Norma — aber
+    Norma bewertet, Typus konstituiert. Ein Typus kann Normen
+    BÜNDELN, aber ein Typus IST keine Norma."""@de ;
+    min:axiomRationale """min:typifies ist subPropertyOf min:constrains.
+    Begründung: Typifizierung ist eine spezielle Form der
+    Bestimmung — sie beschränkt den Nexus auf eine Wesensform.
+    Verworfene Alternative: eigenständige Top-Level-Brückenrelation.
+    Aber Typifizierung IST Einschränkung (auf eine Art), also
+    gehört sie unter constrains."""@de .
 
 
 # #############################################################################
@@ -1728,18 +2485,33 @@ min:philosophicalBasis a owl:AnnotationProperty ;
 #                               typifies, typifiedBy)
 #   Datatype Properties:    5  (hasIdentifier, hasName, hasTimestamp,
 #                               hasDescription, hasStatus)
-#   Annotations:            2  (designRationale, philosophicalBasis)
+#   Annotations (legacy):   2  (designRationale [deprecated], philosophicalBasis)
+#   Meta-Annotations:      11  (definition, criterion, usageExample,
+#                               counterExample, distinguishedFrom,
+#                               normativeSource, rationale,
+#                               definedInVersion, status, replacedBy,
+#                               axiomRationale)
 #
-#   Gesamt:                58  Terme (+3 gegenüber v3.2.0)
+#   Gesamt:                69  Terme (+11 gegenüber v3.3.0-pre)
 #
 #   Neu gegenüber v3.2.0:
 #   — Typus (Klasse): sechste Forma-Kategorie, Wesensbestimmung
 #   — typifies (Object Property): Typus → Nexus (subPropertyOf constrains)
 #   — typifiedBy (Object Property): Nexus → Typus (inverse von typifies)
+#   — 11 Meta-Annotation-Properties (Metavokabular)
+#   — min:designRationale → deprecated, ersetzt durch min:rationale
+#   — Alle 14 Klassen mit Meta-Annotationen versehen
 #   — Disjunktheitsaxiom erweitert: ( Lex, Structura, Possibile,
 #     Norma, Institutio, Typus )
-#   — encodes-Beispiel erweitert um Typus
-#   — designRationale der Ontologie erweitert um Typus-Begründung
+#
+#   Meta-Dimensionen (7, irreduzibel):
+#     I.   Intension        — definition, criterion
+#     II.  Extension         — usageExample
+#     III. Grenze            — counterExample, distinguishedFrom
+#     IV.  Herkunft          — philosophicalBasis, normativeSource
+#     V.   Teleologie        — rationale
+#     VI.  Lebenszyklus      — definedInVersion, status, replacedBy
+#     VII. Axiom-Transparenz — axiomRationale
 #
 #   Designentscheidungen (fortgeführt von v3.2.0):
 #   — hasInput/hasOutput: Range Nexus (nicht Object).
@@ -1748,28 +2520,28 @@ min:philosophicalBasis a owl:AnnotationProperty ;
 #   — Agent-Identität folgt der überlappenden Kategorie.
 #   — Boundary ist disjunkt mit Object, Process, Data.
 #   — Boundary ist NICHT disjunkt mit Agent.
-#   — Boundary-Testkriterium: ‹Entferne Partner → existiert es noch?›
 #   — Typus ist komposit: bündelt andere Forma-Kategorien und Properties.
 #   — Typus ist disjunkt mit allen anderen Forma-Kategorien.
-#   — Typus-Testkriterium: ‹Kann man fragen: Was für ein X ist das?›
-#   — typifies ist subPropertyOf constrains (Typus bestimmt Nexus).
+#   — typifies ist subPropertyOf constrains.
 #   — Ein Nexus kann mehrere Typen haben (Polyhierarchie).
+#   — Metavokabular ist selbstbeschreibend (jede Property annotiert
+#     sich mit sich selbst und den anderen Properties).
 #
 #   Axiome:
 #   — Entity ≡ Nexus ⊔ Forma (erschöpfende Partition)
 #   — 3 Disjunktheitsaxiome (Object/Process/Data/Boundary,
 #     Forma-intern mit Typus, Nexus/Forma)
-#   — 12 owl:inverseOf Paare (+1: typifies/typifiedBy)
+#   — 12 owl:inverseOf Paare
 #   — Process: ∃hasInput.Nexus, ∃hasOutput.Nexus
 #   — Agent: ∃performs.Process
 #   — Boundary: bounds min 2
-#   — Entity: Identitätsaxiom ∃hasIdentifier min 1
+#   — Entity: ∃hasIdentifier min 1
 #
 #   Abwärtskompatibilität:
 #   — Jeder gültige v3.2-Graph ist ein gültiger v3.3-Graph.
 #   — Nexus-interne Queries bleiben unverändert.
-#   — Bestehende Forma-Instanzen (Lex, Structura, Possibile,
-#     Norma, Institutio) sind nicht betroffen.
-#   — Typus erweitert, ersetzt nichts.
+#   — Bestehende Forma-Instanzen sind nicht betroffen.
+#   — Typus und Metavokabular erweitern, ersetzen nichts.
+#   — min:designRationale bleibt parsebar (deprecated, nicht entfernt).
 #
 # #############################################################################
