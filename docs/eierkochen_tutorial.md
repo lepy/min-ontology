@@ -1,8 +1,8 @@
-# Eierkochen mit MIN — Schritt für Schritt
+# Das ontologische Frühstücksei
 
 > **Wie modelliert man einen Alltagsprozess mit einer Grundontologie?**
 >
-> Diese Anleitung zeigt am Beispiel des Eierkochens, wie MIN v3.3.0
+> Diese Anleitung zeigt am Beispiel des Eierkochens, wie die MIN-Ontologie 
 > funktioniert. Jeder Schritt führt eine MIN-Kategorie ein und
 > erklärt, warum genau diese Kategorie die richtige ist.
 
