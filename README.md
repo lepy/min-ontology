@@ -26,10 +26,10 @@ For full class definitions, see `docs/class-catalog.md`.
 
 ![min_hierarchy.svg](min_hierarchy.svg)
 
-**Legende:**  
-`━━` rdfs:subClassOf (disjunkt) · `╌╌` rdfs:subClassOf (überlappt — Agent)  
-⊥ Object · Process · Data · Boundary paarweise disjunkt · Agent überlappt  
-⊥ Lex · Structura · Possibile · Norma · Institutio · Typus paarweise disjunkt  
+**Legend:**  
+`━━` rdfs:subClassOf (disjoint) · `╌╌` rdfs:subClassOf (overlap — Agent)  
+⊥ Object · Process · Data · Boundary pairwise disjoint · Agent overlaps  
+⊥ Lex · Structura · Possibile · Norma · Institutio · Typus pairwise disjoint  
 Entity ≡ Nexus ⊔ Forma
 
 [min_hierarchy.svg](docs/min_hierarchy.svg)
@@ -94,6 +94,7 @@ Core doc pages:
 
 Static visualizations are intentionally kept as part of the docs:
 
+- `docs/min-v3_3_0-visualization.html`
 - `docs/min-v3_0_0-visualization.html`
 - `docs/min-v2_1_0-visualization.html`
 - `docs/bfo-vs-min3_2_0.html` (historical comparison page)

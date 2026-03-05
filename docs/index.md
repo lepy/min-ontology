@@ -16,7 +16,7 @@ MIN v3.3.0 models reality with a strict two-branch architecture under `min:Entit
 ### If you are modeling domain data
 
 1. Pick class patterns in [Klassenbeispiele](examples.md).
-2. Use [Eierkochen Tutorial](eierkochen_tutorial.md) for end-to-end modeling.
+2. Use [Frühstücksei Tutorial (DE)](breakfast_egg_de.md) or [Breakfast Egg Tutorial (EN)](breakfast_egg_en.md) for end-to-end modeling.
 
 ## Reference scope
 
