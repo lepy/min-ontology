@@ -2,6 +2,18 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.3.0] - 2026-03-05
+
+### Changed
+- `min.ttl` now points to MIN `v3.3.0`.
+- Added immutable release snapshot `min-v3.3.0.ttl` and compatibility variant `min_v3.3.0.ttl`.
+- Documentation updated to reference `v3.3.0` as current stable release.
+- Integrated example scenario promoted to `examples/min-v3.3.0-examples.ttl`.
+- Validation updated for `v3.3.0` (`test-min-version.rq`, `scripts/validate.py`).
+
+### Removed
+- Separate file `min-meta-vocabulary.ttl` (meta vocabulary terms are no longer maintained as standalone ontology file).
+
 ## [3.2.0] - 2026-03-04
 
 ### Added

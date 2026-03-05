@@ -10,7 +10,7 @@ MIN v3 models reality with two explicit branches under `min:Entity`:
 ## What to read first
 
 - `min-model.md`: architecture, modeling rules, and design rationale
-- `class-catalog.md`: complete catalog of all MIN classes (v3.0.0)
+- `class-catalog.md`: complete catalog of all MIN classes (v3.3.0)
 - `property-catalog.md`: complete catalog of object/data/annotation properties
 - `versioning.md`: release and semantic versioning rules
 
@@ -18,7 +18,7 @@ MIN v3 models reality with two explicit branches under `min:Entity`:
 
 - [MIN v3.0.0 visualization](min-v3_0_0-visualization.html)
 - [MIN v2.1.0 visualization](min-v2_1_0-visualization.html)
-- [BFO vs MIN v3.2.0](bfo-vs-min3_2_0.html)
+- [BFO vs MIN v3.2.0 (historical)](bfo-vs-min3_2_0.html)
 
 ## Quality gates
 

@@ -1,4 +1,4 @@
-# MIN Property Catalog (v3.2.0)
+# MIN Property Catalog (v3.3.0)
 
 This page lists the properties defined by MIN and groups them by modeling role.
 

@@ -1,6 +1,6 @@
-# MIN Class Catalog (v3.2.0)
+# MIN Class Catalog (v3.3.0)
 
-This page lists **all classes** defined in `min.ttl` for MIN v3.2.0.
+This page lists **all classes** defined in `min.ttl` for MIN v3.3.0.
 
 ## Complete class list
 

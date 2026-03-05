@@ -10,7 +10,8 @@
 
 - `min.ttl`: current stable version
 - `min-vX.Y.Z.ttl`: immutable snapshot for release `X.Y.Z`
-- Current stable line: `3.x` (`min.ttl` -> `v3.2.0`)
+- `min_vX.Y.Z.ttl`: optional compatibility snapshot (underscore naming)
+- Current stable line: `3.x` (`min.ttl` -> `v3.3.0`)
 
 ## Architecture note
 
@@ -19,7 +20,7 @@
 ## Release checklist
 
 1. Update `owl:versionIRI` and `owl:versionInfo` in `min.ttl`.
-2. Create `min-vX.Y.Z.ttl` from released `min.ttl`.
+2. Create `min-vX.Y.Z.ttl` from released `min.ttl` (optional: also `min_vX.Y.Z.ttl`).
 3. Update validation assets (SPARQL/SHACL/scripts) if semantics changed.
 4. Update `CHANGELOG.md` and docs pages.
 5. Run full validation (`uv run ontology-validate`).

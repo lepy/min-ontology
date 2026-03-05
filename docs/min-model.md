@@ -1,11 +1,11 @@
-# MIN Model (v3.2.0)
+# MIN Model (v3.3.0)
 
 This page describes the conceptual architecture and modeling rules of MIN.
 
 ## 1. High-level architecture
 
 MIN v3 introduces a strict two-branch ontology under `min:Entity`.
-As of v3.2, `min:Boundary` is part of the Nexus branch:
+As of v3.2+, `min:Boundary` is part of the Nexus branch:
 
 - `min:Nexus`: actual entities (causal efficacy criterion)
 - `min:Forma`: formal entities (constitutive determination criterion)

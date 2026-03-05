@@ -17,6 +17,8 @@ TTL_FILES = [
     "min-v3.0.0.ttl",
     "min-v3.1.0.ttl",
     "min-v3.2.0.ttl",
+    "min-v3.3.0.ttl",
+    "min_v3.3.0.ttl",
     "examples/min-example.ttl",
     "examples/object.ttl",
     "examples/process.ttl",
@@ -109,7 +111,7 @@ def main() -> int:
     print("[4/4] Running Instance-SHACL validation")
     instance_shapes = parse_turtle(ROOT / "shapes/min-instance.shacl.ttl")
     example_files = [
-        "examples/min-v3.0.0-examples.ttl",
+        "examples/min-v3.3.0-examples.ttl",
         "examples/object.ttl",
         "examples/process.ttl",
         "examples/data.ttl",

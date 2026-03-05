@@ -1,0 +1,423 @@
+@prefix min:     <https://w3id.org/min#> .
+@prefix ex:      <https://example.org/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   MIN v3.3.0 — Beispiele
+#
+#   Szenario: Tiefziehen eines Stahlcoils. Qualitätsprüfung.
+#   Sensorausfall durch Schatten. Risikoanalyse.
+#
+#   Zeigt:
+#   — Nexus-Zweig: Object, Process, Data, Agent (wie v2.1)
+#   — Forma-Zweig: Lex, Structura, Possibile, Norma, Institutio
+#   — Brückenrelationen: realizes, governs, formalizes, evaluates,
+#     concerns, encodes, constitutes, recognizes
+#   — Polarität auf Schema-Ebene
+#
+# =============================================================================
+
+
+# #############################################################################
+#   Schema-Deklarationen (einmal, wie in v2.1)
+# #############################################################################
+
+ex:masse_kg a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+ex:werkstoffNr a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .
+
+ex:pressenkraft_kN a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Process ;
+    rdfs:range xsd:float .
+
+ex:zugfestigkeit_MPa a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+ex:formel a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Entity ;
+    rdfs:range xsd:string .
+
+ex:gueltigkeitsbereich a owl:DatatypeProperty ;
+    rdfs:domain min:Forma ;
+    rdfs:range xsd:string .
+
+
+# #############################################################################
+#   NEXUS-INSTANZEN — das Aktuale
+# #############################################################################
+
+# --- Objects ---
+
+ex:Coil_042 a min:Object ;
+    min:hasIdentifier    "COIL-042" ;
+    min:hasName          "Warmband S355MC" ;
+    min:hasStatus        "in Fertigung" ;
+    ex:masse_kg          12500.0 ;
+    ex:werkstoffNr       "1.0976" ;
+    ex:zugfestigkeit_MPa 485.0 .
+
+ex:Bauteil_007 a min:Object ;
+    min:hasIdentifier    "PART-007" ;
+    min:hasName          "Querlenker vorn links" ;
+    min:hasStatus        "geprüft" ;
+    min:resultOf         ex:Tiefziehen_019 ;
+    ex:masse_kg          3.2 .
+
+ex:Sensor_Optisch_007 a min:Object ;
+    min:hasIdentifier    "SENS-OPT-007" ;
+    min:hasName          "Reflexionslichtschranke Station 12" ;
+    min:hasStatus        "gestört" ;
+    ex:empfindlichkeit   50.0 .
+
+# --- Processes ---
+
+ex:Tiefziehen_019 a min:Process ;
+    min:hasIdentifier    "OP-TZ-019" ;
+    min:hasName          "Tiefziehen Querlenker" ;
+    min:hasTimestamp      "2026-03-02T08:30:00"^^xsd:dateTime ;
+    min:hasInput         ex:Coil_042 ;
+    min:hasOutput        ex:Bauteil_007 ;
+    min:performedBy      ex:Presse_L3 ;
+    min:generates        ex:Messdaten_019 ;
+    ex:pressenkraft_kN   4500.0 .
+
+ex:Zugversuch_042 a min:Process ;
+    min:hasIdentifier    "TEST-ZV-042" ;
+    min:hasName          "Zugversuch Querlenker" ;
+    min:hasInput         ex:Bauteil_007 ;
+    min:hasOutput        ex:Bauteil_007 ;
+    min:performedBy      ex:Dr_Mueller ;
+    min:generates        ex:Pruefzertifikat_042 .
+
+ex:Sensorausfall_2026_03 a min:Process ;
+    min:hasIdentifier    "FAIL-SENS-2026-03" ;
+    min:hasName          "Sensorausfall Station 12" ;
+    min:hasTimestamp      "2026-03-02T14:22:00"^^xsd:dateTime ;
+    min:hasInput         ex:Sensor_Optisch_007 ;
+    min:hasOutput        ex:Sensor_Optisch_007 ;
+    min:performedBy      ex:Schatten_Kran_014 ;
+    min:generates        ex:Fehlerbericht_2026_03 ;
+    ex:dauer_s           45 .
+
+ex:Patentantrag_TZ a min:Object ;
+    min:hasIdentifier    "OBJ-ANTRAG-TZ-2024" ;
+    min:hasName          "Patentantrag Tiefziehverfahren" .
+
+ex:Patenturkunde_TZ a min:Object ;
+    min:hasIdentifier    "OBJ-URKUNDE-TZ-2024" ;
+    min:hasName          "Patenturkunde Tiefziehverfahren" .
+
+ex:Patenterteilung_TZ a min:Process ;
+    min:hasIdentifier    "OP-PAT-TZ-2024" ;
+    min:hasName          "Patenterteilung Tiefziehverfahren" ;
+    min:hasInput         ex:Patentantrag_TZ ;
+    min:hasOutput        ex:Patenturkunde_TZ ;
+    min:generates        ex:Patentschrift_TZ .
+
+ex:Normentwurf_EN10025 a min:Object ;
+    min:hasIdentifier    "OBJ-ENTWURF-EN10025" ;
+    min:hasName          "Normentwurf EN 10025-2" .
+
+ex:Normdokument_EN10025 a min:Object ;
+    min:hasIdentifier    "OBJ-NORM-EN10025" ;
+    min:hasName          "Normblatt EN 10025-2" .
+
+ex:Normungsverfahren_EN10025 a min:Process ;
+    min:hasIdentifier    "OP-NORM-EN10025" ;
+    min:hasName          "Normungsverfahren EN 10025-2" ;
+    min:hasInput         ex:Normentwurf_EN10025 ;
+    min:hasOutput        ex:Normdokument_EN10025 ;
+    min:generates        ex:DIN_EN_10025_2 .
+
+# --- Agents ---
+
+ex:Presse_L3 a min:Object , min:Agent ;
+    min:hasIdentifier    "MACH-PRESS-L3" ;
+    min:hasName          "Hydraulikpresse Linie 3" ;
+    min:performs         ex:Tiefziehen_019 ;
+    ex:masse_kg          85000.0 .
+
+ex:Dr_Mueller a min:Agent ;
+    min:hasIdentifier    "PERS-MUELLER" ;
+    min:hasName          "Dr. Müller" ;
+    min:performs         ex:Zugversuch_042 .
+
+ex:Schatten_Kran_014 a min:Object , min:Agent ;
+    min:hasIdentifier    "SHADOW-KRAN-014" ;
+    min:hasName          "Schattenwurf Brückenkran Halle 3" ;
+    min:performs         ex:Sensorausfall_2026_03 ;
+    min:actsOn           ex:Sensor_Optisch_007 ;
+    ex:flaeche_m2        12.5 ;
+    ex:lichtreduktion    85.0 .
+
+ex:DPMA a min:Agent ;
+    min:hasIdentifier    "ORG-DPMA" ;
+    min:hasName          "Deutsches Patent- und Markenamt" ;
+    min:performs         ex:Patenterteilung_TZ .
+
+ex:DIN_Komitee a min:Agent ;
+    min:hasIdentifier    "ORG-DIN-NA092" ;
+    min:hasName          "DIN-Normenausschuss Materialprüfung" ;
+    min:performs         ex:Normungsverfahren_EN10025 .
+
+# --- Data ---
+
+ex:Messdaten_019 a min:Data ;
+    min:hasIdentifier    "DAT-TZ-019" ;
+    min:hasName          "Messdaten Tiefziehen #019" ;
+    min:describes        ex:Tiefziehen_019 ;
+    min:generatedBy      ex:Tiefziehen_019 .
+
+ex:Pruefzertifikat_042 a min:Data ;
+    min:hasIdentifier    "CERT-042" ;
+    min:hasName          "Prüfzertifikat Zugversuch Querlenker" ;
+    min:describes        ex:Bauteil_007 ;
+    min:generatedBy      ex:Zugversuch_042 .
+
+ex:Fehlerbericht_2026_03 a min:Data ;
+    min:hasIdentifier    "RPT-FAIL-2026-03" ;
+    min:hasName          "Fehlerbericht Sensorausfall Station 12" ;
+    min:describes        ex:Sensorausfall_2026_03 ;
+    min:generatedBy      ex:Sensorausfall_2026_03 .
+
+ex:Lehrbuch_Mechanik a min:Data ;
+    min:hasIdentifier    "BOOK-MECH-001" ;
+    min:hasName          "Technische Mechanik, 15. Auflage" .
+
+ex:FEM_Modell_Fliessflaeche a min:Data ;
+    min:hasIdentifier    "DAT-FEM-VMS-001" ;
+    min:hasName          "FEM-Implementierung von-Mises" .
+
+ex:DIN_EN_10025_2 a min:Data ;
+    min:hasIdentifier    "DOC-EN10025-2" ;
+    min:hasName          "DIN EN 10025-2:2019" ;
+    min:hasDescription   "Warmgewalzte Erzeugnisse aus Baustählen" .
+
+ex:FMEA_Sensor_Halle3 a min:Data ;
+    min:hasIdentifier    "DAT-FMEA-H3-001" ;
+    min:hasName          "FMEA Sensorik Halle 3" .
+
+ex:Patentschrift_TZ a min:Data ;
+    min:hasIdentifier    "DOC-PAT-TZ-2024" ;
+    min:hasName          "Patentschrift DE102024001234" .
+
+ex:Satzung_Stahl_GmbH a min:Data ;
+    min:hasIdentifier    "DOC-SATZ-001" ;
+    min:hasName          "Gesellschaftsvertrag Stahl GmbH" .
+
+
+# #############################################################################
+#   FORMA-INSTANZEN — das Formale
+# #############################################################################
+
+# --- Lex (Naturgesetze) ---
+
+ex:Energieerhaltung a min:Lex ;
+    min:hasIdentifier       "LEX-ENERGY" ;
+    min:hasName             "Energieerhaltungssatz" ;
+    min:hasDescription      "Energie kann weder erzeugt noch vernichtet werden" ;
+    ex:formel               "ΔE_system = 0 (abgeschlossenes System)" ;
+    ex:gueltigkeitsbereich  "universell" ;
+    min:governs             ex:Tiefziehen_019 ;
+    min:constrains          ex:Coil_042 .
+
+ex:Gravitation a min:Lex ;
+    min:hasIdentifier       "LEX-GRAV" ;
+    min:hasName             "Newtonsches Gravitationsgesetz" ;
+    ex:formel               "F = G·m₁·m₂/r²" ;
+    ex:gueltigkeitsbereich  "klassisch, v << c, r >> r_s" .
+
+ex:Massenerhaltung a min:Lex ;
+    min:hasIdentifier       "LEX-MASS" ;
+    min:hasName             "Massenerhaltung" ;
+    ex:formel               "Σm_in = Σm_out (klassisch)" ;
+    min:governs             ex:Tiefziehen_019 .
+
+# --- Structura (Mathematische Strukturen) ---
+
+ex:VonMises_Fliessflaeche a min:Structura ;
+    min:hasIdentifier       "STRUCT-VMS" ;
+    min:hasName             "von-Mises-Fließfläche" ;
+    ex:formel               "σ_v = √(σ₁² - σ₁σ₂ + σ₂²) ≤ σ_F" ;
+    min:formalizes          ex:Tiefziehen_019 ;
+    min:realizedBy          ex:Tiefziehen_019 .
+
+ex:SO3 a min:Structura ;
+    min:hasIdentifier       "STRUCT-SO3" ;
+    min:hasName             "Spezielle orthogonale Gruppe SO(3)" ;
+    min:hasDescription      "Lie-Gruppe der Rotationen im R³" .
+
+# --- Possibile (Möglichkeiten) ---
+
+ex:Sproedbruch_Szenario a min:Possibile ;
+    min:hasIdentifier       "POSS-SPROED-007" ;
+    min:hasName             "Sprödbruch unter Kälteeinwirkung" ;
+    min:hasDescription      "Bauteil versagt spröde bei T < -20°C und Kerbwirkung > 3.0" ;
+    ex:wahrscheinlichkeit   0.02 ;
+    ex:bedingung            "T < -20°C, Kerbfaktor > 3.0" ;
+    min:concerns            ex:Bauteil_007 ;
+    min:alternativeTo       ex:Zugversuch_042 .
+
+ex:Sensorausfall_Szenario a min:Possibile ;
+    min:hasIdentifier       "POSS-SENS-H3" ;
+    min:hasName             "Sensorausfall durch wandernden Schatten" ;
+    min:hasDescription      "Optischer Sensor fällt periodisch aus wenn Brückenkran Schatten wirft" ;
+    ex:wahrscheinlichkeit   0.15 ;
+    min:concerns            ex:Sensor_Optisch_007 .
+
+# --- Norma (Anforderungen) ---
+
+ex:Mindestzugfestigkeit_S355 a min:Norma ;
+    min:hasIdentifier       "NORM-ZF-S355" ;
+    min:hasName             "Mindestzugfestigkeit S355" ;
+    min:hasDescription      "Zugfestigkeit ≥ 470 MPa nach EN 10025-2" ;
+    ex:eigenschaft          "Zugfestigkeit" ;
+    ex:operator             ">=" ;
+    ex:schwellenwert        470.0 ;
+    min:evaluates           ex:Bauteil_007 ;
+    min:evaluates           ex:Coil_042 .
+
+ex:Mindestbruchdehnung_S355 a min:Norma ;
+    min:hasIdentifier       "NORM-BD-S355" ;
+    min:hasName             "Mindestbruchdehnung S355" ;
+    min:hasDescription      "Bruchdehnung ≥ 22% nach EN 10025-2" ;
+    ex:eigenschaft          "Bruchdehnung" ;
+    ex:operator             ">=" ;
+    ex:schwellenwert        22.0 ;
+    min:evaluates           ex:Bauteil_007 .
+
+# --- Institutio (Soziale Konstrukte) ---
+
+ex:Patent_Tiefziehverfahren a min:Institutio ;
+    min:hasIdentifier       "INST-PAT-TZ-2024" ;
+    min:hasName             "Patent Tiefziehverfahren mit adaptiver Niederhalterkraft" ;
+    min:hasStatus           "erteilt" ;
+    ex:gueltig_bis          "2044-03-15"^^xsd:date ;
+    min:constitutedBy       ex:DPMA .
+
+ex:EN_10025_2_Norm a min:Institutio ;
+    min:hasIdentifier       "INST-EN10025-2" ;
+    min:hasName             "Norm EN 10025-2 als Institution" ;
+    min:hasDescription      "Die soziale Vereinbarung, dass diese Anforderungen gelten" ;
+    min:constitutedBy       ex:DIN_Komitee .
+
+
+# #############################################################################
+#   BRÜCKEN — Data encodes Forma
+# #############################################################################
+
+# Lehrbuch kodiert Naturgesetz
+ex:Lehrbuch_Mechanik
+    min:encodes          ex:Energieerhaltung ;
+    min:encodes          ex:Gravitation ;
+    min:encodes          ex:Massenerhaltung .
+
+# FEM-Modell kodiert mathematische Struktur
+ex:FEM_Modell_Fliessflaeche
+    min:encodes          ex:VonMises_Fliessflaeche .
+
+# DIN-Dokument kodiert Anforderungen
+ex:DIN_EN_10025_2
+    min:encodes          ex:Mindestzugfestigkeit_S355 ;
+    min:encodes          ex:Mindestbruchdehnung_S355 .
+
+# FMEA-Tabelle kodiert Möglichkeiten
+ex:FMEA_Sensor_Halle3
+    min:encodes          ex:Sensorausfall_Szenario .
+
+# Patentschrift kodiert Patent
+ex:Patentschrift_TZ
+    min:encodes          ex:Patent_Tiefziehverfahren .
+
+# Satzung kodiert Norm-Institution
+ex:Satzung_Stahl_GmbH
+    min:encodes          ex:EN_10025_2_Norm .
+
+
+# #############################################################################
+#   BRÜCKEN — Nexus realizes Forma
+# #############################################################################
+
+# Tiefziehprozess realisiert Naturgesetze und Strukturen
+ex:Tiefziehen_019
+    min:realizes         ex:Energieerhaltung ;
+    min:realizes         ex:Massenerhaltung ;
+    min:realizes         ex:VonMises_Fliessflaeche .
+
+# Sensorausfall realisiert das Possibile
+ex:Sensorausfall_2026_03
+    min:realizes         ex:Sensorausfall_Szenario .
+
+# Bauteil "realisiert" die Norma (erfüllt oder verletzt)
+ex:Bauteil_007
+    min:realizes         ex:Mindestzugfestigkeit_S355 ;
+    min:realizes         ex:Mindestbruchdehnung_S355 .
+
+
+# #############################################################################
+#
+#   SPARQL-BEISPIELE
+#
+#   1. Welche Naturgesetze regieren den Tiefziehprozess?
+#
+#      SELECT ?gesetz ?name WHERE {
+#          ?gesetz a min:Lex ;
+#              min:governs ex:Tiefziehen_019 ;
+#              min:hasName ?name .
+#      }
+#      → Energieerhaltung, Massenerhaltung
+#
+#   2. Welche Normen bewertet dieses Bauteil und wo stehen sie?
+#
+#      SELECT ?norma ?dokument ?schwellenwert WHERE {
+#          ?norma a min:Norma ;
+#              min:evaluates ex:Bauteil_007 ;
+#              ex:schwellenwert ?schwellenwert .
+#          ?dokument min:encodes ?norma .
+#      }
+#      → Mindestzugfestigkeit 470 MPa in DIN EN 10025-2,
+#        Mindestbruchdehnung 22% in DIN EN 10025-2
+#
+#   3. Welche Möglichkeiten betreffen den Sensor?
+#
+#      SELECT ?szenario ?wahrsch WHERE {
+#          ?szenario a min:Possibile ;
+#              min:concerns ex:Sensor_Optisch_007 ;
+#              ex:wahrscheinlichkeit ?wahrsch .
+#      }
+#      → Sensorausfall durch Schatten, p=0.15
+#
+#   4. Wurde ein Possibile realisiert?
+#
+#      SELECT ?szenario ?process WHERE {
+#          ?process a min:Process ;
+#              min:realizes ?szenario .
+#          ?szenario a min:Possibile .
+#      }
+#      → Sensorausfall_2026_03 realizes Sensorausfall_Szenario
+#
+#   5. Trenne Data von der Forma, die es kodiert:
+#
+#      SELECT ?data ?forma ?forma_typ WHERE {
+#          ?data a min:Data ;
+#              min:encodes ?forma .
+#          ?forma a ?forma_typ .
+#          ?forma_typ rdfs:subClassOf min:Forma .
+#      }
+#      → Lehrbuch → Lex, FEM-Modell → Structura,
+#        DIN-Dokument → Norma, FMEA → Possibile, etc.
+#
+# #############################################################################

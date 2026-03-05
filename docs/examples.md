@@ -276,7 +276,7 @@ ex:ISO9001_Zertifizierung_WerkA a min:Institutio ;
 
 ## Integrated scenario
 
-The file `examples/min-v3.0.0-examples.ttl` contains a larger integrated scenario
-(deep drawing of a steel coil) that uses the original v3.0 class set together
-with bridge relations, polarity properties, and cross-references. It serves as
-the primary integration test for the ontology.
+The file `examples/min-v3.3.0-examples.ttl` contains a larger integrated scenario
+(deep drawing of a steel coil) aligned to MIN v3.3.0, including bridge relations,
+polarity properties, and cross-references. It serves as the primary integration
+test for the ontology.
