@@ -1,6 +1,6 @@
 # MIN Ontology Documentation
 
-MIN v3.3.0 models reality with a strict two-branch architecture under `min:Entity`:
+MIN v3.4.0 models reality with a strict two-branch architecture under `min:Entity`:
 
 - `min:Nexus`: actual, causally effective entities
 - `min:Forma`: formal, constitutively determining entities
@@ -20,11 +20,12 @@ MIN v3.3.0 models reality with a strict two-branch architecture under `min:Entit
 
 ## Reference scope
 
-The docs reflect MIN `v3.3.0` (`min.ttl` points to this release):
+The docs reflect MIN `v3.4.0` (`min.ttl` points to this release):
 
 - 14 classes (`Entity`, 6 Nexus-side classes, 7 Forma-side classes including `Typus`)
 - Full Nexus/Forma bridge relations (including `typifies` / `typifiedBy`)
 - Current validation and versioning rules
+- Extended documentation for `realizes` and `constrains` (full 30-cell matrices, asymmetry rationale)
 
 ## Validation command
 
@@ -36,4 +37,4 @@ uv run ontology-validate
 
 Static visualizations from earlier documentation phases are preserved under **Historisch**.
 
-- [Visualization v3.3.0](min-v3_3_0-visualization.html)
+- [Visualization v3.3.0 (latest rendered)](min-v3_3_0-visualization.html)

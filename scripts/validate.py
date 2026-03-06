@@ -18,6 +18,7 @@ TTL_FILES = [
     "min-v3.1.0.ttl",
     "min-v3.2.0.ttl",
     "min-v3.3.0.ttl",
+    "min-v3.4.0.ttl",
     "examples/min-example.ttl",
     "examples/object.ttl",
     "examples/process.ttl",
@@ -36,6 +37,7 @@ TTL_FILES = [
 
 OPTIONAL_TTL_FILES = [
     # Compatibility snapshot (underscore naming) is optional.
+    "min_v3.4.0.ttl",
     "min_v3.3.0.ttl",
 ]
 

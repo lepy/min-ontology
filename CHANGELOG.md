@@ -2,6 +2,17 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.4.0] - 2026-03-06
+
+### Changed
+- `min.ttl` now points to MIN `v3.4.0`.
+- Added immutable release snapshot `min-v3.4.0.ttl`.
+- Ontology-level documentation extended with v3.4 rationale for `realizes`/`constrains` asymmetry.
+- `min:realizes` and `min:constrains` documentation blocks expanded (full matrix documentation and axiom rationale).
+- Added meta-annotations for `min:realizes` and `min:constrains`.
+- Documentation and navigation updated to mark `v3.4.0` as current stable release.
+- Validation version checks updated for `v3.4.0` (`test-min-version.rq`, `scripts/validate.py`).
+
 ## [3.3.0] - 2026-03-05
 
 ### Changed

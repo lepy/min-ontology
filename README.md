@@ -6,15 +6,15 @@ industrial and scientific domains with a strict distinction between:
 - **Nexus**: actual entities that are causally effective
 - **Forma**: formal entities that are constitutively determining
 
-The current stable release line is **v3.x** (current: **v3.3.0**, tag `v3.3.0`).
+The current stable release line is **v3.x** (current: **v3.4.0**, tag `v3.4.0`).
 
 ## Canonical IRIs
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/3.3.0`
+- Current version IRI: `https://w3id.org/min/3.4.0`
 
-## Conceptual core (v3.3.0)
+## Conceptual core (v3.4.0)
 
 MIN v3 defines **14 classes**:
 
@@ -38,8 +38,8 @@ Entity ≡ Nexus ⊔ Forma
 
 - `min.ttl`: current MIN ontology
 - `min-v*.ttl`: immutable release snapshots
-- `min-v3.3.0.ttl`: current immutable snapshot (hyphen naming)
-- `min_v3.3.0.ttl`: current compatibility snapshot (underscore naming)
+- `min-v3.4.0.ttl`: current immutable snapshot (hyphen naming)
+- `min_v3.4.0.ttl`: optional compatibility snapshot (underscore naming)
 - `examples/`: example instance graphs
 - `examples/min-v3.3.0-examples.ttl`: integrated v3.3.0 scenario
 - `queries/competency/`: competency queries
