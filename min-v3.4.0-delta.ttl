@@ -1,0 +1,430 @@
+# =============================================================================
+#
+#   MIN v3.4.0 — DELTA zu v3.3.0
+#
+#   Nur Ergänzungen. Einfügen in min-v3.3.0.ttl.
+#
+#   Änderungen:
+#     1. Ontologie-Header: Version 3.3.0 → 3.4.0
+#     2. min:realizes — erweiterte Dokumentation:
+#        vollständige 5×6 Nexus→Forma-Matrix
+#     3. min:constrains — erweiterte Dokumentation:
+#        vollständige 6×5 Forma→Nexus-Matrix
+#     4. Asymmetrie-Begründung (axiomRationale) für beide Properties
+#     5. Meta-Annotationen für realizes und constrains
+#     6. Inventar aktualisiert
+#
+#   Anwendung:
+#     Die unten stehenden Blöcke ERSETZEN die entsprechenden
+#     Blöcke in v3.3.0. Suchmarker in Kommentaren.
+#
+#   v3.4.0 — 2026-03-06
+#
+# =============================================================================
+
+@prefix min:     <https://w3id.org/min#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+
+# =============================================================================
+#   ERSETZUNG 1: Ontologie-Header
+#
+#   Ersetze:
+#     owl:versionIRI <https://w3id.org/min/3.3.0> ;
+#     owl:versionInfo "3.3.0" ;
+#     dcterms:created "2026-03-05"^^xsd:date ;
+#
+#   Durch:
+# =============================================================================
+
+# owl:versionIRI <https://w3id.org/min/3.4.0> ;
+# owl:versionInfo "3.4.0" ;
+# dcterms:created "2026-03-06"^^xsd:date ;
+
+
+# =============================================================================
+#   ERSETZUNG 2: Header-Kommentar (oben im Datei-Kopf)
+#
+#   Ersetze:
+#     #   v3.3.0 — 2026-03-05
+#   Durch:
+#     #   v3.4.0 — 2026-03-06
+# =============================================================================
+
+
+# =============================================================================
+#   ERGÄNZUNG 3: Design Rationale — am Ende des bestehenden
+#   min:designRationale auf dem Ontologie-Objekt anhängen
+#   (vor dem schließenden """@de .)
+# =============================================================================
+
+#   v3.4 dokumentiert die vollständige Kreuzmatrix realizes × constrains.
+#
+#   18. In v3.3 waren min:realizes (Nexus → Forma) und min:constrains
+#       (Forma → Nexus) als generische Brückenrelationen definiert,
+#       aber ihre Tragfähigkeit über ALLE 5×6 bzw. 6×5 Paarungen
+#       war nicht dokumentiert. Jede Paarung Nexus×Forma wurde
+#       systematisch geprüft — alle 20 Zellen der realizes-Matrix
+#       und alle 20 Zellen der constrains-Matrix tragen.
+#
+#   19. Zwei Zellen erschienen zunächst schwach:
+#       — Agent → Structura: schwach, wenn Structura nur als Geometrie
+#         gedacht wird. Stark, wenn Structura als abstrakte Struktur
+#         jeder Art gelesen wird: ein Ärzteteam realisiert eine
+#         Hierarchiestruktur, ein Roboterarm eine kinematische Kette.
+#       — Data → Institutio: schwach in der vorindustriellen Welt.
+#         Stark in der digitalisierten Welt: das Grundbuch (Data)
+#         realisiert die Institution des Eigentums. Eine Blockchain
+#         realisiert eine dezentrale Vertrauensinstitution.
+#         Die vermeintliche Schwäche war ein Zeitindex.
+#
+#   20. Asymmetrie: realizes und constrains sind NICHT owl:inverseOf.
+#       Begründung:
+#       — Realisierung ohne Beschränkung (Innovation): Ein Prototyp
+#         kann eine neue Structura realisieren, die vorher in keiner
+#         Lex oder Norma als Beschränkung existierte. Das Nexus-Entity
+#         erzeugt hier eine neue Forma.
+#       — Beschränkung ohne Realisierung (Nichtkonformität): Eine Lex
+#         beschränkt einen Process, aber der Process realisiert die
+#         Lex nicht, weil er die Vorgaben verletzt.
+#       — Mehrfachrealisierung: Ein Process kann gleichzeitig mehrere
+#         Lex realisieren (DIN, ISO, ASTM), wird aber nur von einer
+#         aktiv beschränkt.
+#       Die Lücke zwischen realizes und constrains ist der Raum, in
+#       dem Veränderung stattfindet — Innovation, Abweichung, Fehler,
+#       Normwandel. Wären beide strikt gekoppelt, wäre MIN statisch.
+#
+#   21. Philosophische Verankerung der Asymmetrie:
+#       — Aristoteles: Hyle/Morphe — Materie verwirklicht Form,
+#         aber nicht jede Verwirklichung folgt einer vorgegebenen Form
+#         (poiesis vs. praxis).
+#       — Whitehead: Creativity — das Neue entsteht, wenn Actual
+#         Entities Eternal Objects auf unvorhergesehene Weise
+#         zusammenführen.
+#       — Latour: Translation — jeder Mediator verändert, was durch
+#         ihn hindurchgeht. Die Realisierung ist nie eine reine
+#         Abbildung der Beschränkung.
+
+
+# =============================================================================
+#   ERSETZUNG 4: min:realizes — vollständiger Block
+#
+#   Ersetze den gesamten min:realizes Block
+#   (von "min:realizes a owl:ObjectProperty" bis zum nächsten "min:realizedBy")
+# =============================================================================
+
+min:realizes a owl:ObjectProperty ;
+    rdfs:label "realizes"@en ;
+    rdfs:label "realisiert"@de ;
+    rdfs:domain min:Nexus ;
+    rdfs:range min:Forma ;
+    rdfs:comment """Ein Nexus realisiert eine Forma — macht das Formale
+    im Aktualen wirklich. Realizes ist die zentrale Brücke zwischen
+    den beiden Zweigen.
+
+    Whitehead: ‹ingression of eternal objects into actual entities›.
+
+    Die Relation trägt über ALLE 5×6 = 30 Paarungen Nexus × Forma.
+    Vollständige Matrix:
+
+    Object × Lex:
+      Zugprobe realisiert die Normvorgabe (ist normkonform hergestellt).
+    Object × Structura:
+      Zugprobe realisiert Flachproben-Geometrie.
+    Object × Possibile:
+      Prototyp realisiert ein Designkonzept.
+    Object × Norma:
+      Referenzmaterial realisiert einen Sollwert.
+    Object × Institutio:
+      Prüflabor-Gebäude realisiert die Akkreditierungsstelle.
+    Object × Typus:
+      Blech realisiert den Typus DC04.
+
+    Process × Lex:
+      Zugversuch realisiert DIN EN ISO 6892-1.
+    Process × Structura:
+      Messvorgang realisiert Spannungs-Dehnungs-Schema.
+    Process × Possibile:
+      Forschungsprojekt realisiert eine Hypothese.
+    Process × Norma:
+      Kalibrierung realisiert eine Toleranzgrenze.
+    Process × Institutio:
+      Normungssitzung realisiert den Normungsprozess.
+    Process × Typus:
+      Prüfung realisiert den Typus Zugversuch-nach-ISO-6892-1.
+
+    Data × Lex:
+      Prüfbericht realisiert Berichtsvorschrift.
+    Data × Structura:
+      Datensatz realisiert ein Tabellenschema.
+    Data × Possibile:
+      Simulationsergebnis realisiert ein Modell.
+    Data × Norma:
+      Messwert realisiert einen Referenzwert.
+    Data × Institutio:
+      Grundbuch realisiert die Institution des Eigentums.
+      Blockchain realisiert dezentrale Vertrauensinstitution.
+    Data × Typus:
+      Austauschdatei realisiert den Typus STEP AP214.
+
+    Agent × Lex:
+      Prüfer realisiert Prüferqualifikation (lebt die Lex).
+    Agent × Structura:
+      Ärzteteam realisiert eine Hierarchiestruktur.
+      Roboterarm realisiert eine kinematische Kette.
+    Agent × Possibile:
+      Gründer realisiert eine Geschäftsidee.
+    Agent × Norma:
+      Qualitätsprüfer realisiert Prüfkriterien.
+    Agent × Institutio:
+      DIN e.V. realisiert die Normungsautorität.
+    Agent × Typus:
+      Prüfmaschine realisiert den Typus Universalprüfmaschine.
+
+    Boundary × Lex:
+      Korngrenze realisiert Diffusionsgesetze an der Grenze.
+    Boundary × Structura:
+      Phasengrenze realisiert eine kristallographische Orientierungsrelation.
+    Boundary × Possibile:
+      Grenzfläche realisiert ein Versagensszenario (Delamination).
+    Boundary × Norma:
+      Übergangswiderstand realisiert einen Grenzwert.
+    Boundary × Institutio:
+      Staatsgrenze (als physische Barriere) realisiert die
+      Jurisdiktions-Institution.
+    Boundary × Typus:
+      Korngrenze realisiert den Typus Σ3-CSL.
+
+    ASYMMETRIE: realizes ist NICHT die Inverse von constrains.
+    Siehe min:axiomRationale."""@de ;
+    min:philosophicalBasis """Whitehead: Ingression — Eternal Objects
+    werden in Actual Entities wirklich.
+    Aristoteles: Energeia — die Verwirklichung der Morphe im Hyle.
+    Latour: Translation — der Mediator verändert, was durch ihn
+    hindurchgeht. Realisierung ist nie reine Abbildung."""@de ;
+    min:axiomRationale """Domain min:Nexus, Range min:Forma — nicht
+    eingeschränkt auf spezifische Sub-Klassen. Begründung: Alle 30
+    Paarungen (5 Nexus × 6 Forma) tragen. Verworfene Alternative:
+    Spezialisierte Properties für jede Paarung (z.B. objectRealizesLex).
+    Abgelehnt: 30 Properties statt einer widerspricht MINs
+    Minimalismus-Prinzip.
+
+    NICHT owl:inverseOf min:constrains. Begründung (Asymmetrie):
+    1. Realisierung ohne Beschränkung (Innovation): Ein Prototyp
+       realisiert eine neue Structura, die vorher als Beschränkung
+       nicht existierte. Das Aktuale erzeugt hier neues Formales.
+    2. Beschränkung ohne Realisierung (Nichtkonformität): Eine Lex
+       constrains einen Process, aber der Process realisiert die
+       Lex nicht, weil er die Vorgaben verletzt. Der Zugversuch
+       mit falscher Dehnrate wird von der Norm beschränkt, aber
+       er realisiert sie nicht.
+    3. Mehrfachrealisierung: Ein Process realisiert gleichzeitig
+       DIN, ISO und ASTM, wird aber nur von einer aktiv beschränkt.
+    Die Lücke zwischen realizes und constrains ist der Raum, in dem
+    Veränderung stattfindet — Innovation, Abweichung, Fehler,
+    Normwandel. Wären beide invers, wäre MIN ein statisches System.
+    Verworfene Alternative: owl:inverseOf — hätte die drei
+    Asymmetrie-Fälle zu Widersprüchen gemacht."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   ERSETZUNG 5: min:constrains — vollständiger Block
+#
+#   Ersetze den gesamten min:constrains Block
+#   (von "min:constrains a owl:ObjectProperty" bis zum nächsten
+#    "min:governs")
+# =============================================================================
+
+min:constrains a owl:ObjectProperty ;
+    rdfs:label "constrains"@en ;
+    rdfs:label "beschränkt"@de ;
+    rdfs:domain min:Forma ;
+    rdfs:range min:Nexus ;
+    rdfs:comment """Forma beschränkt, was für Nexus möglich ist.
+    Allgemeinste Bestimmungsrelation von Forma nach Nexus.
+    Governs, formalizes, evaluates, concerns, typifies sind
+    Spezialisierungen.
+
+    Die Relation trägt über ALLE 6×5 = 30 Paarungen Forma × Nexus.
+    Vollständige Matrix (natürliche Richtung: Forma → Nexus):
+
+    Lex × Object:
+      Norm schreibt Probenmaße vor.
+    Lex × Process:
+      Norm regelt Prüfablauf (Dehnrate, Temperatur, Abbruchkriterien).
+    Lex × Agent:
+      Norm fordert Prüferqualifikation.
+    Lex × Data:
+      Norm definiert Berichtsformat.
+    Lex × Boundary:
+      Diffusionsgesetz beschränkt Korngrenz-Transport.
+
+    Structura × Object:
+      Geometrie beschränkt Werkstückform.
+    Structura × Process:
+      Ablaufstruktur beschränkt Prozessschritte.
+    Structura × Agent:
+      Organigramm beschränkt Zuständigkeiten.
+      Kinematische Kette beschränkt Bewegungsfreiheitsgrade.
+    Structura × Data:
+      Schema beschränkt Datenstruktur (Achsen, Einheiten, Felder).
+    Structura × Boundary:
+      Kristallographische Orientierungsrelation beschränkt
+      Korngrenzcharakter.
+
+    Possibile × Object:
+      Machbarkeit beschränkt Fertigungsoptionen.
+    Possibile × Process:
+      Möglichkeitsraum beschränkt Prozessalternativen.
+    Possibile × Agent:
+      Rollenkonzept beschränkt Handlungsoptionen.
+    Possibile × Data:
+      Modellraum beschränkt gültige Datenwerte.
+    Possibile × Boundary:
+      Versagensszenario beschränkt zulässige Grenzflächenbelastung.
+
+    Norma × Object:
+      Toleranz beschränkt zulässige Abweichung.
+    Norma × Process:
+      Schwellenwert beschränkt Prozessparameter.
+    Norma × Agent:
+      Kompetenzanforderung beschränkt Agentenzulassung.
+    Norma × Data:
+      Grenzwert beschränkt Datenvalidität.
+    Norma × Boundary:
+      Grenzwert beschränkt zulässigen Übergangswiderstand.
+
+    Institutio × Object:
+      Akkreditierung beschränkt zugelassene Prüfmittel.
+    Institutio × Process:
+      Institutionelle Regeln beschränken Verfahren.
+    Institutio × Agent:
+      Akkreditierungsstelle beschränkt Prüferzulassung.
+    Institutio × Data:
+      Datenschutzinstitution beschränkt Datennutzung.
+    Institutio × Boundary:
+      Jurisdiktion beschränkt grenzüberschreitende Prozesse.
+
+    Typus × Object:
+      DC04 beschränkt, welche Bleche als DC04 gelten.
+    Typus × Process:
+      Zugversuchstyp beschränkt Prüfablauf.
+    Typus × Agent:
+      Maschinenklasse beschränkt eingesetzte Agenten.
+    Typus × Data:
+      Dateiformat beschränkt Datenstruktur.
+    Typus × Boundary:
+      Korngrenztyp Σ3 beschränkt Orientierungsrelation.
+
+    ASYMMETRIE: constrains ist NICHT die Inverse von realizes.
+    Siehe min:axiomRationale."""@de ;
+    min:axiomRationale """Domain min:Forma, Range min:Nexus — nicht
+    eingeschränkt auf spezifische Sub-Klassen. Begründung: Alle 30
+    Paarungen (6 Forma × 5 Nexus) tragen. Die Spezialisierungen
+    (governs, formalizes, evaluates, concerns, typifies) decken
+    die stärksten Paarungen ab. constrains selbst bleibt für
+    alle anderen offen.
+
+    NICHT owl:inverseOf min:realizes. Begründung: identisch mit
+    der Asymmetrie-Begründung auf min:realizes. Die drei Fälle
+    (Innovation, Nichtkonformität, Mehrfachrealisierung) gelten
+    spiegelbildlich."""@de ;
+    min:definedInVersion "3.0.0" ;
+    min:status "stable" .
+
+
+# =============================================================================
+#   ERGÄNZUNG 6: Meta-Annotationen für realizes und constrains
+#
+#   Einfügen in TEIL XI nach den bestehenden Meta-Annotationen
+#   (z.B. nach TYPUS — Meta-Annotationen, vor dem INVENTAR)
+# =============================================================================
+
+# =============================================================================
+#   REALIZES — Meta-Annotationen
+# =============================================================================
+
+min:realizes
+    min:definition """Zentrale Brückenrelation Nexus → Forma. Ein Nexus
+    realisiert eine Forma — macht das Formale im Aktualen wirklich.
+    Domain: min:Nexus. Range: min:Forma. Alle 30 Paarungen
+    (5 Nexus × 6 Forma) tragen."""@de ;
+    min:criterion "Wird eine formale Bestimmung (Forma) durch eine aktuale Entität (Nexus) in der Welt wirklich?"@de ;
+    min:usageExample """ex:zugversuch_001 min:realizes ex:norma_iso6892 .
+    ex:blech_042 min:realizes ex:DC04_typus .
+    ex:grundbuch_001 min:realizes ex:institution_eigentum .
+    ex:roboterarm_001 min:realizes ex:kinematische_kette ."""@de ;
+    min:counterExample """Ein Zugversuch mit falscher Dehnrate. Die Norm
+    constrains ihn (er SOLLTE sich daran halten), aber er realizes
+    sie NICHT (er verletzt die Vorgaben). Beschränkung ohne
+    Realisierung = Nichtkonformität."""@de ;
+    min:distinguishedFrom """min:constrains — realizes geht von Nexus zu
+    Forma (‹macht wirklich›). constrains geht von Forma zu Nexus
+    (‹gibt Form›). Beide sind NICHT invers: die Lücke zwischen
+    ihnen ist der Raum für Innovation, Abweichung und Fehler."""@de ;
+    min:distinguishedFrom """min:encodes — encodes ist Data-spezifisch:
+    Data kodiert Forma (Lehrbuch kodiert Naturgesetz). realizes
+    ist allgemein: JEDER Nexus kann Forma realisieren."""@de ;
+    min:rationale """v3.0 führte realizes als generische Brücke ein.
+    v3.4 dokumentiert die vollständige 30-Zellen-Matrix und die
+    bewusste Asymmetrie zu constrains. Ohne realizes könnte MIN
+    nicht ausdrücken: ‹Dieser Zugversuch gehorcht diesem Gesetz.›
+    ‹Dieses Grundbuch verkörpert diese Institution.›"""@de .
+
+
+# =============================================================================
+#   CONSTRAINS — Meta-Annotationen
+# =============================================================================
+
+min:constrains
+    min:definition """Allgemeinste Bestimmungsrelation Forma → Nexus. Forma
+    beschränkt, was für Nexus möglich ist. Domain: min:Forma.
+    Range: min:Nexus. Alle 30 Paarungen (6 Forma × 5 Nexus) tragen.
+    Spezialisierungen: governs, formalizes, evaluates, concerns,
+    typifies."""@de ;
+    min:criterion "Bestimmt die Forma-Instanz, was der Nexus sein, tun oder enthalten darf?"@de ;
+    min:usageExample """ex:norma_iso6892 min:constrains ex:zugversuch_001 .
+    ex:flachproben_geometrie min:constrains ex:zugprobe_DC04 .
+    ex:institution_datenschutz min:constrains ex:messdaten_001 .
+    ex:kinematische_kette min:constrains ex:roboterarm_001 ."""@de ;
+    min:counterExample """Ein Naturgesetz, das einen Process VERURSACHT.
+    Lex verursacht nichts — sie BESCHRÄNKT nur. Kausalität liegt
+    im Nexus, Bestimmung in der Forma."""@de ;
+    min:distinguishedFrom """min:realizes — constrains geht von Forma zu
+    Nexus (‹gibt Form›). realizes geht von Nexus zu Forma
+    (‹macht wirklich›). Beide sind NICHT invers."""@de ;
+    min:distinguishedFrom """min:governs — governs ist Spezialisierung:
+    Lex → Process. constrains ist allgemein: JEDE Forma kann
+    JEDEN Nexus beschränken."""@de ;
+    min:rationale """v3.0 führte constrains als allgemeinste Bestimmung
+    ein. v3.4 dokumentiert die vollständige 30-Zellen-Matrix.
+    Ohne constrains könnte MIN nicht ausdrücken: ‹Diese Norm
+    beschränkt dieses Bauteil.› ‹Dieses Organigramm beschränkt
+    diesen Agenten.›"""@de .
+
+
+# =============================================================================
+#   ERGÄNZUNG 7: Inventar-Aktualisierung
+#
+#   Ersetze:
+#     #   v3.3.0 — 2026-03-05 (im Inventar-Header)
+#
+#   Neu gegenüber v3.3.0:
+#   — min:realizes: erweiterte Dokumentation mit vollständiger
+#     5×6 Nexus→Forma-Matrix und Asymmetrie-Begründung
+#   — min:constrains: erweiterte Dokumentation mit vollständiger
+#     6×5 Forma→Nexus-Matrix und Asymmetrie-Begründung
+#   — Meta-Annotationen für min:realizes und min:constrains
+#   — Explizite Dokumentation: realizes ≠ inverseOf constrains
+#     (Innovation, Nichtkonformität, Mehrfachrealisierung)
+#
+#   Keine neuen Klassen oder Properties. Nur Dokumentation.
+#   Jeder gültige v3.3-Graph ist ein gültiger v3.4-Graph.
+# =============================================================================
