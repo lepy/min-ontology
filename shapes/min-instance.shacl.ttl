@@ -4,7 +4,7 @@
 
 # =============================================================================
 #
-#   MIN Instance-Level SHACL Shapes (v3.2.0)
+#   MIN Instance-Level SHACL Shapes (v3.5.0)
 #
 #   These shapes validate instance data against MIN modeling expectations.
 #   Intended to be run against example/domain graphs that import min.ttl.

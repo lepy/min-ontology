@@ -2,6 +2,21 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.5.0] - 2026-03-07
+
+### Changed
+- `min.ttl` now points to MIN `v3.5.0`.
+- Added immutable release snapshot `min-v3.5.0.ttl`.
+- Added optional compatibility snapshot `min_v3.5.0.ttl`.
+- Introduced generic bridge relation pair `min:originates` / `min:originatedBy` for Forma genesis.
+- Removed class `min:Typus`; typification remains via `min:Institutio` with `min:typifies` / `min:typifiedBy`.
+- Added `min:comprises` (`Institutio -> Forma`) for formal bundling.
+- Documentation and validation assets updated for `v3.5.0`.
+- Added regression check `test-min-no-typus-class.rq`.
+
+### Documentation
+- Historical visualization pages (`docs/min-v*-visualization.html`) are retained as reference.
+
 ## [3.4.0] - 2026-03-06
 
 ### Changed

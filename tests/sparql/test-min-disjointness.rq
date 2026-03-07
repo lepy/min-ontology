@@ -11,7 +11,7 @@ ASK WHERE {
   ?m1 rdf:rest*/rdf:first min:Data .
   ?m1 rdf:rest*/rdf:first min:Boundary .
 
-  # Forma-internal disjointness: Lex, Structura, Possibile, Norma, Institutio, Typus
+  # Forma-internal disjointness: Lex, Structura, Possibile, Norma, Institutio
   ?d2 a owl:AllDisjointClasses ;
       owl:members ?m2 .
   ?m2 rdf:rest*/rdf:first min:Lex .
@@ -19,7 +19,6 @@ ASK WHERE {
   ?m2 rdf:rest*/rdf:first min:Possibile .
   ?m2 rdf:rest*/rdf:first min:Norma .
   ?m2 rdf:rest*/rdf:first min:Institutio .
-  ?m2 rdf:rest*/rdf:first min:Typus .
 
   # Branch disjointness: Nexus, Forma
   ?d3 a owl:AllDisjointClasses ;

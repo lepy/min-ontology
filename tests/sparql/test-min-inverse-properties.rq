@@ -9,6 +9,7 @@ ASK WHERE {
   min:describedBy owl:inverseOf min:describes .
   min:generatedBy owl:inverseOf min:generates .
   min:hasBoundary owl:inverseOf min:bounds .
+  min:originatedBy owl:inverseOf min:originates .
   min:realizedBy owl:inverseOf min:realizes .
   min:encodedBy owl:inverseOf min:encodes .
   min:constitutedBy owl:inverseOf min:constitutes .

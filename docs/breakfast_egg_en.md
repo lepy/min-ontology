@@ -10,10 +10,13 @@
 
 ## Overview
 
+> **Version note (v3.5.0):** This tutorial contains historical `Typus` examples from the v3.3/v3.4 line.  
+> In MIN v3.5.0, the `min:Typus` class is removed; type assignment is modeled via `min:Institutio` + `min:typifies`.
+
 MIN has two branches under `Entity`:
 
 - **Nexus** — that which causes effects (Object, Process, Data, Agent, Boundary)
-- **Forma** — the rulebook by which Nexus operates (Lex, Structura, Possibile, Norma, Institutio, Typus)
+- **Forma** — the rulebook by which Nexus operates (Lex, Structura, Possibile, Norma, Institutio)
 
 Boiling an egg requires both. The egg, the pot, the water —
 these are Nexus instances. The cooking time specification, the natural law of

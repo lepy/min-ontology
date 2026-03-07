@@ -1,0 +1,8 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX min: <https://w3id.org/min#>
+
+ASK WHERE {
+  FILTER NOT EXISTS {
+    min:Typus a owl:Class .
+  }
+}

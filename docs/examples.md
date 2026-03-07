@@ -1,6 +1,6 @@
 # Per-Class Examples
 
-MIN provides example patterns for all instantiable classes. Each `.ttl` file below is a
+MIN provides example patterns for all instantiable classes in v3.5.0. Each `.ttl` file below is a
 self-contained graph that can be used as a modeling reference.
 
 All listed example files pass instance-level SHACL validation (`shapes/min-instance.shacl.ttl`).
@@ -18,8 +18,7 @@ All listed example files pass instance-level SHACL validation (`shapes/min-insta
 | `min:Structura` | `examples/structura.ttl` | Euler-Bernoulli beam theory in bridge design |
 | `min:Possibile` | `examples/possibile.ttl` | Fatigue crack scenario (offshore wind) |
 | `min:Norma` | `examples/norma.ttl` | Maximum deflection requirement (Eurocode) |
-| `min:Institutio` | `examples/institutio.ttl` | ISO 9001 certification |
-| `min:Typus` | `examples/typus.ttl` | Material type determination (DC04) |
+| `min:Institutio` | `examples/institutio.ttl` | ISO 9001 certification and type assignment |
 
 Non-instantiable roots (`min:Entity`, `min:Nexus`, `min:Forma`) are abstract query anchors.
 
@@ -149,25 +148,20 @@ ex:Max_Durchbiegung_L300 a min:Norma ;
 ## Institutio — institutional construct
 
 **File:** `examples/institutio.ttl`
-**Pattern highlights:** `constitutedBy`, `recognizedBy`, linked encoding artifacts.
+**Pattern highlights:** `constitutedBy`, `recognizedBy`, `typifies`, linked encoding artifacts.
 
 ```turtle
 ex:ISO9001_Zertifizierung_WerkA a min:Institutio ;
     min:constitutedBy ex:TUeV_Sued ;
     min:recognizedBy  ex:TUeV_Sued .
+
+ex:DC04_Institutio a min:Institutio ;
+    min:typifies ex:Blech_042 .
 ```
 
 ---
 
-## Typus — essential determination
+## Integrated scenarios
 
-**File:** `examples/typus.ttl`
-**Pattern highlights:** `typifies` / `typifiedBy`, distinction from `Norma` and `Data`.
-
-```turtle
-ex:DC04_Typus a min:Typus ;
-    min:typifies ex:Blech_042 .
-
-ex:Blech_042 a min:Object ;
-    min:typifiedBy ex:DC04_Typus .
-```
+- `examples/min-v3.3.0-examples.ttl`: integrated historical scenario.
+- `examples/eierkochen.ttl`: tutorial-scale scenario used in current docs.

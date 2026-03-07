@@ -1,4 +1,4 @@
-# MIN Property Catalog (v3.3.0)
+# MIN Property Catalog (v3.5.0)
 
 This page lists MIN properties by modeling role and relation family.
 
@@ -8,15 +8,6 @@ Both are schema-level `owl:AnnotationProperty` terms:
 
 - `min:materialProperty`
 - `min:informationalProperty`
-
-Recommended pattern:
-
-```ttl
-ex:massKg a owl:DatatypeProperty ;
-  rdfs:subPropertyOf min:materialProperty ;
-  rdfs:domain min:Object ;
-  rdfs:range xsd:decimal .
-```
 
 ## 2. Nexus structural relations
 
@@ -61,24 +52,34 @@ ex:massKg a owl:DatatypeProperty ;
 
 ## 4. Nexus/Forma bridge relations
 
+### Generic bridges
+
 | Property | Domain | Range | Notes |
 | --- | --- | --- | --- |
-| `min:realizes` | `min:Nexus` | `min:Forma` | inverse: `min:realizedBy` |
+| `min:originates` | `min:Nexus` | `min:Forma` | inverse: `min:originatedBy`; forma genesis |
+| `min:originatedBy` | `min:Forma` | `min:Nexus` | inverse of `originates` |
+| `min:realizes` | `min:Nexus` | `min:Forma` | inverse: `min:realizedBy`; realization of existing forma |
 | `min:realizedBy` | `min:Forma` | `min:Nexus` | inverse of `realizes` |
 | `min:constrains` | `min:Forma` | `min:Nexus` | general determination relation |
+
+### Specialized bridges
+
+| Property | Domain | Range | Notes |
+| --- | --- | --- | --- |
 | `min:governs` | `min:Lex` | `min:Process` | subproperty of `constrains` |
 | `min:formalizes` | `min:Structura` | `min:Nexus` | subproperty of `constrains` |
 | `min:evaluates` | `min:Norma` | `min:Nexus` | subproperty of `constrains` |
 | `min:concerns` | `min:Possibile` | `min:Nexus` | possibility scope |
 | `min:alternativeTo` | `min:Possibile` | `min:Nexus` | subproperty of `concerns` |
-| `min:constitutes` | `min:Agent` | `min:Institutio` | inverse: `min:constitutedBy` |
+| `min:constitutes` | `min:Agent` | `min:Institutio` | inverse: `min:constitutedBy`; subproperty of `originates` |
 | `min:constitutedBy` | `min:Institutio` | `min:Agent` | inverse of `constitutes` |
 | `min:recognizes` | `min:Agent` | `min:Institutio` | inverse: `min:recognizedBy` |
 | `min:recognizedBy` | `min:Institutio` | `min:Agent` | inverse of `recognizes` |
 | `min:encodes` | `min:Data` | `min:Forma` | inverse: `min:encodedBy` |
 | `min:encodedBy` | `min:Forma` | `min:Data` | inverse of `encodes` |
-| `min:typifies` | `min:Typus` | `min:Nexus` | subproperty of `constrains` |
-| `min:typifiedBy` | `min:Nexus` | `min:Typus` | inverse of `typifies` |
+| `min:typifies` | `min:Institutio` | `min:Nexus` | subproperty of `constrains` |
+| `min:typifiedBy` | `min:Nexus` | `min:Institutio` | inverse of `typifies` |
+| `min:comprises` | `min:Institutio` | `min:Forma` | bundles formal determinants |
 
 ## 5. Datatype properties
 
@@ -92,13 +93,10 @@ All core datatype properties use domain `min:Entity`:
 
 ## 6. Annotation properties
 
-### Core design annotations
+Core design/meta properties include:
 
 - `min:designRationale`
 - `min:philosophicalBasis`
-
-### Meta-vocabulary annotations
-
 - `min:definition`
 - `min:criterion`
 - `min:usageExample`
@@ -114,7 +112,7 @@ All core datatype properties use domain `min:Entity`:
 ## 7. Modeling guidance
 
 1. Use bridge relations explicitly; do not collapse Nexus and Forma in one node.
-2. Use `encodes` for representation links (`Data -> Forma`).
-3. Use `typifies` when your question is "what kind of thing is this Nexus instance?".
-4. Use `evaluates` when your question is "does this instance satisfy a norm?".
-5. Keep instance graphs flat; use schema-level polarity super-properties instead of reified aspect wrappers.
+2. Use `originates` only when the formal entity is newly brought forth.
+3. Use `realizes` when a formal entity already exists and is instantiated in actuality.
+4. Use `encodes` for representation links (`Data -> Forma`).
+5. Use `typifies` for kind-of determination via institutionalized type assignments.

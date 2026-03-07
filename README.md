@@ -6,42 +6,32 @@ industrial and scientific domains with a strict distinction between:
 - **Nexus**: actual entities that are causally effective
 - **Forma**: formal entities that are constitutively determining
 
-The current stable release line is **v3.x** (current: **v3.4.0**, tag `v3.4.0`).
+The current stable release line is **v3.x** (current: **v3.5.0**).
 
 ## Canonical IRIs
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/3.4.0`
+- Current version IRI: `https://w3id.org/min/3.5.0`
 
-## Conceptual core (v3.4.0)
+## Conceptual core (v3.5.0)
 
-MIN v3 defines **14 classes**:
+MIN v3 defines **13 classes**:
 
 - Root: `min:Entity`
 - Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Agent`, `min:Boundary`
-- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`, `min:Typus`
+- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`
 
 For full class definitions, see `docs/class-catalog.md`.
-
-![min_hierarchy.svg](min_hierarchy.svg)
-
-**Legend:**  
-`━━` rdfs:subClassOf (disjoint) · `╌╌` rdfs:subClassOf (overlap — Agent)  
-⊥ Object · Process · Data · Boundary pairwise disjoint · Agent overlaps  
-⊥ Lex · Structura · Possibile · Norma · Institutio · Typus pairwise disjoint  
-Entity ≡ Nexus ⊔ Forma
-
-[min_hierarchy.svg](docs/min_hierarchy.svg)
 
 ## Repository structure
 
 - `min.ttl`: current MIN ontology
 - `min-v*.ttl`: immutable release snapshots
-- `min-v3.4.0.ttl`: current immutable snapshot (hyphen naming)
-- `min_v3.4.0.ttl`: optional compatibility snapshot (underscore naming)
+- `min-v3.5.0.ttl`: current immutable snapshot (hyphen naming)
+- `min_v3.5.0.ttl`: optional compatibility snapshot (underscore naming)
 - `examples/`: example instance graphs
-- `examples/min-v3.3.0-examples.ttl`: integrated v3.3.0 scenario
+- `examples/min-v3.3.0-examples.ttl`: integrated historical v3.3.0 scenario
 - `queries/competency/`: competency queries
 - `shapes/`: SHACL shapes
 - `tests/sparql/`: SPARQL ASK regression checks
@@ -92,12 +82,11 @@ Core doc pages:
 - `docs/class-catalog.md` (all classes in MIN v3)
 - `docs/property-catalog.md`
 
-Static visualizations are intentionally kept as part of the docs:
+Static visualizations are kept as historical reference pages:
 
 - `docs/min-v3_3_0-visualization.html`
 - `docs/min-v3_0_0-visualization.html`
 - `docs/min-v2_1_0-visualization.html`
-- `docs/bfo-vs-min3_2_0.html` (historical comparison page)
 
 ## GitHub Pages deployment
 

@@ -10,10 +10,13 @@
 
 ## Überblick
 
+> **Versionshinweis (v3.5.0):** Dieses Tutorial enthält historische `Typus`-Beispiele aus der v3.3/v3.4-Linie.  
+> In MIN v3.5.0 ist die Klasse `min:Typus` entfernt; Typisierung wird über `min:Institutio` + `min:typifies` modelliert.
+
 MIN hat zwei Zweige unter `Entity`:
 
 - **Nexus** — das, was etwas bewirkt (Object, Process, Data, Agent, Boundary)
-- **Forma** — das Regelwerk, nach dem Nexus wirkt (Lex, Structura, Possibile, Norma, Institutio, Typus)
+- **Forma** — das Regelwerk, nach dem Nexus wirkt (Lex, Structura, Possibile, Norma, Institutio)
 
 Beim Eierkochen brauchen wir beide. Das Ei, der Topf, das Wasser —
 das sind Nexus-Instanzen. Die Kochzeitvorgabe, das Naturgesetz der

@@ -19,6 +19,7 @@ TTL_FILES = [
     "min-v3.2.0.ttl",
     "min-v3.3.0.ttl",
     "min-v3.4.0.ttl",
+    "min-v3.5.0.ttl",
     "examples/min-example.ttl",
     "examples/object.ttl",
     "examples/process.ttl",
@@ -37,6 +38,7 @@ TTL_FILES = [
 
 OPTIONAL_TTL_FILES = [
     # Compatibility snapshot (underscore naming) is optional.
+    "min_v3.5.0.ttl",
     "min_v3.4.0.ttl",
     "min_v3.3.0.ttl",
 ]
@@ -49,6 +51,7 @@ SPARQL_TESTS = [
     ("tests/sparql/test-min-polarity-superproperties.rq", "min.ttl"),
     ("tests/sparql/test-min-no-opa-import.rq", "min.ttl"),
     ("tests/sparql/test-min-forma-classes.rq", "min.ttl"),
+    ("tests/sparql/test-min-no-typus-class.rq", "min.ttl"),
     ("tests/sparql/test-min-entity-partition.rq", "min.ttl"),
     ("tests/sparql/test-min-disjointness.rq", "min.ttl"),
     ("tests/sparql/test-min-bridge-relations.rq", "min.ttl"),
@@ -136,7 +139,6 @@ def main() -> int:
         "examples/possibile.ttl",
         "examples/norma.ttl",
         "examples/institutio.ttl",
-        "examples/typus.ttl",
     ]
     for ex_rel in example_files:
         instance_graph = parse_turtle(ROOT / "min.ttl")
