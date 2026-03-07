@@ -58,7 +58,7 @@ digraph MIN {
             <TD><B><FONT POINT-SIZE="11" COLOR="#6c3483">Forma</FONT></B></TD>
             <TD><FONT POINT-SIZE="9" COLOR="#a569bd">  ·  das Regelwerk</FONT></TD>
         </TR><TR>
-            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle sechs paarweise disjunkt</FONT></TD>
+            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle fünf paarweise disjunkt</FONT></TD>
         </TR></TABLE>>;
         fontsize=11; fontcolor="#6c3483";
         style="rounded"; color="#bb8fce"; bgcolor="#fcf7ff";
@@ -75,7 +75,6 @@ digraph MIN {
         Possibile  [ label=<<B>Possibile</B>>,  fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
         Norma      [ label=<<B>Norma</B>>,      fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
         Institutio [ label=<<B>Institutio</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
-        Typus      [ label=<<B>Typus</B>>,      fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
     }
 
     // ── Edges ───────────────────────────────────────────────
@@ -93,12 +92,11 @@ digraph MIN {
     Forma -> Possibile  [color="#8e44ad"];
     Forma -> Norma      [color="#8e44ad"];
     Forma -> Institutio [color="#8e44ad"];
-    Forma -> Typus      [color="#8e44ad"];
 
     // ── Rank ────────────────────────────────────────────────
     { rank=same; Nexus; Forma; }
 
     // ── Title ───────────────────────────────────────────────
     labelloc=t;
-    label=<<FONT POINT-SIZE="16"><B>MIN — Material · Information · Nexus</B></FONT><BR/><FONT POINT-SIZE="10" COLOR="#888888">Klassenhierarchie · v3.3.0  ┃  Entity ≡ Nexus ⊔ Forma</FONT><BR/> >;
+    label=<<FONT POINT-SIZE="16"><B>MIN — Material · Information · Nexus</B></FONT><BR/><FONT POINT-SIZE="10" COLOR="#888888">Klassenhierarchie · v3.7.1  ┃  Entity ≡ Nexus ⊔ Forma</FONT><BR/> >;
 }
