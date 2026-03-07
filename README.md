@@ -73,6 +73,12 @@ Local live preview:
 uv run mkdocs serve
 ```
 
+Regenerate class hierarchy artifacts (`.dot`, `.mmd`, `.svg`) from `min.ttl`:
+
+```bash
+uv run python scripts/generate_hierarchy.py
+```
+
 Published docs:
 
 - `https://lepy.github.io/min-ontology/`

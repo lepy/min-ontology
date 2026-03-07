@@ -41,15 +41,15 @@ digraph MIN {
             fontsize=12, penwidth=1.8, width=1.7
         ];
 
-        Object   [ label=<<B>Object</B>>,   fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
-        Process  [ label=<<B>Process</B>>,  fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
-        Data     [ label=<<B>Data</B>>,     fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
-        Boundary [ label=<<B>Boundary</B>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Object [ label=<<B>Object</B>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Process [ label=<<B>Process</B>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Data [ label=<<B>Data</B>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
         Agent [
             label=<<B>Agent</B>>,
             fillcolor="#fdebd0", color="#e67e22", fontcolor="#7e4a12",
             style="rounded,filled,dashed", penwidth=1.6
         ];
+        Boundary [ label=<<B>Boundary</B>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
     }
 
     // ── FORMA ───────────────────────────────────────────────
@@ -58,7 +58,7 @@ digraph MIN {
             <TD><B><FONT POINT-SIZE="11" COLOR="#6c3483">Forma</FONT></B></TD>
             <TD><FONT POINT-SIZE="9" COLOR="#a569bd">  ·  das Regelwerk</FONT></TD>
         </TR><TR>
-            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle fünf paarweise disjunkt</FONT></TD>
+            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle 5 paarweise disjunkt</FONT></TD>
         </TR></TABLE>>;
         fontsize=11; fontcolor="#6c3483";
         style="rounded"; color="#bb8fce"; bgcolor="#fcf7ff";
@@ -70,10 +70,10 @@ digraph MIN {
             fontsize=12, penwidth=1.8, width=1.7
         ];
 
-        Lex        [ label=<<B>Lex</B>>,        fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
-        Structura  [ label=<<B>Structura</B>>,  fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
-        Possibile  [ label=<<B>Possibile</B>>,  fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
-        Norma      [ label=<<B>Norma</B>>,      fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Lex [ label=<<B>Lex</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Structura [ label=<<B>Structura</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Possibile [ label=<<B>Possibile</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Norma [ label=<<B>Norma</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
         Institutio [ label=<<B>Institutio</B>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
     }
 
@@ -81,16 +81,16 @@ digraph MIN {
     Entity -> Nexus  [color="#2e86c1", penwidth=1.8];
     Entity -> Forma  [color="#7d3c98", penwidth=1.8];
 
-    Nexus -> Object   [color="#28b463"];
-    Nexus -> Process  [color="#28b463"];
-    Nexus -> Data     [color="#28b463"];
-    Nexus -> Boundary [color="#28b463"];
+    Nexus -> Object [color="#28b463"];
+    Nexus -> Process [color="#28b463"];
+    Nexus -> Data [color="#28b463"];
     Nexus -> Agent    [color="#e67e22", style=dashed, penwidth=1.3];
+    Nexus -> Boundary [color="#28b463"];
 
-    Forma -> Lex        [color="#8e44ad"];
-    Forma -> Structura  [color="#8e44ad"];
-    Forma -> Possibile  [color="#8e44ad"];
-    Forma -> Norma      [color="#8e44ad"];
+    Forma -> Lex [color="#8e44ad"];
+    Forma -> Structura [color="#8e44ad"];
+    Forma -> Possibile [color="#8e44ad"];
+    Forma -> Norma [color="#8e44ad"];
     Forma -> Institutio [color="#8e44ad"];
 
     // ── Rank ────────────────────────────────────────────────
