@@ -91,6 +91,7 @@ Core doc pages:
 
 Static visualizations are kept as historical reference pages:
 
+- `docs/min-v3_7_1-visualization.html`
 - `docs/min-v3_3_0-visualization.html`
 - `docs/min-v3_0_0-visualization.html`
 - `docs/min-v2_1_0-visualization.html`
