@@ -21,6 +21,7 @@ nav:
     - Breakfast Egg Tutorial (DE): breakfast_egg_de.md
     - Breakfast Egg Tutorial (EN): breakfast_egg_en.md
   - Reference:
+    - Class Hierarchy (SVG): min_hierarchy.svg
     - Versioning: versioning.md
     - Changelog: changelog.md
     - Meta Vocabulary (DE): min-meta-vocabulary-de.md

@@ -24,6 +24,8 @@ MIN v3 defines **13 classes**:
 
 For full class definitions, see `docs/class-catalog.md`.
 
+![MIN Class Hierarchy](docs/min_hierarchy.svg)
+
 ## Repository structure
 
 - `min.ttl`: current MIN ontology
