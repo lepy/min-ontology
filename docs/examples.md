@@ -1,6 +1,6 @@
 # Per-Class Examples
 
-MIN provides example patterns for all instantiable classes in v3.5.0. Each `.ttl` file below is a
+MIN provides example patterns for all instantiable classes in v3.7.1. Each `.ttl` file below is a
 self-contained graph that can be used as a modeling reference.
 
 All listed example files pass instance-level SHACL validation (`shapes/min-instance.shacl.ttl`).

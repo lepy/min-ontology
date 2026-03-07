@@ -9,7 +9,7 @@
 **Lizenz:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 > Historischer Hinweis: Diese Seite dokumentiert den Metavokabular-Stand aus v3.3/v3.4 und enthält `Typus`-Beispiele.
-> In MIN v3.5.0 wurde `min:Typus` als Klasse entfernt.
+> In MIN v3.7.1 wurde `min:Typus` als Klasse entfernt.
 
 ---
 

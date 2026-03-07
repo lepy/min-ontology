@@ -1,4 +1,4 @@
-# MIN Model (v3.5.0)
+# MIN Model (v3.7.1)
 
 This page summarizes the current conceptual architecture and modeling rules in MIN.
 

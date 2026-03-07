@@ -2,12 +2,18 @@
 
 All notable changes to MIN are documented in this file.
 
+## [3.7.1] - 2026-03-07
+
+### Changed
+- `min.ttl` now points to MIN `v3.7.1`.
+- Added immutable release snapshots `min-v3.6.0.ttl`, `min-v3.7.0.ttl`, and `min-v3.7.1.ttl`.
+- Repository docs, validation script, and version checks updated to `v3.7.1`.
+
 ## [3.5.0] - 2026-03-07
 
 ### Changed
 - `min.ttl` now points to MIN `v3.5.0`.
 - Added immutable release snapshot `min-v3.5.0.ttl`.
-- Added optional compatibility snapshot `min_v3.5.0.ttl`.
 - Introduced generic bridge relation pair `min:originates` / `min:originatedBy` for Forma genesis.
 - Removed class `min:Typus`; typification remains via `min:Institutio` with `min:typifies` / `min:typifiedBy`.
 - Added `min:comprises` (`Institutio -> Forma`) for formal bundling.
@@ -32,7 +38,7 @@ All notable changes to MIN are documented in this file.
 
 ### Changed
 - `min.ttl` now points to MIN `v3.3.0`.
-- Added immutable release snapshot `min-v3.3.0.ttl` and compatibility variant `min_v3.3.0.ttl`.
+- Added immutable release snapshot `min-v3.3.0.ttl`.
 - Documentation updated to reference `v3.3.0` as current stable release.
 - Integrated example scenario promoted to `examples/min-v3.3.0-examples.ttl`.
 - Validation updated for `v3.3.0` (`test-min-version.rq`, `scripts/validate.py`).

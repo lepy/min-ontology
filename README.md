@@ -6,15 +6,15 @@ industrial and scientific domains with a strict distinction between:
 - **Nexus**: actual entities that are causally effective
 - **Forma**: formal entities that are constitutively determining
 
-The current stable release line is **v3.x** (current: **v3.5.0**).
+The current stable release line is **v3.x** (current: **v3.7.1**).
 
 ## Canonical IRIs
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/3.5.0`
+- Current version IRI: `https://w3id.org/min/3.7.1`
 
-## Conceptual core (v3.5.0)
+## Conceptual core (v3.7.1)
 
 MIN v3 defines **13 classes**:
 
@@ -28,8 +28,7 @@ For full class definitions, see `docs/class-catalog.md`.
 
 - `min.ttl`: current MIN ontology
 - `min-v*.ttl`: immutable release snapshots
-- `min-v3.5.0.ttl`: current immutable snapshot (hyphen naming)
-- `min_v3.5.0.ttl`: optional compatibility snapshot (underscore naming)
+- `min-v3.7.1.ttl`: current immutable snapshot (hyphen naming)
 - `examples/`: example instance graphs
 - `examples/min-v3.3.0-examples.ttl`: integrated historical v3.3.0 scenario
 - `queries/competency/`: competency queries
@@ -101,7 +100,6 @@ Repository setting required:
 
 - Semantic versioning is used for MIN releases.
 - `min-vX.Y.Z.ttl` files are immutable snapshots.
-- `min_vX.Y.Z.ttl` files may exist for compatibility with underscore naming.
 - `min.ttl` always points to the latest stable MIN release.
 - Since `v2.0.0`, OPA is absorbed into MIN and no separate `opa.ttl` is maintained.
 

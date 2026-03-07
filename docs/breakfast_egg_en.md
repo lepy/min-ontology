@@ -10,8 +10,8 @@
 
 ## Overview
 
-> **Version note (v3.5.0):** This tutorial contains historical `Typus` examples from the v3.3/v3.4 line.  
-> In MIN v3.5.0, the `min:Typus` class is removed; type assignment is modeled via `min:Institutio` + `min:typifies`.
+> **Version note (v3.7.1):** This tutorial contains historical `Typus` examples from the v3.3/v3.4 line.  
+> In MIN v3.7.1, the `min:Typus` class is removed; type assignment is modeled via `min:Institutio` + `min:typifies`.
 
 MIN has two branches under `Entity`:
 

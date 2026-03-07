@@ -1,4 +1,4 @@
-# MIN Property Catalog (v3.5.0)
+# MIN Property Catalog (v3.7.1)
 
 This page lists MIN properties by modeling role and relation family.
 

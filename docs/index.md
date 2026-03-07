@@ -1,6 +1,6 @@
 # MIN Ontology Documentation
 
-MIN v3.5.0 models reality with a strict two-branch architecture under `min:Entity`:
+MIN v3.7.1 models reality with a strict two-branch architecture under `min:Entity`:
 
 - `min:Nexus`: actual, causally effective entities
 - `min:Forma`: formal, constitutively determining entities
@@ -20,7 +20,7 @@ MIN v3.5.0 models reality with a strict two-branch architecture under `min:Entit
 
 ## Reference scope
 
-The docs reflect MIN `v3.5.0` (`min.ttl` points to this release):
+The docs reflect MIN `v3.7.1` (`min.ttl` points to this release):
 
 - 13 classes (`Entity`, 6 Nexus-side classes, 6 Forma-side classes)
 - Updated bridge model including `originates` / `originatedBy`

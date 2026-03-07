@@ -18,7 +18,7 @@
 #
 #   Keine Metaphysik. Werkzeug.
 #
-#   Die Grundontologie. Version 3.7.1
+#   Die Grundontologie. Version 3.6.0
 #
 #   Für Ingenieure, die ihre Welt beschreiben:
 #   Materialien, Produkte, Methoden, Normen, Geld.
@@ -58,14 +58,14 @@
 #     Kripke/Lewis   — Possible Worlds (Possibile)
 #     Woodward       — Interventionistische Kausalität
 #
-#   v3.7.1 — 2026-03-07
+#   v3.6.0 — 2026-03-07
 #
 # =============================================================================
 
 <https://w3id.org/min> a owl:Ontology ;
-    owl:versionIRI <https://w3id.org/min/3.7.1> ;
-    owl:versionInfo "3.7.1" ;
-    owl:priorVersion <https://w3id.org/min/3.7.0> ;
+    owl:versionIRI <https://w3id.org/min/3.6.0> ;
+    owl:versionInfo "3.6.0" ;
+    owl:priorVersion <https://w3id.org/min/3.5.0> ;
     dcterms:title "MIN — Material · Information · Nexus"@en ;
     dcterms:title "MIN — Material · Information · Nexus"@de ;
     dcterms:description """MIN ist keine Metaphysik. MIN ist Werkzeug.
@@ -1777,271 +1777,18 @@ min:originates
     min:status "stable" .
 
 
-
-# =============================================================================
-#   V3.7-ERGÄNZUNGEN (Meta-Annotationen)
-# =============================================================================
-
-min:influences
-    min:definition """Allgemeinste Wirkungsrelation zwischen zwei
-    Nexus-Instanzen. Ein Nexus beeinflusst, verändert oder prägt
-    einen anderen Nexus."""@de ;
-    min:criterion "Gibt es eine gerichtete Wirksamkeit von einem Nexus auf einen anderen?"@de ;
-    min:distinguishedFrom """min:nexusWith — symmetrische Grundverbindung.
-    min:influences — gerichtete Wirksamkeit."""@de ;
-    min:definedInVersion "3.7.0" ;
-    min:status "stable" .
-
-min:expresses
-    min:definition """Allgemeinere Relation, mit der Data eine Forma
-    ausdrückt, repräsentiert oder artikuliert."""@de ;
-    min:criterion "Drückt ein Data-Artefakt eine Forma aus, auch wenn keine strenge technische Kodierung vorliegt?"@de ;
-    min:distinguishedFrom """min:encodes — stärkerer Spezialfall.
-    Jede encodes-Relation ist eine expresses-Relation, aber nicht umgekehrt."""@de ;
-    min:definedInVersion "3.7.0" ;
-    min:status "stable" .
-
-min:between
-    min:definition """Allgemeine Situierungsrelation einer Boundary zu
-    den Nexus-Instanzen, zwischen denen sie existiert."""@de ;
-    min:criterion "Ist die Boundary zwischen zwei oder mehr Nexus-Instanzen situiert?"@de ;
-    min:distinguishedFrom """min:bounds — stärkerer Spezialfall einer
-    begrenzenden Relation."""@de ;
-    min:definedInVersion "3.7.0" ;
-    min:status "stable" .
-
-min:EncodedData
-    min:definition """Data-Instanz, die mindestens eine Forma explizit
-    kodiert."""@de ;
-    min:criterion "Ist die Instanz Data und steht sie in mindestens einer encodes-Relation zu Forma?"@de ;
-    min:distinguishedFrom """min:Data — breitere Grundklasse, die auch
-    rohe oder noch nicht interpretierte Daten zulässt."""@de ;
-    min:definedInVersion "3.7.0" ;
-    min:status "stable" .
-
-min:SelectingAgent
-    min:definition """Agent-Instanz, die mindestens ein Possibile
-    explizit auswählt."""@de ;
-    min:criterion "Ist die Instanz Agent und steht sie in mindestens einer selects-Relation zu Possibile?"@de ;
-    min:distinguishedFrom """min:Agent — breitere Grundklasse, die auch
-    Agenten ohne explizit modellierten Möglichkeitsraum zulässt."""@de ;
-    min:definedInVersion "3.7.0" ;
-    min:status "stable" .
-
-
-
 # #############################################################################
 #
-#   TEIL XII — REFLEXIVE META-EBENE (v3.7.1)
+#   INVENTAR v3.6.0 — 2026-03-07
 #
-#   MIN beschreibt nicht nur Domänenentitäten, sondern auch die eigenen
-#   Beschreibungsmittel. Das Metavokabular wird damit selbst Teil der
-#   Ontologie und mit MIN-Termen dokumentiert.
-#
-# #############################################################################
-
-min:MetaTerm a owl:Class ;
-    rdfs:subClassOf min:Institutio ;
-    rdfs:label "Meta Term"@en ;
-    rdfs:label "Meta-Term"@de ;
-    rdfs:comment """Ontologieinterner Beschreibungsterm von MIN.
-    MetaTerm umfasst insbesondere Annotation Properties und andere
-    reflektierende Vokabularbestandteile, mit denen MIN sich selbst
-    dokumentiert."""@de ;
-    min:definition """Ein ontologieinterner Beschreibungsterm, der der
-    Dokumentation, Erklärung oder Strukturierung der Ontologie selbst dient."""@de ;
-    min:criterion "Dient der Term primär der Beschreibung des Ontologievokabulars selbst statt der Domäne?"@de ;
-    min:distinguishedFrom """min:Forma — MetaTerm ist keine neue Grundkategorie,
-    sondern eine ontologieinterne Spezialisierung institutionell stabilisierter
-    Beschreibungsterme."""@de ;
-    min:rationale """MIN braucht einen leichten, expliziten Anker für das
-    eigene Metavokabular, damit die Ontologie ihre eigenen Beschreibungsmittel
-    nicht nur nutzt, sondern auch klassifiziert."""@de ;
-    min:definedInVersion "3.7.1" ;
-    min:status "stable" .
-
-min:OntologyArtifact a owl:Class ;
-    rdfs:subClassOf min:Data ;
-    rdfs:label "Ontology Artifact"@en ;
-    rdfs:label "Ontologieartefakt"@de ;
-    rdfs:comment """Informationsartiges Artefakt, das eine Ontologie
-    oder einen Ontologieausschnitt kodiert oder ausdrückt."""@de ;
-    min:definition """Data-Artefakt, das ontologische Begriffe, Relationen
-    oder Axiome in maschinenlesbarer Form enthält."""@de ;
-    min:criterion "Ist das Artefakt ein Datenobjekt, das ontologisches Wissen ausdrückt oder kodiert?"@de ;
-    min:distinguishedFrom """min:Data — OntologyArtifact ist eine spezialisierte
-    Unterklasse für ontologische Artefakte."""@de ;
-    min:rationale """MIN soll auch die eigene TTL-Datei, Profile und
-    Dokumentationsartefakte als Data-Artefakte einordnen können."""@de ;
-    min:definedInVersion "3.7.1" ;
-    min:status "stable" .
-
-min:describesOntologyTerm a owl:ObjectProperty ;
-    rdfs:label "describes ontology term"@en ;
-    rdfs:label "beschreibt Ontologieterm"@de ;
-    rdfs:domain min:OntologyArtifact ;
-    rdfs:range min:MetaTerm ;
-    rdfs:subPropertyOf min:describes ;
-    rdfs:comment """Ein Ontologieartefakt beschreibt einen ontologieinternen
-    Beschreibungsterm oder Vokabulareintrag."""@de ;
-    min:definition """Relation zwischen einem Ontologieartefakt und einem
-    MetaTerm, den es dokumentiert oder erläutert."""@de ;
-    min:criterion "Dokumentiert das Artefakt einen ontologieinternen Beschreibungsterm?"@de ;
-    min:definedInVersion "3.7.1" ;
-    min:status "stable" .
-
-# Das Metavokabular als expliziter Gegenstandsbereich
-min:definition a min:MetaTerm .
-min:criterion a min:MetaTerm .
-min:usageExample a min:MetaTerm .
-min:counterExample a min:MetaTerm .
-min:distinguishedFrom a min:MetaTerm .
-min:normativeSource a min:MetaTerm .
-min:rationale a min:MetaTerm .
-min:definedInVersion a min:MetaTerm .
-min:status a min:MetaTerm .
-min:replacedBy a min:MetaTerm .
-min:axiomRationale a min:MetaTerm .
-min:designRationale a min:MetaTerm .
-min:philosophicalBasis a min:MetaTerm .
-min:causalityMode a min:MetaTerm .
-min:efficacyMode a min:MetaTerm .
-
-# Selbstbeschreibung der Meta-Annotationen
-min:definition
-    min:definition """Eine natürlichsprachliche Definition, die die
-    Bedeutung eines Ontologieterms explizit macht."""@de ;
-    min:criterion "Erklärt der Text den semantischen Kern eines Terms so, dass seine intendierte Bedeutung nachvollziehbar wird?"@de ;
-    min:distinguishedFrom """rdfs:comment — informeller und freier.
-    min:definition — semantisch fokussierte Begriffserklärung."""@de ;
-    min:rationale """Die Definitions-Property ist der primäre Träger
-    expliziter Begriffsbedeutung im MIN-Metavokabular."""@de .
-
-min:criterion
-    min:definition """Ein operationalisierbares Zugehörigkeits- oder
-    Prüfmerkmal für die Verwendung eines Ontologieterms."""@de ;
-    min:criterion "Formuliert der Text eine verwendbare Prüfregel oder Entscheidungsfrage?"@de ;
-    min:distinguishedFrom """min:definition — sagt, was etwas ist.
-    min:criterion — sagt, wie Zugehörigkeit oder Anwendbarkeit geprüft wird."""@de ;
-    min:rationale """Ontologische Terme brauchen neben Definitionen auch
-    explizite Anwendungs- oder Zugehörigkeitskriterien."""@de .
-
-min:usageExample
-    min:definition """Ein Beispiel, das die beabsichtigte Verwendung
-    eines Ontologieterms konkret illustriert."""@de ;
-    min:criterion "Zeigt der Text eine plausible, konkrete und nicht-triviale Verwendung des Terms?"@de ;
-    min:distinguishedFrom """min:counterExample — markiert Abgrenzung durch
-    Nicht-Zugehörigkeit; usageExample illustriert positive Verwendung."""@de ;
-    min:rationale """Beispiele verankern abstrakte Definitionen in der
-    Modellierungspraxis."""@de .
-
-min:counterExample
-    min:definition """Ein Gegenbeispiel, das eine naheliegende, aber
-    falsche Zuordnung zu einem Ontologieterm sichtbar macht."""@de ;
-    min:criterion "Zeigt das Beispiel plausibel, was trotz Ähnlichkeit nicht unter den Term fällt?"@de ;
-    min:distinguishedFrom """min:usageExample — positive Illustration.
-    min:counterExample — negative Grenzmarkierung."""@de ;
-    min:rationale """Gegenbeispiele machen Klassengrenzen robust und
-    helfen bei Fehlmodellierungen."""@de .
-
-min:distinguishedFrom
-    min:definition """Eine Abgrenzungsannotation, die den Unterschied
-    zu einem verwandten Ontologieterm expliziert."""@de ;
-    min:criterion "Wird eine konkrete Verwechslungsgefahr mit einem anderen Term operational geklärt?"@de ;
-    min:rationale """Die Ontologie braucht explizite Klassengrenzen,
-    damit verwandte Begriffe nicht semantisch ineinanderlaufen."""@de .
-
-min:normativeSource
-    min:definition """Verweis auf eine autoritative Quelle, die einen
-    Ontologieterm fachlich oder normativ stützt."""@de ;
-    min:criterion "Ist die referenzierte Quelle publiziert und für die Semantik des Terms relevant?"@de ;
-    min:rationale """Technische und institutionelle Terme profitieren
-    von expliziten Referenzen auf Standards oder Literatur."""@de .
-
-min:rationale
-    min:definition """Eine Entwurfsbegründung, warum ein Ontologieterm
-    existiert oder warum er in einer bestimmten Weise modelliert wird."""@de ;
-    min:criterion "Erklärt der Text das Modellierungsproblem und die Motivation der Lösung?"@de ;
-    min:distinguishedFrom """min:definition — erklärt Bedeutung.
-    min:rationale — erklärt Entwurfsnotwendigkeit."""@de ;
-    min:rationale """Ohne rationale gehen Entwurfsentscheidungen verloren
-    und spätere Revisionen werden schwer nachvollziehbar."""@de .
-
-min:definedInVersion
-    min:definition """Versionsannotation, die angibt, in welcher MIN-Version
-    ein Term erstmals eingeführt wurde."""@de ;
-    min:criterion "Ist der Wert eine konsistente Versionsangabe der Ontologie?"@de ;
-    min:rationale """Versionierung macht die Evolutionsgeschichte des
-    Vokabulars nachvollziehbar."""@de .
-
-min:status
-    min:definition """Lebenszyklusstatus eines Ontologieterms innerhalb
-    von MIN, z. B. experimental, stable oder deprecated."""@de ;
-    min:criterion "Beschreibt der Wert den aktuellen Reifegrad des Terms klar und kontrolliert?"@de ;
-    min:rationale """Statusinformationen helfen bei der kontrollierten
-    Weiterentwicklung der Ontologie."""@de .
-
-min:replacedBy
-    min:definition """Verweist auf einen Nachfolgerterm, der einen
-    veralteten Ontologieterm funktional ersetzt."""@de ;
-    min:criterion "Gibt es eine echte Nachfolgebeziehung zwischen altem und neuem Term?"@de ;
-    min:rationale """Deprecation ohne Nachfolgehinweis erschwert Migration
-    und Pflege von Instanzdaten."""@de .
-
-min:axiomRationale
-    min:definition """Begründung für eine formale ontologische Restriktion
-    oder Axiomatisierung."""@de ;
-    min:criterion "Wird erklärt, warum genau diese formale Einschränkung gewählt wurde?"@de ;
-    min:distinguishedFrom """min:rationale — allgemeine Entwurfsbegründung.
-    min:axiomRationale — spezifische Begründung einer Formalisierung."""@de ;
-    min:rationale """Axiomatische Entscheidungen sollen auch in ihrer
-    formalen Motivierung nachvollziehbar bleiben."""@de .
-
-min:designRationale
-    min:definition """Historische Legacy-Annotation für Entwurfsbegründungen
-    in früheren MIN-Versionen."""@de ;
-    min:criterion "Wird die Property für ältere, nicht voll strukturierte Entwurfsbegründungen verwendet?"@de ;
-    min:distinguishedFrom """min:rationale — strukturierter Nachfolger.
-    min:designRationale — Legacy-Variante."""@de ;
-    min:rationale """Die Property bleibt aus Rückwärtskompatibilitätsgründen
-    im Vokabular erhalten."""@de .
-
-min:philosophicalBasis
-    min:definition """Annotation, die einen Ontologieterm auf eine
-    philosophische Begriffs- oder Denktradition bezieht."""@de ;
-    min:criterion "Benennt der Text eine philosophische Quelle oder Tradition, die den Term begrifflich trägt?"@de ;
-    min:rationale """MIN dokumentiert bewusst auch die begriffsgeschichtliche
-    Herkunft zentraler Terme."""@de .
-
-min:causalityMode
-    min:definition """Annotation für die Art kausaler Wirksamkeit einer
-    Nexus-Kategorie, etwa dispositional, mediated oder relational."""@de ;
-    min:criterion "Ordnet der Wert die Wirksamkeit einer Nexus-Kategorie in das vorgesehene Modusschema ein?"@de ;
-    min:rationale """MIN differenziert den Nexus-Zweig nicht nur nach Klassen,
-    sondern auch nach Modi der Kausalität."""@de .
-
-min:efficacyMode
-    min:definition """Allgemeiner Wirksamkeitsmodus einer Entität oder
-    Entitätsklasse innerhalb des MIN-Schemas."""@de ;
-    min:criterion "Ordnet der Wert einen Term einem kohärenten Wirksamkeitsmodus zu?"@de ;
-    min:distinguishedFrom """min:causalityMode — spezifisch für Nexus.
-    min:efficacyMode — allgemeiner über mehrere Wirkungsarten hinweg."""@de ;
-    min:rationale """Mit efficacyMode wird die Theorie differenzierter
-    Wirksamkeit über den reinen Nexus-Zweig hinaus sichtbar."""@de .
-
-
-# #############################################################################
-#
-#   INVENTAR v3.7.1 — 2026-03-07
-#
-#   Klassen:               17  (Entity, Nexus, Object, Process, Data, Agent,
+#   Klassen:               13  (Entity, Nexus, Object, Process, Data, Agent,
 #                               Boundary,
 #                               Forma, Lex, Structura, Possibile, Norma,
 #                               Institutio)
 #   Polaritäts-Properties:  2  (materialProperty, informationalProperty)
 #                               — Typ: owl:AnnotationProperty (HEURISTIK)
 #   Inter-Nexus:            2  (nexusWith, hasComponent)
-#   Kategorienrelationen:  21  (hasInput, hasOutput, undergoes, resultOf,
+#   Kategorienrelationen:  17  (hasInput, hasOutput, undergoes, resultOf,
 #                               performs, performedBy, controls,
 #                               actsOn, affectedBy, owns,
 #                               describes, describedBy, generates,

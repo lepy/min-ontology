@@ -1,6 +1,6 @@
-# MIN Class Catalog (v3.5.0)
+# MIN Class Catalog (v3.7.1)
 
-This catalog reflects the classes in `min.ttl` / `min-v3.5.0.ttl`.
+This catalog reflects the classes in `min.ttl` / `min-v3.7.1.ttl`.
 
 ## Complete class list
 

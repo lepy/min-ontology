@@ -9,7 +9,7 @@
 **License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 > Historical note: this page documents the v3.3/v3.4 meta-vocabulary state and includes `Typus` examples.
-> In MIN v3.5.0, `min:Typus` was removed as class.
+> In MIN v3.7.1, `min:Typus` was removed as class.
 
 ---
 

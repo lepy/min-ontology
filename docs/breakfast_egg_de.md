@@ -10,8 +10,8 @@
 
 ## Überblick
 
-> **Versionshinweis (v3.5.0):** Dieses Tutorial enthält historische `Typus`-Beispiele aus der v3.3/v3.4-Linie.  
-> In MIN v3.5.0 ist die Klasse `min:Typus` entfernt; Typisierung wird über `min:Institutio` + `min:typifies` modelliert.
+> **Versionshinweis (v3.7.1):** Dieses Tutorial enthält historische `Typus`-Beispiele aus der v3.3/v3.4-Linie.  
+> In MIN v3.7.1 ist die Klasse `min:Typus` entfernt; Typisierung wird über `min:Institutio` + `min:typifies` modelliert.
 
 MIN hat zwei Zweige unter `Entity`:
 
