@@ -1,0 +1,36 @@
+name: Release Validation
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Run validation suite
+        run: python scripts/validate.py
+
+      - name: Upload ontology artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ontology-ttl
+          path: |
+            min.ttl
+            min-v*.ttl
+            shapes/*.ttl
+            examples/*.ttl
