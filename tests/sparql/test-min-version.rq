@@ -1,0 +1,8 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  <https://w3id.org/min>
+    a owl:Ontology ;
+    owl:versionIRI <https://w3id.org/min/1.0.0> ;
+    owl:versionInfo "1.0.0" .
+}

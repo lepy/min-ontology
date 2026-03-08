@@ -1,0 +1,45 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix min:     <https://w3id.org/min#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   MIN Instance-Level SHACL Shapes (v1.0.0)
+#
+#   These shapes validate instance data against MIN modeling expectations.
+#   Intended to be run against example/domain graphs that import min.ttl.
+#
+# =============================================================================
+
+min:ProcessInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Process ;
+    sh:property [
+        sh:path min:hasInput ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "Every Process instance must have at least one hasInput."
+    ] ;
+    sh:property [
+        sh:path min:hasOutput ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "Every Process instance must have at least one hasOutput."
+    ] .
+
+min:AgentInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Agent ;
+    sh:property [
+        sh:path min:performs ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "Every Agent instance must perform at least one Process."
+    ] .
+
+min:EntityInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Entity ;
+    sh:property [
+        sh:path min:hasName ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "Entity instances should have at least one hasName."
+    ] .

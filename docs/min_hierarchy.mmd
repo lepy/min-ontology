@@ -1,0 +1,57 @@
+```mermaid
+graph TD
+    Entity["<b>Entity</b><br/><small>eindeutige Referenzierbarkeit<br/>&quot;Das, was existiert.&quot;</small>"]
+    Nexus["<b>Nexus</b><br/><small>kausale Wirksamkeit<br/>&quot;Das, was etwas bewirkt.&quot;</small>"]
+    Forma["<b>Forma</b><br/><small>konstitutive Bestimmung<br/>&quot;Das, was bestimmt.&quot;</small>"]
+
+    Object["<b>Object</b><br/><small>materielle Persistenz<br/>&quot;Das, was da ist.&quot;</small>"]
+    Process["<b>Process</b><br/><small>Veränderung<br/>&quot;Das, was geschieht.&quot;</small>"]
+    Data["<b>Data</b><br/><small>informationelles Artefakt<br/>&quot;Das, was beschreibt.&quot;</small>"]
+    Boundary["<b>Boundary</b><br/><small>Grenzphänomene<br/>&quot;Das, was dazwischen entsteht.&quot;</small>"]
+
+    Lex["<b>Lex</b><br/><small>universelle Gültigkeit<br/>&quot;Das, was immer gilt.&quot;</small>"]
+    Structura["<b>Structura</b><br/><small>formale Struktur<br/>&quot;Das, was die Wirklichkeit formalisiert.&quot;</small>"]
+    Possibile["<b>Possibile</b><br/><small>Möglichkeitsraum<br/>&quot;Das, was sein könnte.&quot;</small>"]
+    Norma["<b>Norma</b><br/><small>Anforderung<br/>&quot;Das, was gelten soll.&quot;</small>"]
+    Institutio["<b>Institutio</b><br/><small>kollektive Anerkennung<br/>&quot;Das, was anerkannt wird.&quot;</small>"]
+
+    Agent["<b>Agent</b><br/><small>selektive Handlungsfähigkeit<br/>&quot;Das, was handelt.&quot;</small>"]
+
+    Entity --> Nexus
+    Entity --> Forma
+    Entity --> Agent
+
+    Nexus --> Object
+    Nexus --> Process
+    Nexus --> Data
+    Nexus --> Boundary
+
+    Forma --> Lex
+    Forma --> Structura
+    Forma --> Possibile
+    Forma --> Norma
+    Forma --> Institutio
+
+    style Entity fill:#f0ebe3,stroke:#9c8b75,color:#3d3225,stroke-width:2px
+    style Nexus fill:#d6eaf8,stroke:#2e86c1,color:#1a3c5e,stroke-width:2px
+    style Forma fill:#e8daef,stroke:#7d3c98,color:#4a235a,stroke-width:2px
+
+    style Object fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Process fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Data fill:#d5f5e3,stroke:#28b463,color:#186a3b
+    style Boundary fill:#d5f5e3,stroke:#28b463,color:#186a3b
+
+    style Lex fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Structura fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Possibile fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Norma fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Institutio fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+
+    style Agent fill:#fdebd0,stroke:#e67e22,color:#7e4a12,stroke-width:2px
+```
+
+**Legende:**
+`━━` rdfs:subClassOf
+⊥ Object · Process · Data · Boundary paarweise disjunkt · Agent überlappt
+⊥ Lex · Structura · Possibile · Norma · Institutio paarweise disjunkt
+Entity ≡ Nexus ⊔ Forma | Agent

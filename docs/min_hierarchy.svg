@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Title: MIN Pages: 1 -->
+<svg width="1178pt" height="388pt"
+ viewBox="0.00 0.00 1177.60 387.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 358.8)">
+<title>MIN</title>
+<text text-anchor="start" x="421" y="-314.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="16.00">MIN — Material · Information · Nexus</text>
+<text text-anchor="start" x="425" y="-303" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.00" fill="#888888">Klassenhierarchie · v1.0.0 │ Entity ≡ Nexus ⊔ Forma | Agent</text>
+<text text-anchor="start" x="558" y="-289.8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.00"> </text>
+<g id="clust1" class="cluster">
+<title>cluster_nexus</title>
+<path fill="#f4f9ff" stroke="#85c1e9" stroke-width="1.4" d="M20,-8C20,-8 480,-8 480,-8 486,-8 492,-14 492,-20 492,-20 492,-96 492,-96 492,-102 486,-108 480,-108 480,-108 20,-108 20,-108 14,-108 8,-102 8,-96 8,-96 8,-20 8,-20 8,-14 14,-8 20,-8"/>
+<text text-anchor="start" x="168" y="-93.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#1a5276">Nexus</text>
+<text text-anchor="start" x="226.5" y="-92.8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.00" fill="#5499c7"> &#160;· &#160;das, was etwas bewirkt</text>
+<text text-anchor="start" x="159" y="-79.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#aabbcc">⊥ Object · Process · Data · Boundary &#160;┃ &#160;Agent überlappt</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_forma</title>
+<path fill="#fcf7ff" stroke="#bb8fce" stroke-width="1.4" d="M512,-8C512,-8 1100,-8 1100,-8 1106,-8 1112,-14 1112,-20 1112,-20 1112,-96 1112,-96 1112,-102 1106,-108 1100,-108 1100,-108 512,-108 512,-108 506,-108 500,-102 500,-96 500,-96 500,-20 500,-20 500,-14 506,-8 512,-8"/>
+<text text-anchor="start" x="743" y="-93.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#6c3483">Forma</text>
+<text text-anchor="start" x="781" y="-92.8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.00" fill="#a569bd"> &#160;· &#160;Das, was bestimmt.</text>
+<text text-anchor="start" x="763.5" y="-79.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#c5aacc">⊥ alle 5 paarweise disjunkt</text>
+</g>
+<!-- Entity -->
+<g id="node1" class="node">
+<title>Entity</title>
+<path fill="#f0ebe3" stroke="#9c8b75" stroke-width="2" d="M623,-282C623,-282 503,-282 503,-282 497,-282 491,-276 491,-270 491,-270 491,-258 491,-258 491,-252 497,-246 503,-246 503,-246 623,-246 623,-246 629,-246 635,-252 635,-258 635,-258 635,-270 635,-270 635,-276 629,-282 623,-282"/>
+<text text-anchor="start" x="544" y="-268.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="13.00" fill="#3d3225">Entity</text>
+<text text-anchor="start" x="510.5" y="-259.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">eindeutige Referenzierbarkeit</text>
+<text text-anchor="start" x="531" y="-252.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was existiert.&quot;</text>
+</g>
+<!-- Nexus -->
+<g id="node2" class="node">
+<title>Nexus</title>
+<path fill="#d6eaf8" stroke="#2e86c1" stroke-width="1.8" d="M468.33,-199C468.33,-199 369.67,-199 369.67,-199 363.83,-199 358,-193.17 358,-187.33 358,-187.33 358,-175.67 358,-175.67 358,-169.83 363.83,-164 369.67,-164 369.67,-164 468.33,-164 468.33,-164 474.17,-164 480,-169.83 480,-175.67 480,-175.67 480,-187.33 480,-187.33 480,-193.17 474.17,-199 468.33,-199"/>
+<text text-anchor="start" x="400.5" y="-186.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="12.00" fill="#1a3c5e">Nexus</text>
+<text text-anchor="start" x="382.5" y="-177.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">kausale Wirksamkeit</text>
+<text text-anchor="start" x="378" y="-170.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was etwas bewirkt.&quot;</text>
+</g>
+<!-- Entity&#45;&gt;Nexus -->
+<g id="edge1" class="edge">
+<title>Entity&#45;&gt;Nexus</title>
+<path fill="none" stroke="#2e86c1" stroke-width="1.8" d="M532.46,-245.93C509.49,-233.09 477.98,-215.47 454,-202.07"/>
+<polygon fill="#2e86c1" stroke="#2e86c1" stroke-width="1.8" points="454.74,-200.27 449,-199.27 452.86,-203.64 454.74,-200.27"/>
+</g>
+<!-- Forma -->
+<g id="node7" class="node">
+<title>Forma</title>
+<path fill="#e8daef" stroke="#7d3c98" stroke-width="1.8" d="M612.33,-199C612.33,-199 513.67,-199 513.67,-199 507.83,-199 502,-193.17 502,-187.33 502,-187.33 502,-175.67 502,-175.67 502,-169.83 507.83,-164 513.67,-164 513.67,-164 612.33,-164 612.33,-164 618.17,-164 624,-169.83 624,-175.67 624,-175.67 624,-187.33 624,-187.33 624,-193.17 618.17,-199 612.33,-199"/>
+<text text-anchor="start" x="544.5" y="-186.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="12.00" fill="#4a235a">Forma</text>
+<text text-anchor="start" x="520" y="-177.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">konstitutive Bestimmung</text>
+<text text-anchor="start" x="529" y="-170.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was bestimmt.&quot;</text>
+</g>
+<!-- Entity&#45;&gt;Forma -->
+<g id="edge2" class="edge">
+<title>Entity&#45;&gt;Forma</title>
+<path fill="none" stroke="#7d3c98" stroke-width="1.8" d="M563,-245.93C563,-234 563,-217.96 563,-204.99"/>
+<polygon fill="#7d3c98" stroke="#7d3c98" stroke-width="1.8" points="564.93,-204.77 563,-199.27 561.08,-204.77 564.93,-204.77"/>
+</g>
+<!-- Agent -->
+<g id="node13" class="node">
+<title>Agent</title>
+<path fill="#fdebd0" stroke="#e67e22" stroke-width="1.6" d="M750.17,-198.5C750.17,-198.5 657.83,-198.5 657.83,-198.5 652.17,-198.5 646.5,-192.83 646.5,-187.17 646.5,-187.17 646.5,-175.83 646.5,-175.83 646.5,-170.17 652.17,-164.5 657.83,-164.5 657.83,-164.5 750.17,-164.5 750.17,-164.5 755.83,-164.5 761.5,-170.17 761.5,-175.83 761.5,-175.83 761.5,-187.17 761.5,-187.17 761.5,-192.83 755.83,-198.5 750.17,-198.5"/>
+<text text-anchor="start" x="688.5" y="-186.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#7e4a12">Agent</text>
+<text text-anchor="start" x="653.5" y="-178.1" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">selektive Handlungsfähigkeit</text>
+<text text-anchor="start" x="673.5" y="-170.9" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was handelt.&quot;</text>
+</g>
+<!-- Entity&#45;&gt;Agent -->
+<g id="edge3" class="edge">
+<title>Entity&#45;&gt;Agent</title>
+<path fill="none" stroke="#e67e22" stroke-width="1.5" d="M592.9,-245.93C615.69,-232.92 647.07,-215 670.67,-201.53"/>
+<polygon fill="#e67e22" stroke="#e67e22" stroke-width="1.5" points="671.76,-203.12 675.58,-198.72 669.85,-199.78 671.76,-203.12"/>
+</g>
+<!-- Object -->
+<g id="node3" class="node">
+<title>Object</title>
+<path fill="#d5f5e3" stroke="#28b463" stroke-width="1.5" d="M98.67,-56C98.67,-56 33.33,-56 33.33,-56 27.67,-56 22,-50.33 22,-44.67 22,-44.67 22,-33.33 22,-33.33 22,-27.67 27.67,-22 33.33,-22 33.33,-22 98.67,-22 98.67,-22 104.33,-22 110,-27.67 110,-33.33 110,-33.33 110,-44.67 110,-44.67 110,-50.33 104.33,-56 98.67,-56"/>
+<text text-anchor="start" x="49" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#186a3b">Object</text>
+<text text-anchor="start" x="29" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">materielle Persistenz</text>
+<text text-anchor="start" x="38" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was da ist.&quot;</text>
+</g>
+<!-- Nexus&#45;&gt;Object -->
+<g id="edge4" class="edge">
+<title>Nexus&#45;&gt;Object</title>
+<path fill="none" stroke="#28b463" stroke-width="1.2" d="M357.74,-177.05C294.15,-170.98 193.98,-154.23 121,-108 102.56,-96.32 87.49,-76.32 77.81,-61.02"/>
+<polygon fill="#28b463" stroke="#28b463" stroke-width="1.2" points="79.27,-59.71 74.74,-56.03 75.99,-61.72 79.27,-59.71"/>
+</g>
+<!-- Process -->
+<g id="node4" class="node">
+<title>Process</title>
+<path fill="#d5f5e3" stroke="#28b463" stroke-width="1.5" d="M204.17,-56C204.17,-56 143.83,-56 143.83,-56 138.17,-56 132.5,-50.33 132.5,-44.67 132.5,-44.67 132.5,-33.33 132.5,-33.33 132.5,-27.67 138.17,-22 143.83,-22 143.83,-22 204.17,-22 204.17,-22 209.83,-22 215.5,-27.67 215.5,-33.33 215.5,-33.33 215.5,-44.67 215.5,-44.67 215.5,-50.33 209.83,-56 204.17,-56"/>
+<text text-anchor="start" x="152.5" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#186a3b">Process</text>
+<text text-anchor="start" x="150" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">Veränderung</text>
+<text text-anchor="start" x="139.5" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was geschieht.&quot;</text>
+</g>
+<!-- Nexus&#45;&gt;Process -->
+<g id="edge5" class="edge">
+<title>Nexus&#45;&gt;Process</title>
+<path fill="none" stroke="#28b463" stroke-width="1.2" d="M357.74,-166.89C317.49,-155.8 265.23,-137.12 226,-108 209.06,-95.42 194.92,-75.89 185.68,-60.97"/>
+<polygon fill="#28b463" stroke="#28b463" stroke-width="1.2" points="187.23,-59.82 182.74,-56.11 183.94,-61.81 187.23,-59.82"/>
+</g>
+<!-- Data -->
+<g id="node5" class="node">
+<title>Data</title>
+<path fill="#d5f5e3" stroke="#28b463" stroke-width="1.5" d="M327.17,-56C327.17,-56 248.83,-56 248.83,-56 243.17,-56 237.5,-50.33 237.5,-44.67 237.5,-44.67 237.5,-33.33 237.5,-33.33 237.5,-27.67 243.17,-22 248.83,-22 248.83,-22 327.17,-22 327.17,-22 332.83,-22 338.5,-27.67 338.5,-33.33 338.5,-33.33 338.5,-44.67 338.5,-44.67 338.5,-50.33 332.83,-56 327.17,-56"/>
+<text text-anchor="start" x="275.5" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#186a3b">Data</text>
+<text text-anchor="start" x="244.5" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">informationelles Artefakt</text>
+<text text-anchor="start" x="252.5" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was beschreibt.&quot;</text>
+</g>
+<!-- Nexus&#45;&gt;Data -->
+<g id="edge6" class="edge">
+<title>Nexus&#45;&gt;Data</title>
+<path fill="none" stroke="#28b463" stroke-width="1.2" d="M402.7,-163.96C388.4,-149.38 367.12,-127.47 349,-108 334.34,-92.25 318.09,-74.1 306.05,-60.51"/>
+<polygon fill="#28b463" stroke="#28b463" stroke-width="1.2" points="307.22,-58.93 302.13,-56.09 304.34,-61.48 307.22,-58.93"/>
+</g>
+<!-- Boundary -->
+<g id="node6" class="node">
+<title>Boundary</title>
+<path fill="#d5f5e3" stroke="#28b463" stroke-width="1.5" d="M466.17,-56C466.17,-56 371.83,-56 371.83,-56 366.17,-56 360.5,-50.33 360.5,-44.67 360.5,-44.67 360.5,-33.33 360.5,-33.33 360.5,-27.67 366.17,-22 371.83,-22 371.83,-22 466.17,-22 466.17,-22 471.83,-22 477.5,-27.67 477.5,-33.33 477.5,-33.33 477.5,-44.67 477.5,-44.67 477.5,-50.33 471.83,-56 466.17,-56"/>
+<text text-anchor="start" x="393" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#186a3b">Boundary</text>
+<text text-anchor="start" x="387" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">Grenzphänomene</text>
+<text text-anchor="start" x="367.5" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was dazwischen entsteht.&quot;</text>
+</g>
+<!-- Nexus&#45;&gt;Boundary -->
+<g id="edge7" class="edge">
+<title>Nexus&#45;&gt;Boundary</title>
+<path fill="none" stroke="#28b463" stroke-width="1.2" d="M419,-163.83C419,-138.45 419,-90.1 419,-61.91"/>
+<polygon fill="#28b463" stroke="#28b463" stroke-width="1.2" points="420.93,-61.71 419,-56.21 417.08,-61.71 420.93,-61.71"/>
+</g>
+<!-- Nexus&#45;&gt;Forma -->
+<!-- Lex -->
+<g id="node8" class="node">
+<title>Lex</title>
+<path fill="#f0e6f6" stroke="#8e44ad" stroke-width="1.5" d="M590.17,-56C590.17,-56 525.83,-56 525.83,-56 520.17,-56 514.5,-50.33 514.5,-44.67 514.5,-44.67 514.5,-33.33 514.5,-33.33 514.5,-27.67 520.17,-22 525.83,-22 525.83,-22 590.17,-22 590.17,-22 595.83,-22 601.5,-27.67 601.5,-33.33 601.5,-33.33 601.5,-44.67 601.5,-44.67 601.5,-50.33 595.83,-56 590.17,-56"/>
+<text text-anchor="start" x="548.5" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#4a235a">Lex</text>
+<text text-anchor="start" x="521.5" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">universelle Gültigkeit</text>
+<text text-anchor="start" x="523" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was immer gilt.&quot;</text>
+</g>
+<!-- Forma&#45;&gt;Lex -->
+<g id="edge8" class="edge">
+<title>Forma&#45;&gt;Lex</title>
+<path fill="none" stroke="#8e44ad" stroke-width="1.2" d="M562.41,-163.83C561.5,-138.45 559.78,-90.1 558.78,-61.91"/>
+<polygon fill="#8e44ad" stroke="#8e44ad" stroke-width="1.2" points="560.7,-61.64 558.58,-56.21 556.85,-61.78 560.7,-61.64"/>
+</g>
+<!-- Structura -->
+<g id="node9" class="node">
+<title>Structura</title>
+<path fill="#f0e6f6" stroke="#8e44ad" stroke-width="1.5" d="M748.67,-56C748.67,-56 635.33,-56 635.33,-56 629.67,-56 624,-50.33 624,-44.67 624,-44.67 624,-33.33 624,-33.33 624,-27.67 629.67,-22 635.33,-22 635.33,-22 748.67,-22 748.67,-22 754.33,-22 760,-27.67 760,-33.33 760,-33.33 760,-44.67 760,-44.67 760,-50.33 754.33,-56 748.67,-56"/>
+<text text-anchor="start" x="667" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#4a235a">Structura</text>
+<text text-anchor="start" x="662.5" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">formale Struktur</text>
+<text text-anchor="start" x="631" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was die Wirklichkeit formalisiert.&quot;</text>
+</g>
+<!-- Forma&#45;&gt;Structura -->
+<g id="edge9" class="edge">
+<title>Forma&#45;&gt;Structura</title>
+<path fill="none" stroke="#8e44ad" stroke-width="1.2" d="M578.3,-163.83C602,-138.03 647.5,-88.47 673.17,-60.51"/>
+<polygon fill="#8e44ad" stroke="#8e44ad" stroke-width="1.2" points="674.81,-61.57 677.11,-56.21 671.98,-58.96 674.81,-61.57"/>
+</g>
+<!-- Possibile -->
+<g id="node10" class="node">
+<title>Possibile</title>
+<path fill="#f0e6f6" stroke="#8e44ad" stroke-width="1.5" d="M858.67,-56C858.67,-56 793.33,-56 793.33,-56 787.67,-56 782,-50.33 782,-44.67 782,-44.67 782,-33.33 782,-33.33 782,-27.67 787.67,-22 793.33,-22 793.33,-22 858.67,-22 858.67,-22 864.33,-22 870,-27.67 870,-33.33 870,-33.33 870,-44.67 870,-44.67 870,-50.33 864.33,-56 858.67,-56"/>
+<text text-anchor="start" x="801.5" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#4a235a">Possibile</text>
+<text text-anchor="start" x="795" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">Möglichkeitsraum</text>
+<text text-anchor="start" x="789" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was sein könnte.&quot;</text>
+</g>
+<!-- Forma&#45;&gt;Possibile -->
+<g id="edge10" class="edge">
+<title>Forma&#45;&gt;Possibile</title>
+<path fill="none" stroke="#8e44ad" stroke-width="1.2" d="M621.75,-163.96C674.24,-148.48 746.52,-125.22 771,-108 788.63,-95.6 803.62,-76.04 813.48,-61.08"/>
+<polygon fill="#8e44ad" stroke="#8e44ad" stroke-width="1.2" points="815.26,-61.86 816.62,-56.2 812.02,-59.78 815.26,-61.86"/>
+</g>
+<!-- Norma -->
+<g id="node11" class="node">
+<title>Norma</title>
+<path fill="#f0e6f6" stroke="#8e44ad" stroke-width="1.5" d="M964.67,-56C964.67,-56 903.33,-56 903.33,-56 897.67,-56 892,-50.33 892,-44.67 892,-44.67 892,-33.33 892,-33.33 892,-27.67 897.67,-22 903.33,-22 903.33,-22 964.67,-22 964.67,-22 970.33,-22 976,-27.67 976,-33.33 976,-33.33 976,-44.67 976,-44.67 976,-50.33 970.33,-56 964.67,-56"/>
+<text text-anchor="start" x="916" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#4a235a">Norma</text>
+<text text-anchor="start" x="911" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">Anforderung</text>
+<text text-anchor="start" x="899" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was gelten soll.&quot;</text>
+</g>
+<!-- Forma&#45;&gt;Norma -->
+<g id="edge11" class="edge">
+<title>Forma&#45;&gt;Norma</title>
+<path fill="none" stroke="#8e44ad" stroke-width="1.2" d="M624.15,-166.62C716.33,-145.7 880.31,-108.44 881,-108 899.16,-96.45 913.63,-76.43 922.84,-61.1"/>
+<polygon fill="#8e44ad" stroke="#8e44ad" stroke-width="1.2" points="924.65,-61.81 925.76,-56.09 921.32,-59.88 924.65,-61.81"/>
+</g>
+<!-- Institutio -->
+<g id="node12" class="node">
+<title>Institutio</title>
+<path fill="#f0e6f6" stroke="#8e44ad" stroke-width="1.5" d="M1086.17,-56C1086.17,-56 1009.83,-56 1009.83,-56 1004.17,-56 998.5,-50.33 998.5,-44.67 998.5,-44.67 998.5,-33.33 998.5,-33.33 998.5,-27.67 1004.17,-22 1009.83,-22 1009.83,-22 1086.17,-22 1086.17,-22 1091.83,-22 1097.5,-27.67 1097.5,-33.33 1097.5,-33.33 1097.5,-44.67 1097.5,-44.67 1097.5,-50.33 1091.83,-56 1086.17,-56"/>
+<text text-anchor="start" x="1024.5" y="-44.2" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="11.00" fill="#4a235a">Institutio</text>
+<text text-anchor="start" x="1006.5" y="-35.6" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.00" fill="#666666">kollektive Anerkennung</text>
+<text text-anchor="start" x="1005.5" y="-28.4" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="7.00" fill="#777777">&quot;Das, was anerkannt wird.&quot;</text>
+</g>
+<!-- Forma&#45;&gt;Institutio -->
+<g id="edge12" class="edge">
+<title>Forma&#45;&gt;Institutio</title>
+<path fill="none" stroke="#8e44ad" stroke-width="1.2" d="M624.28,-166.35C628.24,-165.53 632.17,-164.74 636,-164 791.12,-134.13 848.28,-183.59 987,-108 1007.32,-96.93 1024.29,-76.39 1035.13,-60.77"/>
+<polygon fill="#8e44ad" stroke="#8e44ad" stroke-width="1.2" points="1036.81,-61.73 1038.3,-56.1 1033.62,-59.57 1036.81,-61.73"/>
+</g>
+<!-- Forma&#45;&gt;Agent -->
+</g>
+</svg>

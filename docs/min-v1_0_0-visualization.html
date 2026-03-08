@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIN — Material · Information · Nexus — v1.0.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-sans); min-height:100vh; }
+  .header { padding:24px 24px 0; border-bottom:1px solid var(--border); background:var(--surface); }
+  .header h1 { font-family:var(--font-mono); font-size:18px; font-weight:800; letter-spacing:-0.02em; }
+  .header h1 .sep { color:var(--muted); font-weight:400; }
+  .header h1 .mat { color:#f0883e; }
+  .header h1 .inf { color:#a371f7; }
+  .header h1 .nex { color:#58a6ff; }
+  .version-badge { display:inline-block; font-family:var(--font-mono); font-size:11px; color:var(--muted); padding:2px 8px; background:var(--bg); border-radius:10px; border:1px solid var(--border); margin-left:12px; vertical-align:middle; }
+  .new-badge { display:inline-block; font-family:var(--font-mono); font-size:9px; color:#3fb950; padding:1px 5px; background:rgba(63,185,80,0.13); border-radius:8px; border:1px solid rgba(63,185,80,0.27); margin-left:6px; vertical-align:middle; }
+  .subtitle { color:var(--muted); font-size:12px; margin:6px 0 14px; line-height:1.4; }
+  .tabs { display:flex; gap:2px; overflow-x:auto; }
+  .tab-btn { padding:8px 18px; background:transparent; color:var(--muted); border:1px solid transparent; border-bottom:2px solid transparent; border-radius:6px 6px 0 0; font-family:var(--font-mono); font-size:12px; font-weight:400; cursor:pointer; white-space:nowrap; transition:all 0.15s ease; letter-spacing:0.03em; }
+  .tab-btn.active { background:rgba(88,166,255,0.13); color:var(--accent); border-color:rgba(88,166,255,0.33); border-bottom-color:var(--accent); font-weight:600; }
+  .content { padding:20px 24px 40px; max-width:1100px; margin:0 auto; }
+  .tab-panel { display:none; } .tab-panel.active { display:block; }
+  .overview-svg { width:100%; max-height:720px; background:var(--bg); border-radius:8px; border:1px solid var(--border); }
+  .svg-node { cursor:pointer; } .svg-node:hover rect { filter:brightness(1.2); }
+  .class-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:16px; cursor:pointer; transition:all 0.15s ease; margin-bottom:8px; }
+  .class-card:hover { background:#1c2129; }
+  .card-header { display:flex; align-items:center; justify-content:space-between; }
+  .card-header-left { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .class-name { font-family:var(--font-mono); font-size:14px; font-weight:700; }
+  .class-label-de { color:var(--muted); font-family:var(--font-mono); font-size:11px; }
+  .branch-badge { display:inline-block; padding:1px 6px; border-radius:9px; font-size:10px; font-family:var(--font-mono); }
+  .badge-nexus { background:rgba(88,166,255,0.13); color:#58a6ff; border:1px solid rgba(88,166,255,0.2); }
+  .badge-forma { background:rgba(210,168,255,0.13); color:#d2a8ff; border:1px solid rgba(210,168,255,0.2); }
+  .badge-root { background:rgba(139,148,158,0.13); color:#8b949e; border:1px solid rgba(139,148,158,0.2); }
+  .badge-agent { background:rgba(63,185,80,0.13); color:#3fb950; border:1px solid rgba(63,185,80,0.2); }
+  .card-details { margin-top:12px; display:none; } .class-card.expanded .card-details { display:block; }
+  .card-desc { color:var(--text); font-family:var(--font-sans); font-size:13px; line-height:1.6; margin-bottom:10px; }
+  .philosophical-box { background:var(--bg); border-radius:4px; padding:8px 10px; margin-bottom:10px; border-left:2px solid var(--muted); }
+  .section-label { color:var(--muted); font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.08em; }
+  .axiom-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-family:var(--font-mono); background:var(--border); color:var(--text); border:1px solid var(--border); margin:2px; }
+  .axiom-tag.warning { background:rgba(218,54,51,0.13); color:#ff7b72; border-color:rgba(218,54,51,0.33); }
+  .axiom-tag.info { background:rgba(88,166,255,0.13); color:#58a6ff; border-color:rgba(88,166,255,0.33); }
+  .example-tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-family:var(--font-mono); margin:2px; }
+  .ascii-tree { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:16px; margin-bottom:20px; overflow-x:auto; }
+  .ascii-tree pre { color:var(--text); font-family:var(--font-mono); font-size:11px; line-height:1.6; white-space:pre; }
+  .group-toggle { background:var(--surface); border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:8px; }
+  .group-toggle-btn { width:100%; padding:12px 16px; background:transparent; border:none; color:var(--text); font-family:var(--font-mono); font-size:13px; font-weight:600; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+  .group-toggle-btn:hover { background:#1c2129; }
+  .group-content { padding:0 16px 16px; display:none; } .group-toggle.open .group-content { display:block; }
+  .prop-card { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:10px 12px; margin-bottom:8px; }
+  .prop-name { color:var(--accent); font-family:var(--font-mono); font-size:12px; font-weight:600; }
+  .derived-badge { padding:1px 6px; border-radius:8px; font-size:9px; font-family:var(--font-mono); background:rgba(255,166,87,0.13); color:#ffa657; border:1px solid rgba(255,166,87,0.27); }
+  .trait-badge { padding:1px 6px; border-radius:8px; font-size:9px; font-family:var(--font-mono); background:rgba(88,166,255,0.13); color:#58a6ff; border:1px solid rgba(88,166,255,0.27); }
+  .identity-badge { padding:1px 6px; border-radius:8px; font-size:9px; font-family:var(--font-mono); background:rgba(218,54,51,0.13); color:#ff7b72; border:1px solid rgba(218,54,51,0.27); }
+  .conserve-badge { padding:1px 6px; border-radius:8px; font-size:9px; font-family:var(--font-mono); background:rgba(63,185,80,0.13); color:#3fb950; border:1px solid rgba(63,185,80,0.27); }
+  .epist-badge { padding:1px 6px; border-radius:8px; font-size:9px; font-family:var(--font-mono); background:rgba(255,215,0,0.13); color:#e3b341; border:1px solid rgba(255,215,0,0.27); }
+  .prop-meta { font-family:var(--font-mono); font-size:11px; margin-top:6px; display:flex; gap:16px; flex-wrap:wrap; }
+  .prop-meta .label { color:var(--muted); }
+  table { width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px; }
+  th { text-align:left; padding:8px 12px; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid var(--border); }
+  td { padding:8px 12px; border-bottom:1px solid rgba(48,54,61,0.13); }
+  .big-number { text-align:center; padding:30px 0 20px; }
+  .big-number .num { color:var(--accent); font-family:var(--font-mono); font-size:64px; font-weight:800; line-height:1; }
+  .big-number .label { color:var(--muted); font-family:var(--font-mono); font-size:13px; margin-top:4px; }
+  .inv-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+  .inv-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; }
+  .inv-card-header { display:flex; justify-content:space-between; align-items:center; }
+  .inv-card-title { font-family:var(--font-mono); font-size:12px; font-weight:600; }
+  .inv-card-count { font-family:var(--font-mono); font-size:22px; font-weight:800; }
+  .inv-tags { margin-top:8px; display:flex; flex-wrap:wrap; gap:4px; }
+  .inv-tag { padding:1px 6px; border-radius:4px; font-size:10px; font-family:var(--font-mono); }
+  .info-box { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-top:12px; }
+  .code-toggle-group { display:flex; gap:4px; margin-bottom:12px; }
+  .code-toggle-btn { padding:6px 14px; background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:4px; font-family:var(--font-mono); font-size:11px; cursor:pointer; }
+  .code-toggle-btn.active { background:rgba(88,166,255,0.13); color:var(--accent); border-color:rgba(88,166,255,0.33); }
+  .code-block { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:16px; overflow-x:auto; }
+  .code-block pre { color:var(--text); font-family:var(--font-mono); font-size:11px; line-height:1.6; white-space:pre; }
+  .polarity-grid { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .polarity-card { flex:1 1 300px; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px; }
+  .detail-panel { margin-top:16px; background:var(--surface); border-radius:6px; padding:16px; display:none; }
+  .detail-panel.visible { display:block; }
+  .close-btn { float:right; background:transparent; border:1px solid var(--border); border-radius:4px; color:var(--muted); padding:2px 8px; font-size:11px; font-family:var(--font-mono); cursor:pointer; }
+  .meta-dim-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px; margin-bottom:10px; }
+  .meta-dim-title { font-family:var(--font-mono); font-size:13px; font-weight:600; }
+  .meta-prop-inline { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-family:var(--font-mono); margin:2px; background:rgba(126,231,135,0.1); color:#7ee787; border:1px solid rgba(126,231,135,0.2); }
+  .footer { padding:12px 24px; border-top:1px solid var(--border); color:var(--muted); font-family:var(--font-mono); font-size:10px; text-align:center; background:var(--surface); }
+  .kurzformel { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-family:var(--font-mono); background:rgba(139,148,158,0.08); color:var(--muted); border:1px solid rgba(139,148,158,0.15); margin-left:6px; font-style:italic; }
+  ::-webkit-scrollbar { width:6px; height:6px; } ::-webkit-scrollbar-track { background:var(--bg); } ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>MIN <span class="sep">—</span> <span class="mat">Material</span> <span class="sep">·</span> <span class="inf">Information</span> <span class="sep">·</span> <span class="nex">Nexus</span> <span class="version-badge">v1.0.0</span></h1>
+  <p class="subtitle">Keine Metaphysik. Werkzeug. Zwei Zweige + eine Querkategorie unter Entity. Nexus (4) · Forma (5) · Agent (⊥). 85 Terme. Epistemische Relationen. Architekturshift: Agent → Entity.</p>
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="0">◉ Übersicht</button>
+    <button class="tab-btn" data-tab="1">▣ Klassen</button>
+    <button class="tab-btn" data-tab="2">⇄ Relationen</button>
+    <button class="tab-btn" data-tab="3">⊕ Polarität</button>
+    <button class="tab-btn" data-tab="4">⊞ Kurzformeln</button>
+    <button class="tab-btn" data-tab="5">✦ Metavokabular</button>
+    <button class="tab-btn" data-tab="6">∑ Inventar</button>
+  </div>
+</div>
+<div class="content">
+
+<!-- TAB 0: OVERVIEW SVG -->
+<div class="tab-panel active" id="panel-0">
+<svg class="overview-svg" viewBox="0 0 960 720" id="overview-svg">
+  <defs>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrowSub" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#8b949e"/></marker>
+    <marker id="arr-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/></marker>
+    <marker id="arr-purple" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#d2a8ff"/></marker>
+    <marker id="arr-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#ffa657"/></marker>
+    <marker id="arr-red" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#da3633"/></marker>
+    <marker id="arr-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3fb950"/></marker>
+    <marker id="arr-yellow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#e3b341"/></marker>
+    <marker id="arr-pink" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="7" markerHeight="5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f778ba"/></marker>
+  </defs>
+
+  <!-- Disjointness: Nexus-intern (4-way) -->
+  <path d="M 68 316 Q 200 380 332 316" fill="none" stroke="rgba(218,54,51,0.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="200" y="370" fill="rgba(218,54,51,0.6)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint (4)</text>
+
+  <!-- Disjointness: Forma-intern (5-way) -->
+  <path d="M 560 316 Q 720 380 880 316" fill="none" stroke="rgba(210,168,255,0.27)" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="720" y="370" fill="rgba(210,168,255,0.47)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint (5)</text>
+
+  <!-- Disjointness: Nexus / Forma -->
+  <line x1="300" y1="150" x2="660" y2="150" stroke="rgba(255,123,114,0.27)" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="480" y="144" fill="rgba(255,123,114,0.4)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⊥ disjoint</text>
+
+  <!-- Agent cross-category label -->
+  <text x="480" y="238" fill="rgba(63,185,80,0.6)" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">durchquert Zweiggrenze</text>
+
+  <!-- Subclass edges: Entity → Nexus, Forma -->
+  <line x1="480" y1="75" x2="230" y2="140" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="480" y1="75" x2="720" y2="140" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <!-- Entity → Agent (special) -->
+  <line x1="480" y1="75" x2="480" y2="210" stroke="rgba(63,185,80,0.53)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+
+  <!-- Nexus → children -->
+  <line x1="230" y1="180" x2="68" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="230" y1="180" x2="200" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="230" y1="180" x2="332" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="230" y1="180" x2="200" y2="400" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+
+  <!-- Forma → children -->
+  <line x1="720" y1="180" x2="560" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="180" x2="700" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="180" x2="840" y2="270" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="180" x2="610" y2="400" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+  <line x1="720" y1="180" x2="790" y2="400" stroke="rgba(139,148,158,0.53)" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#arrowSub)"/>
+
+  <!-- Agent co-typing dashed lines -->
+  <line x1="480" y1="248" x2="68" y2="290" stroke="rgba(63,185,80,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="480" y1="248" x2="332" y2="290" stroke="rgba(63,185,80,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="480" y1="248" x2="790" y2="400" stroke="rgba(63,185,80,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Key relation edges -->
+  <line x1="200" y1="290" x2="68" y2="290" stroke="rgba(218,54,51,0.33)" stroke-width="1.2" marker-end="url(#arr-red)"/>
+  <rect x="99" y="278" width="70" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="134" y="289" fill="#da3633" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">hasInput/Out</text>
+
+  <!-- Bridge: originates -->
+  <line x1="230" y1="158" x2="720" y2="158" stroke="rgba(255,166,87,0.4)" stroke-width="1.5" marker-end="url(#arr-orange)"/>
+  <rect x="438" y="105" width="60" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="468" y="116" fill="#ffa657" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">originates</text>
+
+  <!-- Bridge: realizes -->
+  <line x1="230" y1="140" x2="720" y2="140" stroke="rgba(88,166,255,0.33)" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <rect x="442" y="120" width="50" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="467" y="131" fill="#58a6ff" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">realizes</text>
+
+  <!-- Bridge: constrains -->
+  <line x1="720" y1="168" x2="230" y2="168" stroke="rgba(210,168,255,0.33)" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+  <rect x="437" y="168" width="60" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="467" y="179" fill="#d2a8ff" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">constrains</text>
+
+  <!-- Bridge: encodes -->
+  <line x1="332" y1="300" x2="720" y2="175" stroke="rgba(163,113,247,0.33)" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+  <rect x="498" y="228" width="48" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="522" y="239" fill="#a371f7" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">encodes</text>
+
+  <!-- Bridge: typifies -->
+  <line x1="790" y1="410" x2="230" y2="180" stroke="rgba(126,231,135,0.3)" stroke-width="1.2" stroke-dasharray="6 3"/>
+  <rect x="490" y="288" width="48" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="514" y="299" fill="#7ee787" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">typifies</text>
+
+  <!-- Epistemische: confirms -->
+  <path d="M 200 300 Q 400 470 560 290" fill="none" stroke="rgba(227,179,65,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="390" y="420" fill="rgba(227,179,65,0.6)" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle">confirms</text>
+
+  <!-- derivedFrom: Nexus → Nexus -->
+  <path d="M 110 290 Q 30 340 68 308" fill="none" stroke="rgba(63,185,80,0.33)" stroke-width="1.2" marker-end="url(#arr-green)"/>
+  <rect x="12" y="325" width="72" height="14" rx="3" fill="#0d1117" fill-opacity="0.9"/>
+  <text x="48" y="336" fill="#3fb950" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">derivedFrom</text>
+
+  <!-- CLASS NODES -->
+  <g class="svg-node" data-class="Entity" onclick="selectSvgNode('Entity')">
+    <rect x="440" y="38" width="80" height="32" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="1.2"/>
+    <text x="480" y="58" fill="#8b949e" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Entity</text>
+  </g>
+  <g class="svg-node" data-class="Nexus" onclick="selectSvgNode('Nexus')">
+    <rect x="190" y="140" width="80" height="32" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.2"/>
+    <text x="230" y="160" fill="#58a6ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Nexus</text>
+  </g>
+  <g class="svg-node" data-class="Forma" onclick="selectSvgNode('Forma')">
+    <rect x="680" y="140" width="80" height="32" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="1.2"/>
+    <text x="720" y="160" fill="#d2a8ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Forma</text>
+  </g>
+  <!-- AGENT: special position between branches -->
+  <g class="svg-node" data-class="Agent" onclick="selectSvgNode('Agent')">
+    <rect x="440" y="214" width="80" height="32" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.8" stroke-dasharray="6 2"/>
+    <text x="480" y="234" fill="#3fb950" font-size="12" font-weight="700" font-family="JetBrains Mono,monospace" text-anchor="middle">Agent</text>
+  </g>
+  <!-- Nexus children -->
+  <g class="svg-node" data-class="Object" onclick="selectSvgNode('Object')">
+    <rect x="26" y="274" width="84" height="32" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.2"/>
+    <text x="68" y="294" fill="#f0883e" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Object</text>
+  </g>
+  <g class="svg-node" data-class="Process" onclick="selectSvgNode('Process')">
+    <rect x="156" y="274" width="88" height="32" rx="6" fill="#161b22" stroke="#da3633" stroke-width="1.2"/>
+    <text x="200" y="294" fill="#da3633" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Process</text>
+  </g>
+  <g class="svg-node" data-class="Data" onclick="selectSvgNode('Data')">
+    <rect x="296" y="274" width="72" height="32" rx="6" fill="#161b22" stroke="#a371f7" stroke-width="1.2"/>
+    <text x="332" y="294" fill="#a371f7" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Data</text>
+  </g>
+  <g class="svg-node" data-class="Boundary" onclick="selectSvgNode('Boundary')">
+    <rect x="148" y="400" width="104" height="32" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="1.2"/>
+    <text x="200" y="420" fill="#e3b341" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Boundary</text>
+  </g>
+  <!-- Forma children -->
+  <g class="svg-node" data-class="Lex" onclick="selectSvgNode('Lex')">
+    <rect x="528" y="274" width="64" height="32" rx="6" fill="#161b22" stroke="#ff7b72" stroke-width="1.2"/>
+    <text x="560" y="294" fill="#ff7b72" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Lex</text>
+  </g>
+  <g class="svg-node" data-class="Structura" onclick="selectSvgNode('Structura')">
+    <rect x="648" y="274" width="104" height="32" rx="6" fill="#161b22" stroke="#79c0ff" stroke-width="1.2"/>
+    <text x="700" y="294" fill="#79c0ff" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Structura</text>
+  </g>
+  <g class="svg-node" data-class="Possibile" onclick="selectSvgNode('Possibile')">
+    <rect x="788" y="274" width="104" height="32" rx="6" fill="#161b22" stroke="#ffa657" stroke-width="1.2"/>
+    <text x="840" y="294" fill="#ffa657" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Possibile</text>
+  </g>
+  <g class="svg-node" data-class="Norma" onclick="selectSvgNode('Norma')">
+    <rect x="568" y="400" width="84" height="32" rx="6" fill="#161b22" stroke="#f778ba" stroke-width="1.2"/>
+    <text x="610" y="420" fill="#f778ba" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Norma</text>
+  </g>
+  <g class="svg-node" data-class="Institutio" onclick="selectSvgNode('Institutio')">
+    <rect x="720" y="400" width="140" height="32" rx="6" fill="#161b22" stroke="#7ee787" stroke-width="1.2"/>
+    <text x="790" y="420" fill="#7ee787" font-size="12" font-weight="600" font-family="JetBrains Mono,monospace" text-anchor="middle">Institutio</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(16,480)">
+    <rect x="0" y="0" width="280" height="220" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="12" y="20" fill="#e6edf3" font-size="11" font-weight="600" font-family="JetBrains Mono,monospace">Legende</text>
+    <line x1="12" y1="28" x2="268" y2="28" stroke="#30363d"/>
+    <line x1="12" y1="40" x2="40" y2="40" stroke="#8b949e" stroke-dasharray="5 3"/>
+    <text x="48" y="44" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">rdfs:subClassOf</text>
+    <line x1="12" y1="58" x2="40" y2="58" stroke="#58a6ff" stroke-width="1.2"/>
+    <text x="48" y="62" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Object Property</text>
+    <line x1="12" y1="76" x2="40" y2="76" stroke="rgba(218,54,51,0.4)" stroke-dasharray="6 3"/>
+    <text x="48" y="80" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">⊥ AllDisjointClasses</text>
+    <rect x="12" y="90" width="10" height="10" rx="2" fill="rgba(88,166,255,0.27)" stroke="#58a6ff" stroke-width="0.5"/>
+    <text x="28" y="99" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Nexus-Kategorien (4)</text>
+    <rect x="12" y="108" width="10" height="10" rx="2" fill="rgba(210,168,255,0.27)" stroke="#d2a8ff" stroke-width="0.5"/>
+    <text x="28" y="117" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Forma-Kategorien (5)</text>
+    <rect x="12" y="126" width="10" height="10" rx="2" fill="rgba(63,185,80,0.27)" stroke="#3fb950" stroke-width="0.5" stroke-dasharray="4 2"/>
+    <text x="28" y="135" fill="#3fb950" font-size="10" font-family="JetBrains Mono,monospace">Agent — Querkategorie</text>
+    <line x1="12" y1="148" x2="40" y2="148" stroke="#ffa657" stroke-width="1.2"/>
+    <text x="48" y="152" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">originates</text>
+    <line x1="12" y1="166" x2="40" y2="166" stroke="rgba(227,179,65,0.4)" stroke-dasharray="4 3"/>
+    <text x="48" y="170" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">epistemisch</text>
+    <!-- <text x="12" y="190" fill="#e6edf3" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace">Drei Brücken</text> -->
+    <text x="12" y="190" fill="#ffa657" font-size="9" font-family="JetBrains Mono,monospace">originates: Nexus → Forma</text>
+    <text x="12" y="204" fill="#58a6ff" font-size="9" font-family="JetBrains Mono,monospace">realizes: Nexus → Forma</text>
+    <text x="12" y="216" fill="#d2a8ff" font-size="9" font-family="JetBrains Mono,monospace">constrains: Forma → Nexus</text>
+  </g>
+
+  <!-- Co-Typisierung box -->
+  <g transform="translate(340,480)">
+    <rect x="0" y="0" width="280" height="220" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="12" y="20" fill="#3fb950" font-size="11" font-weight="600" font-family="JetBrains Mono,monospace">Agent · Querkategorie</text>
+    <line x1="12" y1="28" x2="268" y2="28" stroke="#30363d"/>
+    <text x="12" y="46" fill="#e6edf3" font-size="10" font-family="JetBrains Mono,monospace">Co-Typisierung Pflicht:</text>
+    <text x="12" y="64" fill="#f0883e" font-size="10" font-family="JetBrains Mono,monospace">Agent ∩ Object</text>
+    <text x="130" y="64" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Mensch, Maschine</text>
+    <text x="12" y="80" fill="#a371f7" font-size="10" font-family="JetBrains Mono,monospace">Agent ∩ Data</text>
+    <text x="130" y="80" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">ML-Modell</text>
+    <text x="12" y="96" fill="#da3633" font-size="10" font-family="JetBrains Mono,monospace">Agent ∩ Process</text>
+    <text x="130" y="96" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Korrosion (selektiv)</text>
+    <text x="12" y="112" fill="#7ee787" font-size="10" font-family="JetBrains Mono,monospace">Agent ∩ Institutio</text>
+    <text x="130" y="112" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Organisation</text>
+    <line x1="12" y1="124" x2="268" y2="124" stroke="#30363d"/>
+    <text x="12" y="142" fill="#e6edf3" font-size="10" font-weight="600" font-family="JetBrains Mono,monospace">Vernichtungstest</text>
+    <text x="12" y="160" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">Handelsregister löschen →</text>
+    <text x="12" y="174" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">Agency UND Institutio verschwinden.</text>
+    <text x="12" y="188" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">Selbe Vernichtungsbedingung</text>
+    <text x="12" y="202" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">→ selbes Ding → ein Knoten.</text>
+  </g>
+
+  <!-- Epistemische box -->
+  <g transform="translate(660,480)">
+    <rect x="0" y="0" width="280" height="220" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="12" y="20" fill="#e3b341" font-size="11" font-weight="600" font-family="JetBrains Mono,monospace">Epistemische Relationen</text>
+    <line x1="12" y1="28" x2="268" y2="28" stroke="#30363d"/>
+    <text x="12" y="46" fill="#e3b341" font-size="10" font-family="JetBrains Mono,monospace">confirms</text>
+    <text x="90" y="46" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Process → Forma</text>
+    <text x="12" y="62" fill="#e3b341" font-size="10" font-family="JetBrains Mono,monospace">refutes</text>
+    <text x="90" y="62" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Process → Possibile</text>
+    <text x="12" y="78" fill="#e3b341" font-size="10" font-family="JetBrains Mono,monospace">entails</text>
+    <text x="90" y="78" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Forma → Forma (transitiv)</text>
+    <text x="12" y="94" fill="#e3b341" font-size="10" font-family="JetBrains Mono,monospace">supersedes</text>
+    <text x="90" y="94" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Forma → Forma</text>
+    <text x="12" y="110" fill="#e3b341" font-size="10" font-family="JetBrains Mono,monospace">justifiedBy</text>
+    <text x="90" y="110" fill="#8b949e" font-size="10" font-family="JetBrains Mono,monospace">Institutio → Forma</text>
+    <line x1="12" y1="122" x2="268" y2="122" stroke="#30363d"/>
+    <text x="12" y="140" fill="#e6edf3" font-size="10" font-family="JetBrains Mono,monospace">Popper: Falsifikation / Bewährung</text>
+    <text x="12" y="156" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">realizes verändert die Welt.</text>
+    <text x="12" y="170" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">confirms verändert das Wissen.</text>
+    <line x1="12" y1="180" x2="268" y2="180" stroke="#30363d"/>
+    <text x="12" y="196" fill="#3fb950" font-size="10" font-family="JetBrains Mono,monospace">derivedFrom</text>
+    <text x="12" y="210" fill="#8b949e" font-size="9" font-family="JetBrains Mono,monospace">Nexus → Nexus (Provenienz)</text>
+  </g>
+</svg>
+<div class="detail-panel" id="detail-panel"></div>
+</div>
+
+<!-- TAB 1-6: populated by JS -->
+<div class="tab-panel" id="panel-1"></div>
+<div class="tab-panel" id="panel-2"></div>
+<div class="tab-panel" id="panel-3"></div>
+<div class="tab-panel" id="panel-4"></div>
+<div class="tab-panel" id="panel-5"></div>
+<div class="tab-panel" id="panel-6"></div>
+</div>
+<div class="footer">MIN v1.0.0 · CC BY-SA 4.0 · Dr. Ingolf Lepenies · 2026-03-08 · 1 Wurzel · 2 Zweige · 1 Querkategorie · 4+5 Kategorien · 85 Terme</div>
+
+<script>
+const CLASSES = [
+  {id:"Entity",label_de:"Entität",branch:"root",color:"#8b949e",parent:null,
+   desc:"Das, was existiert. Eindeutige Referenzierbarkeit. Alles, was im Wissensgraph explizit referenziert wird. Zwei Zweige: Nexus (kausal wirksam) und Forma (konstitutiv bestimmend). Eine Querkategorie: Agent (handlungsfähig). Entity ≡ Nexus ⊔ Forma. Agent durchquert die Zweiggrenze.",
+   kurzformel:"Das, was existiert.",kriterium:"eindeutige Referenzierbarkeit",
+   phil:"Aristoteles: to on — das Seiende.",axioms:["Entity ≡ Nexus ⊔ Forma","∃ hasIdentifier min 1"],examples:[],version:"1.0.0",causality:null},
+  {id:"Nexus",label_de:"Nexus",branch:"nexus",color:"#58a6ff",parent:"Entity",
+   desc:"Das, was etwas bewirkt. Kausale Wirksamkeit. Vier Seinskategorien: Object, Process, Data, Boundary. Drei Kausalitätsmodi: dispositional, mediated, relational.",
+   kurzformel:"Das, was etwas bewirkt.",kriterium:"kausale Wirksamkeit",
+   phil:"Whitehead: Actual Entity. Latour: Aktant. Woodward: Interventionistische Kausalität.",axioms:["rdfs:subClassOf min:Entity","owl:AllDisjointClasses { Nexus, Forma }"],examples:[],version:"1.0.0",causality:null},
+  {id:"Object",label_de:"Objekt",branch:"nexus",color:"#f0883e",parent:"Nexus",
+   desc:"Das, was da ist. Materielle Persistenz. Identitätskriterium: materiale Kontinuität. Dispositional — wirkt auch ohne Agent. Oberfläche eines Körpers ist Object (nicht Boundary), da sie ohne Partner existiert.",
+   kurzformel:"Das, was da ist.",kriterium:"materielle Persistenz",
+   phil:"Aristoteles: Ousia.",axioms:["rdfs:subClassOf min:Nexus","⊥ {Object,Process,Data,Boundary}"],
+   examples:["Rohstoff","Coil","Bauteil","Werkzeug","Maschine","Prüfling","Recyclat","Vakuum","EM-Feld","Schatten"],version:"1.0.0",causality:"dispositional"},
+  {id:"Process",label_de:"Prozess",branch:"nexus",color:"#da3633",parent:"Nexus",
+   desc:"Das, was geschieht. Veränderung. Nimmt Nexus als Input, erzeugt Nexus als Output, generiert Data. Dispositional — auch Naturvorgänge transformieren. Zwei Modi: Transformativ (neue ID) und Konservativ (selbe ID).",
+   kurzformel:"Das, was geschieht.",kriterium:"Veränderung",
+   phil:"Whitehead: the becoming of being.",axioms:["rdfs:subClassOf min:Nexus","∃ hasInput min:Nexus","∃ hasOutput min:Nexus"],
+   examples:["Umformen","Gießen","Zugversuch","Simulation","Recycling","ML-Training","Tornado"],version:"1.0.0",causality:"dispositional"},
+  {id:"Data",label_de:"Daten",branch:"nexus",color:"#a371f7",parent:"Nexus",
+   desc:"Das, was beschreibt. Informationsartefakt. Mediated — wirkt NUR über Agent. Das SCHARNIER zwischen Nexus und Forma: hat Bytes (Nexus), kodiert Forma (encodes), wirkt über Agent (mediated). Selbe Bytes = selbe Data.",
+   kurzformel:"Das, was beschreibt.",kriterium:"Informationsartefakt",
+   phil:"Data KODIERT Forma. Lehrbuch löschen → Naturgesetz bleibt.",axioms:["rdfs:subClassOf min:Nexus","⊥ {Object,Process,Data,Boundary}"],
+   examples:["Messdaten","Simulationsergebnis","Produktpass","Zertifikat","DIN-Dokument"],version:"1.0.0",causality:"mediated"},
+  {id:"Agent",label_de:"Agent",branch:"agent",color:"#3fb950",parent:"Entity",
+   desc:"Das, was handelt. Selektive Handlungsfähigkeit. QUERKATEGORIE unter Entity. Keine Seinskategorie, sondern Handlungskategorie. Durchquert die Zweiggrenze Nexus/Forma. Co-Typisierung Pflicht: Agent ∩ Object (Mensch), Agent ∩ Data (ML-Modell), Agent ∩ Institutio (Organisation). Intentionalität NICHT gefordert.",
+   kurzformel:"Das, was handelt.",kriterium:"selektive Handlungsfähigkeit",
+   phil:"Latour: Aktant. Searle: Institutional agency. Aristoteles: Kinesis.",axioms:["rdfs:subClassOf min:Entity","Agent ⊑ Nexus ⊔ Forma","∃ performs min:Process","NICHT in Disjunktheitsaxiomen"],
+   examples:["Mensch","CNC-Maschine","Roboterarm","ML-Modell","Organisation","Normungsgremium","Korrosion"],version:"1.0.0",causality:"dispositional"},
+  {id:"Boundary",label_de:"Grenze",branch:"nexus",color:"#e3b341",parent:"Nexus",
+   desc:"Das, was dazwischen entsteht. Grenzphänomen. Existiert nur zwischen zwei oder mehr Entitäten. Relational — wirkt NUR zwischen Partnern. Test: Entferne einen Partner — verschwindet es? Ja → Boundary.",
+   kurzformel:"Das, was dazwischen entsteht.",kriterium:"Grenzphänomen",
+   phil:"Latour: Mediation. Whitehead: Prehension. Bowden/Tabor: Reibung als Systemeigenschaft.",axioms:["rdfs:subClassOf min:Nexus","bounds min 2"],
+   examples:["Übergangswiderstand","Reibung","Adhäsion","Korngrenze","Phasengrenze"],version:"1.0.0",causality:"relational"},
+  {id:"Forma",label_de:"Forma",branch:"forma",color:"#d2a8ff",parent:"Entity",
+   desc:"Das, was bestimmt. Konstitutive Bestimmung. Forma bewirkt nichts — aber ohne Forma wäre jede Wirkung anders. Forma ist die Grammatik, Nexus sind die Sätze. Fünf Kategorien: Lex, Structura, Possibile, Norma, Institutio. Keine Polarität.",
+   kurzformel:"Das, was bestimmt.",kriterium:"konstitutive Bestimmung",
+   phil:"Whitehead: Eternal Objects. Aristoteles: Morphe.",axioms:["rdfs:subClassOf min:Entity","owl:AllDisjointClasses { Nexus, Forma }"],examples:[],version:"1.0.0",causality:null},
+  {id:"Lex",label_de:"Lex",branch:"forma",color:"#ff7b72",parent:"Forma",
+   desc:"Das, was immer gilt. Universelle Gültigkeit. Naturgesetze, Erhaltungssätze. Lex TUT nichts — sie BESTIMMT. Universalität disqualifiziert für Agency, qualifiziert für Lex. Lex kann NICHT verletzt werden.",
+   kurzformel:"Das, was immer gilt.",kriterium:"universelle Gültigkeit",
+   phil:"Humean/Non-Humean: MIN nimmt keine Stellung.",axioms:["rdfs:subClassOf min:Forma","⊥ {Lex,Structura,Possibile,Norma,Institutio}"],
+   examples:["Gravitation","Energieerhaltung","Thermodynamik","Massenerhaltung","Coulomb-Gesetz"],version:"1.0.0",causality:null},
+  {id:"Structura",label_de:"Structura",branch:"forma",color:"#79c0ff",parent:"Forma",
+   desc:"Das, was die Wirklichkeit formalisiert. Formale Struktur. SO(3) bestimmt Rotationen. Von-Mises bestimmt, wann Stahl fließt. bcc-Gitter formalisiert die Atomanordnung. Structura ist nicht Data — die FEM-Implementierung ist Data, die Fläche selbst ist Structura.",
+   kurzformel:"Das, was die Wirklichkeit formalisiert.",kriterium:"formale Struktur",
+   phil:"Mathematischer Strukturalismus.",axioms:["rdfs:subClassOf min:Forma","⊥ {Lex,Structura,Possibile,Norma,Institutio}"],
+   examples:["SO(3)","von-Mises","bcc-Gitter","Fourier-Trafo","Johnson-Cook","DGL-System"],version:"1.0.0",causality:null},
+  {id:"Possibile",label_de:"Possibile",branch:"forma",color:"#ffa657",parent:"Forma",
+   desc:"Das, was sein könnte. Möglichkeitsraum. Nicht Process — ein Process GESCHIEHT, ein Possibile KÖNNTE geschehen. Wenn ein Possibile eintritt, wird es zum Process (realisiert).",
+   kurzformel:"Das, was sein könnte.",kriterium:"Möglichkeitsraum",
+   phil:"Kripke: Possible Worlds. Lewis: Modal Realism.",axioms:["rdfs:subClassOf min:Forma","⊥ {Lex,Structura,Possibile,Norma,Institutio}"],
+   examples:["Versagensszenario","Risikofall","Designalternative","What-if-Szenario"],version:"1.0.0",causality:null},
+  {id:"Norma",label_de:"Norma",branch:"forma",color:"#f778ba",parent:"Forma",
+   desc:"Das, was gelten soll. Anforderung. ATOMAR — jede einzelne Anforderung ist eigenständig. Kann verletzt werden (anders als Lex). Definiert ‹bestanden› vs. ‹nicht bestanden›. Bündelung mehrerer Norma → Institutio.",
+   kurzformel:"Das, was gelten soll.",kriterium:"Anforderung",
+   phil:"Kant: Sein vs. Sollen. Humes Guillotine.",axioms:["rdfs:subClassOf min:Forma","⊥ {Lex,Structura,Possibile,Norma,Institutio}"],
+   examples:["Rm ≥ 340 MPa","Ra ≤ 1.6 µm","CO₂ ≤ 95 g/km","T = 23 ± 5 °C"],version:"1.0.0",causality:null},
+  {id:"Institutio",label_de:"Institution",branch:"forma",color:"#7ee787",parent:"Forma",
+   desc:"Das, was anerkannt wird. Kollektive Anerkennung. Zwei Funktionen: (1) Soziale Konstrukte (Euro, Patent). (2) Konventionelle Bündelungen (DC04, ISO 6892-1). Klassifikation IST ein institutioneller Akt. Searle: X counts as Y in C.",
+   kurzformel:"Das, was anerkannt wird.",kriterium:"kollektive Anerkennung",
+   phil:"Searle: Institutional Facts. Aristoteles: Eidos. Quine: Natural Kinds.",axioms:["rdfs:subClassOf min:Forma","⊥ {Lex,Structura,Possibile,Norma,Institutio}","constitutes subPropertyOf originates","typifies subPropertyOf constrains"],
+   examples:["Euro","Patent","DC04","HC340LA","ISO 6892-1","STEP AP214","GmbH","Σ3 CSL"],version:"1.0.0",causality:null},
+];
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// SVG node selection
+function selectSvgNode(id) {
+  const cls = CLASSES.find(c => c.id === id); if(!cls) return;
+  const panel = document.getElementById('detail-panel');
+  panel.classList.add('visible');
+  panel.style.borderLeft=`3px solid ${cls.color}44`;
+  let h=`<button class="close-btn" onclick="document.getElementById('detail-panel').classList.remove('visible')">✕</button>`;
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">`;
+  h+=`<span style="color:${cls.color};font-family:var(--font-mono);font-size:16px;font-weight:700">min:${cls.id}</span>`;
+  h+=`<span style="color:var(--muted);font-family:var(--font-mono);font-size:12px">${cls.label_de}</span>`;
+  if(cls.version!=="1.0.0") h+=`<span class="new-badge">v${cls.version}</span>`;
+  if(cls.causality) h+=`<span style="display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-family:var(--font-mono);background:rgba(255,166,87,0.13);color:#ffa657;border:1px solid rgba(255,166,87,0.27)">${cls.causality}</span>`;
+  h+=`<span class="kurzformel">${cls.kurzformel}</span>`;
+  h+=`</div><p style="color:var(--text);font-size:13px;line-height:1.6;margin-bottom:10px">${cls.desc}</p>`;
+  if(cls.axioms.length){h+=`<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">`;cls.axioms.forEach(a=>{h+=`<span class="axiom-tag ${a.includes('NICHT')?'warning':''}">${a}</span>`;});h+=`</div>`;}
+  if(cls.examples.length){h+=`<div style="display:flex;flex-wrap:wrap;gap:4px">`;cls.examples.forEach(e=>{h+=`<span class="example-tag" style="background:${cls.color}18;color:${cls.color};border:1px solid ${cls.color}33">${e}</span>`;});h+=`</div>`;}
+  panel.innerHTML=h;
+  document.querySelectorAll('.svg-node rect').forEach(r=>{r.removeAttribute('filter');});
+  const node=document.querySelector(`.svg-node[data-class="${id}"] rect`);
+  if(node){node.setAttribute('filter','url(#glow)');}
+}
+
+// CLASSES TAB
+(function(){const el=document.getElementById('panel-1');let h='';
+CLASSES.forEach(cls=>{
+  const bc=cls.branch==='nexus'?'badge-nexus':cls.branch==='forma'?'badge-forma':cls.branch==='agent'?'badge-agent':'badge-root';
+  const bl=cls.branch==='root'?'Wurzel':cls.branch==='nexus'?'Nexus':cls.branch==='forma'?'Forma':'⊥ Quer';
+  h+=`<div class="class-card" onclick="this.classList.toggle('expanded')" style="border-left:3px solid ${cls.color}">`;
+  h+=`<div class="card-header"><div class="card-header-left">`;
+  h+=`<span class="class-name" style="color:${cls.color}">min:${cls.id}</span>`;
+  if(cls.label_de!==cls.id) h+=`<span class="class-label-de">${cls.label_de}</span>`;
+  h+=`<span class="branch-badge ${bc}">${bl}</span>`;
+  if(cls.version!=="1.0.0") h+=`<span class="new-badge">v${cls.version}</span>`;
+  if(cls.causality) h+=`<span style="display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-family:var(--font-mono);background:rgba(255,166,87,0.13);color:#ffa657;border:1px solid rgba(255,166,87,0.27)">${cls.causality}</span>`;
+  h+=`<span class="kurzformel">${cls.kurzformel}</span>`;
+  h+=`</div><span style="color:var(--muted)">▸</span></div>`;
+  h+=`<div class="card-details"><p class="card-desc">${cls.desc}</p>`;
+  if(cls.phil){h+=`<div class="philosophical-box"><span class="section-label">Philosophisch</span><p style="color:var(--muted);font-size:12px;margin-top:4px;line-height:1.5;font-style:italic">${cls.phil}</p></div>`;}
+  if(cls.axioms.length){h+=`<div style="margin-bottom:10px"><span class="section-label">Axiome</span><div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:4px">`;cls.axioms.forEach(a=>{h+=`<span class="axiom-tag ${a.includes('NICHT')?'warning':''}">${a}</span>`;});h+=`</div></div>`;}
+  if(cls.examples.length){h+=`<div><span class="section-label">Beispiele</span><div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:4px">`;cls.examples.forEach(e=>{h+=`<span class="example-tag" style="background:${cls.color}18;color:${cls.color};border:1px solid ${cls.color}33">${e}</span>`;});h+=`</div></div>`;}
+  h+=`</div></div>`;});el.innerHTML=h;})();
+
+// KURZFORMELN TAB
+(function(){const el=document.getElementById('panel-4');
+el.innerHTML=`<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:16px">Kurzformeln — Die 13 Kategorien in je einem Satz</h3>
+<div style="display:grid;gap:8px">
+${CLASSES.map(c=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:6px;border-left:3px solid ${c.color}">
+<span style="color:${c.color};font-family:var(--font-mono);font-size:13px;font-weight:700;min-width:100px">min:${c.id}</span>
+<span style="color:var(--muted);font-family:var(--font-mono);font-size:11px;min-width:180px">${c.kriterium}</span>
+<span style="color:var(--text);font-family:var(--font-mono);font-size:12px;font-style:italic">"${c.kurzformel}"</span>
+</div>`).join('')}
+</div>
+<div class="info-box" style="margin-top:20px"><div class="section-label" style="margin-bottom:8px">Schema</div>
+<p style="font-size:12px;line-height:1.6;color:var(--text)">Jede Kategorie folgt dem Muster: <span style="color:var(--accent);font-family:var(--font-mono)">"Das, was [VERB]."</span> + <span style="color:var(--muted);font-family:var(--font-mono)">[KRITERIUM]</span><br>
+Das VERB trennt die Kategorien: existiert / bewirkt / bestimmt / handelt / da ist / geschieht / beschreibt / dazwischen entsteht / immer gilt / formalisiert / sein könnte / gelten soll / anerkannt wird.<br>
+Kein Fachbegriff im ersten Satz, den ein Ingenieur nicht sofort versteht.</p></div>`;
+})();
+
+// RELATIONEN TAB
+(function(){const el=document.getElementById('panel-2');
+const tree=`min:nexusWith (symmetric)
+├── min:hasComponent (transitive)
+├── min:hasInput      Process → Nexus     🔴 transformativ
+│   └── inverse: min:undergoes
+├── min:hasOutput     Process → Nexus     🔴 transformativ
+│   └── inverse: min:resultOf
+├── min:performs      Agent → Process
+│   ├── inverse: min:performedBy
+│   └── min:controls (sub)
+├── min:actsOn        Agent → Object  ⚡ Chain(performs, hasInput)
+│   └── inverse: min:affectedBy
+├── min:owns          Agent → Object
+├── min:describes     Data → Nexus
+│   └── inverse: min:describedBy
+├── min:generates     Process → Data
+│   └── inverse: min:generatedBy
+├── min:produces      Agent → Object  ⚡ Chain(performs, hasOutput)
+├── min:bounds        Boundary → Nexus
+│   └── inverse: min:hasBoundary
+├── min:derivedFrom   Nexus → Nexus (Herkunft)
+
+[Drei generische Brücken — Forma-Lebenszyklus]
+min:originates        Nexus → Forma   (bringt NEUES hervor)
+└── inverse: min:originatedBy
+    └── min:constitutes (sub) Agent → Institutio
+min:realizes          Nexus → Forma   (macht BESTEHENDES wirklich)
+└── inverse: min:realizedBy
+min:constrains        Forma → Nexus
+├── min:governs       Lex → Process (sub)
+├── min:formalizes    Structura → Nexus (sub)
+├── min:evaluates     Norma → Nexus (sub)
+├── min:alternativeTo Possibile → Nexus (sub of concerns)
+└── min:typifies      Institutio → Nexus (sub)
+    └── inverse: min:typifiedBy
+
+[Spezialisierte Brücken]
+min:concerns          Possibile → Nexus
+min:recognizes        Agent → Institutio
+└── inverse: min:recognizedBy
+min:encodes           Data → Forma
+└── inverse: min:encodedBy
+min:comprises         Institutio → Forma (Bündelung)
+└── inverse: min:comprisedBy
+
+[Epistemische Relationen]
+min:confirms          Process → Forma (bestätigt)
+└── inverse: min:confirmedBy
+min:refutes           Process → Possibile (widerlegt)
+└── inverse: min:refutedBy
+min:entails           Forma → Forma (impliziert, transitiv)
+min:supersedes        Forma → Forma (löst ab)
+└── inverse: min:supersededBy
+min:justifiedBy       Institutio → Forma (begründet durch)
+└── inverse: min:justifies`;
+el.innerHTML=`<div class="ascii-tree"><div class="section-label" style="margin-bottom:8px">Strukturdiagramm — Alle Object Properties</div><pre>${tree}</pre></div>`;})();
+
+// POLARITY TAB
+(function(){const el=document.getElementById('panel-3');
+el.innerHTML=`<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:8px">Polaritätsmechanismus — HEURISTIK</h3>
+<p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:16px">Polarität deklariert die Natur einer Eigenschaft auf Schema-Ebene. Gilt NUR für Nexus. Forma hat keine Polarität.</p>
+<div class="polarity-grid">
+<div class="polarity-card" style="border-left:3px solid #f0883e"><div style="color:#f0883e;font-family:var(--font-mono);font-size:13px;font-weight:600">min:materialProperty</div><p style="color:var(--text);font-size:12px;line-height:1.5;margin:8px 0">Superproperty für kausal-räumliche Eigenschaften. Hyle.</p><code style="color:var(--accent);font-family:var(--font-mono);font-size:11px;background:var(--bg);padding:4px 8px;border-radius:4px;display:block">ex:masse_kg rdfs:subPropertyOf min:materialProperty .</code></div>
+<div class="polarity-card" style="border-left:3px solid #a371f7"><div style="color:#a371f7;font-family:var(--font-mono);font-size:13px;font-weight:600">min:informationalProperty</div><p style="color:var(--text);font-size:12px;line-height:1.5;margin:8px 0">Superproperty für strukturell-bestimmte Eigenschaften. Morphe.</p><code style="color:var(--accent);font-family:var(--font-mono);font-size:11px;background:var(--bg);padding:4px 8px;border-radius:4px;display:block">ex:werkstoffNr rdfs:subPropertyOf min:informationalProperty .</code></div>
+</div>`;})();
+
+// META-VOCABULARY TAB
+(function(){const el=document.getElementById('panel-5');
+const dims=[{num:"I",name:"Intension",q:"Was ist es?",props:[{id:"definition",de:"Definition"},{id:"criterion",de:"Existenzkriterium"}]},{num:"II",name:"Extension",q:"Wie sieht es aus?",props:[{id:"usageExample",de:"Verwendungsbeispiel"}]},{num:"III",name:"Grenze",q:"Was ist es nicht?",props:[{id:"counterExample",de:"Gegenbeispiel"},{id:"distinguishedFrom",de:"Abgrenzung"}]},{num:"IV",name:"Herkunft",q:"Woher kommt es?",props:[{id:"philosophicalBasis",de:"Philosophische Grundlage"},{id:"normativeSource",de:"Normative Quelle"}]},{num:"V",name:"Teleologie",q:"Warum existiert es?",props:[{id:"rationale",de:"Entwurfsbegründung"}]},{num:"VI",name:"Lebenszyklus",q:"In welchem Zustand?",props:[{id:"definedInVersion",de:"Version"},{id:"status",de:"Status"},{id:"replacedBy",de:"Ersetzt durch"}]},{num:"VII",name:"Axiom-Transparenz",q:"Warum diese Formalia?",props:[{id:"axiomRationale",de:"Axiom-Begründung"}]}];
+let h=`<h3 style="font-family:var(--font-mono);font-size:14px;font-weight:600;margin-bottom:16px">Metavokabular — 11 Annotation Properties in 7 Dimensionen</h3>`;
+dims.forEach(d=>{h+=`<div class="meta-dim-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="color:var(--accent);font-family:var(--font-mono);font-size:12px;font-weight:700">${d.num}.</span><span class="meta-dim-title">${d.name}</span><span style="color:var(--muted);font-family:var(--font-mono);font-size:11px">— ${d.q}</span></div>`;d.props.forEach(p=>{h+=`<div style="margin-bottom:4px;padding:4px 10px;background:var(--bg);border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;gap:8px"><span class="meta-prop-inline">min:${p.id}</span><span style="color:var(--muted);font-family:var(--font-mono);font-size:11px">${p.de}</span></div>`;});h+=`</div>`;});
+el.innerHTML=h;})();
+
+// INVENTORY TAB
+(function(){const el=document.getElementById('panel-6');
+const cats=[
+  {label:"Klassen",count:15,color:"#58a6ff",items:["Entity","Nexus","Object","Process","Data","Agent ★","Boundary","Forma","Lex","Structura","Possibile","Norma","Institutio","MetaTerm","OntologyArtifact"]},
+  {label:"Polaritäts-Properties",count:2,color:"#f0883e",items:["materialProperty","informationalProperty"]},
+  {label:"Inter-Nexus",count:2,color:"#da3633",items:["nexusWith","hasComponent"]},
+  {label:"Kategorienrelationen",count:18,color:"#3fb950",items:["hasInput","hasOutput","undergoes","resultOf","performs","performedBy","controls","actsOn","affectedBy","owns","describes","describedBy","generates","generatedBy","produces","bounds","hasBoundary","derivedFrom ★"]},
+  {label:"Brückenrelationen",count:18,color:"#d2a8ff",items:["originates","originatedBy","realizes","realizedBy","constrains","governs","formalizes","evaluates","concerns","alternativeTo","constitutes","constitutedBy","recognizes","recognizedBy","encodes","encodedBy","typifies","typifiedBy"]},
+  {label:"Epistemisch",count:9,color:"#e3b341",items:["confirms","confirmedBy","refutes","refutedBy","entails","supersedes","supersededBy","justifiedBy","justifies"]},
+  {label:"Intra-Forma",count:2,color:"#bc8cff",items:["comprises","comprisedBy"]},
+  {label:"Datatype Properties",count:5,color:"#79c0ff",items:["hasIdentifier","hasName","hasTimestamp","hasDescription","hasStatus"]},
+  {label:"Annotations",count:4,color:"#8b949e",items:["designRationale ⚠","philosophicalBasis","causalityMode","efficacyMode"]},
+  {label:"Meta-Annotations",count:11,color:"#7ee787",items:["definition","criterion","usageExample","counterExample","distinguishedFrom","normativeSource","rationale","definedInVersion","status","replacedBy","axiomRationale"]},
+];
+let h=`<div class="big-number"><div class="num">85</div><div class="label">Terme in MIN v1.0.0</div></div>`;
+h+=`<div class="info-box" style="margin-bottom:20px;margin-top:0;border-left:3px solid #3fb950"><div style="font-size:12px;line-height:1.7;color:var(--text)">`;
+h+=`<span style="color:#3fb950;font-family:var(--font-mono)">Agent ⊂ Entity</span> — von Nexus auf Entity (Querkategorie)<br>`;
+h+=`<span style="color:#3fb950;font-family:var(--font-mono)">Agent ⊑ Nexus ⊔ Forma</span> — Co-Typisierungsaxiom<br>`;
+h+=`<span style="color:#3fb950;font-family:var(--font-mono)">min:derivedFrom</span> — direkte Herkunft Nexus → Nexus (Provenienz)<br>`;
+h+=`<span style="color:#e3b341;font-family:var(--font-mono)">5 epistemische Relationen</span> + 4 Inversen<br>`;
+h+=`<span style="color:#ffa657;font-family:var(--font-mono)">Kurzformeln</span> — 13 Kategorien in je einem Satz`;
+h+=`</div></div>`;
+h+=`<div class="info-box" style="margin-bottom:20px;margin-top:0"><div class="section-label" style="margin-bottom:8px">Disjunktheitsaxiome</div>`;
+[{m:["Object","Process","Data","Boundary"],n:"Nexus-intern (4)"},{m:["Lex","Structura","Possibile","Norma","Institutio"],n:"Forma-intern (5)"},{m:["Nexus","Forma"],n:"Zweige"}].forEach(d=>{h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap"><span style="color:#ff7b72;font-family:var(--font-mono);font-size:11px">⊥</span><span style="font-family:var(--font-mono);font-size:11px">{ ${d.m.join(", ")} }</span><span style="color:var(--muted);font-size:11px">— ${d.n}</span></div>`;});
+h+=`<div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span style="color:#3fb950;font-family:var(--font-mono);font-size:11px">≠⊥</span><span style="font-family:var(--font-mono);font-size:11px">Agent</span><span style="color:var(--muted);font-size:11px">— NICHT in Disjunktheitsaxiomen. Durchquert Zweiggrenze.</span></div></div>`;
+h+=`<div class="inv-grid">`;cats.forEach(cat=>{h+=`<div class="inv-card" style="border-top:3px solid ${cat.color}"><div class="inv-card-header"><span class="inv-card-title">${cat.label}</span><span class="inv-card-count" style="color:${cat.color}">${cat.count}</span></div><div class="inv-tags">`;cat.items.forEach(item=>{h+=`<span class="inv-tag" style="background:${cat.color}15;color:${cat.color};border:1px solid ${cat.color}30">${item}</span>`;});h+=`</div></div>`;});h+=`</div>`;
+
+// Inverse pairs
+h+=`<div class="info-box"><div class="section-label" style="margin-bottom:8px">owl:inverseOf Paare (16)</div><div style="display:flex;flex-wrap:wrap;gap:6px">`;
+[["hasInput","undergoes"],["hasOutput","resultOf"],["performs","performedBy"],["actsOn","affectedBy"],["describes","describedBy"],["generates","generatedBy"],["bounds","hasBoundary"],["originates","originatedBy"],["realizes","realizedBy"],["constitutes","constitutedBy"],["recognizes","recognizedBy"],["encodes","encodedBy"],["typifies","typifiedBy"],["comprises","comprisedBy"],["confirms","confirmedBy"],["refutes","refutedBy"]].forEach(([a,b])=>{h+=`<span style="font-family:var(--font-mono);font-size:10px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px"><span style="color:var(--accent)">${a}</span> <span style="color:var(--muted)">↔</span> <span style="color:var(--accent)">${b}</span></span>`;});
+h+=`</div></div>`;
+el.innerHTML=h;})();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  min:Forma a owl:Class .
+  min:Lex a owl:Class .
+  min:Structura a owl:Class .
+  min:Possibile a owl:Class .
+  min:Norma a owl:Class .
+  min:Institutio a owl:Class .
+}

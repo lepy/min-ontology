@@ -1,0 +1,6 @@
+@prefix min: <https://w3id.org/min#> .
+@prefix ex:  <https://example.org/min#> .
+
+ex:example_object a min:Object ;
+    min:hasIdentifier "OBJ-001" ;
+    min:hasName "Example object" .

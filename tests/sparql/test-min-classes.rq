@@ -1,0 +1,18 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  min:Entity a owl:Class .
+  min:Nexus a owl:Class .
+  min:Object a owl:Class .
+  min:Process a owl:Class .
+  min:Data a owl:Class .
+  min:Agent a owl:Class .
+  min:Boundary a owl:Class .
+  min:Forma a owl:Class .
+  min:Lex a owl:Class .
+  min:Structura a owl:Class .
+  min:Possibile a owl:Class .
+  min:Norma a owl:Class .
+  min:Institutio a owl:Class .
+}

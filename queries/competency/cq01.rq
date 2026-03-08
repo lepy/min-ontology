@@ -1,0 +1,12 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?nexus ?type ?materialProp ?informationalProp WHERE {
+  VALUES ?type { min:Object min:Process min:Data min:Agent }
+  ?nexus a ?type ;
+         ?materialProp ?materialValue ;
+         ?informationalProp ?informationalValue .
+  ?materialProp rdfs:subPropertyOf* min:materialProperty .
+  ?informationalProp rdfs:subPropertyOf* min:informationalProperty .
+}
+LIMIT 25

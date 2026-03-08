@@ -1,0 +1,9 @@
+PREFIX min: <https://w3id.org/min#>
+
+SELECT ?process ?input ?output ?data WHERE {
+  ?process a min:Process ;
+           min:hasInput ?input ;
+           min:hasOutput ?output .
+  OPTIONAL { ?process min:generates ?data . }
+}
+LIMIT 25

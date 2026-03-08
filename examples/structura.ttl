@@ -1,0 +1,55 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Structura
+#
+#   Szenario: Euler-Bernoulli-Balkentheorie bei einer Brückenberechnung.
+#   Zeigt: formalizes, realizedBy, encodedBy, Abgrenzung Structura vs. Data.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:formel a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Entity ;
+    rdfs:range xsd:string .
+
+# --- Structura-Instanz ---
+
+ex:Euler_Bernoulli_Balkentheorie a min:Structura ;
+    min:hasIdentifier    "STRUCT-EB-BEAM" ;
+    min:hasName          "Euler-Bernoulli-Balkentheorie" ;
+    min:hasDescription   "Differentialgleichung der Biegelinie bei schlanken Balken" ;
+    ex:formel            "EI · w''''(x) = q(x)" ;
+    min:formalizes       ex:Brueckenberechnung_Feld12 ;
+    min:realizedBy       ex:Brueckenberechnung_Feld12 .
+
+# Das FEM-Modell ist Data — es kodiert die Structura.
+ex:FEM_Modell_Bruecke a min:Data ;
+    min:hasName  "FEM-Modell Brücke Feld 12 (Balkenelemente)" ;
+    min:encodes  ex:Euler_Bernoulli_Balkentheorie .
+
+# --- Stützinstanzen ---
+
+ex:Brueckenentwurf_Feld12 a min:Object ;
+    min:hasName "Brückenentwurf Feld 12 (CAD)" .
+
+ex:Brueckenstatik_Feld12 a min:Object ;
+    min:hasName "Statiknachweis Feld 12" .
+
+ex:Tragwerksplaner_Lang a min:Agent ;
+    min:hasName  "Lang, M. (Tragwerksplaner)" ;
+    min:performs ex:Brueckenberechnung_Feld12 .
+
+ex:Brueckenberechnung_Feld12 a min:Process ;
+    min:hasIdentifier "OP-CALC-FIELD12" ;
+    min:hasName       "Statische Berechnung Brücke Feld 12" ;
+    min:hasInput      ex:Brueckenentwurf_Feld12 ;
+    min:hasOutput     ex:Brueckenstatik_Feld12 ;
+    min:realizes      ex:Euler_Bernoulli_Balkentheorie .

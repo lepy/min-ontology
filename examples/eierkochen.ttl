@@ -1,0 +1,374 @@
+@prefix egg:     <https://example.org/egg#> .
+@prefix min:     <https://w3id.org/min#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Eierkochen — Eine Domänenontologie auf MIN v1.0.0
+#
+#   Keine Metaphysik. Einfach ein leckeres Frühstücksei.
+#
+# =============================================================================
+
+<https://example.org/egg> a owl:Ontology ;
+    owl:versionInfo "0.1.0" ;
+    rdfs:label "Eierkochen-Ontologie"@de ;
+    rdfs:comment """Domänenontologie für das Kochen von Eiern.
+    Demonstriert die MIN-Architektur an einem Alltagsbeispiel:
+    Nexus (Topf, Wasser, Ei, Koch, Wärmeübergang) und
+    Forma (Wärmeübertragung, Kochzeitvorgaben, Garstufen)."""@de ;
+    rdfs:seeAlso <https://w3id.org/min> .
+
+
+# #############################################################################
+#
+#   NEXUS — Das Aktuale
+#
+# #############################################################################
+
+# =============================================================================
+#   Objects — die Dinge auf dem Herd
+# =============================================================================
+
+egg:Topf a min:Object ;
+    min:hasIdentifier "OBJ-TOPF-001" ;
+    min:hasName "Kochtopf"@de ;
+    min:hasDescription "Behälter für Wasser und Eier. Leitet Wärme vom Herd an das Wasser."@de ;
+    egg:material "Edelstahl" ;
+    egg:volumen_ml "2000"^^xsd:float .
+
+egg:Wasser a min:Object ;
+    min:hasIdentifier "OBJ-WASSER-001" ;
+    min:hasName "Kochwasser"@de ;
+    min:hasDescription "Wärmeträger. Überträgt die Energie vom Topfboden an das Ei."@de ;
+    egg:menge_ml "1500"^^xsd:float .
+
+egg:Ei_roh a min:Object ;
+    min:hasIdentifier "OBJ-EI-ROH-001" ;
+    min:hasName "Rohes Ei"@de ;
+    min:hasDescription "Hühnerei, Größe M, direkt aus dem Kühlschrank."@de ;
+    min:typifiedBy egg:Typ_Huehner_M ;
+    egg:gewicht_g "58"^^xsd:float ;
+    egg:starttemperatur_C "7"^^xsd:float .
+
+egg:Ei_gekocht a min:Object ;
+    min:hasIdentifier "OBJ-EI-GEK-001" ;
+    min:hasName "Gekochtes Ei"@de ;
+    min:hasDescription "Ergebnis des Kochprozesses. Garstufe hängt von der Kochzeit ab."@de ;
+    min:typifiedBy egg:Typ_weichgekocht .
+
+egg:Herd a min:Object ;
+    min:hasIdentifier "OBJ-HERD-001" ;
+    min:hasName "Herd"@de ;
+    min:hasDescription "Wärmequelle. Als passives Gerät: Object. Im Betrieb mit Regler: Agent."@de .
+
+
+# =============================================================================
+#   Agent — das, was handelt
+# =============================================================================
+
+egg:Koch a min:Agent , min:Object ;
+    min:hasIdentifier "AGT-KOCH-001" ;
+    min:hasName "Koch"@de ;
+    min:hasDescription "Mensch, der den Prozess steuert: Wasser einfüllen, Herd einschalten, Zeit kontrollieren, Ei abschrecken."@de ;
+    min:performs egg:Eierkochen ;
+    min:controls egg:Eierkochen .
+
+egg:Herd_aktiv a min:Agent , min:Object ;
+    min:hasIdentifier "AGT-HERD-001" ;
+    min:hasName "Herd (aktiv)"@de ;
+    min:hasDescription "Herd im Betrieb. Reguliert die Energiezufuhr. Agent, weil selektiv steuerbar."@de ;
+    min:performs egg:Erhitzen .
+
+
+# =============================================================================
+#   Process — das, was geschieht
+# =============================================================================
+
+egg:Eierkochen a min:Process ;
+    min:hasIdentifier "PRC-KOCHEN-001" ;
+    min:hasName "Eierkochen"@de ;
+    min:hasDescription """Gesamtprozess: Wasser erhitzen, Ei einlegen,
+    definierte Zeit kochen, abschrecken. Transformativ:
+    rohes Ei (Input) → gekochtes Ei (Output)."""@de ;
+    min:hasInput egg:Ei_roh ;
+    min:hasInput egg:Wasser ;
+    min:hasOutput egg:Ei_gekocht ;
+    min:hasOutput egg:Messdaten_Kochzeit ;
+    min:performedBy egg:Koch ;
+    min:hasComponent egg:Erhitzen ;
+    min:hasComponent egg:Garziehen ;
+    min:hasComponent egg:Abschrecken .
+
+egg:Erhitzen a min:Process ;
+    min:hasIdentifier "PRC-ERHITZ-001" ;
+    min:hasName "Wasser erhitzen"@de ;
+    min:hasDescription "Wasser von Raumtemperatur auf 100 °C bringen."@de ;
+    min:hasInput egg:Wasser ;
+    min:hasOutput egg:Wasser ;
+    min:performedBy egg:Herd_aktiv .
+
+egg:Garziehen a min:Process ;
+    min:hasIdentifier "PRC-GAR-001" ;
+    min:hasName "Garziehen"@de ;
+    min:hasDescription """Das Ei liegt im kochenden Wasser. Wärme überträgt
+    sich durch die Schale ins Innere. Dauer bestimmt die Garstufe."""@de ;
+    min:hasInput egg:Ei_roh ;
+    min:hasOutput egg:Ei_gekocht .
+
+egg:Abschrecken a min:Process ;
+    min:hasIdentifier "PRC-ABSCHR-001" ;
+    min:hasName "Abschrecken"@de ;
+    min:hasDescription "Ei unter kaltem Wasser abkühlen. Stoppt den Garprozess."@de ;
+    min:hasInput egg:Ei_gekocht ;
+    min:hasOutput egg:Ei_gekocht .
+
+
+# =============================================================================
+#   Boundary — das, was dazwischen entsteht
+# =============================================================================
+
+egg:Waermeuebergang_Wasser_Ei a min:Boundary ;
+    min:hasIdentifier "BND-WE-001" ;
+    min:hasName "Wärmeübergang Wasser–Ei"@de ;
+    min:hasDescription """Konvektiver Wärmeübergang zwischen kochendem Wasser
+    und Eischale. Irreduzibel relational: der Wärmeübergangskoeffizient
+    gehört weder dem Wasser noch dem Ei, sondern entsteht zwischen beiden.
+    Abhängig von Strömung, Temperatur und Schalenoberfläche."""@de ;
+    min:bounds egg:Wasser ;
+    min:bounds egg:Ei_roh ;
+    egg:waermeuebergangskoeffizient_W_m2K "3000"^^xsd:float .
+
+egg:Waermeuebergang_Topf_Wasser a min:Boundary ;
+    min:hasIdentifier "BND-TW-001" ;
+    min:hasName "Wärmeübergang Topf–Wasser"@de ;
+    min:hasDescription """Wärmeübertragung vom Topfboden an das Wasser.
+    Entferne das Wasser → kein Wärmeübergang mehr. → Boundary."""@de ;
+    min:bounds egg:Topf ;
+    min:bounds egg:Wasser .
+
+
+# =============================================================================
+#   Data — das, was beschreibt
+# =============================================================================
+
+egg:Messdaten_Kochzeit a min:Data ;
+    min:hasIdentifier "DAT-ZEIT-001" ;
+    min:hasName "Kochzeit-Messung"@de ;
+    min:hasDescription "Gemessene Kochzeit in Minuten. Generiert durch den Kochprozess."@de ;
+    min:describes egg:Garziehen ;
+    min:generatedBy egg:Eierkochen ;
+    min:encodes egg:Norma_weich ;
+    egg:kochzeit_min "5.5"^^xsd:float .
+
+egg:Rezept a min:Data ;
+    min:hasIdentifier "DAT-REZ-001" ;
+    min:hasName "Kochrezept"@de ;
+    min:hasDescription """Anleitung zum Eierkochen. Kodiert die Normen
+    (Kochzeiten) und den Typus (Garstufen)."""@de ;
+    min:describes egg:Eierkochen ;
+    min:encodes egg:Norma_weich ;
+    min:encodes egg:Norma_hart ;
+    min:encodes egg:Typ_weichgekocht ;
+    min:encodes egg:Typ_hartgekocht .
+
+
+# #############################################################################
+#
+#   FORMA — Das Regelwerk
+#
+# #############################################################################
+
+# =============================================================================
+#   Lex — Naturgesetze
+# =============================================================================
+
+egg:Waermeuebertragung a min:Lex ;
+    min:hasIdentifier "LEX-WAERME-001" ;
+    min:hasName "Wärmeübertragungsgesetz"@de ;
+    min:hasDescription """Fouriersches Gesetz und Konvektion. Bestimmt,
+    WIE schnell Wärme vom Wasser durch die Schale ins Eigelb
+    gelangt. Gilt universell, ausnahmslos."""@de ;
+    min:governs egg:Garziehen ;
+    min:constrains egg:Waermeuebergang_Wasser_Ei .
+
+egg:Proteindenaturierung a min:Lex ;
+    min:hasIdentifier "LEX-DENAT-001" ;
+    min:hasName "Proteindenaturierung"@de ;
+    min:hasDescription """Eiweiß denaturiert ab ~62 °C, Eigelb ab ~68 °C.
+    Dieses Naturgesetz bestimmt, warum Kochzeit und Garstufe
+    zusammenhängen. Kein Ingenieur kann es ändern."""@de ;
+    min:governs egg:Garziehen .
+
+
+# =============================================================================
+#   Norma — Kochzeitvorgaben
+# =============================================================================
+
+egg:Norma_weich a min:Norma ;
+    min:hasIdentifier "NORMA-WEICH-001" ;
+    min:hasName "Kochzeit weichgekocht"@de ;
+    min:hasDescription """Kochzeit SOLL 4–5 Minuten betragen (Ei Größe M,
+    aus dem Kühlschrank, ins kochende Wasser). Ergebnis:
+    Eiweiß fest, Eigelb flüssig."""@de ;
+    min:evaluates egg:Ei_gekocht ;
+    egg:kochzeit_min_min "4"^^xsd:float ;
+    egg:kochzeit_max_min "5"^^xsd:float .
+
+egg:Norma_wachsweich a min:Norma ;
+    min:hasIdentifier "NORMA-WACHS-001" ;
+    min:hasName "Kochzeit wachsweich"@de ;
+    min:hasDescription """Kochzeit SOLL 6–7 Minuten. Eiweiß fest,
+    Eigelb cremig-wachsartig."""@de ;
+    min:evaluates egg:Ei_gekocht ;
+    egg:kochzeit_min_min "6"^^xsd:float ;
+    egg:kochzeit_max_min "7"^^xsd:float .
+
+egg:Norma_hart a min:Norma ;
+    min:hasIdentifier "NORMA-HART-001" ;
+    min:hasName "Kochzeit hartgekocht"@de ;
+    min:hasDescription """Kochzeit SOLL 9–11 Minuten. Eiweiß und Eigelb
+    vollständig fest. Kein grüner Ring erwünscht."""@de ;
+    min:evaluates egg:Ei_gekocht ;
+    egg:kochzeit_min_min "9"^^xsd:float ;
+    egg:kochzeit_max_min "11"^^xsd:float .
+
+
+# =============================================================================
+#   Structura — formale Struktur
+# =============================================================================
+
+egg:Waermeleitungsgleichung a min:Structura ;
+    min:hasIdentifier "STRUCT-WL-001" ;
+    min:hasName "Wärmeleitungsgleichung (Kugel)"@de ;
+    min:hasDescription """∂T/∂t = α·∇²T in Kugelkoordinaten.
+    Formalisiert die Temperaturverteilung im Ei über die Zeit.
+    Das Ei ist keine perfekte Kugel — aber die Näherung reicht."""@de ;
+    min:formalizes egg:Garziehen .
+
+
+# =============================================================================
+#   Typus — Garstufen und Eisorten
+# =============================================================================
+
+egg:Typ_weichgekocht a min:Typus ;
+    min:hasIdentifier "TYP-WEICH-001" ;
+    min:hasName "weichgekocht"@de ;
+    min:hasDescription """Wesensbestimmung: Eiweiß fest, Eigelb flüssig.
+    Bündelt Norma (4–5 min), Lex (Denaturierung bei 62–68 °C)
+    und sensorische Eigenschaften. ‹Was für ein Ei ist das?› →
+    ‹Ein Weiches.›"""@de ;
+    min:typifies egg:Ei_gekocht .
+
+egg:Typ_wachsweich a min:Typus ;
+    min:hasIdentifier "TYP-WACHS-001" ;
+    min:hasName "wachsweich"@de ;
+    min:hasDescription """Eiweiß fest, Eigelb cremig. Der Idealzustand
+    für viele — aber schwer zu treffen."""@de ;
+    min:typifies egg:Ei_gekocht .
+
+egg:Typ_hartgekocht a min:Typus ;
+    min:hasIdentifier "TYP-HART-001" ;
+    min:hasName "hartgekocht"@de ;
+    min:hasDescription """Eiweiß und Eigelb vollständig fest.
+    Ideal für Eiersalat, problematisch für Frühstück."""@de ;
+    min:typifies egg:Ei_gekocht .
+
+egg:Typ_Huehner_M a min:Typus ;
+    min:hasIdentifier "TYP-EI-M-001" ;
+    min:hasName "Hühnerei Größe M"@de ;
+    min:hasDescription """Gewichtsklasse 53–63 g.
+    EU-Vermarktungsnorm. Die Kochzeiten der Normen
+    beziehen sich auf diese Größe."""@de ;
+    min:typifies egg:Ei_roh .
+
+
+# =============================================================================
+#   Possibile — was schiefgehen kann
+# =============================================================================
+
+egg:Ueberkochen a min:Possibile ;
+    min:hasIdentifier "POSS-UEBER-001" ;
+    min:hasName "Überkochen"@de ;
+    min:hasDescription """Das Wasser kocht über den Topfrand.
+    Hätte vermieden werden können (weniger Wasser, größerer Topf).
+    Wenn es eintritt → wird zum Process."""@de ;
+    min:concerns egg:Erhitzen .
+
+egg:Gruener_Ring a min:Possibile ;
+    min:hasIdentifier "POSS-GRUEN-001" ;
+    min:hasName "Grüner Ring am Eigelb"@de ;
+    min:hasDescription """Eisensulfid-Bildung bei zu langer Kochzeit
+    (> 12 min). Optisch unappetitlich, geschmacklich irrelevant.
+    Vermeidbar durch Einhalten der Norma."""@de ;
+    min:concerns egg:Ei_gekocht .
+
+
+# =============================================================================
+#   Institutio — soziale Konstrukte
+# =============================================================================
+
+egg:EU_Vermarktungsnorm a min:Institutio ;
+    min:hasIdentifier "INST-EU-EI-001" ;
+    min:hasName "EU-Vermarktungsnormen für Eier"@de ;
+    min:hasDescription """Verordnung (EG) Nr. 589/2008. Definiert
+    Gewichtsklassen (S/M/L/XL), Haltungsformen, Kennzeichnung.
+    Existiert, weil EU-Mitgliedstaaten sie anerkennen."""@de ;
+    min:constitutedBy egg:Koch ;
+    min:recognizedBy egg:Koch .
+
+
+# #############################################################################
+#
+#   DOMAIN PROPERTIES
+#
+# #############################################################################
+
+egg:material a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:string .
+
+egg:volumen_ml a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+egg:menge_ml a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+egg:gewicht_g a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+egg:starttemperatur_C a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+egg:kochzeit_min a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:informationalProperty ;
+    rdfs:domain min:Data ;
+    rdfs:range xsd:float .
+
+egg:kochzeit_min_min a owl:DatatypeProperty ;
+    rdfs:domain min:Norma ;
+    rdfs:range xsd:float ;
+    rdfs:label "Kochzeit Minimum (min)"@de .
+
+egg:kochzeit_max_min a owl:DatatypeProperty ;
+    rdfs:domain min:Norma ;
+    rdfs:range xsd:float ;
+    rdfs:label "Kochzeit Maximum (min)"@de .
+
+egg:waermeuebergangskoeffizient_W_m2K a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Boundary ;
+    rdfs:range xsd:float ;
+    rdfs:label "Wärmeübergangskoeffizient (W/m²K)"@de .

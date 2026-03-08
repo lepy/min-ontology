@@ -1,0 +1,84 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#
+#   Beispiel: min:Agent
+#
+#   Szenario: Ein kollaborativer Roboter (Cobot) in der Montage.
+#   Zeigt: Doppeltypisierung Object+Agent, performs, controls, actsOn,
+#          owns, constitutes (Brücke zu Institutio).
+#
+#   Zusätzlich: Ein menschlicher Agent und ein Software-Agent,
+#   um die Bandbreite des Agent-Konzepts zu zeigen.
+#
+# =============================================================================
+
+# --- Schema-Deklarationen ---
+
+ex:tragfaehigkeit_kg a owl:DatatypeProperty ;
+    rdfs:subPropertyOf min:materialProperty ;
+    rdfs:domain min:Object ;
+    rdfs:range xsd:float .
+
+# --- Agent-Instanzen ---
+
+# Cobot: zugleich Object (physisch) und Agent (handelt)
+ex:Cobot_UR10e a min:Object , min:Agent ;
+    min:hasIdentifier    "MACH-COBOT-UR10e-003" ;
+    min:hasName          "UR10e Montagezelle 3" ;
+    min:hasStatus        "aktiv" ;
+    min:performs         ex:Schraubmontage_Deckel ;
+    min:actsOn           ex:Getriebegehaeuse_K9 ;
+    ex:tragfaehigkeit_kg 10.0 .
+
+# Mensch: reiner Agent (kein Object in MIN — Modellierungsentscheidung)
+ex:Werker_Schmidt a min:Agent ;
+    min:hasIdentifier    "PERS-SCHMIDT" ;
+    min:hasName          "Schmidt, T. (Schichtführer)" ;
+    min:performs         ex:Qualitaetskontrolle_K9 ;
+    min:controls         ex:Schraubmontage_Deckel ;
+    min:owns             ex:Getriebegehaeuse_K9 .
+
+# Software-Agent: kein Object, aber Agent
+ex:MES_Planner a min:Agent ;
+    min:hasIdentifier    "SW-MES-PLAN-001" ;
+    min:hasName          "MES-Planungsagent" ;
+    min:hasDescription   "Optimiert Reihenfolge und Taktzeit" ;
+    min:performs         ex:Reihenfolgeplanung_Montage .
+
+# --- Stützinstanzen ---
+
+ex:Getriebegehaeuse_K9 a min:Object ;
+    min:hasName "Getriebegehäuse K9" .
+
+ex:Deckel_K9 a min:Object ;
+    min:hasName "Gehäusedeckel K9" .
+
+ex:Getriebegehaeuse_K9_montiert a min:Object ;
+    min:hasName "Getriebegehäuse K9 (Deckel montiert)" .
+
+ex:Schraubmontage_Deckel a min:Process ;
+    min:hasName   "Schraubmontage Deckel K9" ;
+    min:hasInput  ex:Getriebegehaeuse_K9 ;
+    min:hasInput  ex:Deckel_K9 ;
+    min:hasOutput ex:Getriebegehaeuse_K9_montiert .
+
+ex:Qualitaetskontrolle_K9 a min:Process ;
+    min:hasName   "Qualitätskontrolle K9" ;
+    min:hasInput  ex:Getriebegehaeuse_K9_montiert ;
+    min:hasOutput ex:Getriebegehaeuse_K9_montiert ;
+    min:generates ex:Pruefbericht_K9 .
+
+ex:Reihenfolgeplanung_Montage a min:Process ;
+    min:hasName   "Reihenfolgeplanung Montagelinie" ;
+    min:hasInput  ex:Getriebegehaeuse_K9 ;
+    min:hasOutput ex:Getriebegehaeuse_K9 .
+
+ex:Pruefbericht_K9 a min:Data ;
+    min:hasName      "Prüfbericht K9" ;
+    min:describes    ex:Getriebegehaeuse_K9_montiert ;
+    min:generatedBy  ex:Qualitaetskontrolle_K9 .

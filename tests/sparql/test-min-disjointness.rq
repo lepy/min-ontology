@@ -1,0 +1,28 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX min: <https://w3id.org/min#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+ASK WHERE {
+  # Nexus-internal disjointness: Object, Process, Data, Boundary
+  ?d1 a owl:AllDisjointClasses ;
+      owl:members ?m1 .
+  ?m1 rdf:rest*/rdf:first min:Object .
+  ?m1 rdf:rest*/rdf:first min:Process .
+  ?m1 rdf:rest*/rdf:first min:Data .
+  ?m1 rdf:rest*/rdf:first min:Boundary .
+
+  # Forma-internal disjointness: Lex, Structura, Possibile, Norma, Institutio
+  ?d2 a owl:AllDisjointClasses ;
+      owl:members ?m2 .
+  ?m2 rdf:rest*/rdf:first min:Lex .
+  ?m2 rdf:rest*/rdf:first min:Structura .
+  ?m2 rdf:rest*/rdf:first min:Possibile .
+  ?m2 rdf:rest*/rdf:first min:Norma .
+  ?m2 rdf:rest*/rdf:first min:Institutio .
+
+  # Branch disjointness: Nexus, Forma
+  ?d3 a owl:AllDisjointClasses ;
+      owl:members ?m3 .
+  ?m3 rdf:rest*/rdf:first min:Nexus .
+  ?m3 rdf:rest*/rdf:first min:Forma .
+}

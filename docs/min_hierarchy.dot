@@ -1,0 +1,106 @@
+digraph MIN {
+    rankdir=TB;
+    bgcolor="transparent";
+    pad=0.4;
+    nodesep=0.3;
+    ranksep=0.65;
+    splines=true;
+
+    graph [fontname="Helvetica Neue, Helvetica, Arial, sans-serif"];
+    node  [fontname="Helvetica Neue, Helvetica, Arial, sans-serif"];
+    edge  [fontname="Helvetica Neue, Helvetica, Arial, sans-serif"];
+
+    node [
+        shape=box, style="rounded,filled", penwidth=1.5,
+        fontsize=11, height=0.42, margin="0.10,0.06"
+    ];
+    edge [ penwidth=1.2, arrowsize=0.55 ];
+
+    // ── ENTITY ──────────────────────────────────────────────
+    Entity [
+        label=<<B>Entity</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">eindeutige Referenzierbarkeit</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was existiert.&quot;</FONT>>,
+        fillcolor="#f0ebe3", color="#9c8b75", fontcolor="#3d3225",
+        fontsize=13, penwidth=2.0, width=2.0
+    ];
+
+    // ── NEXUS ───────────────────────────────────────────────
+    subgraph cluster_nexus {
+        label=<<TABLE BORDER="0" CELLPADDING="1"><TR>
+            <TD><B><FONT POINT-SIZE="11" COLOR="#1a5276">Nexus</FONT></B></TD>
+            <TD><FONT POINT-SIZE="9" COLOR="#5499c7">  ·  das, was etwas bewirkt</FONT></TD>
+        </TR><TR>
+            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#aabbcc">⊥ Object · Process · Data · Boundary  ┃  Agent überlappt</FONT></TD>
+        </TR></TABLE>>;
+        fontsize=11; fontcolor="#1a5276";
+        style="rounded"; color="#85c1e9"; bgcolor="#f4f9ff";
+        margin=14; penwidth=1.4;
+
+        Nexus [
+            label=<<B>Nexus</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">kausale Wirksamkeit</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was etwas bewirkt.&quot;</FONT>>,
+            fillcolor="#d6eaf8", color="#2e86c1", fontcolor="#1a3c5e",
+            fontsize=12, penwidth=1.8, width=1.7
+        ];
+
+        Object [ label=<<B>Object</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">materielle Persistenz</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was da ist.&quot;</FONT>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Process [ label=<<B>Process</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Veränderung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was geschieht.&quot;</FONT>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Data [ label=<<B>Data</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">informationelles Artefakt</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was beschreibt.&quot;</FONT>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+        Boundary [ label=<<B>Boundary</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Grenzphänomene</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was dazwischen entsteht.&quot;</FONT>>, fillcolor="#d5f5e3", color="#28b463", fontcolor="#186a3b" ];
+    }
+
+    // ── FORMA ───────────────────────────────────────────────
+    subgraph cluster_forma {
+        label=<<TABLE BORDER="0" CELLPADDING="1"><TR>
+            <TD><B><FONT POINT-SIZE="11" COLOR="#6c3483">Forma</FONT></B></TD>
+            <TD><FONT POINT-SIZE="9" COLOR="#a569bd">  ·  Das, was bestimmt.</FONT></TD>
+        </TR><TR>
+            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle 5 paarweise disjunkt</FONT></TD>
+        </TR></TABLE>>;
+        fontsize=11; fontcolor="#6c3483";
+        style="rounded"; color="#bb8fce"; bgcolor="#fcf7ff";
+        margin=14; penwidth=1.4;
+
+        Forma [
+            label=<<B>Forma</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">konstitutive Bestimmung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was bestimmt.&quot;</FONT>>,
+            fillcolor="#e8daef", color="#7d3c98", fontcolor="#4a235a",
+            fontsize=12, penwidth=1.8, width=1.7
+        ];
+
+        Lex [ label=<<B>Lex</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">universelle Gültigkeit</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was immer gilt.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Structura [ label=<<B>Structura</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">formale Struktur</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was die Wirklichkeit formalisiert.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Possibile [ label=<<B>Possibile</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Möglichkeitsraum</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was sein könnte.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Norma [ label=<<B>Norma</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Anforderung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was gelten soll.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Institutio [ label=<<B>Institutio</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">kollektive Anerkennung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was anerkannt wird.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+    }
+
+    // ── ENTITY-QUERKATEGORIEN ─────────────────────────────
+    Agent [
+        label=<<B>Agent</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">selektive Handlungsfähigkeit</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was handelt.&quot;</FONT>>,
+        fillcolor="#fdebd0", color="#e67e22", fontcolor="#7e4a12",
+        style="rounded,filled", penwidth=1.6
+    ];
+
+    // ── Edges ───────────────────────────────────────────────
+    Entity -> Nexus  [color="#2e86c1", penwidth=1.8];
+    Entity -> Forma  [color="#7d3c98", penwidth=1.8];
+    Entity -> Agent  [color="#e67e22", penwidth=1.5];
+
+    Nexus -> Object [color="#28b463", minlen=2];
+    Nexus -> Process [color="#28b463", minlen=2];
+    Nexus -> Data [color="#28b463", minlen=2];
+    Nexus -> Boundary [color="#28b463", minlen=2];
+
+    Forma -> Lex [color="#8e44ad", minlen=2];
+    Forma -> Structura [color="#8e44ad", minlen=2];
+    Forma -> Possibile [color="#8e44ad", minlen=2];
+    Forma -> Norma [color="#8e44ad", minlen=2];
+    Forma -> Institutio [color="#8e44ad", minlen=2];
+    Nexus -> Forma [style=invis, weight=50, constraint=true];
+    Forma -> Agent [style=invis, weight=50, constraint=true];
+
+    // ── Rank ────────────────────────────────────────────────
+    { rank=same; Nexus; Forma; Agent; }
+
+    // ── Title ───────────────────────────────────────────────
+    labelloc=t;
+    label=<<FONT POINT-SIZE="16"><B>MIN — Material · Information · Nexus</B></FONT><BR/><FONT POINT-SIZE="10" COLOR="#888888">Klassenhierarchie · v1.0.0 │ Entity ≡ Nexus ⊔ Forma | Agent</FONT><BR/> >;
+}

@@ -1,0 +1,11 @@
+@prefix min: <https://w3id.org/min#> .
+@prefix ex:  <https://example.org/min#> .
+
+ex:dc04_standard a min:Institutio ;
+    min:hasIdentifier "INST-DC04" ;
+    min:hasName "DC04 material designation" ;
+    min:typifies ex:sheet_042 .
+
+ex:sheet_042 a min:Object ;
+    min:hasIdentifier "OBJ-042" ;
+    min:hasName "Sheet 042" .

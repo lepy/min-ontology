@@ -1,0 +1,106 @@
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix min:     <https://w3id.org/min#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+min:OntologyMetadataShape a sh:NodeShape ;
+    sh:targetNode <https://w3id.org/min> ;
+    sh:property [
+        sh:path owl:versionIRI ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path owl:versionInfo ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:title ;
+        sh:minCount 2
+    ] ;
+    sh:property [
+        sh:path dcterms:description ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:creator ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:created ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path dcterms:license ;
+        sh:minCount 1
+    ] .
+
+min:ClassLabelShape a sh:NodeShape ;
+    sh:targetNode min:Entity ;
+    sh:targetNode min:Nexus ;
+    sh:targetNode min:Forma ;
+    sh:targetNode min:Object ;
+    sh:targetNode min:Process ;
+    sh:targetNode min:Data ;
+    sh:targetNode min:Agent ;
+    sh:targetNode min:Lex ;
+    sh:targetNode min:Structura ;
+    sh:targetNode min:Possibile ;
+    sh:targetNode min:Norma ;
+    sh:targetNode min:Institutio ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1
+    ] .
+
+min:PolaritySuperPropertyShape a sh:NodeShape ;
+    sh:targetNode min:materialProperty ;
+    sh:targetNode min:informationalProperty ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1
+    ] .
+
+min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
+    sh:targetNode min:hasInput ;
+    sh:targetNode min:hasOutput ;
+    sh:targetNode min:undergoes ;
+    sh:targetNode min:resultOf ;
+    sh:targetNode min:performs ;
+    sh:targetNode min:performedBy ;
+    sh:targetNode min:controls ;
+    sh:targetNode min:actsOn ;
+    sh:targetNode min:affectedBy ;
+    sh:targetNode min:owns ;
+    sh:targetNode min:describes ;
+    sh:targetNode min:describedBy ;
+    sh:targetNode min:generates ;
+    sh:targetNode min:generatedBy ;
+    sh:targetNode min:produces ;
+    sh:targetNode min:realizes ;
+    sh:targetNode min:realizedBy ;
+    sh:targetNode min:constrains ;
+    sh:targetNode min:governs ;
+    sh:targetNode min:formalizes ;
+    sh:targetNode min:evaluates ;
+    sh:targetNode min:concerns ;
+    sh:targetNode min:alternativeTo ;
+    sh:targetNode min:constitutes ;
+    sh:targetNode min:constitutedBy ;
+    sh:targetNode min:recognizes ;
+    sh:targetNode min:recognizedBy ;
+    sh:targetNode min:encodes ;
+    sh:targetNode min:encodedBy ;
+    sh:targetNode min:nexusWith ;
+    sh:targetNode min:hasComponent ;
+    sh:property [
+        sh:path rdfs:domain ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path rdfs:range ;
+        sh:minCount 1
+    ] .
