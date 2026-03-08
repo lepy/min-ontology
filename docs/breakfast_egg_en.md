@@ -507,7 +507,7 @@ no polarity label.
 ```
 Nexus (causes effects)             Forma (determines)
 ──────────────────────             ──────────────────
-Object:   Pot, Water, Egg           Lex:        Heat transfer,
+Object:   Pot, Water, Egg          Lex:        Heat transfer,
 Process:  Boiling, Simmering                   Protein denaturation
 Data:     Measurement, Recipe      Structura:  Heat conduction equation
 Boundary: Heat transfer ×2         Norma:      Cooking times (s/m/h)
