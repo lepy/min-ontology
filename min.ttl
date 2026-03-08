@@ -5,6 +5,7 @@
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+
 # Design decision: dcterms:, skos:, and foaf: are used as metadata vocabularies
 # but NOT imported via owl:imports. Rationale: MIN must remain self-contained
 # and parseable without network access. The dcterms/skos/foaf terms used here
@@ -314,7 +315,6 @@
 <https://orcid.org/0000-0001-8199-8666> a foaf:Person ;
     foaf:name "Dr. Ingolf Lepenies" ;
     foaf:homepage <https://github.com/lepy> .
-
 
 # =============================================================================
 #

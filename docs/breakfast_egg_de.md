@@ -10,14 +10,16 @@
 
 ## Überblick
 
-MIN hat zwei Zweige unter `Entity`:
+MIN hat zwei Zweige und eine Querkategorie unter `Entity`:
 
-- **Nexus** — das, was etwas bewirkt (Object, Process, Data, Agent, Boundary)
+- **Nexus** — das, was etwas bewirkt (Object, Process, Data, Boundary)
 - **Forma** — das Regelwerk, nach dem Nexus wirkt (Lex, Structura, Possibile, Norma, Institutio)
+- **Agent** — das, was handelt. Orthogonale Querkategorie, die die Zweiggrenze durchquert.
 
-Beim Eierkochen brauchen wir beide. Das Ei, der Topf, das Wasser —
+Beim Eierkochen brauchen wir alle drei. Das Ei, der Topf, das Wasser —
 das sind Nexus-Instanzen. Die Kochzeitvorgabe, das Naturgesetz der
 Wärmeübertragung, die Garstufe „weichgekocht" — das sind Forma-Instanzen.
+Der Koch und der Herd im Betrieb — das sind Agents mit Co-Typisierung.
 
 ![min_hierarchy.svg](min_hierarchy.svg)
 
@@ -67,7 +69,10 @@ Der Koch ist Agent — er entscheidet, wann er das Ei einlegt, wie lange
 er kocht, ob er abschreckt. Der Herd im Betrieb ist ebenfalls Agent —
 er reguliert die Energiezufuhr selektiv.
 
-Agent ist orthogonal zu Object: Ein Mensch ist Agent ∩ Object (dual-typing).
+Agent ist eine orthogonale Querkategorie unter Entity (v1.0). Agent ist
+keine Seinskategorie, sondern eine Handlungskategorie. Sie durchquert
+die Zweiggrenze Nexus/Forma. Co-Typisierung ist Pflicht: jeder Agent
+muss mindestens eine Seinskategorie tragen.
 
 ```turtle
 egg:Koch a min:Agent , min:Object ;
@@ -83,13 +88,19 @@ egg:Herd_aktiv a min:Agent , min:Object ;
 ```
 
 **Warum `a min:Agent, min:Object`?** Weil der Koch physisch da ist
-(Object) UND handelt (Agent). MIN erzwingt keine Wahl — Agent ist
-nicht disjunkt mit Object. Das ist eine bewusste Architekturentscheidung:
-Agency ist eine Dimension, keine Substanzkategorie.
+(Object) UND handelt (Agent). MIN erzwingt Co-Typisierung — Agent
+allein reicht nie. Die Co-Klasse bestimmt den Seinsmodus:
+Agent ∩ Object → Nexus-Zweig. Agent ∩ Institutio → Forma-Zweig.
 
 **Warum ist die Gravitation kein Agent?** Sie wirkt universal, nicht
 selektiv. Universalität disqualifiziert für Agency — qualifiziert aber
 für Lex (→ Schritt 7).
+
+**Warum ist Agent keine Nexus-Kategorie mehr?** Weil Agent die
+Zweiggrenze durchquert. Eine Organisation handelt (Agent) UND wird
+anerkannt (Institutio). Der Vernichtungstest zeigt: dieselbe
+Vernichtungsbedingung — also dasselbe Ding. Agent muss über der
+Zweiggrenze stehen: `rdfs:subClassOf min:Entity`.
 
 ---
 
@@ -207,7 +218,7 @@ egg:Rezept a min:Data ;
     min:describes egg:Eierkochen ;
     min:encodes egg:Norma_weich ;
     min:encodes egg:Norma_hart ;
-    min:encodes egg:Typ_weichgekocht .
+    min:encodes egg:Garstufe_weichgekocht .
 ```
 
 **Die Schlüsselrelation: `min:encodes`.**
@@ -287,6 +298,10 @@ ist Structura. Die Implementierung *kodiert* die Struktur: `Data encodes Structu
 Die Kochzeitvorgaben sind Normen. Sie bewirken nichts — aber sie
 definieren den Unterschied zwischen „weich" und „zu hart".
 
+Norma ist ATOMAR: jede einzelne Anforderung ist eine eigenständige
+Norma-Instanz. Die Bündelung mehrerer Norma zu einer Wesensbestimmung
+ist Institutio, nicht Norma (→ Schritt 10).
+
 ```turtle
 egg:Norma_weich a min:Norma ;
     min:hasIdentifier "NORMA-WEICH-001" ;
@@ -320,47 +335,73 @@ Genau das macht Norma zur Norma.
 
 ---
 
-## Schritt 10 — Was etwas zu dem macht, was es ist: Typus
+## Schritt 10 — Was etwas zu dem macht, was es ist: Institutio
 
-> *„Was für ein Ei ist das?"* → **Typus.**
+> *„Was für ein Ei ist das?"* → **Institutio.**
 
-Die Garstufe „weichgekocht" ist ein Typus — das Bündel von Bestimmungen,
-das festlegt, als was das Ei zählt. Typus bündelt Norma, Lex, Structura
-und Properties zu einer Wesensbestimmung.
+Die Garstufe „weichgekocht" ist eine Institutio — eine konventionelle
+Bündelung von Bestimmungen, die festlegt, als was das Ei zählt.
+Institutio bündelt Norma, Lex, Structura und Properties zu einer
+Wesensbestimmung. Diese Bündelung existiert, weil eine Fachgemeinschaft
+(hier: Köche) sie anerkennt.
+
+Searle: *„X counts as Y in context C."* Das gekochte Ei (Object) zählt
+als weichgekocht (Institutio) im Kontext der Küche.
 
 ```turtle
-egg:Typ_weichgekocht a min:Typus ;
-    min:hasIdentifier "TYP-WEICH-001" ;
+egg:Garstufe_weichgekocht a min:Institutio ;
+    min:hasIdentifier "INST-WEICH-001" ;
     min:hasName "weichgekocht"@de ;
-    min:typifies egg:Ei_gekocht .
+    min:typifies egg:Ei_gekocht ;
+    min:comprises egg:Norma_weich ;
+    min:recognizedBy egg:Koch .
 
-egg:Typ_wachsweich a min:Typus ;
-    min:hasIdentifier "TYP-WACHS-001" ;
+egg:Garstufe_wachsweich a min:Institutio ;
+    min:hasIdentifier "INST-WACHS-001" ;
     min:hasName "wachsweich"@de ;
-    min:typifies egg:Ei_gekocht .
+    min:typifies egg:Ei_gekocht ;
+    min:comprises egg:Norma_wachsweich ;
+    min:recognizedBy egg:Koch .
 
-egg:Typ_hartgekocht a min:Typus ;
-    min:hasIdentifier "TYP-HART-001" ;
+egg:Garstufe_hartgekocht a min:Institutio ;
+    min:hasIdentifier "INST-HART-001" ;
     min:hasName "hartgekocht"@de ;
-    min:typifies egg:Ei_gekocht .
+    min:typifies egg:Ei_gekocht ;
+    min:comprises egg:Norma_hart ;
+    min:recognizedBy egg:Koch .
 
-egg:Typ_Huehner_M a min:Typus ;
-    min:hasIdentifier "TYP-EI-M-001" ;
+egg:Huehner_M a min:Institutio ;
+    min:hasIdentifier "INST-EI-M-001" ;
     min:hasName "Hühnerei Größe M"@de ;
-    min:typifies egg:Ei_roh .
+    min:typifies egg:Ei_roh ;
+    min:recognizedBy egg:Koch .
 ```
 
-**`min:typifies`**: Typus → Nexus. Der Typus *bestimmt*, als was der
-Nexus zählt. Nicht beschreiben (→ Data), nicht bewerten (→ Norma),
-sondern BESTIMMEN.
+**`min:typifies`**: Institutio → Nexus. Die Institutio *bestimmt*,
+als was der Nexus zählt. Nicht beschreiben (→ Data), nicht bewerten
+(→ Norma), sondern BESTIMMEN.
 
-**Warum ist „weichgekocht" nicht Norma?** Norma bewertet: „Die Kochzeit
-SOLL 4–5 Minuten betragen." Typus konstituiert: „Ein weiches Ei IST das,
-was festes Eiweiß und flüssiges Eigelb hat." Norma fragt: Bestanden?
-Typus fragt: Was ist es?
+**`min:comprises`**: Institutio → Forma. Die Bündelungsrelation.
+Die Garstufe „weichgekocht" *umfasst* die Norma „Kochzeit 4–5 min".
+Die gebündelten Forma-Instanzen existieren unabhängig. Die Bündelung
+ist der institutionelle Akt.
 
-**Polyhierarchie:** Ein Ei kann mehrere Typen haben — es ist zugleich
-`Typ_Huehner_M` (Eisorte) und `Typ_weichgekocht` (Garstufe).
+**Warum ist „weichgekocht" nicht Norma?** Norma ist ATOMAR und bewertet:
+„Die Kochzeit SOLL 4–5 Minuten betragen." Institutio BÜNDELT und
+konstituiert: „Ein weiches Ei IST das, was festes Eiweiß und flüssiges
+Eigelb hat — und die Koch-Community erkennt das an." Norma fragt:
+Bestanden? Institutio fragt: Was ist es?
+
+**Polyhierarchie:** Ein Ei kann mehrere Institutio-Typen haben — es ist
+zugleich `Huehner_M` (Eisorte) und `Garstufe_weichgekocht` (Garstufe).
+
+**Warum Institutio und nicht eine eigene Kategorie „Typus"?** Die
+Bündelung von Forma-Instanzen zu einer Wesensbestimmung ist ein
+institutioneller Akt — sie existiert, weil eine Fachgemeinschaft sie
+anerkennt. „Weichgekocht" bleibt „weichgekocht", solange IRGENDWER
+die Konvention anerkennt. Wenn NIEMAND sie mehr kennt, zerfällt sie
+in ihre atomaren Norma-Bestandteile. Genau das ist Searles Kriterium
+für Institutio. Klassifikation IST ein institutioneller Akt.
 
 ---
 
@@ -389,9 +430,13 @@ wird es zum Process (`min:realizes`).
 
 ---
 
-## Schritt 12 — Was anerkannt wird: Institutio
+## Schritt 12 — Soziale Konstrukte: Institutio (zweite Funktion)
 
 > *„Existiert es nur, weil Agenten es anerkennen?"* → **Institutio.**
+
+In Schritt 10 haben wir Institutio als konventionelle Bündelung
+kennengelernt (Garstufen). Institutio hat eine zweite Funktion:
+soziale Konstrukte im engeren Sinne.
 
 Die EU-Vermarktungsnorm für Eier (Größenklassen S/M/L/XL) existiert,
 weil EU-Mitgliedstaaten sie anerkennen. Ohne Anerkennung — keine Norm.
@@ -400,22 +445,28 @@ weil EU-Mitgliedstaaten sie anerkennen. Ohne Anerkennung — keine Norm.
 egg:EU_Vermarktungsnorm a min:Institutio ;
     min:hasIdentifier "INST-EU-EI-001" ;
     min:hasName "EU-Vermarktungsnormen für Eier"@de ;
-    min:constitutedBy egg:Koch ;
+    min:comprises egg:Norma_groesse_M ;
+    min:constitutedBy egg:EU_Kommission ;
     min:recognizedBy egg:Koch .
 ```
 
-**Warum nicht Norma?** Norma ist eine inhaltliche Anforderung
-(„Rm ≥ 270 MPa", „Kochzeit 4–5 min"). Institutio ist ein soziales
-Konstrukt — es existiert durch kollektive Anerkennung. Die EU-Verordnung
-als *Anforderungskatalog* ist Norma. Die EU-Verordnung als
-*gesellschaftlich anerkanntes Regelwerk* ist Institutio.
+**Institutio hat also zwei Funktionen:**
+
+1. **Konventionelle Bündelungen** — Garstufen, Stahlsorten, Prüfverfahren.
+   Die Bündelung atomarer Forma zu einer Wesensbestimmung (Schritt 10).
+2. **Soziale Konstrukte** — Geld, Patente, Vermarktungsnormen, Organisationen.
+   Institutionelle Tatsachen im Sinne Searles.
+
+Beide existieren durch kollektive Anerkennung. Beide zerfallen,
+wenn niemand sie mehr anerkennt.
 
 ---
 
 ## Schritt 13 — Domain Properties: Polarität
 
 MIN unterscheidet auf Schema-Ebene zwischen materialen und
-informationalen Eigenschaften. Das ist die Polarität.
+informationalen Eigenschaften. Das ist die Polarität — eine Heuristik,
+kein Axiom.
 
 ```turtle
 egg:material a owl:DatatypeProperty ;
@@ -445,6 +496,11 @@ bei Properties, die das Strukturelle, Semantische erfassen (Kochzeit
 als Messwert, Dateiformat). Die Deklaration liegt in der Property,
 nicht in der Instanz. Die Instanzen bleiben flach.
 
+Polarität ist HEURISTIK: Domänen-Properties KÖNNEN als Subproperties
+deklariert werden, MÜSSEN aber nicht. Temporale, modale und
+zustandsbezogene Properties (hasTimestamp, hasStatus) passen in keine
+der beiden Kategorien und brauchen kein Polaritäts-Label.
+
 ---
 
 ## Zusammenfassung
@@ -454,11 +510,13 @@ Nexus (bewirkt)                    Forma (bestimmt)
 ─────────────────                  ─────────────────
 Object:   Topf, Wasser, Ei         Lex:        Wärmeübertragung,
 Process:  Kochen, Garziehen                    Proteindenaturierung
-Agent:    Koch, Herd (aktiv)       Structura:  Wärmeleitungsgleichung
+Data:     Messung, Rezept          Structura:  Wärmeleitungsgleichung
 Boundary: Wärmeübergang ×2         Norma:      Kochzeiten (w/m/h)
-Data:     Messung, Rezept          Typus:      weich/wachsweich/hart
                                    Possibile:  Überkochen, Grüner Ring
-                                   Institutio: EU-Vermarktungsnorm
+Querkategorie (handelt)            Institutio: Garstufen (weich/wachs/hart),
+─────────────────                              Hühnerei Größe M,
+Agent:    Koch, Herd (aktiv)                   EU-Vermarktungsnorm
+          (jeweils Agent ∩ Object)
 ```
 
 **Brückenrelationen verbinden die Zweige:**
@@ -469,7 +527,8 @@ Data:     Messung, Rezept          Typus:      weich/wachsweich/hart
 | `governs` | Proteindenaturierung governs Garziehen |
 | `evaluates` | Norma_weich evaluates Ei_gekocht |
 | `encodes` | Rezept encodes Norma_weich |
-| `typifies` | Typ_weichgekocht typifies Ei_gekocht |
+| `typifies` | Garstufe_weichgekocht typifies Ei_gekocht |
+| `comprises` | Garstufe_weichgekocht comprises Norma_weich |
 | `formalizes` | Wärmeleitungsgleichung formalizes Garziehen |
 | `concerns` | Grüner_Ring concerns Ei_gekocht |
 | `constrains` | Wärmeübertragung constrains Wärmeübergang |
