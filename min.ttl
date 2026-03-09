@@ -162,8 +162,6 @@
     — supersedes: Forma ersetzt ältere Forma
     — justifiedBy: Institutio wird durch Forma getragen
 
-    Zweischicht-Architektur: MIN → sdata.
-
     1 Wurzel (Entity). 2 Zweige (Nexus, Forma). 1 Querkategorie (Agent).
     4 Nexus-Kategorien. 5 Forma-Kategorien.
     2 Polaritäts-Superproperties (Heuristik).
@@ -176,7 +174,6 @@
     dcterms:created "2026-03-08"^^xsd:date ;
     dcterms:contributor "" ;
     dcterms:license <https://creativecommons.org/licenses/by-sa/4.0/> ;
-    rdfs:seeAlso <https://w3id.org/sdata/core> ;
     min:designRationale """v1.0.0 erweitert MIN um den Forma-Zweig. Begründung:
 
     1. MIN v1.0.0 modelliert nur das Aktuale — Dinge mit kausaler
