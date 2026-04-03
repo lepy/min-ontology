@@ -39,18 +39,22 @@ ex:Hooke_Gesetz a min:Lex ;
 
 # Das Lehrbuch ist Data — es kodiert die Lex, IST aber nicht die Lex.
 ex:Lehrbuch_Festigkeitslehre a min:Data ;
+    min:hasIdentifier "DAT-BOOK-STRENGTH-12" ;
     min:hasName  "Technische Mechanik — Festigkeitslehre, 12. Aufl." ;
     min:encodes  ex:Hooke_Gesetz .
 
 # --- Stützinstanzen ---
 
 ex:Druckfeder_F42 a min:Object ;
+    min:hasIdentifier "OBJ-SPRING-F42" ;
     min:hasName "Druckfeder F42 (Edelstahl)" .
 
 ex:Druckfeder_F42_geprueft a min:Object ;
+    min:hasIdentifier "OBJ-SPRING-F42-TESTED" ;
     min:hasName "Druckfeder F42 (geprüft)" .
 
 ex:Pruefer_Weber a min:Agent ;
+    min:hasIdentifier "AGENT-WEBER" ;
     min:hasName  "Weber, K. (Prüfingenieur)" ;
     min:performs ex:Federpruefung_101 .
 
@@ -63,6 +67,7 @@ ex:Federpruefung_101 a min:Process ;
     min:generates     ex:Pruefprotokoll_FP101 .
 
 ex:Pruefprotokoll_FP101 a min:Data ;
+    min:hasIdentifier "DAT-PROTOCOL-FP101" ;
     min:hasName      "Prüfprotokoll FP-101" ;
     min:describes    ex:Federpruefung_101 ;
     min:generatedBy  ex:Federpruefung_101 .

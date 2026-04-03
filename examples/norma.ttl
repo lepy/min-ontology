@@ -54,32 +54,40 @@ ex:Max_Eigenfrequenz_Fussgaenger a min:Norma ;
 
 # Das Normdokument ist Data — es kodiert die Norma.
 ex:Eurocode_EN1993_2 a min:Data ;
+    min:hasIdentifier "DAT-EN1993-2" ;
     min:hasName  "DIN EN 1993-2:2010 Stahlbrücken" ;
     min:encodes  ex:Max_Durchbiegung_L300 .
 
 ex:Eurocode_EN1990_A2 a min:Data ;
+    min:hasIdentifier "DAT-EN1990-A2" ;
     min:hasName  "DIN EN 1990 Anhang A2 Brücken" ;
     min:encodes  ex:Max_Eigenfrequenz_Fussgaenger .
 
 # --- Stützinstanzen ---
 
 ex:Stahltraeger_B12 a min:Object ;
+    min:hasIdentifier "OBJ-IPE300-B12" ;
     min:hasName "Stahlträger IPE 300, Brücke Feld 12" .
 
 ex:Brueckenfeld_12 a min:Object ;
+    min:hasIdentifier "OBJ-FELD-12" ;
     min:hasName "Brückenfeld 12" .
 
 ex:Brueckenentwurf_Feld12 a min:Object ;
+    min:hasIdentifier "OBJ-DESIGN-FIELD12" ;
     min:hasName "Brückenentwurf Feld 12 (CAD)" .
 
 ex:Brueckenstatik_Feld12 a min:Object ;
+    min:hasIdentifier "OBJ-STATICS-FIELD12" ;
     min:hasName "Statiknachweis Feld 12" .
 
 ex:Tragwerksplaner_Lang a min:Agent ;
+    min:hasIdentifier "AGENT-LANG" ;
     min:hasName  "Lang, M. (Tragwerksplaner)" ;
     min:performs ex:Brueckenberechnung_Feld12 .
 
 ex:Brueckenberechnung_Feld12 a min:Process ;
+    min:hasIdentifier "PROC-CALC-FIELD12" ;
     min:hasName   "Statische Berechnung Brücke Feld 12" ;
     min:hasInput  ex:Brueckenentwurf_Feld12 ;
     min:hasOutput ex:Brueckenstatik_Feld12 .

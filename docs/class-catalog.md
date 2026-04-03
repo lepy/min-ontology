@@ -123,6 +123,22 @@ Entity ("Das, was existiert.")
 - Key relations: `constitutedBy`, `recognizedBy`, `typifies`, `comprises`.
 - Example: [Institutio section](examples.md#institutio-institutional-construct).
 
+## Forma classification guide
+
+```text
+Is it violable?
+  Yes → Norma
+  No  → Does it hold universally and without exception?
+    Yes → Lex
+    No  → Is it purely formal, without empirical content?
+      Yes → Structura
+      No  → Does it exist only through collective recognition?
+        Yes → Institutio
+        No  → Does it describe something that has not occurred?
+          Yes → Possibile
+          No  → Modeling problem — possibly a missing category.
+```
+
 ## Disjointness and overlap rules
 
 - `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are pairwise disjoint.

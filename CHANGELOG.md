@@ -15,10 +15,20 @@ All notable changes to MIN are documented in this file.
 - Added `min:constrainedBy` as inverse of `min:constrains`.
 - Datatype properties aligned to Dublin Core (`hasIdentifier → dcterms:identifier`, `hasTimestamp → dcterms:date`, `hasDescription → dcterms:description`).
 - `min:owns` range widened from `min:Object` to `min:Entity`.
+- `min:Agent` and `min:Process` are now disjoint (Agent ∩ Process no longer allowed).
+- Moved `MetaTerm`, `OntologyArtifact`, `describesOntologyTerm` from `min.ttl` to `min-docs.ttl`.
+- SHACL shapes fully updated: all 49 object properties, Boundary instance shape, all class labels.
 
 ### Added
+- `min:startedAt`, `min:endedAt` (DatatypeProperties on Process, xsd:dateTime).
+- Forma classification guide (decision tree) in class catalog.
 - `alignment/min-prov.ttl`: optional PROV-O alignment (Entity, Process, Agent + properties).
 - `alignment/min-bfo.ttl`: optional BFO 2020 alignment (Object → material entity, Process → process, Data → GDC).
+- `alignment/min-schema.ttl`, `alignment/min-sosa.ttl`, `alignment/min-dolce.ttl`, `alignment/min-qudt.ttl`, `alignment/min-dcterms.ttl`: additional optional interoperability modules.
+- `examples/dpp-coil.ttl`: end-to-end DPP use case (coil → deep drawing → part → tensile test).
+- `docs/use-case-dpp.md`: use case documentation with SPARQL queries.
+- `docs/validation.md`: SHACL shapes documentation.
+- `min-v1.0.1.ttl`: immutable release snapshot.
 - `min-docs.ttl` imports `min.ttl` via `owl:imports`.
 - Removed all references to deprecated class `Typus` (subsumed under `Institutio`).
 - Removed undeclared terms from documentation (`influences`, `expresses`, `between`, `EncodedData`, `SelectingAgent`).

@@ -53,18 +53,22 @@ ex:Grenzwertliste_Vibration a min:Data ;
 # --- Stützinstanzen ---
 
 ex:Getriebe_G5 a min:Object ;
+    min:hasIdentifier "OBJ-GEAR-G5" ;
     min:hasName "Planetengetriebe Gondel 5" .
 
 ex:Sensor_VIB_G5 a min:Object ;
+    min:hasIdentifier "OBJ-SENSOR-VIB-G5" ;
     min:hasName "Beschleunigungssensor Gondel 5" .
 
 ex:Schwingungsmessung_G5 a min:Process ;
+    min:hasIdentifier "PROC-MEAS-G5" ;
     min:hasName   "Schwingungsmessung Getriebe G5" ;
     min:hasInput  ex:Getriebe_G5 ;
     min:hasOutput ex:Getriebe_G5 ;
     min:generates ex:Schwingungsdaten_G5_2026 .
 
 ex:Schwingungsgrenzwert_Stufe2 a min:Norma ;
+    min:hasIdentifier "NORMA-VIB-ST2" ;
     min:hasName "Schwingungsgrenzwert Alarmstufe 2" ;
     min:hasDescription "Effektivwert ≤ 7.1 mm/s (ISO 10816-21)" ;
     min:evaluates ex:Getriebe_G5 .

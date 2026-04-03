@@ -1,0 +1,50 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ QUDT Alignment
+#
+#   Optional module. Load for interoperability with QUDT
+#   (http://qudt.org/) — Quantities, Units, Dimensions, Types.
+#
+#   MIN has no built-in quantity pattern. This alignment provides
+#   recommended mappings for domain ontologies (e.g. sdata) that
+#   need to express numeric values with units.
+#
+#   Pattern: rdfs:subClassOf + rdfs:subPropertyOf.
+# =============================================================================
+
+<https://w3id.org/min/alignment/qudt> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ QUDT Alignment"@en ;
+    rdfs:comment "Maps MIN to QUDT for quantity/unit interoperability. Optional module."@en .
+
+# --- Class alignment ---
+
+# A QUDT QuantityValue is an information artifact with a numeric value
+# and a unit reference. In MIN terms, it is Data (has bytes, can be
+# copied, describes a Nexus).
+qudt:QuantityValue rdfs:subClassOf min:Data .
+
+# A QUDT Quantity (the abstract measurable property) maps to Forma —
+# it is a formal determinant, not a concrete measurement.
+qudt:Quantity rdfs:subClassOf min:Forma .
+
+# --- Recommended usage pattern ---
+#
+# Domain ontologies should model measurements as:
+#
+#   ex:messung_Rm a min:Data , qudt:QuantityValue ;
+#       min:hasIdentifier "MEAS-RM-001" ;
+#       qudt:numericValue 285.0 ;
+#       qudt:hasUnit unit:MegaPA ;
+#       min:describes ex:bauteil_001 ;
+#       min:encodes ex:norma_Rm_270 .
+#
+# This keeps MIN's Nexus/Forma separation intact:
+# - The measurement (Data/QuantityValue) is Nexus — actual, with bytes.
+# - The requirement it encodes (Norma) is Forma — formal, no bytes.
+# - QUDT provides the numeric value and unit.

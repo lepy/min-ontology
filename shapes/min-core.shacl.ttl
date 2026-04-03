@@ -5,21 +5,24 @@
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
+# =============================================================================
+#   MIN Core SHACL Shapes (v1.0.1)
+#   Validates ontology-level structure of min.ttl.
+# =============================================================================
+
 min:OntologyMetadataShape a sh:NodeShape ;
     sh:targetNode <https://w3id.org/min> ;
     sh:property [
         sh:path owl:versionIRI ;
-        sh:minCount 1 ;
-        sh:maxCount 1
+        sh:minCount 1 ; sh:maxCount 1
     ] ;
     sh:property [
         sh:path owl:versionInfo ;
-        sh:minCount 1 ;
-        sh:maxCount 1
+        sh:minCount 1 ; sh:maxCount 1
     ] ;
     sh:property [
         sh:path dcterms:title ;
-        sh:minCount 2
+        sh:minCount 1
     ] ;
     sh:property [
         sh:path dcterms:description ;
@@ -46,11 +49,14 @@ min:ClassLabelShape a sh:NodeShape ;
     sh:targetNode min:Process ;
     sh:targetNode min:Data ;
     sh:targetNode min:Agent ;
+    sh:targetNode min:Boundary ;
     sh:targetNode min:Lex ;
     sh:targetNode min:Structura ;
     sh:targetNode min:Possibile ;
     sh:targetNode min:Norma ;
     sh:targetNode min:Institutio ;
+    sh:targetNode min:CausalityMode ;
+    sh:targetNode min:EfficacyMode ;
     sh:property [
         sh:path rdfs:label ;
         sh:minCount 1
@@ -65,24 +71,39 @@ min:PolaritySuperPropertyShape a sh:NodeShape ;
     ] .
 
 min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
+    # Inter-Nexus
+    sh:targetNode min:nexusWith ;
+    sh:targetNode min:hasComponent ;
+    # Transformation
     sh:targetNode min:hasInput ;
     sh:targetNode min:hasOutput ;
     sh:targetNode min:undergoes ;
     sh:targetNode min:resultOf ;
+    # Agency
     sh:targetNode min:performs ;
     sh:targetNode min:performedBy ;
     sh:targetNode min:controls ;
     sh:targetNode min:actsOn ;
     sh:targetNode min:affectedBy ;
     sh:targetNode min:owns ;
+    # Data
     sh:targetNode min:describes ;
     sh:targetNode min:describedBy ;
     sh:targetNode min:generates ;
     sh:targetNode min:generatedBy ;
+    # Boundary
+    sh:targetNode min:bounds ;
+    sh:targetNode min:hasBoundary ;
+    # Derived
     sh:targetNode min:produces ;
+    # Generic bridges
+    sh:targetNode min:originates ;
+    sh:targetNode min:originatedBy ;
     sh:targetNode min:realizes ;
     sh:targetNode min:realizedBy ;
     sh:targetNode min:constrains ;
+    sh:targetNode min:constrainedBy ;
+    # Specialized bridges
     sh:targetNode min:governs ;
     sh:targetNode min:formalizes ;
     sh:targetNode min:evaluates ;
@@ -94,12 +115,23 @@ min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
     sh:targetNode min:recognizedBy ;
     sh:targetNode min:encodes ;
     sh:targetNode min:encodedBy ;
-    sh:targetNode min:nexusWith ;
-    sh:targetNode min:hasComponent ;
-    sh:property [
-        sh:path rdfs:domain ;
-        sh:minCount 1
-    ] ;
+    sh:targetNode min:typifies ;
+    sh:targetNode min:typifiedBy ;
+    sh:targetNode min:comprises ;
+    sh:targetNode min:comprisedBy ;
+    # Epistemic
+    sh:targetNode min:confirms ;
+    sh:targetNode min:confirmedBy ;
+    sh:targetNode min:refutes ;
+    sh:targetNode min:refutedBy ;
+    sh:targetNode min:entails ;
+    sh:targetNode min:supersedes ;
+    sh:targetNode min:supersededBy ;
+    sh:targetNode min:justifiedBy ;
+    sh:targetNode min:justifies ;
+    # Mode
+    sh:targetNode min:hasCausalityMode ;
+    sh:targetNode min:hasEfficacyMode ;
     sh:property [
         sh:path rdfs:range ;
         sh:minCount 1

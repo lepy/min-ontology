@@ -3,13 +3,24 @@
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 
 # =============================================================================
-#
-#   MIN Instance-Level SHACL Shapes (v1.0.0)
-#
-#   These shapes validate instance data against MIN modeling expectations.
-#   Intended to be run against example/domain graphs that import min.ttl.
-#
+#   MIN Instance-Level SHACL Shapes (v1.0.1)
+#   Validates instance data against MIN modeling expectations.
 # =============================================================================
+
+min:EntityInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Entity ;
+    sh:property [
+        sh:path min:hasIdentifier ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "Every Entity must have at least one hasIdentifier."
+    ] ;
+    sh:property [
+        sh:path min:hasName ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "Entity instances should have at least one hasName."
+    ] .
 
 min:ProcessInstanceShape a sh:NodeShape ;
     sh:targetClass min:Process ;
@@ -17,13 +28,13 @@ min:ProcessInstanceShape a sh:NodeShape ;
         sh:path min:hasInput ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "Every Process instance must have at least one hasInput."
+        sh:message "Every Process must have at least one hasInput."
     ] ;
     sh:property [
         sh:path min:hasOutput ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "Every Process instance must have at least one hasOutput."
+        sh:message "Every Process must have at least one hasOutput."
     ] .
 
 min:AgentInstanceShape a sh:NodeShape ;
@@ -32,14 +43,14 @@ min:AgentInstanceShape a sh:NodeShape ;
         sh:path min:performs ;
         sh:minCount 1 ;
         sh:severity sh:Violation ;
-        sh:message "Every Agent instance must perform at least one Process."
+        sh:message "Every Agent must perform at least one Process."
     ] .
 
-min:EntityInstanceShape a sh:NodeShape ;
-    sh:targetClass min:Entity ;
+min:BoundaryInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Boundary ;
     sh:property [
-        sh:path min:hasName ;
-        sh:minCount 1 ;
-        sh:severity sh:Warning ;
-        sh:message "Entity instances should have at least one hasName."
+        sh:path min:bounds ;
+        sh:minCount 2 ;
+        sh:severity sh:Violation ;
+        sh:message "Every Boundary must bound at least two Nexus instances."
     ] .

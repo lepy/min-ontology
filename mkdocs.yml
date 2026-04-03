@@ -22,7 +22,10 @@ nav:
     - Class Examples: examples.md
     - Breakfast Egg Tutorial (DE): breakfast_egg_de.md
     - Breakfast Egg Tutorial (EN): breakfast_egg_en.md
+  - Use Cases:
+    - DPP — Steel Coil to Part: use-case-dpp.md
   - Reference:
+    - Validation (SHACL): validation.md
     - Class Hierarchy (SVG): min_hierarchy.svg
     - Versioning: versioning.md
     - Changelog: changelog.md

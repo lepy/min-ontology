@@ -52,7 +52,8 @@ Disjointness:
 
 - `min:Agent` is a direct subclass of `min:Entity` in v1.0.
 - Structural constraints: at least one `performs`; co-typing with `Nexus` or `Forma` is required.
-- Typical co-typing patterns: `Agent ∩ Object`, `Agent ∩ Data`, `Agent ∩ Process`, `Agent ∩ Institutio`.
+- Typical co-typing patterns: `Agent ∩ Object`, `Agent ∩ Data`, `Agent ∩ Institutio`.
+- `Agent` and `Process` are disjoint (v1.0.1).
 
 ## 4. Forma branch (formal)
 

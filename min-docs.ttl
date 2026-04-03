@@ -318,7 +318,7 @@ min:Data
 # --- Agent ---
 
 min:Agent
-    skos:example "Mensch, CNC-Maschine, Roboterarm, Software-Agent, ML-Modell, Organisation, Normungsgremium, Korrosion."@de ;
+    skos:example "Mensch, CNC-Maschine, Roboterarm, Software-Agent, ML-Modell, Organisation, Normungsgremium."@de ;
     min:philosophicalBasis """Latour: Aktant — alles, was einen Unterschied
     macht, unabhängig von Intentionalität.
     Searle: Institutional agency — eine Organisation handelt
@@ -348,8 +348,7 @@ min:Agent
     2. ZURECHENBARKEIT — Kann man die Wirkung DIESEM Ding zuschreiben?
     3. CO-KLASSE — Gibt es eine Seinskategorie (Object, Data, Institutio, ...)?
     4. KEINE INTENTIONALITÄT GEFORDERT — Bewusstsein ist nicht nötig.
-    5. BEI PROCESS-CO-KLASSE — Transformiert der Process SELEKTIV?
-    Alle fünf müssen erfüllt sein."""@de ;
+    Alle vier müssen erfüllt sein."""@de ;
     min:usageExample """ex:operator_mueller a min:Agent , min:Object ;
     min:performs ex:zugversuch_001 .
 ex:siemens a min:Agent , min:Institutio ;
@@ -368,11 +367,11 @@ min:Institutio — Organisation als Handelnder: Agent. Als juristische
     Person: Institutio. Seit v1.0 beides in einem Knoten: Agent ∩ Institutio.
     Nicht jede Institutio ist Agent (Euro, Patent → keine Agency).
 min:Process — Process sagt WAS GESCHIEHT. Agent sagt WER HANDELT.
-    Agent ∩ Process nur wenn selektiv (Korrosion), nicht wenn universal (Tornado)."""@de ;
+    Agent und Process sind disjunkt (v1.0.1)."""@de ;
     min:axiomRationale """v1.0: rdfs:subClassOf min:Entity (vorher min:Nexus).
     Co-Typisierungsaxiom: Agent ⊑ Nexus ⊔ Forma.
-    Agent durchquert die Zweiggrenze. Nicht disjunkt mit
-    Object, Process, Data, Boundary, Institutio.
+    Agent durchquert die Zweiggrenze. Disjunkt mit Process (v1.0.1).
+    Nicht disjunkt mit Object, Data, Boundary, Institutio.
     FPT-Begründung: Vernichtungstest — Agency einer Organisation
     und ihre institutionelle Existenz haben dieselbe
     Vernichtungsbedingung. ∃performs.Process,
@@ -556,6 +555,24 @@ min:Institutio
     min:definedInVersion "1.0.0" ;
     min:status "stable" .
 
+
+# --- Reflexive Meta-Ebene (defined in min-docs, not in min-core) ---
+
+min:MetaTerm a owl:Class ;
+    rdfs:subClassOf min:Institutio ;
+    rdfs:label "Meta Term"@en , "Meta-Term"@de ;
+    rdfs:comment "Ontology-internal descriptive term of MIN."@en .
+
+min:OntologyArtifact a owl:Class ;
+    rdfs:subClassOf min:Data ;
+    rdfs:label "Ontology Artifact"@en , "Ontologieartefakt"@de ;
+    rdfs:comment "Data artifact encoding ontological terms or axioms."@en .
+
+min:describesOntologyTerm a owl:ObjectProperty ;
+    rdfs:label "describes ontology term"@en ;
+    rdfs:domain min:OntologyArtifact ;
+    rdfs:range min:MetaTerm ;
+    rdfs:subPropertyOf min:describes .
 
 # --- MetaTerm ---
 

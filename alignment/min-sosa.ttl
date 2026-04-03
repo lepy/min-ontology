@@ -1,0 +1,33 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ SSN/SOSA Alignment
+#
+#   Optional module. Load for interoperability with W3C Semantic Sensor
+#   Network ontology (https://www.w3.org/TR/vocab-ssn/).
+#
+#   Pattern: rdfs:subClassOf (MIN specializes SOSA).
+# =============================================================================
+
+<https://w3id.org/min/alignment/sosa> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ SSN/SOSA Alignment"@en ;
+    rdfs:comment "Maps MIN classes to W3C SOSA. Optional module."@en .
+
+# --- Class alignment ---
+# SOSA models observations, sensors, actuators.
+# MIN Process subsumes SOSA Observation (a process that produces data).
+# MIN Agent subsumes SOSA Sensor (an agent that performs observations).
+# MIN Data subsumes SOSA Result (data produced by observation).
+
+min:Process rdfs:subClassOf sosa:Procedure .
+min:Data    rdfs:subClassOf sosa:Result .
+
+# --- Property alignment ---
+
+min:hasOutput    rdfs:subPropertyOf sosa:hasResult .
+min:generatedBy  rdfs:subPropertyOf sosa:isResultOf .

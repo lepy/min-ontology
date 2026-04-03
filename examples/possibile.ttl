@@ -48,6 +48,7 @@ ex:Blattbruch_Szenario_G5 a min:Possibile ;
 
 # Kodierung: Die FMEA-Tabelle ist Data, das Possibile ist Forma.
 ex:FMEA_Offshore_G5 a min:Data ;
+    min:hasIdentifier "DAT-FMEA-G5" ;
     min:hasName  "FMEA Offshore-Anlage Gondel 5" ;
     min:encodes  ex:Ermuedungsriss_Naht_G5 ;
     min:encodes  ex:Blattbruch_Szenario_G5 .
@@ -55,12 +56,15 @@ ex:FMEA_Offshore_G5 a min:Data ;
 # --- Stützinstanzen ---
 
 ex:Schweissnaht_Turmfuss_G5 a min:Object ;
+    min:hasIdentifier "OBJ-WELD-G5" ;
     min:hasName "Schweißnaht Turmfuß Gondel 5" .
 
 ex:Rotorblatt_G5 a min:Object ;
+    min:hasIdentifier "OBJ-BLADE-G5" ;
     min:hasName "Rotorblatt 1 Gondel 5" .
 
 ex:Inspekteur_Hansen a min:Agent ;
+    min:hasIdentifier "AGENT-HANSEN" ;
     min:hasName  "Hansen, L. (Offshore-Inspekteur)" ;
     min:performs ex:Inspektion_G5_2026 .
 

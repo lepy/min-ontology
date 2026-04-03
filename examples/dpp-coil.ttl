@@ -1,0 +1,167 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/dpp/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#   MIN End-to-End Use Case: Digital Product Passport — Steel Coil to Part
+#
+#   Coil(Object) → Tiefziehen(Process) → Bauteil(Object)
+#                       ↑                      ↑
+#                  Operator(Agent)        Zugversuch(Process)
+#                       ↑                      ↓
+#                  DIN-Dok(Data) ──encodes→ ISO6892(Norma)
+#                                              ↓
+#                                       DC04(Institutio) ──comprises→ Norma
+#                                              ↓
+#                                       typifies → Coil
+# =============================================================================
+
+
+# --- Objects ---
+
+ex:coil_042 a min:Object ;
+    min:hasIdentifier "COIL-2026-042" ;
+    min:hasName "DC04 Coil Charge 042"@en .
+
+ex:bauteil_001 a min:Object ;
+    min:hasIdentifier "PART-2026-001" ;
+    min:hasName "Deep-drawn part from Coil 042"@en .
+
+
+# --- Processes ---
+
+ex:tiefziehen a min:Process ;
+    min:hasIdentifier "PROC-TZ-001" ;
+    min:hasName "Deep drawing"@en ;
+    min:hasInput ex:coil_042 ;
+    min:hasOutput ex:bauteil_001 ;
+    min:startedAt "2026-03-15T08:00:00"^^xsd:dateTime ;
+    min:endedAt "2026-03-15T08:45:00"^^xsd:dateTime .
+
+ex:zugversuch a min:Process ;
+    min:hasIdentifier "PROC-ZV-001" ;
+    min:hasName "Tensile test ISO 6892-1"@en ;
+    min:hasInput ex:bauteil_001 ;
+    min:hasOutput ex:messdaten_zv ;
+    min:startedAt "2026-03-16T10:00:00"^^xsd:dateTime ;
+    min:endedAt "2026-03-16T10:30:00"^^xsd:dateTime .
+
+
+# --- Agents ---
+
+ex:operator_mueller a min:Agent , min:Object ;
+    min:hasIdentifier "AGENT-OP-001" ;
+    min:hasName "Operator Müller"@de ;
+    min:performs ex:tiefziehen ;
+    min:performs ex:zugversuch .
+
+ex:siemens a min:Agent , min:Institutio ;
+    min:hasIdentifier "AGENT-SI-001" ;
+    min:hasName "Siemens AG" ;
+    min:performs ex:tiefziehen .
+
+
+# --- Data ---
+
+ex:messdaten_zv a min:Data ;
+    min:hasIdentifier "DAT-ZV-001" ;
+    min:hasName "Tensile test results"@en ;
+    min:generatedBy ex:zugversuch ;
+    min:describes ex:bauteil_001 ;
+    min:encodes ex:norma_iso6892 .
+
+ex:din_dokument a min:Data ;
+    min:hasIdentifier "DAT-DIN-001" ;
+    min:hasName "DIN EN ISO 6892-1:2019"@en ;
+    min:encodes ex:norma_iso6892 ;
+    min:encodes ex:norma_Rm_270 .
+
+
+# --- Forma: Lex ---
+
+ex:energieerhaltung a min:Lex ;
+    min:hasIdentifier "LEX-ENERGY-001" ;
+    min:hasName "Conservation of energy"@en ;
+    min:governs ex:tiefziehen .
+
+
+# --- Forma: Structura ---
+
+ex:von_mises a min:Structura ;
+    min:hasIdentifier "STRUCT-VM-001" ;
+    min:hasName "von Mises yield criterion"@en ;
+    min:formalizes ex:tiefziehen .
+
+
+# --- Forma: Norma ---
+
+ex:norma_iso6892 a min:Norma ;
+    min:hasIdentifier "NORMA-ISO-001" ;
+    min:hasName "Tensile test procedure ISO 6892-1"@en ;
+    min:evaluates ex:bauteil_001 .
+
+ex:norma_Rm_270 a min:Norma ;
+    min:hasIdentifier "NORMA-RM-001" ;
+    min:hasName "Rm >= 270 MPa"@en ;
+    min:evaluates ex:bauteil_001 .
+
+ex:norma_C_max a min:Norma ;
+    min:hasIdentifier "NORMA-C-001" ;
+    min:hasName "C <= 0.08%"@en ;
+    min:evaluates ex:coil_042 .
+
+
+# --- Forma: Institutio (type determination) ---
+
+ex:DC04 a min:Institutio ;
+    min:hasIdentifier "INST-DC04" ;
+    min:hasName "DC04"@en ;
+    min:typifies ex:coil_042 ;
+    min:comprises ex:norma_Rm_270 ,
+                  ex:norma_C_max ,
+                  ex:von_mises ;
+    min:constitutedBy ex:normungsausschuss ;
+    min:recognizedBy ex:metallurgie_community .
+
+ex:normungsausschuss a min:Agent , min:Institutio ;
+    min:hasIdentifier "AGENT-NA-001" ;
+    min:hasName "Steel standards committee"@en ;
+    min:performs ex:normungsprozess .
+
+ex:metallurgie_community a min:Agent , min:Institutio ;
+    min:hasIdentifier "INST-MET-001" ;
+    min:hasName "Metallurgy community"@en ;
+    min:performs ex:normungsprozess .
+
+ex:normungsprozess a min:Process ;
+    min:hasIdentifier "PROC-NORM-001" ;
+    min:hasName "Standardization process"@en ;
+    min:hasInput ex:din_dokument ;
+    min:hasOutput ex:din_dokument ;
+    min:originates ex:norma_Rm_270 .
+
+
+# --- Forma: Possibile ---
+
+ex:versagen_bauteil a min:Possibile ;
+    min:hasIdentifier "POSS-FAIL-001" ;
+    min:hasName "Part failure under load"@en ;
+    min:concerns ex:bauteil_001 .
+
+
+# --- Boundary ---
+
+ex:reibung_werkzeug a min:Boundary ;
+    min:hasIdentifier "BND-FRIC-001" ;
+    min:hasName "Tool-sheet friction"@en ;
+    min:bounds ex:coil_042 ;
+    min:bounds ex:bauteil_001 .
+
+
+# --- Epistemic relations ---
+
+ex:zugversuch min:confirms ex:norma_Rm_270 .
+ex:zugversuch min:refutes ex:versagen_bauteil .
+ex:norma_Rm_270 min:entails ex:norma_C_max .
+ex:DC04 min:justifiedBy ex:norma_iso6892 .

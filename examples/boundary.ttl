@@ -40,18 +40,22 @@ ex:Reibkontakt_Werkzeug_Blech_A17 a min:Boundary ;
 # --- Stützinstanzen ---
 
 ex:Matrize_A17 a min:Object ;
+    min:hasIdentifier "OBJ-DIE-A17" ;
     min:hasName "Matrize A17" ;
     min:hasBoundary ex:Reibkontakt_Werkzeug_Blech_A17 .
 
 ex:AluBlech_A17 a min:Object ;
+    min:hasIdentifier "OBJ-SHEET-A17" ;
     min:hasName "Aluminiumblech A17" ;
     min:hasBoundary ex:Reibkontakt_Werkzeug_Blech_A17 .
 
 ex:Tiefziehen_A17 a min:Process ;
+    min:hasIdentifier "PROC-DD-A17" ;
     min:hasName "Tiefziehen Charge A17" ;
     min:hasInput ex:AluBlech_A17 ;
     min:hasOutput ex:GeformtesBauteil_A17 .
 
 ex:GeformtesBauteil_A17 a min:Object ;
+    min:hasIdentifier "OBJ-PART-A17" ;
     min:hasName "Geformtes Bauteil A17" ;
     min:resultOf ex:Tiefziehen_A17 .

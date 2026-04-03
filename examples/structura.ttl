@@ -32,18 +32,22 @@ ex:Euler_Bernoulli_Balkentheorie a min:Structura ;
 
 # Das FEM-Modell ist Data — es kodiert die Structura.
 ex:FEM_Modell_Bruecke a min:Data ;
+    min:hasIdentifier "DAT-FEM-FIELD12" ;
     min:hasName  "FEM-Modell Brücke Feld 12 (Balkenelemente)" ;
     min:encodes  ex:Euler_Bernoulli_Balkentheorie .
 
 # --- Stützinstanzen ---
 
 ex:Brueckenentwurf_Feld12 a min:Object ;
+    min:hasIdentifier "OBJ-DESIGN-FIELD12" ;
     min:hasName "Brückenentwurf Feld 12 (CAD)" .
 
 ex:Brueckenstatik_Feld12 a min:Object ;
+    min:hasIdentifier "OBJ-STATICS-FIELD12" ;
     min:hasName "Statiknachweis Feld 12" .
 
 ex:Tragwerksplaner_Lang a min:Agent ;
+    min:hasIdentifier "AGENT-LANG" ;
     min:hasName  "Lang, M. (Tragwerksplaner)" ;
     min:performs ex:Brueckenberechnung_Feld12 .
 

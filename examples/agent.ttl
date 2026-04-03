@@ -53,32 +53,39 @@ ex:MES_Planner a min:Agent ;
 # --- Stützinstanzen ---
 
 ex:Getriebegehaeuse_K9 a min:Object ;
+    min:hasIdentifier "OBJ-HOUSING-K9" ;
     min:hasName "Getriebegehäuse K9" .
 
 ex:Deckel_K9 a min:Object ;
+    min:hasIdentifier "OBJ-COVER-K9" ;
     min:hasName "Gehäusedeckel K9" .
 
 ex:Getriebegehaeuse_K9_montiert a min:Object ;
+    min:hasIdentifier "OBJ-HOUSING-K9-ASM" ;
     min:hasName "Getriebegehäuse K9 (Deckel montiert)" .
 
 ex:Schraubmontage_Deckel a min:Process ;
+    min:hasIdentifier "PROC-SCREW-K9" ;
     min:hasName   "Schraubmontage Deckel K9" ;
     min:hasInput  ex:Getriebegehaeuse_K9 ;
     min:hasInput  ex:Deckel_K9 ;
     min:hasOutput ex:Getriebegehaeuse_K9_montiert .
 
 ex:Qualitaetskontrolle_K9 a min:Process ;
+    min:hasIdentifier "PROC-QC-K9" ;
     min:hasName   "Qualitätskontrolle K9" ;
     min:hasInput  ex:Getriebegehaeuse_K9_montiert ;
     min:hasOutput ex:Getriebegehaeuse_K9_montiert ;
     min:generates ex:Pruefbericht_K9 .
 
 ex:Reihenfolgeplanung_Montage a min:Process ;
+    min:hasIdentifier "PROC-PLAN-K9" ;
     min:hasName   "Reihenfolgeplanung Montagelinie" ;
     min:hasInput  ex:Getriebegehaeuse_K9 ;
     min:hasOutput ex:Getriebegehaeuse_K9 .
 
 ex:Pruefbericht_K9 a min:Data ;
+    min:hasIdentifier "DAT-REPORT-K9" ;
     min:hasName      "Prüfbericht K9" ;
     min:describes    ex:Getriebegehaeuse_K9_montiert ;
     min:generatedBy  ex:Qualitaetskontrolle_K9 .

@@ -1,0 +1,59 @@
+@prefix min: <https://w3id.org/min#> .
+@prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ DOLCE Ultra Lite (DUL) Alignment
+#
+#   Optional module. Load to connect MIN to DOLCE
+#   (http://www.ontologydesignpatterns.org/ont/dul/DUL.owl).
+#
+#   DOLCE is a descriptive foundational ontology (cognitive/linguistic).
+#   MIN is a pragmatic foundational ontology (engineering/causal).
+#   The alignment maps the structural overlap.
+#
+#   Pattern: rdfs:subClassOf (MIN specializes DUL).
+# =============================================================================
+
+<https://w3id.org/min/alignment/dolce> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ DOLCE Ultra Lite Alignment"@en ;
+    rdfs:comment "Maps MIN classes to DOLCE Ultra Lite (DUL). Optional module."@en .
+
+# --- Class alignment ---
+
+# Entity: DUL Entity is the universal root, like MIN Entity.
+min:Entity rdfs:subClassOf dul:Entity .
+
+# Object: DUL PhysicalObject covers material things.
+min:Object rdfs:subClassOf dul:PhysicalObject .
+
+# Process: DUL Event/Process covers occurrences over time.
+min:Process rdfs:subClassOf dul:Process .
+
+# Data: DUL InformationObject — information realized in some entity.
+min:Data rdfs:subClassOf dul:InformationObject .
+
+# Agent: DUL Agent — entity that acts.
+min:Agent rdfs:subClassOf dul:Agent .
+
+# Boundary: No direct DUL equivalent. DUL has Quality but Boundary
+# is causally efficacious in MIN, qualities are not in DUL.
+
+# Forma branch: DUL Abstract covers non-spatial, non-temporal entities.
+# This is the closest match, though DUL Abstract is broader.
+min:Forma rdfs:subClassOf dul:Abstract .
+
+# Institutio: DUL SocialObject — entities dependent on social contexts.
+min:Institutio rdfs:subClassOf dul:SocialObject .
+
+# Norma: DUL Norm (if available) or Description.
+min:Norma rdfs:subClassOf dul:Description .
+
+# --- Property alignment ---
+
+min:hasComponent rdfs:subPropertyOf dul:hasPart .
+min:performs     rdfs:subPropertyOf dul:actsThrough .
+min:describes    rdfs:subPropertyOf dul:isAbout .

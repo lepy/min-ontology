@@ -12,9 +12,19 @@ ROOT = Path(__file__).resolve().parents[1]
 TTL_FILES = [
     "min.ttl",
     "min-v1.0.0.ttl",
+    "min-v1.0.1.ttl",
+    "min-docs.ttl",
+    "alignment/min-prov.ttl",
+    "alignment/min-bfo.ttl",
+    "alignment/min-schema.ttl",
+    "alignment/min-sosa.ttl",
+    "alignment/min-dolce.ttl",
+    "alignment/min-qudt.ttl",
+    "alignment/min-dcterms.ttl",
     "examples/min-example.ttl",
     "examples/min-v1.0.0-examples.ttl",
     "examples/min-examples.ttl",
+    "examples/dpp-coil.ttl",
     "examples/object.ttl",
     "examples/process.ttl",
     "examples/data.ttl",
@@ -106,6 +116,7 @@ def main() -> int:
     instance_shapes = parse_turtle(ROOT / "shapes/min-instance.shacl.ttl")
     example_files = [
         "examples/min-v1.0.0-examples.ttl",
+        "examples/dpp-coil.ttl",
         "examples/object.ttl",
         "examples/process.ttl",
         "examples/data.ttl",

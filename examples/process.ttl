@@ -44,20 +44,25 @@ ex:Laserschweissen_047 a min:Process ;
 # --- Stützinstanzen ---
 
 ex:Profil_A_links a min:Object ;
+    min:hasIdentifier "OBJ-PROF-A-L" ;
     min:hasName "Aluminiumprofil A links" .
 
 ex:Profil_B_links a min:Object ;
+    min:hasIdentifier "OBJ-PROF-B-L" ;
     min:hasName "Aluminiumprofil B links" .
 
 ex:Seitenteil_links a min:Object ;
+    min:hasIdentifier "OBJ-SIDE-L-001" ;
     min:hasName          "Seitenteil links (geschweißt)" ;
     min:resultOf         ex:Laserschweissen_047 .
 
 ex:Schweissroboter_R7 a min:Object , min:Agent ;
+    min:hasIdentifier "AGENT-ROBOT-R7" ;
     min:hasName   "Schweißroboter R7" ;
     min:performs  ex:Laserschweissen_047 .
 
 ex:Schweissprotokoll_047 a min:Data ;
+    min:hasIdentifier "DAT-WELD-047" ;
     min:hasName      "Schweißprotokoll #047" ;
     min:describes    ex:Laserschweissen_047 ;
     min:generatedBy  ex:Laserschweissen_047 .

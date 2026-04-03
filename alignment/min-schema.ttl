@@ -1,0 +1,33 @@
+@prefix min:    <https://w3id.org/min#> .
+@prefix schema: <https://schema.org/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ schema.org Alignment
+#
+#   Optional module. Load for interoperability with schema.org-based
+#   product data, organizations, and events.
+#
+#   Pattern: rdfs:subClassOf (MIN specializes schema.org).
+# =============================================================================
+
+<https://w3id.org/min/alignment/schema> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ schema.org Alignment"@en ;
+    rdfs:comment "Maps MIN classes to schema.org. Optional module."@en .
+
+# --- Class alignment ---
+
+min:Object       rdfs:subClassOf schema:Thing .
+min:Process      rdfs:subClassOf schema:Action .
+min:Agent        rdfs:subClassOf schema:Thing .
+min:Institutio   rdfs:subClassOf schema:Intangible .
+min:Data         rdfs:subClassOf schema:CreativeWork .
+
+# --- Property alignment ---
+
+min:hasName        rdfs:subPropertyOf schema:name .
+min:hasDescription rdfs:subPropertyOf schema:description .
+min:hasIdentifier  rdfs:subPropertyOf schema:identifier .

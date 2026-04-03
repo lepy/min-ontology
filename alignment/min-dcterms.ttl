@@ -1,0 +1,50 @@
+@prefix min:     <https://w3id.org/min#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix adms:    <http://www.w3.org/ns/adms#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+# =============================================================================
+#   MIN ↔ Dublin Core / FOAF / ADMS Alignment
+#
+#   Optional module. Consolidates class-level mappings to established
+#   metadata vocabularies.
+#
+#   Note: Property-level alignments (hasIdentifier → dcterms:identifier,
+#   hasTimestamp → dcterms:date, hasDescription → dcterms:description,
+#   hasName → rdfs:label) are already in min.ttl via rdfs:subPropertyOf.
+#   This module adds class-level and additional property mappings.
+# =============================================================================
+
+<https://w3id.org/min/alignment/dcterms> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ Dublin Core / FOAF / ADMS Alignment"@en ;
+    rdfs:comment "Class-level mappings to DC, FOAF, ADMS. Optional module."@en .
+
+# --- Dublin Core class alignment ---
+
+# MIN Data (information artifacts) maps to dcterms:Agent-created resources.
+# dcterms has no class hierarchy, but dcterms:BibliographicResource is
+# the closest for documents.
+min:Data rdfs:subClassOf dcterms:BibliographicResource .
+
+# --- FOAF class alignment ---
+
+# An Agent ∩ Object (human) is a foaf:Person.
+# An Agent ∩ Institutio (organization) is a foaf:Organization.
+# These are co-typing patterns, not direct subclass relations.
+# Domain ontologies should declare:
+#   ex:mueller a min:Agent , min:Object , foaf:Person .
+#   ex:siemens a min:Agent , min:Institutio , foaf:Organization .
+
+# --- ADMS alignment ---
+
+# ADMS status vocabulary for lifecycle management.
+# min:hasStatus (xsd:string) can be aligned to ADMS status concepts.
+min:hasStatus rdfs:subPropertyOf adms:status .
+
+# --- Additional Dublin Core property alignment ---
+
+min:hasTimestamp rdfs:subPropertyOf dcterms:date .
+min:constitutedBy rdfs:subPropertyOf dcterms:creator .
