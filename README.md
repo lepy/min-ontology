@@ -8,15 +8,15 @@ industrial and scientific domains with a strict distinction between:
 - **Forma · konstitutive Bestimmung · "Das, was bestimmt."**
 - **Agent · selektive Handlungsfähigkeit · "Das, was handelt."**
 
-The current stable release line is **v1.x** (current: **v1.0.0**).
+The current stable release line is **v1.x** (current: **v1.0.1**).
 
 ## Canonical IRIs
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/1.0.0`
+- Current version IRI: `https://w3id.org/min/1.0.1`
 
-## Conceptual core (v1.0.0)
+## Conceptual core
 
 MIN v1 defines **13 classes**:
 
@@ -43,7 +43,8 @@ For full class definitions, see `docs/class-catalog.md`.
 
 ## Repository structure
 
-- `min.ttl`: current MIN ontology
+- `min.ttl`: current MIN ontology (axioms only, < 20 KB)
+- `min-docs.ttl`: annotations, philosophical basis, design rationale (imports `min.ttl`)
 - `min-v*.ttl`: immutable release snapshots
 - `min-v1.0.0.ttl`: current immutable snapshot (hyphen naming)
 - `examples/`: example instance graphs

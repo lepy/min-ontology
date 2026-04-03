@@ -1,6 +1,6 @@
 # MIN Ontology Documentation
 
-MIN v1.0.0 models reality with these core definitions:
+MIN v1.0.1 models reality with these core definitions:
 
 - `Entity · eindeutige Referenzierbarkeit · "Das, was existiert."`
 - `Nexus · kausale Wirksamkeit · "Das, was etwas bewirkt."`
@@ -22,7 +22,7 @@ MIN v1.0.0 models reality with these core definitions:
 
 ## Reference scope
 
-The docs reflect MIN `v1.0.0` (`min.ttl` points to this release):
+The docs reflect MIN `v1.0.1` (`min.ttl` points to this release):
 
 - 13 classes (`Entity`, 5 Nexus-side classes, 6 Forma-side classes, plus `Agent` as "Das, was handelt.")
 - Updated bridge model including `originates` / `originatedBy`
@@ -49,4 +49,4 @@ uv run ontology-validate
 
 ## Visualization
 
-- [Visualization v1.0.0](min-v1_0_0-visualization.html)
+- [Visualization](min-v1_0_0-visualization.html)
