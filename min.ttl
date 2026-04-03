@@ -23,8 +23,8 @@
 <https://w3id.org/min> a owl:Ontology ;
     owl:versionIRI <https://w3id.org/min/1.0.1> ;
     owl:versionInfo "1.0.1" ;
-    dcterms:title "MIN — Material · Information · Nexus"@de ;
-    dcterms:description "Grundontologie für Ingenieure. Keine Metaphysik. Werkzeug."@de ;
+    dcterms:title "MIN — Material · Information · Nexus"@en ;
+    dcterms:description "Foundational ontology for engineers. No metaphysics. A tool."@en ;
     dcterms:creator <https://orcid.org/0000-0001-8199-8666> ;
     dcterms:created "2026-03-08"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by-sa/4.0/> .
@@ -38,7 +38,7 @@
 
 min:Entity a owl:Class ;
     rdfs:label "Entity"@en , "Entität"@de ;
-    rdfs:comment "Absolute Wurzel. Entity ≡ Nexus ⊔ Forma; Agent als orthogonale Querkategorie."@de ;
+    rdfs:comment "Absolute root. Entity ≡ Nexus ⊔ Forma; Agent as orthogonal cross-category."@en ;
     owl:equivalentClass [ a owl:Class ; owl:unionOf ( min:Nexus min:Forma ) ] ;
     rdfs:subClassOf [
         a owl:Restriction ;
@@ -52,19 +52,20 @@ min:Entity a owl:Class ;
 min:Nexus a owl:Class ;
     rdfs:subClassOf min:Entity ;
     rdfs:label "Nexus"@en , "Nexus"@de ;
-    rdfs:comment "Das, was etwas bewirkt. Vier Kategorien: Object, Process, Data, Boundary."@de .
+    rdfs:comment "The causally efficacious. Four categories: Object, Process, Data, Boundary."@en ;
+    owl:equivalentClass [ a owl:Class ; owl:unionOf ( min:Object min:Process min:Data min:Boundary ) ] .
 
 min:Object a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Object"@en , "Objekt"@de ;
-    rdfs:comment "Material-dominanter Nexus mit dispositionaler Kausalität."@de ;
+    rdfs:comment "Material-dominant nexus with dispositional causality."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Dispositional ] ,
                     [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Dispositional ] .
 
 min:Process a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Process"@en , "Prozess"@de ;
-    rdfs:comment "Transformation, die Nexus als Input konsumiert und als Output erzeugt."@de ;
+    rdfs:comment "Transformation that consumes Nexus as input and produces Nexus as output."@en ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:hasInput ;
@@ -82,14 +83,14 @@ min:Process a owl:Class ;
 min:Data a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Data"@en , "Daten"@de ;
-    rdfs:comment "Informational-dominanter Nexus — Scharnier zwischen Nexus und Forma via encodes."@de ;
+    rdfs:comment "Information-dominant nexus — hinge between Nexus and Forma via encodes."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Mediated ] ,
                     [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Informational ] .
 
 min:Boundary a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Boundary"@en , "Grenze"@de ;
-    rdfs:comment "Irreduzibel relationaler Nexus, existiert nur zwischen Partnern."@de ;
+    rdfs:comment "Irreducibly relational nexus, exists only between partners."@en ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:bounds ;
@@ -109,7 +110,7 @@ min:Boundary a owl:Class ;
 min:Agent a owl:Class ;
     rdfs:subClassOf min:Entity ;
     rdfs:label "Agent"@en , "Agent"@de ;
-    rdfs:comment "Orthogonale Handlungskategorie. Co-Typisierung Pflicht: Agent ⊑ Nexus ⊔ Forma."@de ;
+    rdfs:comment "Orthogonal action category. Co-typing required: Agent ⊑ Nexus ⊔ Forma."@en ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty min:performs ;
@@ -127,36 +128,37 @@ min:Agent a owl:Class ;
 min:Forma a owl:Class ;
     rdfs:subClassOf min:Entity ;
     rdfs:label "Forma"@en , "Forma"@de ;
-    rdfs:comment "Das Regelwerk, nach dem Nexus wirkt. Forma bewirkt nichts."@de .
+    rdfs:comment "The formal determinants. Forma causes nothing but determines how Nexus acts."@en ;
+    owl:equivalentClass [ a owl:Class ; owl:unionOf ( min:Lex min:Structura min:Possibile min:Norma min:Institutio ) ] .
 
 min:Lex a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Lex"@en , "Lex"@de ;
-    rdfs:comment "Universelle Regularitäten und Naturgesetze. Kann nicht verletzt werden."@de ;
+    rdfs:comment "Universal regularities and natural laws. Cannot be violated."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Lawful ] .
 
 min:Structura a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Structura"@en , "Structura"@de ;
-    rdfs:comment "Mathematische und formale Strukturen."@de ;
+    rdfs:comment "Mathematical and formal structures."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Structural ] .
 
 min:Possibile a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Possibile"@en , "Possibile"@de ;
-    rdfs:comment "Möglichkeiten und kontrafaktische Szenarien."@de ;
+    rdfs:comment "Possibilities and counterfactual scenarios."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Modal ] .
 
 min:Norma a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Norma"@en , "Norma"@de ;
-    rdfs:comment "Atomare Anforderung, Grenzwert oder Bewertungskriterium."@de ;
+    rdfs:comment "Atomic requirement, threshold or evaluation criterion."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Normative ] .
 
 min:Institutio a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Institutio"@en , "Institution"@de ;
-    rdfs:comment "Soziale Konstrukte und konventionelle Bündelungen. Bündelt via comprises, typifiziert via typifies."@de ;
+    rdfs:comment "Social constructs and conventional bundles. Bundles via comprises, typifies via typifies."@en ;
     rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Institutional ] .
 
 [] a owl:AllDisjointClasses ;
@@ -171,23 +173,23 @@ min:Institutio a owl:Class ;
 min:MetaTerm a owl:Class ;
     rdfs:subClassOf min:Institutio ;
     rdfs:label "Meta Term"@en , "Meta-Term"@de ;
-    rdfs:comment "Ontologieinterner Beschreibungsterm von MIN."@de .
+    rdfs:comment "Ontology-internal descriptive term of MIN."@en .
 
 min:OntologyArtifact a owl:Class ;
     rdfs:subClassOf min:Data ;
     rdfs:label "Ontology Artifact"@en , "Ontologieartefakt"@de ;
-    rdfs:comment "Data-Artefakt, das ontologische Begriffe oder Axiome kodiert."@de .
+    rdfs:comment "Data artifact encoding ontological terms or axioms."@en .
 
 
 # --- Polarität (Heuristik, nur Nexus) ---
 
 min:materialProperty a owl:AnnotationProperty ;
     rdfs:label "material property"@en , "materiale Eigenschaft"@de ;
-    rdfs:comment "Superproperty für kausal-räumliche Nexus-Eigenschaften. Heuristik."@de .
+    rdfs:comment "Super-property for causal-spatial nexus properties. Heuristic."@en .
 
 min:informationalProperty a owl:AnnotationProperty ;
     rdfs:label "informational property"@en , "informationale Eigenschaft"@de ;
-    rdfs:comment "Superproperty für strukturell-bestimmte Nexus-Eigenschaften. Heuristik."@de .
+    rdfs:comment "Super-property for structurally determined nexus properties. Heuristic."@en .
 
 
 # --- Kausalitäts- und Wirksamkeitsmodus ---
@@ -234,7 +236,7 @@ min:hasComponent a owl:ObjectProperty , owl:TransitiveProperty ;
     rdfs:domain min:Nexus ;
     rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:nexusWith ;
-    rdfs:comment "Mereologische Relation. Transitiv."@de .
+    rdfs:comment "Mereological relation. Transitive."@en .
 
 
 # --- Kategorienrelationen ---
@@ -246,14 +248,14 @@ min:hasInput a owl:ObjectProperty ;
     rdfs:domain min:Process ;
     rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:nexusWith ;
-    rdfs:comment "Transformativ: neue Entität, neue ID."@de .
+    rdfs:comment "Transformative: new entity, new identity."@en .
 
 min:hasOutput a owl:ObjectProperty ;
     rdfs:label "has output"@en ;
     rdfs:domain min:Process ;
     rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:nexusWith ;
-    rdfs:comment "Transformativ: neue Entität, neue ID."@de .
+    rdfs:comment "Transformative: new entity, new identity."@en .
 
 min:undergoes a owl:ObjectProperty ;
     rdfs:label "undergoes"@en ;
@@ -261,7 +263,7 @@ min:undergoes a owl:ObjectProperty ;
     rdfs:range min:Process ;
     owl:inverseOf min:hasInput ;
     rdfs:subPropertyOf min:nexusWith ;
-    rdfs:comment "Konservativ: selbe Entität, selbe ID."@de .
+    rdfs:comment "Conservative: same entity, same identity."@en .
 
 min:resultOf a owl:ObjectProperty ;
     rdfs:label "result of"@en ;
@@ -290,7 +292,7 @@ min:controls a owl:ObjectProperty ;
     rdfs:domain min:Agent ;
     rdfs:range min:Process ;
     rdfs:subPropertyOf min:performs ;
-    rdfs:comment "Stärker als performs: Agent bestimmt Parameter."@de .
+    rdfs:comment "Stronger than performs: agent determines parameters."@en .
 
 # Agent ↔ Object
 
@@ -375,7 +377,7 @@ min:originates a owl:ObjectProperty ;
     rdfs:label "originates"@en , "bringt hervor"@de ;
     rdfs:domain min:Nexus ;
     rdfs:range min:Forma ;
-    rdfs:comment "Nexus bringt NEUES Formales hervor."@de .
+    rdfs:comment "Nexus brings forth NEW formal determinants."@en .
 
 min:originatedBy a owl:ObjectProperty ;
     rdfs:label "originated by"@en , "hervorgebracht durch"@de ;
@@ -387,7 +389,7 @@ min:realizes a owl:ObjectProperty ;
     rdfs:label "realizes"@en , "realisiert"@de ;
     rdfs:domain min:Nexus ;
     rdfs:range min:Forma ;
-    rdfs:comment "Nexus macht BESTEHENDES Formales wirklich."@de .
+    rdfs:comment "Nexus makes EXISTING formal determinants actual."@en .
 
 min:realizedBy a owl:ObjectProperty ;
     rdfs:label "realized by"@en ;
@@ -399,7 +401,13 @@ min:constrains a owl:ObjectProperty ;
     rdfs:label "constrains"@en , "beschränkt"@de ;
     rdfs:domain min:Forma ;
     rdfs:range min:Nexus ;
-    rdfs:comment "Allgemeinste Bestimmungsrelation Forma → Nexus."@de .
+    rdfs:comment "Most general determination relation Forma → Nexus."@en .
+
+min:constrainedBy a owl:ObjectProperty ;
+    rdfs:label "constrained by"@en , "beschränkt durch"@de ;
+    rdfs:domain min:Nexus ;
+    rdfs:range min:Forma ;
+    owl:inverseOf min:constrains .
 
 # Spezialisierte Brücken
 
@@ -463,7 +471,7 @@ min:encodes a owl:ObjectProperty ;
     rdfs:label "encodes"@en ;
     rdfs:domain min:Data ;
     rdfs:range min:Forma ;
-    rdfs:comment "Data kodiert Forma."@de .
+    rdfs:comment "Data encodes Forma."@en .
 
 min:encodedBy a owl:ObjectProperty ;
     rdfs:label "encoded by"@en ;
@@ -478,7 +486,7 @@ min:typifies a owl:ObjectProperty ;
     rdfs:domain min:Institutio ;
     rdfs:range min:Nexus ;
     rdfs:subPropertyOf min:constrains ;
-    rdfs:comment "Institutio bestimmt, als was ein Nexus zählt."@de .
+    rdfs:comment "Institutio determines what kind a Nexus counts as."@en .
 
 min:typifiedBy a owl:ObjectProperty ;
     rdfs:label "typified by"@en ;
@@ -492,7 +500,7 @@ min:comprises a owl:ObjectProperty ;
     rdfs:label "comprises"@en , "umfasst"@de ;
     rdfs:domain min:Institutio ;
     rdfs:range min:Forma ;
-    rdfs:comment "Institutio bündelt atomare Forma-Instanzen."@de .
+    rdfs:comment "Institutio bundles atomic Forma instances."@en .
 
 min:comprisedBy a owl:ObjectProperty ;
     rdfs:label "comprised by"@en , "umfasst durch"@de ;
@@ -507,7 +515,7 @@ min:confirms a owl:ObjectProperty ;
     rdfs:label "confirms"@en , "bestätigt"@de ;
     rdfs:domain min:Process ;
     rdfs:range min:Forma ;
-    rdfs:comment "Epistemische Bewährung — nicht Verifikation."@de .
+    rdfs:comment "Epistemic corroboration — not verification."@en .
 
 min:confirmedBy a owl:ObjectProperty ;
     rdfs:label "confirmed by"@en , "bestätigt durch"@de ;
@@ -519,7 +527,7 @@ min:refutes a owl:ObjectProperty ;
     rdfs:label "refutes"@en , "widerlegt"@de ;
     rdfs:domain min:Process ;
     rdfs:range min:Possibile ;
-    rdfs:comment "Epistemische Widerlegung eines Possibile."@de .
+    rdfs:comment "Epistemic refutation of a Possibile."@en .
 
 min:refutedBy a owl:ObjectProperty ;
     rdfs:label "refuted by"@en , "widerlegt durch"@de ;
@@ -531,13 +539,13 @@ min:entails a owl:ObjectProperty , owl:TransitiveProperty ;
     rdfs:label "entails"@en , "impliziert"@de ;
     rdfs:domain min:Forma ;
     rdfs:range min:Forma ;
-    rdfs:comment "Logische Implikation. Transitiv."@de .
+    rdfs:comment "Logical implication. Transitive."@en .
 
 min:supersedes a owl:ObjectProperty ;
     rdfs:label "supersedes"@en , "löst ab"@de ;
     rdfs:domain min:Forma ;
     rdfs:range min:Forma ;
-    rdfs:comment "Ablösung. Nicht transitiv."@de .
+    rdfs:comment "Succession. Not transitive."@en .
 
 min:supersededBy a owl:ObjectProperty ;
     rdfs:label "superseded by"@en , "abgelöst durch"@de ;
@@ -549,7 +557,7 @@ min:justifiedBy a owl:ObjectProperty ;
     rdfs:label "justified by"@en , "begründet durch"@de ;
     rdfs:domain min:Institutio ;
     rdfs:range min:Forma ;
-    rdfs:comment "Epistemische Begründung einer Institutio."@de .
+    rdfs:comment "Epistemic grounding of an Institutio."@en .
 
 min:justifies a owl:ObjectProperty ;
     rdfs:label "justifies"@en , "begründet"@de ;
@@ -640,7 +648,7 @@ min:definedInVersion a owl:AnnotationProperty ;
 min:status a owl:AnnotationProperty ;
     rdfs:label "status"@en ;
     rdfs:range xsd:string ;
-    rdfs:comment "experimental | stable | deprecated."@de .
+    rdfs:comment "experimental | stable | deprecated."@en .
 
 min:replacedBy a owl:AnnotationProperty ;
     rdfs:label "replaced by"@en ;
