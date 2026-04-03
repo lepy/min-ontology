@@ -1,6 +1,6 @@
-# MIN Class Catalog (v1.0.0)
+# MIN Class Catalog (v1.0.1)
 
-This catalog reflects the classes in `min.ttl` / `min-v1.0.0.ttl`.
+This catalog reflects the classes in `min.ttl`.
 
 ## Complete class list
 
@@ -19,6 +19,8 @@ This catalog reflects the classes in `min.ttl` / `min-v1.0.0.ttl`.
 | `min:Possibile` | `min:Forma` | Forma | Yes | Möglichkeitsraum |
 | `min:Norma` | `min:Forma` | Forma | Yes | Anforderung |
 | `min:Institutio` | `min:Forma` | Forma | Yes | kollektive Anerkennung |
+| `min:MetaTerm` | `min:Institutio` | Forma | Yes | ontologieinterner Beschreibungsterm |
+| `min:OntologyArtifact` | `min:Data` | Nexus | Yes | ontologisches Data-Artefakt |
 
 ## Hierarchy
 
@@ -35,7 +37,10 @@ Entity ("Das, was existiert.")
 │   ├── Possibile ("Das, was sein könnte.")
 │   ├── Norma ("Das, was gelten soll.")
 │   └── Institutio ("Das, was anerkannt wird.")
-└── Agent ("Das, was handelt.")
+│       └── MetaTerm (ontologieinterner Beschreibungsterm)
+├── Agent ("Das, was handelt.")
+└── (Data branch also contains:)
+    └── OntologyArtifact (ontologisches Data-Artefakt)
 ```
 
 ## Per-class details

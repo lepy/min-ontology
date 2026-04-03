@@ -68,7 +68,7 @@ Das Metavokabular folgt vier Prinzipien:
 
 **Beispiele:**
 - `min:Object min:definition "Ein Ding, das kausal wirksam ist — es kann Wirkungen empfangen oder ausüben."@de .`
-- `min:Typus min:definition "Das Bündel von Bestimmungen, das eine Klasse von Nexus-Instanzen konstituiert. Typus bestimmt, ALS WAS ein Nexus zählt."@de .`
+- `min:Institutio min:definition "Soziales Konstrukt oder konventionelle Bündelung, die nur durch kollektive Anerkennung existiert."@de .`
 
 ---
 
@@ -94,7 +94,7 @@ Das Metavokabular folgt vier Prinzipien:
 
 **Beispiele:**
 - `min:Process min:criterion "Verbraucht oder transformiert die Entität Inputs zu Outputs über die Zeit?"@de .`
-- `min:Typus min:criterion "Kann man fragen: Was für ein X ist das? — und liefert die Antwort eine Wesensbestimmung?"@de .`
+- `min:Institutio min:criterion "Existiert es NUR, weil Agenten es kollektiv anerkennen?"@de .`
 
 ---
 
@@ -170,7 +170,7 @@ Das Metavokabular folgt vier Prinzipien:
 
 **Beispiele:**
 - `min:Data min:distinguishedFrom "min:Object — Data ist kausal inert (kann kopiert, gelöscht werden ohne physische Wirkung). Object ist kausal wirksam."@de .`
-- `min:Typus min:distinguishedFrom "min:Norma — Norma BEWERTET (Rm SOLL ≥ 270 MPa). Typus KONSTITUIERT (DC04 IST das, was C ≤ 0.08% und Rm 270–350 MPa hat)."@de .`
+- `min:Institutio min:distinguishedFrom "min:Norma — Norma ist ATOMAR (ein Grenzwert). Institutio BÜNDELT Norma + Structura + Lex zu einer Wesensbestimmung."@de .`
 
 ---
 
@@ -204,7 +204,7 @@ Das Metavokabular folgt vier Prinzipien:
 
 **Beispiele:**
 - `sdata:TensileTest min:normativeSource "DIN EN ISO 6892-1:2019, Abschnitt 3.1"@de .`
-- `ex:DC04_typus min:normativeSource "EN 10130:2006, Tabelle 3 — Chemische Zusammensetzung und mechanische Eigenschaften"@de .`
+- `ex:DC04 min:normativeSource "EN 10130:2006, Tabelle 3 — Chemische Zusammensetzung und mechanische Eigenschaften"@de .`
 
 ---
 
@@ -234,7 +234,7 @@ Das Metavokabular folgt vier Prinzipien:
 
 **Beispiele:**
 - `min:EnvironmentAgent min:rationale "Natürliche Prozesse (Korrosion, Alterung) haben keinen intentionalen Agenten. Ohne EnvironmentAgent müsste man Agent-Instanzen für physikalische Gesetze anlegen, was die Semantik von Agent verwässert."@de .`
-- `min:Typus min:rationale "MIN kann einzelne Bestimmungen und Typzuweisungen in einem konsistenten Modell ausdrücken."@de .`
+- `min:Institutio min:rationale "Klassifikation IST ein institutioneller Akt. Die Bündelung von Forma-Instanzen existiert, weil eine Fachgemeinschaft sie anerkennt."@de .`
 
 ---
 
@@ -343,45 +343,52 @@ min:PhysicalObject min:status "deprecated" ;
 
 ---
 
-## Demonstration — `min:Typus` mit vollständiger Meta-Dokumentation
+## Demonstration — `min:Institutio` (DC04) mit vollständiger Meta-Dokumentation
 
-Die folgende Klasse zeigt, wie alle 11 Properties zusammenwirken, um eine Klasse vollständig zu dokumentieren.
+Die folgende Instanz zeigt, wie alle 11 Properties zusammenwirken, um eine Klasse vollständig zu dokumentieren.
 
 ### Intension
 
-**Definition:** Das Bündel von Bestimmungen, das eine Klasse von Nexus-Instanzen konstituiert. Typus bestimmt, ALS WAS ein Nexus zählt — nicht, was er hat (Property), nicht, was er soll (Norma), sondern, was er IST.
+**Definition:** Soziales Konstrukt oder konventionelle Bündelung, die nur durch kollektive Anerkennung existiert. Institutio bündelt atomare Forma-Instanzen zu einer Wesensbestimmung und typifiziert Nexus via `min:typifies`.
 
-**Kriterium:** Kann man fragen: „Was für ein X ist das?" — und liefert die Antwort eine Wesensbestimmung (ein Bündel von Bestimmungen, das die Sorte/Art konstituiert)?
+**Kriterium:** Existiert es NUR, weil Agenten es kollektiv anerkennen? Und hört es auf zu existieren (oder zerfällt in atomare Forma), wenn NIEMAND es mehr anerkennt?
 
 ### Extension
 
 ```turtle
-ex:DC04_typus a min:Typus ;
+ex:DC04 a min:Institutio ;
     rdfs:label "DC04"@de ;
-    min:hasIdentifier "DC04" ;
-    min:typifies ex:blech_042 .
+    min:hasIdentifier "INST-DC04" ;
+    min:typifies ex:blech_042 ;
+    min:comprises ex:norma_C_max_008 ,
+                  ex:norma_Rm_270_350 ,
+                  ex:structura_bcc_ferrit ;
+    min:constitutedBy ex:normungsausschuss_stahl ;
+    min:recognizedBy ex:metallurgie_community .
 ```
 
 ### Grenze
 
-**Gegenbeispiel:** Ein SKOS-Konzept „DC04" in einem Thesaurus. Es klassifiziert terminologisch, aber es bestimmt nicht die Wesensform — es hat keine Verbindung zu Structura, Lex, Norma. → `skos:Concept`, nicht `min:Typus`.
+**Gegenbeispiel:** „Rm ≥ 270 MPa" als einzelne Anforderung. Das ist atomar → Norma. Erst die BÜNDELUNG mit anderen Forma zu „DC04" ist Institutio.
 
 **Abgrenzungen:**
 
 | Gegenüber | Unterschied |
 |-----------|-------------|
-| `min:Norma` | Norma BEWERTET (Soll). Typus KONSTITUIERT (Wesen). |
-| `min:Structura` | Structura ist formal-rein (mathematische Struktur). Typus ist komposit — er BÜNDELT Structura, Norma, Lex und Properties. |
-| `min:Institutio` | Institutio braucht laufende kollektive Anerkennung. Typus nicht — DC04 bleibt DC04, auch wenn das Normungsgremium aufgelöst wird. |
-| `min:Lex` | Lex ist universell und ausnahmslos. Typus ist kontingent — DC04 hätte andere Grenzwerte haben können. |
+| `min:Norma` | Norma ist ATOMAR (ein Grenzwert). Institutio BÜNDELT Norma + Structura + Lex zu einer Wesensbestimmung. |
+| `min:Structura` | Structura ist formal-rein (mathematische Struktur). Institutio ist komposit — bündelt mehrere Forma-Kategorien. |
+| `min:Lex` | Lex ist universell und ausnahmslos. Institutio ist konventionell und hört auf zu existieren, wenn niemand sie mehr anerkennt. |
+| `min:Agent` | Unternehmen als Handelnder ist Agent. Dasselbe als juristische Person ist Institutio. Seit v1.0: beides in einem Knoten (Agent ∩ Institutio). |
 
 ### Herkunft
 
-**Normative Quellen:** Aristoteles: Metaphysik, Buch Z (Eidos als Wesensform). Quine: Natural Kinds (1969). Putnam: The Meaning of „Meaning" (1975). Weber: Objektive Möglichkeit und adäquate Verursachung (1906, Idealtyp).
+**Philosophische Grundlage:** Searle: Institutional Facts — „X counts as Y in context C." Aristoteles: Eidos — die Wesensform.
+
+**Normative Quelle:** Searle, J.R.: The Construction of Social Reality (1995).
 
 ### Teleologie
 
-MIN kann einzelne Bestimmungen aussprechen (Norma: Rm ≥ 270 MPa; Structura: bcc-Gitter) und explizite Typzuweisungen wie „Das ist ein DC04." modellieren.
+Klassifikation IST ein institutioneller Akt. Die Bündelung von Forma-Instanzen zu einer Wesensbestimmung (z. B. „DC04") existiert, weil eine Fachgemeinschaft sie anerkennt. Institutio stellt `min:typifies` (Institutio → Nexus) und `min:comprises` (Institutio → Forma) bereit.
 
 ### Lebenszyklus
 
@@ -389,9 +396,7 @@ Definiert in Version **1.0.0**, Status **stable**.
 
 ### Axiom-Transparenz
 
-Typus ist disjunkt mit Lex, Structura, Possibile, Norma, Institutio. Typus ist komposit (bündelt andere Forma-Kategorien), während jede andere Forma-Kategorie atomar ist. Verworfene Alternative: Typus als Subklasse von Norma — aber Norma bewertet, Typus konstituiert.
-
-`min:typifies` ist subPropertyOf `min:constrains`. Typifizierung ist eine spezielle Form der Bestimmung. Verworfene Alternative: eigenständige Top-Level-Brückenrelation. Aber Typifizierung IST Einschränkung (auf eine Art), also gehört sie unter `constrains`.
+`min:typifies` ist subPropertyOf `min:constrains`. Typifizierung ist eine spezielle Form der Bestimmung. `min:comprises` hat Domain `min:Institutio` und Range `min:Forma` — nur Institutio bündelt, weil Bündelung ein institutioneller Akt ist.
 
 ---
 

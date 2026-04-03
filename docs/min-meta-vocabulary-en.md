@@ -68,7 +68,7 @@ The meta-vocabulary follows four principles:
 
 **Examples:**
 - `min:Object min:definition "A thing that is causally efficacious — it can receive or exert effects."@en .`
-- `min:Typus min:definition "The bundle of determinations that constitutes a class of Nexus instances. Typus determines WHAT a Nexus counts AS."@en .`
+- `min:Institutio min:definition "A social construct or conventional bundling that exists only through collective recognition."@en .`
 
 ---
 
@@ -94,7 +94,7 @@ The meta-vocabulary follows four principles:
 
 **Examples:**
 - `min:Process min:criterion "Does the entity consume or transform inputs into outputs over time?"@en .`
-- `min:Typus min:criterion "Can one ask: What kind of X is this? — and does the answer provide an essential determination?"@en .`
+- `min:Institutio min:criterion "Does it exist ONLY because agents collectively recognize it?"@en .`
 
 ---
 
@@ -170,7 +170,7 @@ The meta-vocabulary follows four principles:
 
 **Examples:**
 - `min:Data min:distinguishedFrom "min:Object — Data is causally inert (can be copied, deleted without physical effect). Object is causally efficacious."@en .`
-- `min:Typus min:distinguishedFrom "min:Norma — Norma EVALUATES (Rm SHALL ≥ 270 MPa). Typus CONSTITUTES (DC04 IS what has C ≤ 0.08% and Rm 270–350 MPa)."@en .`
+- `min:Institutio min:distinguishedFrom "min:Norma — Norma is ATOMIC (one threshold). Institutio BUNDLES Norma + Structura + Lex into a type determination."@en .`
 
 ---
 
@@ -204,7 +204,7 @@ The meta-vocabulary follows four principles:
 
 **Examples:**
 - `sdata:TensileTest min:normativeSource "DIN EN ISO 6892-1:2019, Section 3.1"@en .`
-- `ex:DC04_typus min:normativeSource "EN 10130:2006, Table 3 — Chemical composition and mechanical properties"@en .`
+- `ex:DC04 min:normativeSource "EN 10130:2006, Table 3 — Chemical composition and mechanical properties"@en .`
 
 ---
 
@@ -234,7 +234,7 @@ The meta-vocabulary follows four principles:
 
 **Examples:**
 - `min:EnvironmentAgent min:rationale "Natural processes (corrosion, aging) have no intentional agent. Without EnvironmentAgent one would have to create Agent instances for physical laws, diluting the semantics of Agent."@en .`
-- `min:Typus min:rationale "MIN can express individual determinations and type assignments in a unified way."@en .`
+- `min:Institutio min:rationale "Classification IS an institutional act. The bundling of Forma instances into a type determination exists because a community recognizes it."@en .`
 
 ---
 
@@ -343,45 +343,52 @@ min:PhysicalObject min:status "deprecated" ;
 
 ---
 
-## Demonstration — `min:Typus` with Complete Meta-Documentation
+## Demonstration — `min:Institutio` (DC04) with Complete Meta-Documentation
 
-The following class demonstrates how all 11 properties work together to fully document a class.
+The following instance demonstrates how all 11 properties work together to fully document a class.
 
 ### Intension
 
-**Definition:** The bundle of determinations that constitutes a class of Nexus instances. Typus determines WHAT a Nexus counts AS — not what it has (Property), not what it should (Norma), but what it IS.
+**Definition:** A social construct or conventional bundling that exists only through collective recognition. Institutio bundles atomic Forma instances into a type determination and typifies Nexus via `min:typifies`.
 
-**Criterion:** Can one ask: "What kind of X is this?" — and does the answer provide an essential determination (a bundle of determinations that constitutes the sort/kind)?
+**Criterion:** Does it exist ONLY because agents collectively recognize it? And does it cease to exist (or disintegrate into atomic Forma) when NOBODY recognizes it any longer?
 
 ### Extension
 
 ```turtle
-ex:DC04_typus a min:Typus ;
+ex:DC04 a min:Institutio ;
     rdfs:label "DC04"@de ;
-    min:hasIdentifier "DC04" ;
-    min:typifies ex:blech_042 .
+    min:hasIdentifier "INST-DC04" ;
+    min:typifies ex:blech_042 ;
+    min:comprises ex:norma_C_max_008 ,
+                  ex:norma_Rm_270_350 ,
+                  ex:structura_bcc_ferrit ;
+    min:constitutedBy ex:normungsausschuss_stahl ;
+    min:recognizedBy ex:metallurgie_community .
 ```
 
 ### Boundary
 
-**Counterexample:** A SKOS concept "DC04" in a thesaurus. It classifies terminologically but does not determine the essential form — it has no connection to Structura, Lex, Norma. → `skos:Concept`, not `min:Typus`.
+**Counterexample:** A single requirement "Rm ≥ 270 MPa". That is atomic → Norma. Only the BUNDLING with other Forma into "DC04" is Institutio.
 
 **Demarcations:**
 
 | From | Difference |
 |------|------------|
-| `min:Norma` | Norma EVALUATES (ought). Typus CONSTITUTES (essence). |
-| `min:Structura` | Structura is purely formal (a mathematical structure). Typus is composite — it BUNDLES Structura, Norma, Lex, and Properties. |
-| `min:Institutio` | Institutio requires ongoing collective recognition. Typus does not — DC04 remains DC04 even if the standards body is dissolved. |
-| `min:Lex` | Lex is universal and exceptionless. Typus is contingent — DC04 could have had different limits. |
+| `min:Norma` | Norma is ATOMIC (one threshold). Institutio BUNDLES Norma + Structura + Lex into a type determination. |
+| `min:Structura` | Structura is purely formal (a mathematical structure). Institutio is composite — it bundles multiple Forma categories. |
+| `min:Lex` | Lex is universal and exceptionless. Institutio is conventional and ceases to exist when nobody recognizes it. |
+| `min:Agent` | A company as actor is Agent. The same entity as legal person is Institutio. Since v1.0: both in one node (Agent ∩ Institutio). |
 
 ### Provenance
 
-**Normative sources:** Aristotle: Metaphysics, Book Z (Eidos as essential form). Quine: Natural Kinds (1969). Putnam: The Meaning of "Meaning" (1975). Weber: Objective Possibility and Adequate Causation (1906, ideal type).
+**Philosophical basis:** Searle: Institutional Facts — "X counts as Y in context C." Aristotle: Eidos — the essential form.
+
+**Normative source:** Searle, J.R.: The Construction of Social Reality (1995).
 
 ### Teleology
 
-MIN can express individual determinations (Norma: Rm ≥ 270 MPa; Structura: bcc lattice) and explicit type assignments such as "This is a DC04."
+Classification IS an institutional act. The bundling of Forma instances to a type determination (e.g. "DC04") exists because a community of practice recognizes it. Institutio provides `min:typifies` (Institutio → Nexus) and `min:comprises` (Institutio → Forma).
 
 ### Lifecycle
 
@@ -389,9 +396,7 @@ Defined in version **1.0.0**, status **stable**.
 
 ### Axiom Transparency
 
-Typus is disjoint with Lex, Structura, Possibile, Norma, Institutio. Typus is composite (bundles other Forma categories), while every other Forma category is atomic. Rejected alternative: Typus as subclass of Norma — but Norma evaluates, Typus constitutes.
-
-`min:typifies` is subPropertyOf `min:constrains`. Typification is a special form of determination. Rejected alternative: standalone top-level bridge relation. But typification IS constraint (to a kind), so it belongs under `constrains`.
+`min:typifies` is subPropertyOf `min:constrains`. Typification is a special form of determination. `min:comprises` has Domain `min:Institutio` and Range `min:Forma` — only Institutio bundles, because bundling is an institutional act.
 
 ---
 

@@ -1,4 +1,4 @@
-# MIN Model (v1.0.0)
+# MIN Model (v1.0.1)
 
 This page summarizes the current conceptual architecture and modeling rules in MIN.
 
@@ -122,8 +122,20 @@ Current model characteristics:
 - 13 inverse object-property pairs are explicitly declared
 - Branch disjointness and class partition are represented as OWL axioms
 
-## 10. Typification note
+## 10. Typification
 
-- `min:Typus` class is not part of the current model.
-- Typification remains in the model via `min:Institutio` + `min:typifies`.
-- `originates` / `originatedBy` are introduced as generic Forma-genesis relation.
+Typification is modeled via `min:Institutio` + `min:typifies`:
+
+- `min:typifies` (`Institutio -> Nexus`): determines what kind a Nexus counts as
+- `min:comprises` (`Institutio -> Forma`): bundles atomic Forma instances into a type determination
+- Classification is an institutional act — the bundling exists because a community recognizes it
+
+## 11. Epistemic relations
+
+Five relations model what we know about Forma:
+
+- `min:confirms` / `min:confirmedBy` (`Process -> Forma`): epistemic corroboration
+- `min:refutes` / `min:refutedBy` (`Process -> Possibile`): epistemic falsification
+- `min:entails` (`Forma -> Forma`): logical implication (transitive)
+- `min:supersedes` / `min:supersededBy` (`Forma -> Forma`): historical succession (not transitive)
+- `min:justifiedBy` / `min:justifies` (`Institutio -> Forma`): epistemic grounding

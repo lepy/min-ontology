@@ -1002,55 +1002,6 @@ min:efficacyMode
 
 
 # =============================================================================
-#   V3.7/3.8 — Weitere Meta-Annotationen
-# =============================================================================
-
-min:influences
-    min:definition """Allgemeinste Wirkungsrelation zwischen zwei
-    Nexus-Instanzen. Ein Nexus beeinflusst, verändert oder prägt
-    einen anderen Nexus."""@de ;
-    min:criterion "Gibt es eine gerichtete Wirksamkeit von einem Nexus auf einen anderen?"@de ;
-    min:distinguishedFrom """min:nexusWith — symmetrische Grundverbindung.
-    min:influences — gerichtete Wirksamkeit."""@de ;
-    min:definedInVersion "1.0.0" ;
-    min:status "stable" .
-
-min:expresses
-    min:definition """Allgemeinere Relation, mit der Data eine Forma
-    ausdrückt, repräsentiert oder artikuliert."""@de ;
-    min:criterion "Drückt ein Data-Artefakt eine Forma aus, auch wenn keine strenge technische Kodierung vorliegt?"@de ;
-    min:distinguishedFrom """min:encodes — stärkerer Spezialfall.
-    Jede encodes-Relation ist eine expresses-Relation, aber nicht umgekehrt."""@de ;
-    min:definedInVersion "1.0.0" ;
-    min:status "stable" .
-
-min:between
-    min:definition """Allgemeine Situierungsrelation einer Boundary zu
-    den Nexus-Instanzen, zwischen denen sie existiert."""@de ;
-    min:criterion "Ist die Boundary zwischen zwei oder mehr Nexus-Instanzen situiert?"@de ;
-    min:distinguishedFrom """min:bounds — stärkerer Spezialfall einer
-    begrenzenden Relation."""@de ;
-    min:definedInVersion "1.0.0" ;
-    min:status "stable" .
-
-min:EncodedData
-    min:definition "Data-Instanz, die mindestens eine Forma explizit kodiert."@de ;
-    min:criterion "Ist die Instanz Data und steht sie in mindestens einer encodes-Relation zu Forma?"@de ;
-    min:distinguishedFrom """min:Data — breitere Grundklasse, die auch
-    rohe oder noch nicht interpretierte Daten zulässt."""@de ;
-    min:definedInVersion "1.0.0" ;
-    min:status "stable" .
-
-min:SelectingAgent
-    min:definition "Agent-Instanz, die mindestens ein Possibile explizit auswählt."@de ;
-    min:criterion "Ist die Instanz Agent und steht sie in mindestens einer selects-Relation zu Possibile?"@de ;
-    min:distinguishedFrom """min:Agent — breitere Grundklasse, die auch
-    Agenten ohne explizit modellierten Möglichkeitsraum zulässt."""@de ;
-    min:definedInVersion "1.0.0" ;
-    min:status "stable" .
-
-
-# =============================================================================
 #   METATERM-MITGLIEDSCHAFT
 # =============================================================================
 

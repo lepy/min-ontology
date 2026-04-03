@@ -1,4 +1,4 @@
-# MIN Property Catalog (v1.0.0)
+# MIN Property Catalog (v1.0.1)
 
 This page lists MIN properties by modeling role and relation family.
 
@@ -79,7 +79,28 @@ Both are schema-level `owl:AnnotationProperty` terms:
 | `min:encodedBy` | `min:Forma` | `min:Data` | inverse of `encodes` |
 | `min:typifies` | `min:Institutio` | `min:Nexus` | subproperty of `constrains` |
 | `min:typifiedBy` | `min:Nexus` | `min:Institutio` | inverse of `typifies` |
-| `min:comprises` | `min:Institutio` | `min:Forma` | bundles formal determinants |
+| `min:comprises` | `min:Institutio` | `min:Forma` | inverse: `min:comprisedBy`; bundles formal determinants |
+| `min:comprisedBy` | `min:Forma` | `min:Institutio` | inverse of `comprises` |
+
+### Epistemic relations
+
+| Property | Domain | Range | Notes |
+| --- | --- | --- | --- |
+| `min:confirms` | `min:Process` | `min:Forma` | inverse: `min:confirmedBy`; epistemic corroboration |
+| `min:confirmedBy` | `min:Forma` | `min:Process` | inverse of `confirms` |
+| `min:refutes` | `min:Process` | `min:Possibile` | inverse: `min:refutedBy`; epistemic falsification |
+| `min:refutedBy` | `min:Possibile` | `min:Process` | inverse of `refutes` |
+| `min:entails` | `min:Forma` | `min:Forma` | transitive; logical implication |
+| `min:supersedes` | `min:Forma` | `min:Forma` | inverse: `min:supersededBy`; NOT transitive |
+| `min:supersededBy` | `min:Forma` | `min:Forma` | inverse of `supersedes` |
+| `min:justifiedBy` | `min:Institutio` | `min:Forma` | inverse: `min:justifies`; epistemic grounding |
+| `min:justifies` | `min:Forma` | `min:Institutio` | inverse of `justifiedBy` |
+
+### Meta-relation
+
+| Property | Domain | Range | Notes |
+| --- | --- | --- | --- |
+| `min:describesOntologyTerm` | `min:OntologyArtifact` | `min:MetaTerm` | subproperty of `describes` |
 
 ## 5. Datatype properties
 
@@ -108,6 +129,8 @@ Core design/meta properties include:
 - `min:status`
 - `min:replacedBy`
 - `min:axiomRationale`
+- `min:causalityMode`
+- `min:efficacyMode`
 
 ## 7. Modeling guidance
 

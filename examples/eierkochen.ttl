@@ -168,7 +168,7 @@ egg:Rezept a min:Data ;
     min:hasIdentifier "DAT-REZ-001" ;
     min:hasName "Kochrezept"@de ;
     min:hasDescription """Anleitung zum Eierkochen. Kodiert die Normen
-    (Kochzeiten) und den Typus (Garstufen)."""@de ;
+    (Kochzeiten) und die Garstufen (Institutio)."""@de ;
     min:describes egg:Eierkochen ;
     min:encodes egg:Norma_weich ;
     min:encodes egg:Norma_hart ;
@@ -251,10 +251,10 @@ egg:Waermeleitungsgleichung a min:Structura ;
 
 
 # =============================================================================
-#   Typus — Garstufen und Eisorten
+#   Institutio — Garstufen und Eisorten (konventionelle Bündelungen)
 # =============================================================================
 
-egg:Typ_weichgekocht a min:Typus ;
+egg:Typ_weichgekocht a min:Institutio ;
     min:hasIdentifier "TYP-WEICH-001" ;
     min:hasName "weichgekocht"@de ;
     min:hasDescription """Wesensbestimmung: Eiweiß fest, Eigelb flüssig.
@@ -263,21 +263,21 @@ egg:Typ_weichgekocht a min:Typus ;
     ‹Ein Weiches.›"""@de ;
     min:typifies egg:Ei_gekocht .
 
-egg:Typ_wachsweich a min:Typus ;
+egg:Typ_wachsweich a min:Institutio ;
     min:hasIdentifier "TYP-WACHS-001" ;
     min:hasName "wachsweich"@de ;
     min:hasDescription """Eiweiß fest, Eigelb cremig. Der Idealzustand
     für viele — aber schwer zu treffen."""@de ;
     min:typifies egg:Ei_gekocht .
 
-egg:Typ_hartgekocht a min:Typus ;
+egg:Typ_hartgekocht a min:Institutio ;
     min:hasIdentifier "TYP-HART-001" ;
     min:hasName "hartgekocht"@de ;
     min:hasDescription """Eiweiß und Eigelb vollständig fest.
     Ideal für Eiersalat, problematisch für Frühstück."""@de ;
     min:typifies egg:Ei_gekocht .
 
-egg:Typ_Huehner_M a min:Typus ;
+egg:Typ_Huehner_M a min:Institutio ;
     min:hasIdentifier "TYP-EI-M-001" ;
     min:hasName "Hühnerei Größe M"@de ;
     min:hasDescription """Gewichtsklasse 53–63 g.

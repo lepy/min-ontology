@@ -395,13 +395,13 @@ Bestanden? Institutio fragt: Was ist es?
 **Polyhierarchie:** Ein Ei kann mehrere Institutio-Typen haben — es ist
 zugleich `Huehner_M` (Eisorte) und `Garstufe_weichgekocht` (Garstufe).
 
-**Warum Institutio und nicht eine eigene Kategorie „Typus"?** Die
-Bündelung von Forma-Instanzen zu einer Wesensbestimmung ist ein
-institutioneller Akt — sie existiert, weil eine Fachgemeinschaft sie
-anerkennt. „Weichgekocht" bleibt „weichgekocht", solange IRGENDWER
-die Konvention anerkennt. Wenn NIEMAND sie mehr kennt, zerfällt sie
-in ihre atomaren Norma-Bestandteile. Genau das ist Searles Kriterium
-für Institutio. Klassifikation IST ein institutioneller Akt.
+**Warum Institutio?** Die Bündelung von Forma-Instanzen zu einer
+Wesensbestimmung ist ein institutioneller Akt — sie existiert, weil
+eine Fachgemeinschaft sie anerkennt. „Weichgekocht" bleibt
+„weichgekocht", solange IRGENDWER die Konvention anerkennt. Wenn
+NIEMAND sie mehr kennt, zerfällt sie in ihre atomaren Norma-Bestandteile.
+Genau das ist Searles Kriterium für Institutio. Klassifikation IST ein
+institutioneller Akt.
 
 ---
 

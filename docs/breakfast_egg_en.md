@@ -395,13 +395,12 @@ Institutio asks: What is it?
 simultaneously `ChickenEgg_M` (egg variety) and `Doneness_softBoiled`
 (doneness grade).
 
-**Why Institutio and not a separate category "Typus"?** The bundling of
-Forma instances into a type determination is an institutional act — it
-exists because a community of practice recognises it. "Soft-boiled"
-remains "soft-boiled" as long as ANYONE recognises the convention. If
-NOBODY knows it any longer, it disintegrates into its atomic Norma
-constituents. This is precisely Searle's criterion for Institutio.
-Classification IS an institutional act.
+**Why Institutio?** The bundling of Forma instances into a type
+determination is an institutional act — it exists because a community
+of practice recognises it. "Soft-boiled" remains "soft-boiled" as long
+as ANYONE recognises the convention. If NOBODY knows it any longer, it
+disintegrates into its atomic Norma constituents. This is precisely
+Searle's criterion for Institutio. Classification IS an institutional act.
 
 ---
 
