@@ -22,7 +22,7 @@ Coil(Object) → Tiefziehen(Process) → Bauteil(Object)
 
 ## Example file
 
-See [`examples/dpp-coil.ttl`](../examples/dpp-coil.ttl).
+See [`examples/dpp-coil.ttl`](https://github.com/lepy/min-ontology/blob/main/examples/dpp-coil.ttl).
 
 ## Key SPARQL queries
 
