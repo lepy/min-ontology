@@ -263,8 +263,6 @@ min:Agent — Agent ist keine Nexus-Kategorie mehr (v1.0), sondern Querkategorie
 # --- Object ---
 
 min:Object
-    min:causalityMode "dispositional" ;
-    min:efficacyMode "dispositional" ;
     skos:example "Rohstoff, Coil, Bauteil, Werkzeug, Maschine (passiv), Prüfling, Recyclat, Vakuum, EM-Feld, Schatten, Oberfläche."@de ;
     min:definition "Material-dominanter Nexus. Identitätskriterium: materiale Kontinuität. Kausalitätsmodus: dispositional."@de ;
     min:criterion "Ist es primär über seine Materialität zugänglich und bewirkt es etwas als physisches Ding?"@de ;
@@ -280,8 +278,6 @@ min:Object
 # --- Process ---
 
 min:Process
-    min:causalityMode "dispositional" ;
-    min:efficacyMode "dispositional" ;
     skos:example "Umformen, Gießen, Zugversuch, Simulation, Recycling, Montage, Datentransfer, ML-Training, Altern, Lernen, Tornado."@de ;
     min:definition "Ausgewogener Nexus. Transformation, die Nexus-Instanzen als Input konsumiert und als Output erzeugt. Kausalitätsmodus: dispositional."@de ;
     min:criterion "Verbraucht oder transformiert die Entität Inputs zu Outputs über die Zeit?"@de ;
@@ -298,8 +294,6 @@ min:Process
 # --- Data ---
 
 min:Data
-    min:causalityMode "mediated" ;
-    min:efficacyMode "informational" ;
     skos:example "Messdaten, Simulationsergebnis, Produktpass, Zertifikat, Fehlerbericht, DIN-Dokument."@de ;
     min:definition "Informational-dominanter Nexus. Kausalitätsmodus: mediated — wirkt NUR über Agent. Das Scharnier zwischen Nexus und Forma."@de ;
     min:criterion "Existiert es primär als Informationsträger, wirkt es nur über einen Interpreten und kodiert es mindestens eine Forma?"@de ;
@@ -324,8 +318,6 @@ min:Data
 # --- Agent ---
 
 min:Agent
-    min:causalityMode "dispositional" ;
-    min:efficacyMode "agentive" ;
     skos:example "Mensch, CNC-Maschine, Roboterarm, Software-Agent, ML-Modell, Organisation, Normungsgremium, Korrosion."@de ;
     min:philosophicalBasis """Latour: Aktant — alles, was einen Unterschied
     macht, unabhängig von Intentionalität.
@@ -392,7 +384,6 @@ min:Process — Process sagt WAS GESCHIEHT. Agent sagt WER HANDELT.
 # --- Boundary ---
 
 min:Boundary
-    min:causalityMode "relational" ;
     skos:example "Übergangswiderstand, Reibung, Adhäsion, Korngrenze, Phasengrenze, Grenzflächenenergie, thermischer Kontaktwiderstand."@de ;
     min:philosophicalBasis """Latour: Médiation technique — der Mediator
     ist ein eigenständiger Aktant.
@@ -413,7 +404,6 @@ min:Boundary
 # --- Forma ---
 
 min:Forma
-    min:efficacyMode "formal" ;
     min:philosophicalBasis """Whitehead: Eternal Objects — die reinen
     Möglichkeiten, die in aktualen Entitäten realisiert werden.
     Aristoteles: Morphe — die Form, die den Stoff bestimmt.
@@ -430,7 +420,6 @@ min:Forma
 # --- Lex ---
 
 min:Lex
-    min:efficacyMode "lawful" ;
     skos:example "Gravitation, Energieerhaltung, Thermodynamik, Massenerhaltung, Coulomb-Gesetz."@de ;
     min:philosophicalBasis "Naturgesetzliche Regularitäten. MIN nimmt keine Stellung Humean vs. Non-Humean."@de ;
     min:definition "Universelle Regularität. Naturgesetz oder Erhaltungssatz."@de ;
@@ -446,7 +435,6 @@ min:Lex
 # --- Structura ---
 
 min:Structura
-    min:efficacyMode "structural" ;
     skos:example "SO(3), von-Mises-Fließfläche, Fourier-Transformation, Differentialgleichungssystem."@de ;
     min:philosophicalBasis "Mathematischer Strukturalismus."@de ;
     min:definition "Mathematische/formale Struktur, die die Geometrie des Möglichen bestimmt."@de ;
@@ -462,7 +450,6 @@ min:Structura
 # --- Possibile ---
 
 min:Possibile
-    min:efficacyMode "modal" ;
     skos:example "Versagensszenario, Risikofall, Designalternative, What-if-Szenario."@de ;
     min:philosophicalBasis """Kripke: Possible Worlds.
     Lewis: Modal Realism (ohne die ontologische Verpflichtung)."""@de ;
@@ -479,7 +466,6 @@ min:Possibile
 # --- Norma ---
 
 min:Norma
-    min:efficacyMode "normative" ;
     skos:example "Mindestzugfestigkeit Rm ≥ 340 MPa, Toleranz Ra ≤ 1.6 µm, Emissionsgrenzwert CO₂ ≤ 95 g/km, Prüftemperatur 23 ± 2 °C."@de ;
     min:philosophicalBasis """Kants Unterscheidung: Sein vs. Sollen.
     Humes Guillotine: aus Sein folgt kein Sollen.
@@ -502,7 +488,6 @@ min:Norma
 # --- Institutio ---
 
 min:Institutio
-    min:efficacyMode "institutional" ;
     skos:example "Euro, Patent, Zertifizierung, GmbH-Form, Grenze, Vertrag, DC04 (Stahlsorte), HC340LA (Stahlsorte), Zugversuch nach ISO 6892-1 (Prüfverfahren), STEP AP214 (Dateiformat), Universalprüfmaschine (Maschinenklasse), Σ3 CSL-Boundary (Korngrenztyp)."@de ;
     min:philosophicalBasis """Searle: Institutional Facts.
     ‹X counts as Y in context C.›
@@ -821,26 +806,17 @@ min:justifies
     min:status "stable" .
 
 
-# --- causalityMode ---
+# --- hasCausalityMode ---
 
-min:causalityMode
-    min:definition """Annotation auf Nexus-Kategorien, die differenziert,
-    WIE die Kategorie kausal wirksam wird. Gilt nur für Nexus —
-    Forma hat keinen Kausalitätsmodus (sie wirkt nicht).
-    Drei Werte:
-    — dispositional: wirkt oder könnte wirken, auch ohne Agent.
-    — mediated: wirkt nur über einen interpretierenden Agent.
-    — relational: wirkt nur zwischen Partnern."""@de ;
-    min:criterion """Beschreibt der Wert zutreffend, wie die Kategorie
-    kausal wirksam wird?"""@de ;
-    min:rationale """MIN v1.0.0 verwendete ein einheitliches
-    Existenzkriterium (kausale Wirksamkeit), aber nicht alle
-    Nexus-Kategorien wirken auf dieselbe Weise. Object wirkt
-    dispositional (auch ohne Beobachter). Data wirkt mediated
-    (nur über Agent). Boundary wirkt relational (nur zwischen
-    Partnern). Ohne diese Differenzierung verdeckt MIN den
-    wichtigsten Unterschied innerhalb des Nexus-Zweigs."""@de ;
-    min:definedInVersion "1.0.0" ;
+min:hasCausalityMode
+    min:definition """ObjectProperty mit owl:oneOf-Enumeration (CausalityMode).
+    Differenziert, WIE eine Nexus-Kategorie kausal wirksam wird.
+    Drei Individuen: CM_Dispositional, CM_Mediated, CM_Relational.
+    Reasoner inferiert den Modus automatisch per Klassenzugehörigkeit."""@de ;
+    min:rationale """Ersetzt die String-Annotation min:causalityMode.
+    Strings sind für OWL-Reasoner unsichtbar. owl:hasValue-Restrictions
+    auf Klassenebene machen den Modus querybar und validierbar."""@de ;
+    min:definedInVersion "1.0.1" ;
     min:status "stable" .
 
 
@@ -989,15 +965,17 @@ min:philosophicalBasis
     min:definedInVersion "1.0.0" ;
     min:status "stable" .
 
-min:efficacyMode
-    min:definition """Allgemeiner Wirksamkeitsmodus einer Entität oder
-    Entitätsklasse innerhalb des MIN-Schemas."""@de ;
-    min:criterion "Ordnet der Wert einen Term einem kohärenten Wirksamkeitsmodus zu?"@de ;
-    min:distinguishedFrom """min:causalityMode — spezifisch für Nexus.
-    min:efficacyMode — allgemeiner über mehrere Wirkungsarten hinweg."""@de ;
-    min:rationale """Mit efficacyMode wird die Theorie differenzierter
-    Wirksamkeit über den reinen Nexus-Zweig hinaus sichtbar."""@de ;
-    min:definedInVersion "1.0.0" ;
+min:hasEfficacyMode
+    min:definition """ObjectProperty mit owl:oneOf-Enumeration (EfficacyMode).
+    Allgemeiner Wirksamkeitsmodus einer Entitätsklasse.
+    10 Individuen über Nexus und Forma hinweg.
+    Reasoner inferiert den Modus automatisch per Klassenzugehörigkeit."""@de ;
+    min:distinguishedFrom """min:hasCausalityMode — spezifisch für Nexus (3 Werte).
+    min:hasEfficacyMode — allgemeiner über alle Entity-Subklassen (10 Werte)."""@de ;
+    min:rationale """Ersetzt die String-Annotation min:efficacyMode.
+    owl:hasValue-Restrictions auf Klassenebene machen den Modus
+    querybar und validierbar."""@de ;
+    min:definedInVersion "1.0.1" ;
     min:status "stable" .
 
 
@@ -1028,5 +1006,5 @@ min:replacedBy a min:MetaTerm .
 min:axiomRationale a min:MetaTerm .
 min:designRationale a min:MetaTerm .
 min:philosophicalBasis a min:MetaTerm .
-min:causalityMode a min:MetaTerm .
-min:efficacyMode a min:MetaTerm .
+min:hasCausalityMode a min:MetaTerm .
+min:hasEfficacyMode a min:MetaTerm .

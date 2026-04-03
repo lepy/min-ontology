@@ -57,7 +57,9 @@ min:Nexus a owl:Class ;
 min:Object a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Object"@en , "Objekt"@de ;
-    rdfs:comment "Material-dominanter Nexus mit dispositionaler Kausalität."@de .
+    rdfs:comment "Material-dominanter Nexus mit dispositionaler Kausalität."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Dispositional ] ,
+                    [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Dispositional ] .
 
 min:Process a owl:Class ;
     rdfs:subClassOf min:Nexus ;
@@ -71,12 +73,18 @@ min:Process a owl:Class ;
         a owl:Restriction ;
         owl:onProperty min:hasOutput ;
         owl:someValuesFrom min:Nexus
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Dispositional
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Dispositional
     ] .
 
 min:Data a owl:Class ;
     rdfs:subClassOf min:Nexus ;
     rdfs:label "Data"@en , "Daten"@de ;
-    rdfs:comment "Informational-dominanter Nexus — Scharnier zwischen Nexus und Forma via encodes."@de .
+    rdfs:comment "Informational-dominanter Nexus — Scharnier zwischen Nexus und Forma via encodes."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Mediated ] ,
+                    [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Informational ] .
 
 min:Boundary a owl:Class ;
     rdfs:subClassOf min:Nexus ;
@@ -86,6 +94,10 @@ min:Boundary a owl:Class ;
         a owl:Restriction ;
         owl:onProperty min:bounds ;
         owl:minCardinality "2"^^xsd:nonNegativeInteger
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Relational
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Relational
     ] .
 
 [] a owl:AllDisjointClasses ;
@@ -102,6 +114,10 @@ min:Agent a owl:Class ;
         a owl:Restriction ;
         owl:onProperty min:performs ;
         owl:someValuesFrom min:Process
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasCausalityMode ; owl:hasValue min:CM_Dispositional
+    ] , [
+        a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Agentive
     ] ;
     rdfs:subClassOf [ a owl:Class ; owl:unionOf ( min:Nexus min:Forma ) ] .
 
@@ -116,27 +132,32 @@ min:Forma a owl:Class ;
 min:Lex a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Lex"@en , "Lex"@de ;
-    rdfs:comment "Universelle Regularitäten und Naturgesetze. Kann nicht verletzt werden."@de .
+    rdfs:comment "Universelle Regularitäten und Naturgesetze. Kann nicht verletzt werden."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Lawful ] .
 
 min:Structura a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Structura"@en , "Structura"@de ;
-    rdfs:comment "Mathematische und formale Strukturen."@de .
+    rdfs:comment "Mathematische und formale Strukturen."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Structural ] .
 
 min:Possibile a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Possibile"@en , "Possibile"@de ;
-    rdfs:comment "Möglichkeiten und kontrafaktische Szenarien."@de .
+    rdfs:comment "Möglichkeiten und kontrafaktische Szenarien."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Modal ] .
 
 min:Norma a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Norma"@en , "Norma"@de ;
-    rdfs:comment "Atomare Anforderung, Grenzwert oder Bewertungskriterium."@de .
+    rdfs:comment "Atomare Anforderung, Grenzwert oder Bewertungskriterium."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Normative ] .
 
 min:Institutio a owl:Class ;
     rdfs:subClassOf min:Forma ;
     rdfs:label "Institutio"@en , "Institution"@de ;
-    rdfs:comment "Soziale Konstrukte und konventionelle Bündelungen. Bündelt via comprises, typifiziert via typifies."@de .
+    rdfs:comment "Soziale Konstrukte und konventionelle Bündelungen. Bündelt via comprises, typifiziert via typifies."@de ;
+    rdfs:subClassOf [ a owl:Restriction ; owl:onProperty min:hasEfficacyMode ; owl:hasValue min:EM_Institutional ] .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( min:Lex min:Structura min:Possibile min:Norma min:Institutio ) .
@@ -167,6 +188,38 @@ min:materialProperty a owl:AnnotationProperty ;
 min:informationalProperty a owl:AnnotationProperty ;
     rdfs:label "informational property"@en , "informationale Eigenschaft"@de ;
     rdfs:comment "Superproperty für strukturell-bestimmte Nexus-Eigenschaften. Heuristik."@de .
+
+
+# --- Kausalitäts- und Wirksamkeitsmodus ---
+
+min:CausalityMode a owl:Class ;
+    owl:oneOf ( min:CM_Dispositional min:CM_Mediated min:CM_Relational ) .
+min:CM_Dispositional a min:CausalityMode ; rdfs:label "dispositional"@en .
+min:CM_Mediated      a min:CausalityMode ; rdfs:label "mediated"@en .
+min:CM_Relational    a min:CausalityMode ; rdfs:label "relational"@en .
+
+min:hasCausalityMode a owl:ObjectProperty ;
+    rdfs:label "has causality mode"@en ;
+    rdfs:range min:CausalityMode .
+
+min:EfficacyMode a owl:Class ;
+    owl:oneOf ( min:EM_Dispositional min:EM_Informational min:EM_Agentive
+                min:EM_Relational min:EM_Formal min:EM_Lawful min:EM_Structural
+                min:EM_Modal min:EM_Normative min:EM_Institutional ) .
+min:EM_Dispositional  a min:EfficacyMode ; rdfs:label "dispositional"@en .
+min:EM_Informational  a min:EfficacyMode ; rdfs:label "informational"@en .
+min:EM_Agentive       a min:EfficacyMode ; rdfs:label "agentive"@en .
+min:EM_Relational     a min:EfficacyMode ; rdfs:label "relational"@en .
+min:EM_Formal         a min:EfficacyMode ; rdfs:label "formal"@en .
+min:EM_Lawful         a min:EfficacyMode ; rdfs:label "lawful"@en .
+min:EM_Structural     a min:EfficacyMode ; rdfs:label "structural"@en .
+min:EM_Modal          a min:EfficacyMode ; rdfs:label "modal"@en .
+min:EM_Normative      a min:EfficacyMode ; rdfs:label "normative"@en .
+min:EM_Institutional  a min:EfficacyMode ; rdfs:label "institutional"@en .
+
+min:hasEfficacyMode a owl:ObjectProperty ;
+    rdfs:label "has efficacy mode"@en ;
+    rdfs:range min:EfficacyMode .
 
 
 # --- Inter-Nexus-Relationen ---
@@ -551,14 +604,6 @@ min:designRationale a owl:AnnotationProperty ;
 min:philosophicalBasis a owl:AnnotationProperty ;
     rdfs:label "philosophical basis"@en .
 
-min:causalityMode a owl:AnnotationProperty ;
-    rdfs:label "causality mode"@en ;
-    rdfs:range xsd:string ;
-    rdfs:comment "dispositional | mediated | relational."@de .
-
-min:efficacyMode a owl:AnnotationProperty ;
-    rdfs:label "efficacy mode"@en ;
-    rdfs:range xsd:string .
 
 min:definition a owl:AnnotationProperty ;
     rdfs:label "definition"@en ;

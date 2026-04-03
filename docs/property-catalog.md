@@ -129,10 +129,39 @@ Core design/meta properties include:
 - `min:status`
 - `min:replacedBy`
 - `min:axiomRationale`
-- `min:causalityMode`
-- `min:efficacyMode`
+## 7. Mode properties (formalized enumerations)
 
-## 7. Modeling guidance
+| Property | Range | Type | Notes |
+| --- | --- | --- | --- |
+| `min:hasCausalityMode` | `min:CausalityMode` | ObjectProperty | Nexus & Agent (by restriction) |
+| `min:hasEfficacyMode` | `min:EfficacyMode` | ObjectProperty | All leaf Entity subclasses |
+
+### CausalityMode values
+
+| Individual | Label | Applied to |
+| --- | --- | --- |
+| `min:CM_Dispositional` | dispositional | Object, Process, Agent |
+| `min:CM_Mediated` | mediated | Data |
+| `min:CM_Relational` | relational | Boundary |
+
+### EfficacyMode values
+
+| Individual | Label | Applied to |
+| --- | --- | --- |
+| `min:EM_Dispositional` | dispositional | Object, Process |
+| `min:EM_Informational` | informational | Data |
+| `min:EM_Agentive` | agentive | Agent |
+| `min:EM_Relational` | relational | Boundary |
+| `min:EM_Formal` | formal | (via Forma branch root, if instantiated) |
+| `min:EM_Lawful` | lawful | Lex |
+| `min:EM_Structural` | structural | Structura |
+| `min:EM_Modal` | modal | Possibile |
+| `min:EM_Normative` | normative | Norma |
+| `min:EM_Institutional` | institutional | Institutio |
+
+Reasoner infers mode automatically via `owl:hasValue` restrictions on each class.
+
+## 8. Modeling guidance
 
 1. Use bridge relations explicitly; do not collapse Nexus and Forma in one node.
 2. Use `originates` only when the formal entity is newly brought forth.

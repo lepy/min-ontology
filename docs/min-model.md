@@ -130,7 +130,21 @@ Typification is modeled via `min:Institutio` + `min:typifies`:
 - `min:comprises` (`Institutio -> Forma`): bundles atomic Forma instances into a type determination
 - Classification is an institutional act — the bundling exists because a community recognizes it
 
-## 11. Epistemic relations
+## 11. Causality and efficacy modes
+
+`min:hasCausalityMode` and `min:hasEfficacyMode` are formalized as ObjectProperties with `owl:oneOf` enumeration classes. Each leaf class has an `owl:hasValue` restriction, so a reasoner infers the mode automatically:
+
+```sparql
+# Find all instances with dispositional causality
+SELECT ?x WHERE { ?x min:hasCausalityMode min:CM_Dispositional . }
+# Returns all Object, Process, and Agent instances (inferred)
+```
+
+- `CausalityMode`: 3 values (Dispositional, Mediated, Relational) — Nexus + Agent only
+- `EfficacyMode`: 10 values — all leaf Entity subclasses
+- Not `owl:FunctionalProperty` — Agent co-typing (Agent ∩ Object) legitimately produces two efficacy modes
+
+## 12. Epistemic relations
 
 Five relations model what we know about Forma:
 
