@@ -10,7 +10,7 @@
 #   MIN — Dokumentation und philosophische Grundlagen   v1.0.1
 #
 #   Import-Modul. Wer die Philosophie will, importiert dieses Modul.
-#   Wer nur Axiome will, importiert nur min-core.ttl.
+#   Wer nur Axiome will, importiert nur min.ttl.
 # =============================================================================
 
 <https://w3id.org/min/docs> a owl:Ontology ;
