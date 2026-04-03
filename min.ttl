@@ -313,8 +313,7 @@ min:affectedBy a owl:ObjectProperty ;
 min:owns a owl:ObjectProperty ;
     rdfs:label "owns"@en ;
     rdfs:domain min:Agent ;
-    rdfs:range min:Object ;
-    rdfs:subPropertyOf min:nexusWith .
+    rdfs:range min:Entity .
 
 # Data-Relationen
 
@@ -578,6 +577,7 @@ min:describesOntologyTerm a owl:ObjectProperty ;
 
 min:hasIdentifier a owl:DatatypeProperty ;
     rdfs:label "has identifier"@en ;
+    rdfs:subPropertyOf dcterms:identifier ;
     rdfs:domain min:Entity ;
     rdfs:range xsd:string .
 
@@ -588,11 +588,13 @@ min:hasName a owl:DatatypeProperty ;
 
 min:hasTimestamp a owl:DatatypeProperty ;
     rdfs:label "has timestamp"@en ;
+    rdfs:subPropertyOf dcterms:date ;
     rdfs:domain min:Entity ;
     rdfs:range xsd:dateTime .
 
 min:hasDescription a owl:DatatypeProperty ;
     rdfs:label "has description"@en ;
+    rdfs:subPropertyOf dcterms:description ;
     rdfs:domain min:Entity ;
     rdfs:range xsd:string .
 

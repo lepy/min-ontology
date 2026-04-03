@@ -45,6 +45,8 @@ For full class definitions, see `docs/class-catalog.md`.
 
 - `min.ttl`: current MIN ontology (axioms only, < 20 KB)
 - `min-docs.ttl`: annotations, philosophical basis, design rationale (imports `min.ttl`)
+- `alignment/min-prov.ttl`: optional PROV-O alignment
+- `alignment/min-bfo.ttl`: optional BFO 2020 alignment
 - `min-v*.ttl`: immutable release snapshots
 - `min-v1.0.0.ttl`: current immutable snapshot (hyphen naming)
 - `examples/`: example instance graphs

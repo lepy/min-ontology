@@ -36,7 +36,7 @@ Both are schema-level `owl:AnnotationProperty` terms:
 | `min:controls` | `min:Agent` | `min:Process` | stronger agency/control relation |
 | `min:actsOn` | `min:Agent` | `min:Nexus` | inverse: `min:affectedBy` |
 | `min:affectedBy` | `min:Nexus` | `min:Agent` | inverse of `actsOn` |
-| `min:owns` | `min:Agent` | `min:Object` | ownership relation |
+| `min:owns` | `min:Agent` | `min:Entity` | ownership / responsibility |
 | `min:produces` | `min:Agent` | `min:Object` | derived via chain `(performs o hasOutput)` |
 
 ### Data and boundary
@@ -60,7 +60,8 @@ Both are schema-level `owl:AnnotationProperty` terms:
 | `min:originatedBy` | `min:Forma` | `min:Nexus` | inverse of `originates` |
 | `min:realizes` | `min:Nexus` | `min:Forma` | inverse: `min:realizedBy`; realization of existing forma |
 | `min:realizedBy` | `min:Forma` | `min:Nexus` | inverse of `realizes` |
-| `min:constrains` | `min:Forma` | `min:Nexus` | general determination relation |
+| `min:constrains` | `min:Forma` | `min:Nexus` | inverse: `min:constrainedBy`; general determination relation |
+| `min:constrainedBy` | `min:Nexus` | `min:Forma` | inverse of `constrains` |
 
 ### Specialized bridges
 

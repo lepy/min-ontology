@@ -1,0 +1,33 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ PROV-O Alignment
+#
+#   Optional module. Load to connect MIN instances to the
+#   W3C Provenance data model (https://www.w3.org/TR/prov-o/).
+#
+#   Pattern: rdfs:subClassOf (MIN specializes PROV-O).
+# =============================================================================
+
+<https://w3id.org/min/alignment/prov> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ PROV-O Alignment"@en ;
+    rdfs:comment "Maps MIN classes to W3C PROV-O. Optional module."@en .
+
+# --- Class alignment ---
+
+min:Entity  rdfs:subClassOf prov:Entity .
+min:Process rdfs:subClassOf prov:Activity .
+min:Agent   rdfs:subClassOf prov:Agent .
+
+# --- Property alignment ---
+
+min:performs      rdfs:subPropertyOf prov:wasAssociatedWith .
+min:performedBy   rdfs:subPropertyOf prov:wasAssociatedWith .
+min:hasInput      rdfs:subPropertyOf prov:used .
+min:hasOutput     rdfs:subPropertyOf prov:generated .
+min:generatedBy   rdfs:subPropertyOf prov:wasGeneratedBy .

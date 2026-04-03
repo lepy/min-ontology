@@ -1,0 +1,73 @@
+@prefix min: <https://w3id.org/min#> .
+@prefix bfo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ BFO 2020 Alignment
+#
+#   Optional module. Load to connect MIN to the Basic Formal Ontology
+#   (ISO 21838-2:2020, https://basic-formal-ontology.org/).
+#
+#   Pattern: rdfs:subClassOf (MIN specializes BFO).
+#
+#   BFO class IRIs use OBO numeric identifiers:
+#     BFO_0000001 = entity
+#     BFO_0000002 = continuant
+#     BFO_0000003 = occurrent
+#     BFO_0000004 = independent continuant
+#     BFO_0000015 = process
+#     BFO_0000019 = quality
+#     BFO_0000020 = specifically dependent continuant
+#     BFO_0000023 = role
+#     BFO_0000031 = generically dependent continuant
+#     BFO_0000040 = material entity
+# =============================================================================
+
+<https://w3id.org/min/alignment/bfo> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ BFO 2020 Alignment"@en ;
+    rdfs:comment "Maps MIN classes to BFO 2020 (ISO 21838-2). Optional module."@en .
+
+# --- Entity ---
+# MIN Entity is broader than any single BFO category (spans continuant + occurrent).
+# No direct subClassOf — Entity maps to bfo:entity (top).
+min:Entity rdfs:subClassOf bfo:BFO_0000001 .  # bfo:entity
+
+# --- Nexus branch ---
+# Object: material things with dispositional causality.
+min:Object rdfs:subClassOf bfo:BFO_0000040 .  # bfo:material entity
+
+# Process: transformations over time.
+min:Process rdfs:subClassOf bfo:BFO_0000015 . # bfo:process
+
+# Data: information artifacts — closest BFO match is generically dependent continuant
+# (can be copied, exists in multiple bearers).
+min:Data rdfs:subClassOf bfo:BFO_0000031 .    # bfo:generically dependent continuant
+
+# Boundary: relationally dependent phenomena between partners.
+# BFO has "relational quality" (BFO_0000145) but it is under specifically dependent continuant.
+# MIN Boundary is causally efficacious, which BFO qualities are not.
+# Conservative: no BFO alignment for Boundary.
+
+# Agent: action category — BFO has no direct equivalent.
+# Agent ∩ Object maps via Object → material entity.
+# Agent ∩ Institutio has no BFO counterpart.
+# Conservative: align Agent to role-bearer pattern.
+min:Agent rdfs:subClassOf bfo:BFO_0000004 .   # bfo:independent continuant
+
+# --- Forma branch ---
+# Forma has no direct BFO equivalent. BFO's "generically dependent continuant"
+# is the closest, but Forma is explicitly non-spatial and non-temporal.
+# Conservative: no alignment for Forma branch root.
+
+# Lex: natural laws — no BFO class for laws/regularities.
+# Structura: mathematical structures — no BFO class.
+# Possibile: possibilities — no BFO class.
+# Norma: requirements — closest would be bfo:role but semantically different.
+# Institutio: social constructs — no BFO class.
+
+# Note: BFO is a realist ontology focused on material entities and processes.
+# MIN's Forma branch (formal determinants) has no BFO counterpart by design —
+# this is precisely the gap MIN fills.
