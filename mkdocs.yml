@@ -14,6 +14,8 @@ nav:
   - Home: index.md
   - Foundations:
     - Model Overview: min-model.md
+    - Philosophical Lineage (DE): min_philosophical_lineage-de.md
+    - Philosophical Lineage (EN): min_philosophical_lineage-en.md
     - Class Catalog: class-catalog.md
     - Property Catalog: property-catalog.md
   - Guides:
