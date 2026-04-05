@@ -174,7 +174,39 @@ Provenienz in MIN laeuft ueber drei komplementaere Mechanismen:
 
 ---
 
-## Zusammenfassung: sieben Achsen
+## Achse 8: Temporalitaet — wann geschieht es?
+
+| Frage | MIN-Konstrukt |
+|---|---|
+| Wann wurde es erfasst? | `hasTimestamp` (Entity → xsd:dateTime) |
+| Wann begann der Prozess? | `startedAt` (Process → xsd:dateTime) |
+| Wann endete der Prozess? | `endedAt` (Process → xsd:dateTime) |
+| Welche zeitliche Abfolge? | Prozessketten ueber `hasInput` / `hasOutput` |
+| Was hat was abgeloest? | `supersedes` (Forma → Forma) |
+
+MIN bettet Temporalitaet implizit ein, statt ein separates Zeitmodell
+zu verwenden. Zeitstempel haengen direkt an Entitaeten und Prozessen.
+Zeitliche Ordnung ergibt sich aus Prozessketten: wenn Prozess B den
+Output von Prozess A nutzt, dann geht A B voraus. Epistemische
+Sukzession nutzt `supersedes` — wenn ein neues Epistemicum ein altes
+ersetzt, wird die zeitliche Dimension strukturell erfasst, nicht ueber
+explizite Zeitintervalle.
+
+**Was Alignment bereitstellt:**
+- OWL-Time (`alignment/min-time.ttl`): `min:Process rdfs:subClassOf time:ProperInterval` —
+  Prozesse koennen von OWL-Time-Reasonern als Zeitintervalle behandelt werden.
+- PROV-O (`alignment/min-prov.ttl`): `min:startedAt rdfs:subPropertyOf prov:startedAtTime` —
+  Zeitstempel werden fuer PROV-O-Werkzeuge sichtbar.
+
+**Was in die Domainschicht gehoert:**
+- Zeitreihendaten (Sensorwerte im Millisekundentakt)
+- Lebenszyklus-Phasenmodelle (Entwurf → Fertigung → Nutzung → Lebensende)
+- Kalender- und Terminierungsbeschraenkungen
+- Allen-Intervallrelationen (before, during, overlaps)
+
+---
+
+## Zusammenfassung: acht Achsen
 
 ```
 1. Materialitaet     Was existiert physisch?                → Nexus
@@ -184,6 +216,7 @@ Provenienz in MIN laeuft ueber drei komplementaere Mechanismen:
 5. Epistemik          Was wissen wir, wie sicher?            → Epistemicum
 6. Unsicherheit       Was wissen wir nicht?                  → Possibile + isQuantifiable
 7. Provenienz         Woher stammt die Information?          → Data + originatedBy + supportedBy
+8. Temporalitaet      Wann geschieht es?                     → hasTimestamp + startedAt/endedAt
 ```
 
 ## Was MIN bewusst NICHT abdeckt

@@ -22,6 +22,7 @@ TTL_FILES = [
     "alignment/min-dolce.ttl",
     "alignment/min-qudt.ttl",
     "alignment/min-dcterms.ttl",
+    "alignment/min-time.ttl",
     "examples/min-example.ttl",
     "examples/min-v1.0.0-examples.ttl",
     "examples/min-examples.ttl",

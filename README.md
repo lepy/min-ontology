@@ -47,7 +47,7 @@ For full class definitions, see `docs/class-catalog.md`.
 
 - `min.ttl`: current MIN ontology (axioms only, < 20 KB)
 - `min-docs.ttl`: annotations, philosophical basis, design rationale (imports `min.ttl`)
-- `alignment/`: optional alignment modules (BFO, DOLCE, PROV-O, QUDT, SSN/SOSA, schema.org, DC/FOAF/ADMS)
+- `alignment/`: optional alignment modules (BFO, DOLCE, OWL-Time, PROV-O, QUDT, SSN/SOSA, schema.org, DC/FOAF/ADMS)
 - `min-v*.ttl`: immutable release snapshots
 - `min-v1.1.0.ttl`: current immutable snapshot
 - `examples/`: example instance graphs

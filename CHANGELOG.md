@@ -16,6 +16,9 @@ All notable changes to MIN are documented in this file.
 - Example: `examples/epistemic-zugversuch.ttl` — tensile test with both epistemic patterns.
 - Documentation: `docs/epistemic-dimension-en.md`, `docs/epistemic-dimension-de.md`, `docs/migration-v1.0-to-v1.1.md`.
 - `min-v1.1.0.ttl`: immutable release snapshot.
+- `alignment/min-time.ttl`: optional OWL-Time alignment (Process → time:ProperInterval).
+- `alignment/min-prov.ttl`: extended with temporal property mappings (startedAt → prov:startedAtTime, endedAt → prov:endedAtTime).
+- Documentation: Axis 8 (Temporality) added to `docs/min-requirements-en.md`, `docs/min-requirements-de.md`.
 
 ### Changed
 - Forma partition extended: `Forma ≡ Lex ⊔ Structura ⊔ Possibile ⊔ Norma ⊔ Institutio ⊔ Epistemicum` (**breaking change** — monotone extension, all v1.0.x graphs remain valid).

@@ -1,0 +1,54 @@
+@prefix min:     <https://w3id.org/min#> .
+@prefix time:    <http://www.w3.org/2006/time#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#   MIN ↔ OWL-Time Alignment
+#
+#   Optional module. Load to connect MIN temporal concepts to the
+#   W3C OWL-Time ontology (https://www.w3.org/TR/owl-time/).
+#
+#   Pattern: rdfs:subClassOf (MIN specializes OWL-Time).
+#
+#   Key constraint: MIN temporal properties (hasTimestamp, startedAt,
+#   endedAt) are DatatypeProperties with xsd:dateTime range.
+#   OWL-Time models instants as resources (time:Instant) reached via
+#   ObjectProperties (time:hasBeginning, time:hasEnd).
+#   This type mismatch prevents direct property alignment.
+#   The class-level mapping is nonetheless valid and useful.
+# =============================================================================
+
+<https://w3id.org/min/alignment/time> a owl:Ontology ;
+    owl:imports <https://w3id.org/min> ;
+    dcterms:title "MIN ↔ OWL-Time Alignment"@en ;
+    rdfs:comment "Maps MIN temporal concepts to W3C OWL-Time. Optional module."@en .
+
+# --- Class alignment ---
+
+# A MIN Process has temporal extent: startedAt and endedAt define a
+# non-zero-duration interval. OWL-Time ProperInterval is an interval
+# whose beginning and end are distinct — matching Process semantics.
+min:Process rdfs:subClassOf time:ProperInterval .
+
+# --- Property alignment ---
+# NOT MAPPED. Documented rationale:
+#
+# min:startedAt (DatatypeProperty, range xsd:dateTime)
+#   vs. time:hasBeginning (ObjectProperty, range time:Instant)
+#   Type mismatch: DatatypeProperty cannot be rdfs:subPropertyOf ObjectProperty.
+#
+# min:endedAt (DatatypeProperty, range xsd:dateTime)
+#   vs. time:hasEnd (ObjectProperty, range time:Instant)
+#   Same type mismatch.
+#
+# min:hasTimestamp (DatatypeProperty, range xsd:dateTime)
+#   vs. time:inXSDDateTimeStamp (DatatypeProperty on time:Instant,
+#       range xsd:dateTimeStamp)
+#   Structural mismatch: hasTimestamp attaches directly to Entity;
+#   inXSDDateTimeStamp attaches to time:Instant (one indirection level).
+#   Also xsd:dateTimeStamp requires timezone, xsd:dateTime does not.
+#
+# Domain ontologies needing full OWL-Time interop should create
+# time:Instant resources and link them via time:hasBeginning/hasEnd.

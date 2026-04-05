@@ -31,3 +31,9 @@ min:performedBy   rdfs:subPropertyOf prov:wasAssociatedWith .
 min:hasInput      rdfs:subPropertyOf prov:used .
 min:hasOutput     rdfs:subPropertyOf prov:generated .
 min:generatedBy   rdfs:subPropertyOf prov:wasGeneratedBy .
+
+# --- Temporal property alignment ---
+# Both sides are DatatypeProperties with xsd:dateTime — direct mapping.
+
+min:startedAt rdfs:subPropertyOf prov:startedAtTime .
+min:endedAt   rdfs:subPropertyOf prov:endedAtTime .

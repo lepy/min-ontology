@@ -173,7 +173,38 @@ Provenance in MIN runs through three complementary mechanisms:
 
 ---
 
-## Summary: seven axes
+## Axis 8: Temporality — when does it happen?
+
+| Question | MIN construct |
+|---|---|
+| When was it recorded? | `hasTimestamp` (Entity → xsd:dateTime) |
+| When did the process start? | `startedAt` (Process → xsd:dateTime) |
+| When did the process end? | `endedAt` (Process → xsd:dateTime) |
+| What temporal sequence? | Process chains via `hasInput` / `hasOutput` |
+| What replaced what? | `supersedes` (Forma → Forma) |
+
+MIN embeds temporality implicitly rather than as a separate temporal model.
+Timestamps attach directly to entities and processes. Temporal ordering
+emerges from process chains: if Process B uses the output of Process A,
+then A precedes B. Epistemic succession uses `supersedes` — when a new
+Epistemicum replaces an old one, the temporal dimension is captured
+structurally, not through explicit time intervals.
+
+**What alignment provides:**
+- OWL-Time (`alignment/min-time.ttl`): `min:Process rdfs:subClassOf time:ProperInterval` —
+  processes can be treated as time intervals by OWL-Time reasoners.
+- PROV-O (`alignment/min-prov.ttl`): `min:startedAt rdfs:subPropertyOf prov:startedAtTime` —
+  timestamps become visible to PROV-O tools.
+
+**What belongs in the domain layer:**
+- Time series data (sensor readings at millisecond resolution)
+- Lifecycle phase models (design → manufacture → use → end-of-life)
+- Calendar and scheduling constraints
+- Allen interval relations (before, during, overlaps)
+
+---
+
+## Summary: eight axes
 
 ```
 1. Materiality     What exists physically?                → Nexus
@@ -183,6 +214,7 @@ Provenance in MIN runs through three complementary mechanisms:
 5. Epistemics      What do we know, how certain?          → Epistemicum
 6. Uncertainty     What do we not know?                   → Possibile + isQuantifiable
 7. Provenance      Where does the information come from?  → Data + originatedBy + supportedBy
+8. Temporality     When does it happen?                   → hasTimestamp + startedAt/endedAt
 ```
 
 ## What MIN deliberately does NOT cover
