@@ -13,6 +13,7 @@ TTL_FILES = [
     "min.ttl",
     "min-v1.0.0.ttl",
     "min-v1.0.1.ttl",
+    "min-v1.1.0.ttl",
     "min-docs.ttl",
     "alignment/min-prov.ttl",
     "alignment/min-bfo.ttl",
@@ -35,6 +36,7 @@ TTL_FILES = [
     "examples/possibile.ttl",
     "examples/norma.ttl",
     "examples/institutio.ttl",
+    "examples/epistemic-zugversuch.ttl",
     "shapes/min-core.shacl.ttl",
     "shapes/min-instance.shacl.ttl",
 ]
@@ -50,6 +52,14 @@ SPARQL_TESTS = [
     ("tests/sparql/test-min-disjointness.rq", "min.ttl"),
     ("tests/sparql/test-min-bridge-relations.rq", "min.ttl"),
     ("tests/sparql/test-min-inverse-properties.rq", "min.ttl"),
+    ("tests/sparql/test-min-supersedes-nontransitive.rq", "min.ttl"),
+    ("tests/sparql/test-min-efficacymode-count.rq", "min.ttl"),
+    ("tests/sparql/test-min-epistemic-example.rq", "examples/epistemic-zugversuch.ttl"),
+]
+
+COMPETENCY_QUERIES = [
+    f"queries/competency/cq{index:02d}.rq"
+    for index in range(1, 11)
 ]
 
 
@@ -66,10 +76,19 @@ def run_sparql_ask(query_file: Path, data_file: Path) -> bool:
     return bool(result.askAnswer)
 
 
+def run_select_count(query_file: Path, data_files: list[Path]) -> int:
+    graph = Graph()
+    for data_file in data_files:
+        graph.parse(data_file, format="turtle")
+    query = query_file.read_text(encoding="utf-8")
+    result = graph.query(query)
+    return sum(1 for _ in result)
+
+
 def main() -> int:
     failures = 0
 
-    print("[1/4] Parsing Turtle files")
+    print("[1/5] Parsing Turtle files")
     for rel in TTL_FILES:
         path = ROOT / rel
         try:
@@ -79,7 +98,7 @@ def main() -> int:
             failures += 1
             print(f"  ERR {rel}: {exc}")
 
-    print("[2/4] Running SPARQL ASK tests")
+    print("[2/5] Running SPARQL ASK tests")
     for query_rel, data_rel in SPARQL_TESTS:
         query_file = ROOT / query_rel
         data_file = ROOT / data_rel
@@ -94,7 +113,22 @@ def main() -> int:
             failures += 1
             print(f"  ERR {query_rel} on {data_rel}: {exc}")
 
-    print("[3/4] Running Core-SHACL validation")
+    print("[3/5] Running competency queries")
+    competency_data_files = [ROOT / "min.ttl", ROOT / "examples/epistemic-zugversuch.ttl"]
+    for query_rel in COMPETENCY_QUERIES:
+        query_file = ROOT / query_rel
+        try:
+            rows = run_select_count(query_file, competency_data_files)
+            if rows > 0:
+                print(f"  OK  {query_rel}: {rows} row(s)")
+            else:
+                failures += 1
+                print(f"  ERR {query_rel}: returned 0 rows")
+        except Exception as exc:  # pragma: no cover
+            failures += 1
+            print(f"  ERR {query_rel}: {exc}")
+
+    print("[4/5] Running Core-SHACL validation")
     data_graph = parse_turtle(ROOT / "min.ttl")
     shapes_graph = parse_turtle(ROOT / "shapes/min-core.shacl.ttl")
     conforms, _, report_text = validate(
@@ -112,7 +146,7 @@ def main() -> int:
         print("  ERR Core-SHACL validation failed")
         print(report_text)
 
-    print("[4/4] Running Instance-SHACL validation")
+    print("[5/5] Running Instance-SHACL validation")
     instance_shapes = parse_turtle(ROOT / "shapes/min-instance.shacl.ttl")
     example_files = [
         "examples/min-v1.0.0-examples.ttl",
@@ -127,6 +161,7 @@ def main() -> int:
         "examples/possibile.ttl",
         "examples/norma.ttl",
         "examples/institutio.ttl",
+        "examples/epistemic-zugversuch.ttl",
     ]
     for ex_rel in example_files:
         instance_graph = parse_turtle(ROOT / "min.ttl")

@@ -14,6 +14,7 @@ graph TD
     Possibile["<b>Possibile</b><br/><small>Möglichkeitsraum<br/>&quot;Das, was sein könnte.&quot;</small>"]
     Norma["<b>Norma</b><br/><small>Anforderung<br/>&quot;Das, was gelten soll.&quot;</small>"]
     Institutio["<b>Institutio</b><br/><small>kollektive Anerkennung<br/>&quot;Das, was anerkannt wird.&quot;</small>"]
+    Epistemicum["<b>Epistemicum</b><br/><small>epistemische Haltung<br/>&quot;Das, was fuer wahr gehalten wird.&quot;</small>"]
 
     Agent["<b>Agent</b><br/><small>selektive Handlungsfähigkeit<br/>&quot;Das, was handelt.&quot;</small>"]
 
@@ -31,6 +32,7 @@ graph TD
     Forma --> Possibile
     Forma --> Norma
     Forma --> Institutio
+    Forma --> Epistemicum
 
     style Entity fill:#f0ebe3,stroke:#9c8b75,color:#3d3225,stroke-width:2px
     style Nexus fill:#d6eaf8,stroke:#2e86c1,color:#1a3c5e,stroke-width:2px
@@ -46,6 +48,7 @@ graph TD
     style Possibile fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
     style Norma fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
     style Institutio fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
+    style Epistemicum fill:#f0e6f6,stroke:#8e44ad,color:#4a235a
 
     style Agent fill:#fdebd0,stroke:#e67e22,color:#7e4a12,stroke-width:2px
 ```
@@ -53,5 +56,5 @@ graph TD
 **Legende:**
 `━━` rdfs:subClassOf
 ⊥ Object · Process · Data · Boundary paarweise disjunkt · Agent überlappt
-⊥ Lex · Structura · Possibile · Norma · Institutio paarweise disjunkt
+⊥ Lex · Structura · Possibile · Norma · Institutio · Epistemicum paarweise disjunkt
 Entity ≡ Nexus ⊔ Forma | Agent

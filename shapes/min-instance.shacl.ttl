@@ -2,8 +2,11 @@
 @prefix min:     <https://w3id.org/min#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 
+<https://w3id.org/min>
+    sh:declare [ sh:prefix "min" ; sh:namespace "https://w3id.org/min#"^^xsd:anyURI ] .
+
 # =============================================================================
-#   MIN Instance-Level SHACL Shapes (v1.0.1)
+#   MIN Instance-Level SHACL Shapes (v1.1.0)
 #   Validates instance data against MIN modeling expectations.
 # =============================================================================
 
@@ -53,4 +56,73 @@ min:BoundaryInstanceShape a sh:NodeShape ;
         sh:minCount 2 ;
         sh:severity sh:Violation ;
         sh:message "Every Boundary must bound at least two Nexus instances."
+    ] .
+
+# --- Epistemicum (v1.1.0) ---
+
+min:EpistemicumInstanceShape a sh:NodeShape ;
+    sh:targetClass min:Epistemicum ;
+    sh:property [
+        sh:path min:about ;
+        sh:minCount 1 ;
+        sh:class min:Entity ;
+        sh:severity sh:Violation ;
+        sh:message "Every Epistemicum must be about at least one Entity."
+    ] ;
+    sh:property [
+        sh:path min:heldBy ;
+        sh:class min:Agent ;
+        sh:severity sh:Violation ;
+        sh:message "heldBy must point to an Agent."
+    ] ;
+    sh:property [
+        sh:path min:hasEpistemicStatus ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class min:EpistemicStatus ;
+        sh:severity sh:Violation ;
+        sh:message "Every Epistemicum must have exactly one hasEpistemicStatus."
+    ] ;
+    sh:property [
+        sh:path min:hasConfidence ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:severity sh:Violation ;
+        sh:message "hasConfidence must be a double in [0.0, 1.0]."
+    ] ;
+    sh:property [
+        sh:path min:hasConfidenceType ;
+        sh:maxCount 1 ;
+        sh:class min:ConfidenceType ;
+        sh:severity sh:Violation ;
+        sh:message "hasConfidenceType must point to a ConfidenceType individual."
+    ] ;
+    sh:property [
+        sh:path min:supportedBy ;
+        sh:class min:Nexus ;
+        sh:severity sh:Violation ;
+        sh:message "supportedBy must point to a Nexus instance (not Forma)."
+    ] ;
+    sh:property [
+        sh:path min:underminedBy ;
+        sh:class min:Nexus ;
+        sh:severity sh:Violation ;
+        sh:message "underminedBy must point to a Nexus instance (not Forma)."
+    ] .
+
+# Consistency rule: hasConfidence requires hasConfidenceType
+min:ConfidenceRequiresTypeShape a sh:NodeShape ;
+    sh:targetClass min:Epistemicum ;
+    sh:sparql [
+        sh:prefixes <https://w3id.org/min> ;
+        sh:select """
+            SELECT $this WHERE {
+                $this min:hasConfidence ?c .
+                FILTER NOT EXISTS { $this min:hasConfidenceType ?t }
+            }
+        """ ;
+        sh:severity sh:Violation ;
+        sh:message "Epistemicum with hasConfidence must also have hasConfidenceType."
     ] .

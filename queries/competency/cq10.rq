@@ -1,0 +1,8 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ10: Quantifizierbare vs. nicht-quantifizierbare Moeglichkeiten
+SELECT ?p ?q WHERE {
+  ?p a min:Possibile ;
+     min:isQuantifiable ?q .
+}
+LIMIT 25

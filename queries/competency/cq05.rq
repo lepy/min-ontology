@@ -1,10 +1,8 @@
 PREFIX min: <https://w3id.org/min#>
 
-# CQ05: Welche Norma evaluiert einen Nexus? (evaluates)
-SELECT ?norma ?normaName ?nexus ?nexusName WHERE {
-  ?norma a min:Norma ;
-         min:evaluates ?nexus .
-  OPTIONAL { ?norma min:hasName ?normaName . }
-  OPTIONAL { ?nexus min:hasName ?nexusName . }
+# CQ05: Epistemische Historie (Property Path, KEIN transitives supersedes)
+SELECT ?latest ?earliest WHERE {
+  ?latest a min:Epistemicum .
+  ?latest min:supersedes+ ?earliest .
 }
 LIMIT 25

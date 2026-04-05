@@ -1,6 +1,6 @@
 # MIN Ontology Documentation
 
-MIN v1.0.1 models reality with these core definitions:
+MIN v1.1.0 models reality with these core definitions:
 
 - `Entity · eindeutige Referenzierbarkeit · "Das, was existiert."`
 - `Nexus · kausale Wirksamkeit · "Das, was etwas bewirkt."`
@@ -14,6 +14,7 @@ MIN v1.0.1 models reality with these core definitions:
 1. Start with [Modellüberblick](min-model.md).
 2. Continue with [Klassenkatalog](class-catalog.md).
 3. Use [Property-Katalog](property-catalog.md) as implementation reference.
+4. Read [Epistemic Dimension (EN)](epistemic-dimension-en.md) / [Epistemische Dimension (DE)](epistemic-dimension-de.md) for v1.1.0 design decisions.
 
 ### If you are modeling domain data
 
@@ -22,12 +23,12 @@ MIN v1.0.1 models reality with these core definitions:
 
 ## Reference scope
 
-The docs reflect MIN `v1.0.1` (`min.ttl` points to this release):
+The docs reflect MIN `v1.1.0` (`min.ttl` points to this release):
 
-- 13 classes (`Entity`, 5 Nexus-side classes, 6 Forma-side classes, plus `Agent` as "Das, was handelt.")
-- Updated bridge model including `originates` / `originatedBy`
-- Current validation and versioning rules
-- Updated documentation for `realizes`, `constrains`, and `originates`
+- 14 domain classes + 4 enum classes
+- Epistemic dimension: `Epistemicum` as 6th Forma subclass with status, confidence, and evidence relations
+- Two complementary epistemic patterns (Popperian + evidence-centric)
+- Bridge model including `originates` / `originatedBy`
 
 Canonical subclass profiles:
 
@@ -40,6 +41,7 @@ Canonical subclass profiles:
 - `Possibile · Möglichkeitsraum · "Das, was sein könnte."`
 - `Norma · Anforderung · "Das, was gelten soll."`
 - `Institutio · kollektive Anerkennung · "Das, was anerkannt wird."`
+- `Epistemicum · epistemische Haltung · "Das, was fuer wahr gehalten wird."`
 
 ## Validation command
 

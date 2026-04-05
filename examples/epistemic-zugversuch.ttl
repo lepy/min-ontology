@@ -1,0 +1,204 @@
+@prefix min:  <https://w3id.org/min#> .
+@prefix ex:   <https://example.org/epistemic/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+#   MIN v1.1.0 Epistemicum Example: Tensile Test with Epistemic Dimension
+#
+#   Scenario:
+#     Engineer Mueller believes Hooke's law holds for DC04 up to 200 MPa.
+#     Tensile test 1 confirms (process-centric) and supports (evidence).
+#     Confidence rises from 0.8 (subjective) to 0.95 (statistical).
+#     Tensile test 2 at 300 MPa refutes the extended hypothesis.
+#     The graph also shows dissent, contradictory evidence, an agent-free
+#     institutionalized epistemic state, and quantifiable vs. non-quantifiable
+#     possibilia for the competency queries.
+#
+#   Demonstrates BOTH epistemic patterns:
+#     - Popperian:  Process confirms/refutes Forma       (v1.0.1)
+#     - Evidential: Epistemicum supportedBy/underminedBy Nexus  (v1.1.0)
+# =============================================================================
+
+
+# --- Agents ---
+
+ex:Mueller a min:Agent ;
+    min:hasIdentifier "AGENT-MUELLER" ;
+    min:hasName "Ing. Mueller"@en ;
+    min:performs ex:Zugversuch_1 , ex:Zugversuch_2 .
+
+ex:Schmidt a min:Agent ;
+    min:hasIdentifier "AGENT-SCHMIDT" ;
+    min:hasName "Ing. Schmidt"@en ;
+    min:performs ex:Zugversuch_2 .
+
+ex:Zugpruefmaschine a min:Agent ;
+    min:hasIdentifier "EQUIP-ZPM-001" ;
+    min:hasName "Zwick Z250 tensile tester"@en ;
+    min:performs ex:Zugversuch_1 , ex:Zugversuch_2 .
+
+
+# --- Objects ---
+
+ex:Blech a min:Object ;
+    min:hasIdentifier "MAT-DC04-001" ;
+    min:hasName "DC04 sheet"@en .
+
+ex:Probe_1 a min:Object ;
+    min:hasIdentifier "SPEC-001" ;
+    min:hasName "Tensile specimen 1 (200 MPa)"@en .
+
+ex:Probe_2 a min:Object ;
+    min:hasIdentifier "SPEC-002" ;
+    min:hasName "Tensile specimen 2 (300 MPa)"@en .
+
+
+# --- Processes ---
+
+ex:Zugversuch_1 a min:Process ;
+    min:hasIdentifier "TEST-001" ;
+    min:hasName "Tensile test 1 (up to 200 MPa)"@en ;
+    min:hasInput ex:Probe_1 ;
+    min:hasOutput ex:Messdaten_1 ;
+    min:startedAt "2026-03-15T09:00:00"^^xsd:dateTime ;
+    min:endedAt "2026-03-15T09:45:00"^^xsd:dateTime .
+
+ex:Zugversuch_2 a min:Process ;
+    min:hasIdentifier "TEST-002" ;
+    min:hasName "Tensile test 2 (up to 300 MPa)"@en ;
+    min:hasInput ex:Probe_2 ;
+    min:hasOutput ex:Messdaten_2 ;
+    min:startedAt "2026-03-16T10:00:00"^^xsd:dateTime ;
+    min:endedAt "2026-03-16T10:30:00"^^xsd:dateTime .
+
+
+# --- Data ---
+
+ex:Messdaten_1 a min:Data ;
+    min:hasIdentifier "DATA-001" ;
+    min:hasName "Stress-strain data test 1"@en ;
+    min:describes ex:Probe_1 ;
+    min:generatedBy ex:Zugversuch_1 .
+
+ex:Messdaten_2 a min:Data ;
+    min:hasIdentifier "DATA-002" ;
+    min:hasName "Stress-strain data test 2"@en ;
+    min:describes ex:Probe_2 ;
+    min:generatedBy ex:Zugversuch_2 .
+
+ex:Pruefprotokoll a min:Data ;
+    min:hasIdentifier "DOC-001" ;
+    min:hasName "Test report"@en ;
+    min:encodes ex:Hooke , ex:Rm_Norma .
+
+
+# --- Forma: Lex + Norma ---
+
+ex:Hooke a min:Lex ;
+    min:hasIdentifier "LEX-HOOKE" ;
+    min:hasName "Hooke's law"@en ;
+    min:governs ex:Zugversuch_1 , ex:Zugversuch_2 .
+
+ex:Rm_Norma a min:Norma ;
+    min:hasIdentifier "NORM-RM-270" ;
+    min:hasName "Rm >= 270 MPa acceptance criterion"@en ;
+    min:evaluates ex:Probe_1 .
+
+
+# --- Forma: Possibile ---
+
+ex:Hooke_bis_300 a min:Possibile ;
+    min:hasIdentifier "POSS-HOOKE-300" ;
+    min:hasName "Hooke holds for DC04 up to 300 MPa"@en ;
+    min:isQuantifiable false ;
+    min:concerns ex:Blech .
+
+ex:Versagen_unter_150 a min:Possibile ;
+    min:hasIdentifier "POSS-FAIL-150" ;
+    min:hasName "Specimen failure below 150 MPa"@en ;
+    min:isQuantifiable true ;
+    min:concerns ex:Probe_1 .
+
+
+# --- Epistemicum (v1.1.0) ---
+
+# Initial hypothesis: subjective, 0.8 confidence
+ex:Hypothese_v1 a min:Epistemicum ;
+    min:hasIdentifier "EPIST-001-V1" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 200 MPa (initial)"@en ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke ;
+    min:hasEpistemicStatus min:ES_Hypothetical ;
+    min:hasConfidence "0.8"^^xsd:double ;
+    min:hasConfidenceType min:CT_Subjective .
+
+# After test 1: confirmed, statistical confidence
+ex:Hypothese_v2 a min:Epistemicum ;
+    min:hasIdentifier "EPIST-001-V2" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 200 MPa (confirmed)"@en ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke ;
+    min:supportedBy ex:Messdaten_1 ;
+    min:hasEpistemicStatus min:ES_Confirmed ;
+    min:hasConfidence "0.95"^^xsd:double ;
+    min:hasConfidenceType min:CT_Statistical ;
+    min:supersedes ex:Hypothese_v1 .
+
+# Initial extension: low-confidence hypothesis about 300 MPa
+ex:Hypothese_300_v1 a min:Epistemicum ;
+    min:hasIdentifier "EPIST-300-V1" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 300 MPa (initial)"@en ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke_bis_300 ;
+    min:hasEpistemicStatus min:ES_Hypothetical ;
+    min:hasConfidence "0.4"^^xsd:double ;
+    min:hasConfidenceType min:CT_Subjective .
+
+# Competing stance by a second engineer
+ex:Hypothese_300_bestaetigt_schmidt a min:Epistemicum ;
+    min:hasIdentifier "EPIST-300-SCHMIDT" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 300 MPa (Schmidt confirmed)"@en ;
+    min:heldBy ex:Schmidt ;
+    min:about ex:Hooke_bis_300 ;
+    min:supportedBy ex:Messdaten_1 ;
+    min:hasEpistemicStatus min:ES_Confirmed ;
+    min:hasConfidence "0.55"^^xsd:double ;
+    min:hasConfidenceType min:CT_Heuristic .
+
+# Conflicting evidence on the same claim
+ex:Hypothese_300_umstritten a min:Epistemicum ;
+    min:hasIdentifier "EPIST-300-V2" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 300 MPa (contested)"@en ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke_bis_300 ;
+    min:supportedBy ex:Messdaten_1 ;
+    min:underminedBy ex:Messdaten_2 ;
+    min:hasEpistemicStatus min:ES_Contested ;
+    min:hasConfidence "0.4"^^xsd:double ;
+    min:hasConfidenceType min:CT_Subjective ;
+    min:supersedes ex:Hypothese_300_v1 .
+
+# After test 2: extended hypothesis refuted
+ex:Hypothese_widerlegt a min:Epistemicum ;
+    min:hasIdentifier "EPIST-002" ;
+    min:hasName "Hypothesis: Hooke holds for DC04 up to 300 MPa (refuted)"@en ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke_bis_300 ;
+    min:underminedBy ex:Messdaten_2 ;
+    min:hasEpistemicStatus min:ES_Refuted ;
+    min:supersedes ex:Hypothese_300_umstritten .
+
+# Agent-free institutionalized state
+ex:Datensatz_verifiziert a min:Epistemicum ;
+    min:hasIdentifier "EPIST-DATA-001" ;
+    min:hasName "Dataset 1 is institutionally treated as verified"@en ;
+    min:about ex:Messdaten_1 ;
+    min:supportedBy ex:Pruefprotokoll ;
+    min:hasEpistemicStatus min:ES_Confirmed .
+
+
+# --- Popperian pattern (v1.0.1 — process-centric) ---
+
+ex:Zugversuch_1 min:confirms ex:Hooke .
+ex:Zugversuch_2 min:refutes ex:Hooke_bis_300 .

@@ -13,11 +13,17 @@ theme:
 nav:
   - Home: index.md
   - Foundations:
+    - Requirements (EN): min-requirements-en.md
+    - Anforderungen (DE): min-requirements-de.md
     - Model Overview: min-model.md
     - Philosophical Lineage (DE): min_philosophical_lineage-de.md
     - Philosophical Lineage (EN): min_philosophical_lineage-en.md
     - Class Catalog: class-catalog.md
     - Property Catalog: property-catalog.md
+  - Epistemic Dimension:
+    - Epistemic Dimension (EN): epistemic-dimension-en.md
+    - Epistemische Dimension (DE): epistemic-dimension-de.md
+    - Migration v1.0 to v1.1: migration-v1.0-to-v1.1.md
   - Guides:
     - Class Examples: examples.md
     - Breakfast Egg Tutorial (DE): breakfast_egg_de.md
@@ -32,4 +38,5 @@ nav:
     - Meta Vocabulary (DE): min-meta-vocabulary-de.md
     - Meta Vocabulary (EN): min-meta-vocabulary-en.md
   - Visualizations:
+    - Visualization v1.1.0: min-v1_1_0-visualization.html
     - Visualization v1.0.0: min-v1_0_0-visualization.html

@@ -1,10 +1,15 @@
 PREFIX min: <https://w3id.org/min#>
 
-# CQ04: Welches Lex regiert einen Process? (governs)
-SELECT ?lex ?lexName ?process ?processName WHERE {
-  ?lex a min:Lex ;
-       min:governs ?process .
-  OPTIONAL { ?lex min:hasName ?lexName . }
-  OPTIONAL { ?process min:hasName ?processName . }
+# CQ04: Dissens zwischen Agents
+SELECT ?forma ?a1 ?a2 WHERE {
+  ?e1 a min:Epistemicum ;
+      min:about ?forma ;
+      min:heldBy ?a1 ;
+      min:hasEpistemicStatus min:ES_Confirmed .
+  ?e2 a min:Epistemicum ;
+      min:about ?forma ;
+      min:heldBy ?a2 ;
+      min:hasEpistemicStatus min:ES_Refuted .
+  FILTER (?a1 != ?a2)
 }
 LIMIT 25

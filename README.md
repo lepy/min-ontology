@@ -8,22 +8,23 @@ industrial and scientific domains with a strict distinction between:
 - **Forma · konstitutive Bestimmung · "Das, was bestimmt."**
 - **Agent · selektive Handlungsfähigkeit · "Das, was handelt."**
 
-The current stable release line is **v1.x** (current: **v1.0.1**).
+The current stable release line is **v1.x** (current: **v1.1.0**).
 
 ## Canonical IRIs
 
 - Ontology IRI: `https://w3id.org/min`
 - Namespace: `https://w3id.org/min#`
-- Current version IRI: `https://w3id.org/min/1.0.1`
+- Current version IRI: `https://w3id.org/min/1.1.0`
 
 ## Conceptual core
 
-MIN v1 defines **13 classes**:
+MIN v1.1 defines **16 classes** (14 domain + 2 enums):
 
 - Root: `min:Entity`
 - Actual branch: `min:Nexus`, `min:Object`, `min:Process`, `min:Data`, `min:Boundary`
-- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`
+- Formal branch: `min:Forma`, `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`, `min:Epistemicum`
 - Agent: `min:Agent` ("Das, was handelt.")
+- Enums: `min:CausalityMode` (3), `min:EfficacyMode` (10), `min:EpistemicStatus` (5), `min:ConfidenceType` (4)
 
 Canonical subclass profiles:
 
@@ -36,6 +37,7 @@ Canonical subclass profiles:
 - `Possibile · Möglichkeitsraum · "Das, was sein könnte."`
 - `Norma · Anforderung · "Das, was gelten soll."`
 - `Institutio · kollektive Anerkennung · "Das, was anerkannt wird."`
+- `Epistemicum · epistemische Haltung · "Das, was fuer wahr gehalten wird."`
 
 For full class definitions, see `docs/class-catalog.md`.
 
@@ -47,9 +49,10 @@ For full class definitions, see `docs/class-catalog.md`.
 - `min-docs.ttl`: annotations, philosophical basis, design rationale (imports `min.ttl`)
 - `alignment/`: optional alignment modules (BFO, DOLCE, PROV-O, QUDT, SSN/SOSA, schema.org, DC/FOAF/ADMS)
 - `min-v*.ttl`: immutable release snapshots
-- `min-v1.0.1.ttl`: current immutable snapshot (hyphen naming)
+- `min-v1.1.0.ttl`: current immutable snapshot
 - `examples/`: example instance graphs
-- `examples/min-v1.0.0-examples.ttl`: integrated scenario
+- `examples/epistemic-zugversuch.ttl`: tensile test with epistemic dimension (v1.1.0)
+- `examples/dpp-coil.ttl`: end-to-end DPP use case
 - `queries/competency/`: competency queries
 - `shapes/`: SHACL shapes
 - `tests/sparql/`: SPARQL ASK regression checks
@@ -103,12 +106,10 @@ Published docs:
 Core doc pages:
 
 - `docs/min-model.md`
-- `docs/class-catalog.md` (all classes in MIN v1)
+- `docs/class-catalog.md`
 - `docs/property-catalog.md`
-
-Static visualization:
-
-- `docs/min-v1_0_0-visualization.html`
+- `docs/epistemic-dimension-en.md` / `docs/epistemic-dimension-de.md` (v1.1.0 design decisions, bilingual)
+- `docs/migration-v1.0-to-v1.1.md`
 
 ## GitHub Pages deployment
 

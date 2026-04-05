@@ -7,7 +7,7 @@
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 
 # =============================================================================
-#   MIN — Dokumentation und philosophische Grundlagen   v1.0.1
+#   MIN — Dokumentation und philosophische Grundlagen   v1.1.0
 #
 #   Import-Modul. Wer die Philosophie will, importiert dieses Modul.
 #   Wer nur Axiome will, importiert nur min.ttl.
@@ -15,8 +15,8 @@
 
 <https://w3id.org/min/docs> a owl:Ontology ;
     owl:imports <https://w3id.org/min> ;
-    owl:versionIRI <https://w3id.org/min/docs/1.0.1> ;
-    owl:versionInfo "1.0.1" ;
+    owl:versionIRI <https://w3id.org/min/docs/1.1.0> ;
+    owl:versionInfo "1.1.0" ;
     dcterms:title "MIN — Dokumentation und philosophische Grundlagen"@de ;
     dcterms:description "Annotations-Modul zur MIN-Ontologie. Philosophische Ahnenreihe, Design Rationale und strukturierte Klassendokumentation."@de .
 
@@ -553,6 +553,57 @@ min:Institutio
     zu existieren, wenn niemand sie mehr anerkennt."""@de ;
     min:normativeSource "Searle, J.R.: The Construction of Social Reality (1995)."@de ;
     min:definedInVersion "1.0.0" ;
+    min:status "stable" .
+
+min:Epistemicum
+    skos:example "Hypothese: Hooke gilt fuer DC04 bis 200 MPa. Bestaetigung: Rm-Wert liegt in akzeptablem Bereich. Axiom: Energieerhaltung als Grundannahme."@de ;
+    min:philosophicalBasis """Popper: Conjectures and Refutations — Wissen
+    ist immer vorläufig und an Evidenz gebunden.
+
+    Quine: Web of Belief — Epistemische Haltungen sind
+    netzwerkförmig verknüpft, nicht isoliert.
+
+    Peirce: Fallibilismus — Jede Überzeugung kann sich als
+    falsch herausstellen. Der Status ‹Confirmed› ist nie endgültig."""@de ;
+    min:rationale """v1.1.0 fuehrt Epistemicum als 6. Forma-Subklasse ein.
+
+    Epistemicum schliesst die Luecke zwischen dem Popperschen
+    Muster (confirms/refutes: Prozess bewertet Forma) und der
+    Notwendigkeit, epistemische Haltungen als eigenstaendige
+    Entitaeten zu modellieren — mit Status, Konfidenz, Typ und
+    Agent-Zuordnung.
+
+    Epistemicum bewirkt nichts kausal (nicht Nexus), bestimmt
+    aber, wie ein Agent Nexus interpretiert (Forma).
+
+    Im Unterschied zu den bestehenden Relationen confirms/refutes
+    (die den Prozess als Traeger haben) haben die neuen Relationen
+    supportedBy/underminedBy das Epistemicum als Traeger — ein
+    komplementaeres, nicht ersetzendes Muster."""@de ;
+    min:definition """Das, was fuer wahr gehalten wird. Epistemische
+    Haltung eines Agent gegenueber einem Sachverhalt.
+    Kann agentengebunden (persoenliche Ueberzeugung) oder
+    agentenfrei (institutionalisierter Status) sein."""@de ;
+    min:criterion """Kann man fragen: ‹Gilt F laut Agent A?› — und
+    ist die Antwort im Wissensgraph darstellbar? Wenn ja,
+    dann ist F ein Epistemicum."""@de ;
+    min:usageExample """ex:hypothese_hooke a min:Epistemicum ;
+    min:heldBy ex:mueller ;
+    min:about ex:hooke ;
+    min:hasEpistemicStatus min:ES_Hypothetical ;
+    min:hasConfidence 0.8 ;
+    min:hasConfidenceType min:CT_Subjective ."""@de ;
+    min:counterExample """Ein Messdatensatz. Messdaten beschreiben einen
+    Sachverhalt → Data. Die BEWERTUNG der Messdaten als
+    hinreichend → Epistemicum."""@de ;
+    min:distinguishedFrom """min:Possibile — Possibile ist eine Moeglichkeit.
+    Epistemicum ist eine Haltung GEGENUEBER einer Moeglichkeit."""@de ;
+    min:distinguishedFrom """min:Data — Data kodiert Information (Bytes).
+    Epistemicum bewertet Information (Gueltigkeit)."""@de ;
+    min:distinguishedFrom """min:Norma — Norma sagt, was gelten SOLL.
+    Epistemicum sagt, was fuer wahr GEHALTEN wird."""@de ;
+    min:normativeSource "Popper, K.R.: Conjectures and Refutations (1963). Quine, W.V.O.: Web of Belief (1970). Peirce, C.S.: Fallibilism (1897)."@de ;
+    min:definedInVersion "1.1.0" ;
     min:status "stable" .
 
 

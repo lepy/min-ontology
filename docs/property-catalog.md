@@ -1,4 +1,4 @@
-# MIN Property Catalog (v1.0.1)
+# MIN Property Catalog (v1.1.0)
 
 This page lists MIN properties by modeling role and relation family.
 
@@ -83,19 +83,37 @@ Both are schema-level `owl:AnnotationProperty` terms:
 | `min:comprises` | `min:Institutio` | `min:Forma` | inverse: `min:comprisedBy`; bundles formal determinants |
 | `min:comprisedBy` | `min:Forma` | `min:Institutio` | inverse of `comprises` |
 
-### Epistemic relations
+### Epistemic relations (process-centric, v1.0.0)
 
 | Property | Domain | Range | Notes |
 | --- | --- | --- | --- |
-| `min:confirms` | `min:Process` | `min:Forma` | inverse: `min:confirmedBy`; epistemic corroboration |
+| `min:confirms` | `min:Process` | `min:Forma` | inverse: `min:confirmedBy`; Popperian corroboration |
 | `min:confirmedBy` | `min:Forma` | `min:Process` | inverse of `confirms` |
-| `min:refutes` | `min:Process` | `min:Possibile` | inverse: `min:refutedBy`; epistemic falsification |
+| `min:refutes` | `min:Process` | `min:Possibile` | inverse: `min:refutedBy`; Popperian falsification |
 | `min:refutedBy` | `min:Possibile` | `min:Process` | inverse of `refutes` |
 | `min:entails` | `min:Forma` | `min:Forma` | transitive; logical implication |
 | `min:supersedes` | `min:Forma` | `min:Forma` | inverse: `min:supersededBy`; NOT transitive |
 | `min:supersededBy` | `min:Forma` | `min:Forma` | inverse of `supersedes` |
 | `min:justifiedBy` | `min:Institutio` | `min:Forma` | inverse: `min:justifies`; epistemic grounding |
 | `min:justifies` | `min:Forma` | `min:Institutio` | inverse of `justifiedBy` |
+
+### Epistemicum relations (evidence-centric, v1.1.0)
+
+| Property | Domain | Range | Notes |
+| --- | --- | --- | --- |
+| `min:holds` | `min:Agent` | `min:Epistemicum` | inverse: `min:heldBy`; agent holds epistemic stance |
+| `min:heldBy` | `min:Epistemicum` | `min:Agent` | inverse of `holds`; optional (agent-free allowed) |
+| `min:about` | `min:Epistemicum` | `min:Entity` | the entity this stance is about; required |
+| `min:supportedBy` | `min:Epistemicum` | `min:Nexus` | inverse: `min:supports`; evidence supports stance |
+| `min:supports` | `min:Nexus` | `min:Epistemicum` | inverse of `supportedBy` |
+| `min:underminedBy` | `min:Epistemicum` | `min:Nexus` | inverse: `min:undermines`; evidence weakens stance |
+| `min:undermines` | `min:Nexus` | `min:Epistemicum` | inverse of `underminedBy` |
+| `min:hasEpistemicStatus` | `min:Epistemicum` | `min:EpistemicStatus` | functional; exactly one per Epistemicum |
+| `min:hasConfidenceType` | `min:Epistemicum` | `min:ConfidenceType` | functional; required when hasConfidence present |
+
+Both epistemic patterns complement each other:
+- **Process-centric (Popperian):** "The tensile test confirms Hooke's law." Carrier: Process.
+- **Evidence-centric (Epistemicum):** "The hypothesis is supported by measurement data." Carrier: Epistemicum.
 
 ### Meta-relation
 
@@ -105,13 +123,23 @@ Both are schema-level `owl:AnnotationProperty` terms:
 
 ## 5. Datatype properties
 
-All core datatype properties use domain `min:Entity`:
+Core datatype properties (domain `min:Entity`):
 
 - `min:hasIdentifier`
 - `min:hasName`
 - `min:hasTimestamp`
 - `min:hasDescription`
 - `min:hasStatus`
+
+Process-specific:
+
+- `min:startedAt` (domain: `min:Process`, range: `xsd:dateTime`)
+- `min:endedAt` (domain: `min:Process`, range: `xsd:dateTime`)
+
+Epistemicum-specific (v1.1.0):
+
+- `min:hasConfidence` (domain: `min:Epistemicum`, range: `xsd:double` [0.0, 1.0], functional)
+- `min:isQuantifiable` (domain: `min:Possibile`, range: `xsd:boolean`; true = risk, false = Knightian uncertainty)
 
 ## 6. Annotation properties
 
@@ -162,6 +190,25 @@ Core design/meta properties include:
 
 Reasoner infers mode automatically via `owl:hasValue` restrictions on each class.
 
+### EpistemicStatus values (v1.1.0)
+
+| Individual | Label | Meaning |
+| --- | --- | --- |
+| `min:ES_Hypothetical` | hypothetical | proposed, neither confirmed nor refuted |
+| `min:ES_Confirmed` | confirmed | supported by evidence and accepted |
+| `min:ES_Refuted` | refuted | contradicted by evidence |
+| `min:ES_Contested` | contested | conflicting evidence, no consensus |
+| `min:ES_Axiomatic` | axiomatic | foundational assumption, not empirically testable |
+
+### ConfidenceType values (v1.1.0)
+
+| Individual | Label | Meaning |
+| --- | --- | --- |
+| `min:CT_Subjective` | subjective | expert judgement |
+| `min:CT_Statistical` | statistical | from sample (confidence interval) |
+| `min:CT_Bayesian` | bayesian | posterior probability |
+| `min:CT_Heuristic` | heuristic | experience-based estimate |
+
 ## 8. Modeling guidance
 
 1. Use bridge relations explicitly; do not collapse Nexus and Forma in one node.
@@ -169,3 +216,6 @@ Reasoner infers mode automatically via `owl:hasValue` restrictions on each class
 3. Use `realizes` when a formal entity already exists and is instantiated in actuality.
 4. Use `encodes` for representation links (`Data -> Forma`).
 5. Use `typifies` for kind-of determination via institutionalized type assignments.
+6. Use `confirms`/`refutes` when a **Process** is the epistemic agent (Popperian pattern).
+7. Use `supportedBy`/`underminedBy` when an **Epistemicum** accumulates evidence from Nexus instances.
+8. When `hasConfidence` is present, always also provide `hasConfidenceType`.

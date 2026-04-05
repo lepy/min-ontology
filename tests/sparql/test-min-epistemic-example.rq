@@ -1,0 +1,34 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  FILTER NOT EXISTS {
+    ?x a min:Epistemicum .
+    FILTER NOT EXISTS { ?x min:about ?e . }
+  }
+
+  FILTER NOT EXISTS {
+    ?x min:hasConfidence ?c .
+    FILTER NOT EXISTS { ?x min:hasConfidenceType ?t . }
+  }
+
+  FILTER NOT EXISTS {
+    ?x min:supportedBy ?y .
+    ?y a min:Forma .
+  }
+
+  FILTER NOT EXISTS {
+    ?x min:underminedBy ?y .
+    ?y a min:Forma .
+  }
+
+  FILTER NOT EXISTS {
+    ?x min:confirms ?y .
+    FILTER NOT EXISTS { ?x a min:Process . ?y a min:Forma . }
+  }
+
+  FILTER NOT EXISTS {
+    ?x min:refutes ?y .
+    FILTER NOT EXISTS { ?x a min:Process . ?y a min:Possibile . }
+  }
+}

@@ -53,7 +53,7 @@ digraph MIN {
             <TD><B><FONT POINT-SIZE="11" COLOR="#6c3483">Forma</FONT></B></TD>
             <TD><FONT POINT-SIZE="9" COLOR="#a569bd">  ·  Das, was bestimmt.</FONT></TD>
         </TR><TR>
-            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle 5 paarweise disjunkt</FONT></TD>
+            <TD COLSPAN="2"><FONT POINT-SIZE="7.5" COLOR="#c5aacc">⊥ alle 6 paarweise disjunkt</FONT></TD>
         </TR></TABLE>>;
         fontsize=11; fontcolor="#6c3483";
         style="rounded"; color="#bb8fce"; bgcolor="#fcf7ff";
@@ -70,6 +70,7 @@ digraph MIN {
         Possibile [ label=<<B>Possibile</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Möglichkeitsraum</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was sein könnte.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
         Norma [ label=<<B>Norma</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">Anforderung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was gelten soll.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
         Institutio [ label=<<B>Institutio</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">kollektive Anerkennung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was anerkannt wird.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
+        Epistemicum [ label=<<B>Epistemicum</B><BR/><FONT POINT-SIZE="8" COLOR="#666666">epistemische Haltung</FONT><BR/><FONT POINT-SIZE="7" COLOR="#777777">&quot;Das, was f&#252;r wahr gehalten wird.&quot;</FONT>>, fillcolor="#f0e6f6", color="#8e44ad", fontcolor="#4a235a" ];
     }
 
     // ── ENTITY-QUERKATEGORIEN ─────────────────────────────
@@ -94,6 +95,7 @@ digraph MIN {
     Forma -> Possibile [color="#8e44ad", minlen=2];
     Forma -> Norma [color="#8e44ad", minlen=2];
     Forma -> Institutio [color="#8e44ad", minlen=2];
+    Forma -> Epistemicum [color="#8e44ad", minlen=2];
     Nexus -> Forma [style=invis, weight=50, constraint=true];
     Forma -> Agent [style=invis, weight=50, constraint=true];
 
@@ -102,5 +104,5 @@ digraph MIN {
 
     // ── Title ───────────────────────────────────────────────
     labelloc=t;
-    label=<<FONT POINT-SIZE="16"><B>MIN — Material · Information · Nexus</B></FONT><BR/><FONT POINT-SIZE="10" COLOR="#888888">Klassenhierarchie · v1.0.0 │ Entity ≡ Nexus ⊔ Forma | Agent</FONT><BR/> >;
+    label=<<FONT POINT-SIZE="16"><B>MIN — Material · Information · Nexus</B></FONT><BR/><FONT POINT-SIZE="10" COLOR="#888888">Klassenhierarchie · v1.1.0 │ Entity ≡ Nexus ⊔ Forma | Agent</FONT><BR/> >;
 }

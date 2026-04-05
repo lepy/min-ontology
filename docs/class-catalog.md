@@ -1,4 +1,4 @@
-# MIN Class Catalog (v1.0.1)
+# MIN Class Catalog (v1.1.0)
 
 This catalog reflects the classes in `min.ttl`.
 
@@ -19,6 +19,9 @@ This catalog reflects the classes in `min.ttl`.
 | `min:Possibile` | `min:Forma` | Forma | Yes | Möglichkeitsraum |
 | `min:Norma` | `min:Forma` | Forma | Yes | Anforderung |
 | `min:Institutio` | `min:Forma` | Forma | Yes | kollektive Anerkennung |
+| `min:Epistemicum` | `min:Forma` | Forma | Yes | epistemische Haltung |
+| `min:EpistemicStatus` | - | Enum | No (enum class) | Controlled vocabulary for epistemic standing |
+| `min:ConfidenceType` | - | Enum | No (enum class) | Controlled vocabulary for confidence kind |
 | `min:MetaTerm` | `min:Institutio` | Forma | Yes | ontologieinterner Beschreibungsterm |
 | `min:OntologyArtifact` | `min:Data` | Nexus | Yes | ontologisches Data-Artefakt |
 
@@ -36,8 +39,9 @@ Entity ("Das, was existiert.")
 │   ├── Structura ("Das, was die Wirklichkeit formalisiert.")
 │   ├── Possibile ("Das, was sein könnte.")
 │   ├── Norma ("Das, was gelten soll.")
-│   └── Institutio ("Das, was anerkannt wird.")
-│       └── MetaTerm (ontologieinterner Beschreibungsterm)
+│   ├── Institutio ("Das, was anerkannt wird.")
+│   │   └── MetaTerm (ontologieinterner Beschreibungsterm)
+│   └── Epistemicum ("Das, was fuer wahr gehalten wird.")
 ├── Agent ("Das, was handelt.")
 └── (Data branch also contains:)
     └── OntologyArtifact (ontologisches Data-Artefakt)
@@ -91,7 +95,7 @@ Entity ("Das, was existiert.")
 ### `min:Forma`
 
 - Role: root for formal determinants.
-- Modeling note: instantiate one of its subclasses (`Lex`, `Structura`, `Possibile`, `Norma`, `Institutio`).
+- Modeling note: instantiate one of its subclasses (`Lex`, `Structura`, `Possibile`, `Norma`, `Institutio`, `Epistemicum`).
 
 ### `min:Lex`
 
@@ -123,6 +127,26 @@ Entity ("Das, was existiert.")
 - Key relations: `constitutedBy`, `recognizedBy`, `typifies`, `comprises`.
 - Example: [Institutio section](examples.md#institutio-institutional-construct).
 
+### `min:Epistemicum`
+
+- Role: epistemische Haltung — "Das, was fuer wahr gehalten wird."
+- Epistemic stance of an agent towards a state of affairs.
+- Key relations: `heldBy` (optional), `about` (required), `supportedBy`, `underminedBy`, `hasEpistemicStatus` (required, functional), `hasConfidenceType`, `hasConfidence`.
+- Agent-free instances model institutionalized epistemic states ("This dataset is verified").
+- Example: [Epistemicum section](examples.md#epistemicum-epistemic-stance).
+
+### `min:EpistemicStatus`
+
+- Role: controlled vocabulary for epistemic standing.
+- Individuals: `ES_Hypothetical`, `ES_Confirmed`, `ES_Refuted`, `ES_Contested`, `ES_Axiomatic`.
+- Used via `hasEpistemicStatus` (functional, exactly one per Epistemicum).
+
+### `min:ConfidenceType`
+
+- Role: controlled vocabulary for the kind of confidence behind a numeric value.
+- Individuals: `CT_Subjective`, `CT_Statistical`, `CT_Bayesian`, `CT_Heuristic`.
+- Used via `hasConfidenceType` (functional, required when `hasConfidence` is present).
+
 ## Forma classification guide
 
 ```text
@@ -136,13 +160,15 @@ Is it violable?
         Yes → Institutio
         No  → Does it describe something that has not occurred?
           Yes → Possibile
-          No  → Modeling problem — possibly a missing category.
+          No  → Is it an epistemic stance (something held to be true)?
+            Yes → Epistemicum
+            No  → Modeling problem — possibly a missing category.
 ```
 
 ## Disjointness and overlap rules
 
 - `min:Object`, `min:Process`, `min:Data`, `min:Boundary` are pairwise disjoint.
 - `min:Agent` is intentionally not disjoint from those Nexus subclasses and can overlap with `min:Institutio`.
-- `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio` are pairwise disjoint.
+- `min:Lex`, `min:Structura`, `min:Possibile`, `min:Norma`, `min:Institutio`, `min:Epistemicum` are pairwise disjoint.
 - `min:Nexus` and `min:Forma` are disjoint.
 

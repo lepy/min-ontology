@@ -1,9 +1,8 @@
 PREFIX min: <https://w3id.org/min#>
 
-SELECT ?process ?input ?output ?data WHERE {
-  ?process a min:Process ;
-           min:hasInput ?input ;
-           min:hasOutput ?output .
-  OPTIONAL { ?process min:generates ?data . }
+# CQ02: Agent-freie epistemische Zustaende (institutionalisiert)
+SELECT ?e WHERE {
+  ?e a min:Epistemicum .
+  FILTER NOT EXISTS { ?e min:heldBy ?a }
 }
 LIMIT 25

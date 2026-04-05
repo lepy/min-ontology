@@ -15,4 +15,7 @@ ASK WHERE {
   min:Possibile a owl:Class .
   min:Norma a owl:Class .
   min:Institutio a owl:Class .
+  min:Epistemicum a owl:Class .
+  min:EpistemicStatus a owl:Class .
+  min:ConfidenceType a owl:Class .
 }

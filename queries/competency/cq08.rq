@@ -1,0 +1,7 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ08: Prozesszentrische Bestaetigung (bestehendes Muster)
+SELECT ?process ?forma WHERE {
+  ?process min:confirms ?forma .
+}
+LIMIT 25

@@ -1,12 +1,11 @@
 PREFIX min: <https://w3id.org/min#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?nexus ?type ?materialProp ?informationalProp WHERE {
-  VALUES ?type { min:Object min:Process min:Data min:Agent }
-  ?nexus a ?type ;
-         ?materialProp ?materialValue ;
-         ?informationalProp ?informationalValue .
-  ?materialProp rdfs:subPropertyOf* min:materialProperty .
-  ?informationalProp rdfs:subPropertyOf* min:informationalProperty .
+# CQ01: Alle Hypothesen eines Agents
+SELECT ?agent ?e ?gegenstand ?konfidenz WHERE {
+  ?e a min:Epistemicum ;
+     min:heldBy ?agent ;
+     min:about ?gegenstand ;
+     min:hasEpistemicStatus min:ES_Hypothetical ;
+     min:hasConfidence ?konfidenz .
 }
 LIMIT 25

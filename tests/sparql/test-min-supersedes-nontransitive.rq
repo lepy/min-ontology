@@ -1,0 +1,6 @@
+PREFIX min: <https://w3id.org/min#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+ASK WHERE {
+  FILTER NOT EXISTS { min:supersedes a owl:TransitiveProperty . }
+}

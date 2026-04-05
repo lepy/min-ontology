@@ -1,10 +1,8 @@
 PREFIX min: <https://w3id.org/min#>
 
-# CQ06: Wurde ein Possibile realisiert? (realizes)
-SELECT ?possibile ?possibileName ?nexus ?nexusName WHERE {
-  ?nexus min:realizes ?possibile .
-  ?possibile a min:Possibile .
-  OPTIONAL { ?possibile min:hasName ?possibileName . }
-  OPTIONAL { ?nexus min:hasName ?nexusName . }
+# CQ06: Niedrige Konfidenz
+SELECT ?e ?c WHERE {
+  ?e min:hasConfidence ?c .
+  FILTER (?c < 0.5)
 }
 LIMIT 25

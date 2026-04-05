@@ -1,0 +1,7 @@
+PREFIX min: <https://w3id.org/min#>
+
+# CQ09: Widerlegte Possibilia (bestehendes Muster)
+SELECT ?process ?possibile WHERE {
+  ?process min:refutes ?possibile .
+}
+LIMIT 25

@@ -6,7 +6,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # =============================================================================
-#   MIN Core SHACL Shapes (v1.0.1)
+#   MIN Core SHACL Shapes (v1.1.0)
 #   Validates ontology-level structure of min.ttl.
 # =============================================================================
 
@@ -55,8 +55,11 @@ min:ClassLabelShape a sh:NodeShape ;
     sh:targetNode min:Possibile ;
     sh:targetNode min:Norma ;
     sh:targetNode min:Institutio ;
+    sh:targetNode min:Epistemicum ;
     sh:targetNode min:CausalityMode ;
     sh:targetNode min:EfficacyMode ;
+    sh:targetNode min:EpistemicStatus ;
+    sh:targetNode min:ConfidenceType ;
     sh:property [
         sh:path rdfs:label ;
         sh:minCount 1
@@ -129,6 +132,16 @@ min:ObjectPropertyDomainRangeShape a sh:NodeShape ;
     sh:targetNode min:supersededBy ;
     sh:targetNode min:justifiedBy ;
     sh:targetNode min:justifies ;
+    # Epistemicum (v1.1.0)
+    sh:targetNode min:holds ;
+    sh:targetNode min:heldBy ;
+    sh:targetNode min:about ;
+    sh:targetNode min:supportedBy ;
+    sh:targetNode min:supports ;
+    sh:targetNode min:underminedBy ;
+    sh:targetNode min:undermines ;
+    sh:targetNode min:hasEpistemicStatus ;
+    sh:targetNode min:hasConfidenceType ;
     # Mode
     sh:targetNode min:hasCausalityMode ;
     sh:targetNode min:hasEfficacyMode ;

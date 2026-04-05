@@ -1,6 +1,6 @@
 # Per-Class Examples
 
-MIN provides example patterns for all instantiable classes in v1.0.0. Each `.ttl` file below is a
+MIN provides example patterns for all instantiable classes. Each `.ttl` file below is a
 self-contained graph that can be used as a modeling reference.
 
 All listed example files pass instance-level SHACL validation (`shapes/min-instance.shacl.ttl`).
@@ -19,6 +19,7 @@ All listed example files pass instance-level SHACL validation (`shapes/min-insta
 | `min:Possibile` | `examples/possibile.ttl` | Fatigue crack scenario (offshore wind) |
 | `min:Norma` | `examples/norma.ttl` | Maximum deflection requirement (Eurocode) |
 | `min:Institutio` | `examples/institutio.ttl` | ISO 9001 certification and type assignment |
+| `min:Epistemicum` | `examples/epistemic-zugversuch.ttl` | Tensile test with epistemic dimension (v1.1.0) |
 
 Non-instantiable roots (`min:Entity`, `min:Nexus`, `min:Forma`) are abstract query anchors.
 
@@ -157,6 +158,30 @@ ex:ISO9001_Zertifizierung_WerkA a min:Institutio ;
 
 ex:DC04_Institutio a min:Institutio ;
     min:typifies ex:Blech_042 .
+```
+
+---
+
+## Epistemicum — epistemic stance
+
+**File:** `examples/epistemic-zugversuch.ttl`
+**Pattern highlights:** Both epistemic patterns — Popperian (`confirms`/`refutes`) and evidence-centric (`supportedBy`/`underminedBy`). Epistemic status progression, confidence typing.
+
+```turtle
+ex:Hypothese_v1 a min:Epistemicum ;
+    min:heldBy ex:Mueller ;
+    min:about ex:Hooke ;
+    min:hasEpistemicStatus min:ES_Hypothetical ;
+    min:hasConfidence "0.8"^^xsd:double ;
+    min:hasConfidenceType min:CT_Subjective .
+
+ex:Hypothese_v2 a min:Epistemicum ;
+    min:about ex:Hooke ;
+    min:supportedBy ex:Messdaten_1 ;
+    min:hasEpistemicStatus min:ES_Confirmed ;
+    min:supersedes ex:Hypothese_v1 .
+
+ex:Zugversuch_1 min:confirms ex:Hooke .
 ```
 
 ---

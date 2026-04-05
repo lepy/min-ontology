@@ -1,4 +1,4 @@
-# MIN Model (v1.0.1)
+# MIN Model (v1.1.0)
 
 This page summarizes the current conceptual architecture and modeling rules in MIN.
 
@@ -65,10 +65,11 @@ Classes:
 - `min:Possibile` · Möglichkeitsraum · "Das, was sein könnte."
 - `min:Norma` · Anforderung · "Das, was gelten soll."
 - `min:Institutio` · kollektive Anerkennung · "Das, was anerkannt wird."
+- `min:Epistemicum` · epistemische Haltung · "Das, was fuer wahr gehalten wird." (v1.1.0)
 
 Disjointness:
 
-- The five Forma subclasses are pairwise disjoint
+- The six Forma subclasses are pairwise disjoint
 - `min:Nexus` and `min:Forma` are disjoint
 
 ## 5. Bridge relations (Nexus <-> Forma)
@@ -147,10 +148,22 @@ SELECT ?x WHERE { ?x min:hasCausalityMode min:CM_Dispositional . }
 
 ## 12. Epistemic relations
 
-Five relations model what we know about Forma:
+### Process-centric (Popperian, v1.0.0)
 
 - `min:confirms` / `min:confirmedBy` (`Process -> Forma`): epistemic corroboration
 - `min:refutes` / `min:refutedBy` (`Process -> Possibile`): epistemic falsification
 - `min:entails` (`Forma -> Forma`): logical implication (transitive)
 - `min:supersedes` / `min:supersededBy` (`Forma -> Forma`): historical succession (not transitive)
 - `min:justifiedBy` / `min:justifies` (`Institutio -> Forma`): epistemic grounding
+
+### Evidence-centric (Epistemicum, v1.1.0)
+
+- `min:holds` / `min:heldBy` (`Agent <-> Epistemicum`): agent holds epistemic stance
+- `min:about` (`Epistemicum -> Entity`): what the stance is about
+- `min:supportedBy` / `min:supports` (`Epistemicum <-> Nexus`): evidence supports stance
+- `min:underminedBy` / `min:undermines` (`Epistemicum <-> Nexus`): evidence weakens stance
+- `min:hasEpistemicStatus` (`Epistemicum -> EpistemicStatus`): exactly one status
+- `min:hasConfidenceType` (`Epistemicum -> ConfidenceType`): kind of confidence
+- `min:hasConfidence` (`Epistemicum -> xsd:double`): quantitative confidence [0..1]
+
+Both patterns complement each other. See [Epistemic Dimension (EN)](epistemic-dimension-en.md) / [Epistemische Dimension (DE)](epistemic-dimension-de.md) for details.

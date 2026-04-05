@@ -21,4 +21,23 @@ ASK WHERE {
   min:typifies a owl:ObjectProperty .
   min:typifiedBy a owl:ObjectProperty .
   min:comprises a owl:ObjectProperty .
+  min:comprisedBy a owl:ObjectProperty .
+  min:confirms a owl:ObjectProperty .
+  min:confirmedBy a owl:ObjectProperty .
+  min:refutes a owl:ObjectProperty .
+  min:refutedBy a owl:ObjectProperty .
+  min:entails a owl:ObjectProperty .
+  min:supersedes a owl:ObjectProperty .
+  min:supersededBy a owl:ObjectProperty .
+  min:justifiedBy a owl:ObjectProperty .
+  min:justifies a owl:ObjectProperty .
+  min:holds a owl:ObjectProperty .
+  min:heldBy a owl:ObjectProperty .
+  min:about a owl:ObjectProperty .
+  min:supportedBy a owl:ObjectProperty .
+  min:supports a owl:ObjectProperty .
+  min:underminedBy a owl:ObjectProperty .
+  min:undermines a owl:ObjectProperty .
+  min:hasEpistemicStatus a owl:ObjectProperty .
+  min:hasConfidenceType a owl:ObjectProperty .
 }

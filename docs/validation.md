@@ -9,9 +9,9 @@ Validates the **ontology structure** of `min.ttl` itself:
 | Shape | Validates |
 |-------|-----------|
 | `OntologyMetadataShape` | Ontology IRI has versionIRI, versionInfo, title, description, creator, created, license |
-| `ClassLabelShape` | All 13 domain classes + 2 enum classes have `rdfs:label` |
+| `ClassLabelShape` | All 14 domain classes + 4 enum classes have `rdfs:label` |
 | `PolaritySuperPropertyShape` | Polarity super-properties have labels |
-| `ObjectPropertyDomainRangeShape` | All 49 object properties have `rdfs:range` |
+| `ObjectPropertyDomainRangeShape` | All 58 object properties have `rdfs:range` |
 
 ## Instance shapes (`shapes/min-instance.shacl.ttl`)
 
@@ -23,6 +23,8 @@ Validates **domain instance data** that imports `min.ttl`:
 | `ProcessInstanceShape` | `min:Process` | `hasInput` min 1, `hasOutput` min 1 |
 | `AgentInstanceShape` | `min:Agent` | `performs` min 1 |
 | `BoundaryInstanceShape` | `min:Boundary` | `bounds` min 2 |
+| `EpistemicumInstanceShape` | `min:Epistemicum` | `about` min 1, `hasEpistemicStatus` exactly 1, `hasConfidence` in [0,1], `supportedBy`/`underminedBy` class Nexus |
+| `ConfidenceRequiresTypeShape` | `min:Epistemicum` | SPARQL rule: `hasConfidence` requires `hasConfidenceType` |
 
 ## Running validation
 
