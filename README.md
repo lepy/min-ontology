@@ -1,5 +1,10 @@
 # MIN Ontology
 
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://w3id.org/min/1.1.0)
+[![W3ID](https://img.shields.io/badge/w3id-min-green.svg)](https://w3id.org/min)
+[![Docs](https://img.shields.io/badge/docs-GitHub_Pages-orange.svg)](https://lepy.github.io/min-ontology/)
+
 MIN (Material · Information · Nexus) is a foundational ontology for modeling
 industrial and scientific domains with a strict distinction between:
 
@@ -9,6 +14,8 @@ industrial and scientific domains with a strict distinction between:
 - **Agent · selektive Handlungsfähigkeit · "Das, was handelt."**
 
 The current stable release line is **v1.x** (current: **v1.1.0**).
+
+Documentation site: <https://lepy.github.io/min-ontology/>
 
 ## Canonical IRIs
 
@@ -125,6 +132,38 @@ Repository setting required:
 - Semantic versioning is used for MIN releases.
 - `min-vX.Y.Z.ttl` files are immutable snapshots.
 - `min.ttl` always points to the latest stable MIN release.
+
+## Related projects
+
+- **[sdata-ontology](https://github.com/lepy/sdata-ontology)** — Domain ontology suite for Product Passports, Circular Economy, and Digital Twins, built on MIN.
+- **[sdata-experiments](https://github.com/lepy/sdata-experiments)** — Tensile/compression/bending/fatigue test workflows using the MIN/sdata stack.
+
+## Alignments to external ontologies
+
+MIN provides optional alignment modules in `alignment/`:
+
+| Module | Target | Key mappings |
+|---|---|---|
+| `min-bfo.ttl` | BFO 2020 | Object → material entity, Process → process |
+| `min-dolce.ttl` | DOLCE Ultra Lite | Entity, Process, Data, Agent, Forma |
+| `min-prov.ttl` | W3C PROV-O | Process → Activity, performs → wasAssociatedWith |
+| `min-time.ttl` | W3C OWL-Time | Process → ProperInterval |
+| `min-qudt.ttl` | QUDT | QuantityValue → Data, Quantity → Forma |
+| `min-sosa.ttl` | W3C SSN/SOSA | Process → Procedure, Data → Result |
+| `min-schema.ttl` | schema.org | Object → Thing, Process → Action |
+| `min-dcterms.ttl` | DC/FOAF/ADMS | Data → BibliographicResource |
+
+## Citation
+
+```bibtex
+@misc{lepenies2026min,
+  author       = {Lepenies, Ingolf},
+  title        = {{MIN} --- {Material} · {Information} · {Nexus}: A Foundational Ontology for Engineers},
+  year         = {2026},
+  url          = {https://w3id.org/min},
+  note         = {Version 1.1.0. Licensed under CC BY-SA 4.0}
+}
+```
 
 ## License and Attribution
 
